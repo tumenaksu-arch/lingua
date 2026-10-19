@@ -2,7 +2,8 @@ import * as Haptics from 'expo-haptics';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
-import { MIN_TOUCH, PRESS_DEPTH, colors, fontSize, fontWeight, radii, spacing } from './theme';
+import { MAX_FONT_SCALE_DENSE, MIN_TOUCH, PRESS_DEPTH, fontSize, fontWeight, radii, spacing, type ColorTokens } from './theme';
+import { useTheme } from './useTheme';
 
 export type WordChipState = 'idle' | 'selected' | 'correct' | 'wrong' | 'used';
 
@@ -14,23 +15,31 @@ export type WordChipProps = {
   style?: StyleProp<ViewStyle>;
 };
 
-const STATE_STYLE: Record<WordChipState, { border: string; bg: string; text: string }> = {
-  idle: { border: colors.border, bg: colors.background, text: colors.text },
-  selected: { border: colors.secondary, bg: colors.secondaryTint, text: colors.secondaryShadow },
-  correct: { border: colors.primary, bg: colors.primaryTint, text: colors.primaryShadow },
-  wrong: { border: colors.danger, bg: colors.dangerTint, text: colors.dangerShadow },
-  // "used": leaves an empty slot in the word bank, like Duolingo
-  used: { border: colors.border, bg: colors.border, text: colors.border },
-};
+function styleFor(state: WordChipState, c: ColorTokens): { border: string; bg: string; text: string } {
+  switch (state) {
+    case 'idle':
+      return { border: c.border, bg: c.background, text: c.text };
+    case 'selected':
+      return { border: c.secondary, bg: c.secondaryTint, text: c.secondaryText };
+    case 'correct':
+      return { border: c.primary, bg: c.primaryTint, text: c.primaryText };
+    case 'wrong':
+      return { border: c.danger, bg: c.dangerTint, text: c.dangerText };
+    case 'used':
+      // leaves an empty slot in the word bank, like Duolingo
+      return { border: c.border, bg: c.border, text: c.border };
+  }
+}
 
 export function WordChip({ word, state = 'idle', disabled, onPress, style }: WordChipProps) {
   const [pressed, setPressed] = useState(false);
-  const s = STATE_STYLE[state];
+  const { colors } = useTheme();
+  const s = styleFor(state, colors);
   const inert = disabled || state === 'used';
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={word}
+      accessibilityLabel={state === 'used' ? `${word}, kullanıldı` : word}
       accessibilityState={{ selected: state === 'selected', disabled: inert }}
       disabled={inert}
       onPressIn={() => setPressed(true)}
@@ -53,7 +62,9 @@ export function WordChip({ word, state = 'idle', disabled, onPress, style }: Wor
             },
           ]}
         >
-          <Text style={[styles.text, { color: s.text }]}>{word}</Text>
+          <Text style={[styles.text, { color: s.text }]} maxFontSizeMultiplier={MAX_FONT_SCALE_DENSE}>
+            {word}
+          </Text>
         </View>
       </View>
     </Pressable>

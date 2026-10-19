@@ -4,9 +4,10 @@ import { useFocusEffect } from 'expo-router';
 
 import { getVocab } from '@/content';
 import type { SrsCard, VocabItem } from '@/domain';
+import { playCorrect, playWrong } from '@/features/sound';
 import { useAppStore } from '@/features/store';
 import { speak } from '@/speech';
-import { Body, Button, Caption, Heading, ProgressBar, Screen, Title, colors, radii, spacing } from '@/ui';
+import { Body, Button, Caption, Heading, ProgressBar, Screen, Title, radii, spacing, useTheme } from '@/ui';
 
 interface Deck { cards: SrsCard[]; vocab: Map<string, VocabItem>; }
 
@@ -14,7 +15,9 @@ export default function ReviewScreen() {
   const course = useAppStore((s) => s.course);
   const dueCount = useAppStore((s) => s.dueCount);
   const loadDueCards = useAppStore((s) => s.loadDueCards);
+  const startReviewSession = useAppStore((s) => s.startReviewSession);
   const reviewCard = useAppStore((s) => s.reviewCard);
+  const { colors } = useTheme();
 
   const [deck, setDeck] = useState<Deck | null>(null);
   const [index, setIndex] = useState(0);
@@ -24,13 +27,14 @@ export default function ReviewScreen() {
 
   const load = useCallback(async () => {
     const cards = await loadDueCards(20);
+    if (cards.length > 0) void startReviewSession();
     const vocab = new Map(getVocab(course.id).map((v) => [v.id, v]));
     setDeck({ cards: cards.filter((c) => vocab.has(c.vocabId)), vocab });
     setIndex(0);
     setFlipped(false);
     setDone({ right: 0, wrong: 0 });
     shownAt.current = Date.now();
-  }, [course.id, loadDueCards]);
+  }, [course.id, loadDueCards, startReviewSession]);
 
   useFocusEffect(useCallback(() => { void load(); }, [load]));
   // Reset the response timer whenever a different card is shown (new index or a reloaded deck).
@@ -57,6 +61,7 @@ export default function ReviewScreen() {
 
   const v = deck.vocab.get(card.vocabId)!;
   const grade = async (correct: boolean) => {
+    void (correct ? playCorrect() : playWrong());
     await reviewCard(card, correct, Date.now() - shownAt.current);
     setDone((d) => (correct ? { ...d, right: d.right + 1 } : { ...d, wrong: d.wrong + 1 }));
     setFlipped(false);
@@ -67,21 +72,24 @@ export default function ReviewScreen() {
     <Screen>
       <View style={styles.header}>
         <ProgressBar progress={index / deck.cards.length} style={{ flex: 1 }} />
-        <Caption>{index + 1}/{deck.cards.length}</Caption>
+        <Caption accessibilityLabel={`Kart ${index + 1} / ${deck.cards.length}`}>{index + 1}/{deck.cards.length}</Caption>
       </View>
 
       <Pressable
         onPress={() => setFlipped((f) => !f)}
         accessibilityRole="button"
-        accessibilityLabel={flipped ? 'Kartı çevir (ön yüz)' : 'Kartı çevir (arka yüz)'}
-        style={[styles.card, flipped && styles.cardBack]}
+        accessibilityLabel={flipped ? `Anlamı: ${v.translation}. Ön yüze dön` : `Kelime: ${v.term}. Cevabı görmek için dokun`}
+        style={[
+          styles.card,
+          { borderColor: flipped ? colors.secondary : colors.border, backgroundColor: flipped ? colors.secondaryTint : colors.surface },
+        ]}
       >
         <Caption color={colors.textMuted}>{flipped ? 'ANLAMI' : 'KELİME'}</Caption>
-        <Title center>{flipped ? v.translation : v.term}</Title>
+        <Title center color={flipped ? colors.secondaryText : undefined}>{flipped ? v.translation : v.term}</Title>
         {flipped && v.example ? <Body center color={colors.textMuted}>{v.example}</Body> : null}
         {!flipped && (
           <Pressable onPress={() => speak(v.term, course.toLang)} accessibilityRole="button" accessibilityLabel="Dinle" style={styles.speaker}>
-            <Heading>🔊</Heading>
+            <Heading accessible={false}>🔊</Heading>
           </Pressable>
         )}
       </Pressable>
@@ -101,8 +109,7 @@ export default function ReviewScreen() {
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: 'center', gap: spacing.lg },
   header: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, marginBottom: spacing.xl },
-  card: { flex: 1, borderWidth: 2, borderColor: colors.border, borderRadius: radii.xl, padding: spacing.xl, alignItems: 'center', justifyContent: 'center', gap: spacing.md, marginBottom: spacing.xl, backgroundColor: colors.surface },
-  cardBack: { borderColor: colors.secondary, backgroundColor: colors.secondaryTint },
+  card: { flex: 1, borderWidth: 2, borderRadius: radii.xl, padding: spacing.xl, alignItems: 'center', justifyContent: 'center', gap: spacing.md, marginBottom: spacing.xl },
   speaker: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   actions: { flexDirection: 'row', gap: spacing.md },
 });

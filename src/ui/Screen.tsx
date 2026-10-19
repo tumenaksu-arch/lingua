@@ -1,7 +1,8 @@
 import { StyleSheet, View, type ViewProps } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { colors, spacing } from './theme';
+import { spacing } from './theme';
+import { useTheme } from './useTheme';
 
 export type ScreenProps = ViewProps & {
   /** Edges that receive safe-area padding. Default: top + bottom. */
@@ -11,22 +12,16 @@ export type ScreenProps = ViewProps & {
   background?: string;
 };
 
-export function Screen({
-  edges = ['top', 'bottom'],
-  padding = spacing.lg,
-  background = colors.background,
-  style,
-  children,
-  ...rest
-}: ScreenProps) {
+export function Screen({ edges = ['top', 'bottom'], padding = spacing.lg, background, style, children, ...rest }: ScreenProps) {
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
   return (
     <View
       {...rest}
       style={[
         styles.root,
         {
-          backgroundColor: background,
+          backgroundColor: background ?? colors.background,
           paddingTop: edges.includes('top') ? insets.top : 0,
           paddingBottom: edges.includes('bottom') ? insets.bottom : 0,
           paddingHorizontal: padding,

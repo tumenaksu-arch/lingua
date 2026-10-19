@@ -11,7 +11,8 @@ import {
   type ViewStyle,
 } from 'react-native';
 
-import { MIN_TOUCH, PRESS_DEPTH, colors, fontSize, fontWeight, radii, spacing } from './theme';
+import { MIN_TOUCH, PRESS_DEPTH, fontSize, fontWeight, radii, spacing, type ColorTokens } from './theme';
+import { useTheme } from './useTheme';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'danger';
 
@@ -26,12 +27,18 @@ export type ButtonProps = Omit<PressableProps, 'style' | 'children'> & {
   style?: StyleProp<ViewStyle>;
 };
 
-const faces: Record<ButtonVariant, { bg: string; shadow: string; text: string; border?: string }> = {
-  primary: { bg: colors.primary, shadow: colors.primaryShadow, text: colors.textOnColor },
-  secondary: { bg: colors.secondary, shadow: colors.secondaryShadow, text: colors.textOnColor },
-  danger: { bg: colors.danger, shadow: colors.dangerShadow, text: colors.textOnColor },
-  outline: { bg: colors.background, shadow: colors.border, text: colors.secondary, border: colors.border },
-};
+function faceFor(variant: ButtonVariant, c: ColorTokens): { bg: string; shadow: string; text: string; border?: string } {
+  switch (variant) {
+    case 'primary':
+      return { bg: c.buttonPrimary, shadow: c.buttonPrimaryShadow, text: c.textOnColor };
+    case 'secondary':
+      return { bg: c.buttonSecondary, shadow: c.buttonSecondaryShadow, text: c.textOnColor };
+    case 'danger':
+      return { bg: c.buttonDanger, shadow: c.buttonDangerShadow, text: c.textOnColor };
+    case 'outline':
+      return { bg: c.background, shadow: c.border, text: c.secondaryText, border: c.border };
+  }
+}
 
 /**
  * Duolingo-style 3D button: a solid bottom edge that collapses when pressed,
@@ -51,7 +58,8 @@ export function Button({
   ...rest
 }: ButtonProps) {
   const [pressed, setPressed] = useState(false);
-  const face = faces[variant];
+  const { colors } = useTheme();
+  const face = faceFor(variant, colors);
   const inactive = disabled || loading;
 
   return (
@@ -75,12 +83,7 @@ export function Button({
       style={[block ? styles.block : null, style]}
       {...rest}
     >
-      <View
-        style={[
-          styles.shell,
-          { backgroundColor: inactive ? colors.disabled : face.shadow },
-        ]}
-      >
+      <View style={[styles.shell, { backgroundColor: inactive ? colors.disabled : face.shadow }]}>
         <View
           style={[
             styles.face,
@@ -97,7 +100,10 @@ export function Button({
           {loading ? (
             <ActivityIndicator color={face.text} />
           ) : (
-            <Text style={[styles.label, { color: inactive ? colors.disabledText : face.text }]}>
+            <Text
+              style={[styles.label, { color: inactive ? colors.disabledText : face.text }]}
+              maxFontSizeMultiplier={1.6}
+            >
               {title.toUpperCase()}
             </Text>
           )}
@@ -118,5 +124,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  label: { fontSize: fontSize.md, fontWeight: fontWeight.bold, letterSpacing: 0.8 },
+  // 19px bold counts as WCAG "large text", so white on the button faces needs ≥ 3:1.
+  label: { fontSize: fontSize.lg, fontWeight: fontWeight.bold, letterSpacing: 0.8, textAlign: 'center' },
 });

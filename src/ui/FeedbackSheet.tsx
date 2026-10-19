@@ -1,11 +1,13 @@
 import * as Haptics from 'expo-haptics';
 import { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Animated, { SlideInDown, SlideOutDown } from 'react-native-reanimated';
+import { AccessibilityInfo, StyleSheet, Text, View } from 'react-native';
+import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from './Button';
-import { colors, fontSize, fontWeight, radii, shadows, spacing } from './theme';
+import { fontSize, fontWeight, radii, shadows, spacing } from './theme';
+import { useReduceMotion } from './useReduceMotion';
+import { useTheme } from './useTheme';
 
 export type FeedbackSheetProps = {
   /** null/undefined = hidden */
@@ -30,36 +32,39 @@ export function FeedbackSheet({
   onContinue,
 }: FeedbackSheetProps) {
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
+  const reduceMotion = useReduceMotion();
+  const correct = result === 'correct';
+  const headline = title ?? (correct ? 'Nicely done!' : 'Correct solution:');
 
   useEffect(() => {
     if (!result) return;
     Haptics.notificationAsync(
-      result === 'correct' ? Haptics.NotificationFeedbackType.Success : Haptics.NotificationFeedbackType.Error,
+      correct ? Haptics.NotificationFeedbackType.Success : Haptics.NotificationFeedbackType.Error,
     ).catch(() => {});
-  }, [result]);
+    // Screen readers: say the outcome (and the solution) without needing focus to move.
+    AccessibilityInfo.announceForAccessibility(detail ? `${headline} ${detail}` : headline);
+  }, [result, correct, headline, detail]);
 
   if (!result) return null;
-  const correct = result === 'correct';
-  const headline = title ?? (correct ? 'Nicely done!' : 'Correct solution:');
+  const tint = correct ? colors.primaryTint : colors.dangerTint;
+  const ink = correct ? colors.primaryText : colors.dangerText;
 
   return (
     <Animated.View
-      entering={SlideInDown.duration(250)}
-      exiting={SlideOutDown.duration(200)}
-      accessibilityLiveRegion="polite"
+      entering={reduceMotion ? FadeIn.duration(120) : SlideInDown.duration(250)}
+      exiting={reduceMotion ? FadeOut.duration(100) : SlideOutDown.duration(200)}
+      accessibilityLiveRegion="assertive"
       accessibilityRole="alert"
-      style={[
-        styles.sheet,
-        { backgroundColor: correct ? colors.primaryTint : colors.dangerTint, paddingBottom: insets.bottom + spacing.lg },
-      ]}
+      style={[styles.sheet, { backgroundColor: tint, paddingBottom: insets.bottom + spacing.lg }]}
     >
       <View style={styles.header}>
-        <Text style={styles.icon}>{correct ? '✅' : '❌'}</Text>
+        <Text style={styles.icon} accessible={false}>
+          {correct ? '✅' : '❌'}
+        </Text>
         <View style={styles.textCol}>
-          <Text style={[styles.title, { color: correct ? colors.primaryShadow : colors.dangerShadow }]}>{headline}</Text>
-          {detail ? (
-            <Text style={[styles.detail, { color: correct ? colors.primaryShadow : colors.dangerShadow }]}>{detail}</Text>
-          ) : null}
+          <Text style={[styles.title, { color: ink }]}>{headline}</Text>
+          {detail ? <Text style={[styles.detail, { color: ink }]}>{detail}</Text> : null}
         </View>
       </View>
       <Button title={continueLabel} variant={correct ? 'primary' : 'danger'} onPress={onContinue} silent />

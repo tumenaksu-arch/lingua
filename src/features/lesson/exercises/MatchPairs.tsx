@@ -34,12 +34,12 @@ export function MatchPairs({ exercise, onAnswer, disabled }: ExerciseProps<Match
     <View style={styles.root}>
       <Prompt instruction="Eşleştir" />
       <View style={styles.columns}>
-        <View style={styles.col}>
+        <View style={styles.col} accessibilityLabel="Sol sütun">
           {state.left.map((w, i) => (
             <ChoiceCard key={w} label={w} state={stateFor('left', i)} disabled={disabled || done} onPress={() => tap('left', i)} />
           ))}
         </View>
-        <View style={styles.col}>
+        <View style={styles.col} accessibilityLabel="Sağ sütun">
           {state.right.map((w, i) => (
             <ChoiceCard key={w} label={w} state={stateFor('right', i)} disabled={disabled || done} onPress={() => tap('right', i)} />
           ))}

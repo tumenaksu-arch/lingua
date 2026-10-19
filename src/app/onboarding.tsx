@@ -4,7 +4,7 @@ import { router } from 'expo-router';
 
 import { courses } from '@/content';
 import { useAppStore } from '@/features/store';
-import { Body, Button, Caption, ChoiceCard, ProgressBar, Screen, Title, colors, spacing } from '@/ui';
+import { Body, Button, Caption, ChoiceCard, ProgressBar, Screen, Title, spacing, useTheme } from '@/ui';
 
 const LANG_NAME: Record<string, string> = { en: 'İngilizce', de: 'Almanca', es: 'İspanyolca', fr: 'Fransızca', tr: 'Türkçe' };
 const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', tr: '🇹🇷' };
@@ -18,6 +18,7 @@ const GOALS: { xp: number; label: string; hint: string }[] = [
 
 export default function OnboardingScreen() {
   const completeOnboarding = useAppStore((s) => s.completeOnboarding);
+  const { colors } = useTheme();
   const [step, setStep] = useState<0 | 1>(0);
   const [courseId, setCourseId] = useState<string | null>(null);
   const [goal, setGoal] = useState<number>(20);
@@ -36,11 +37,11 @@ export default function OnboardingScreen() {
 
   return (
     <Screen>
-      <ProgressBar progress={step === 0 ? 0.5 : 1} />
+      <ProgressBar progress={step === 0 ? 0.5 : 1} accessibilityLabel={`Adım ${step + 1} / 2`} />
       <View style={styles.body}>
         {step === 0 ? (
           <>
-            <Title>Hangi dili öğrenmek istiyorsun?</Title>
+            <Title accessibilityRole="header">Hangi dili öğrenmek istiyorsun?</Title>
             <Body color={colors.textMuted}>Daha sonra profilinden değiştirebilirsin.</Body>
             <View style={styles.list}>
               {courses.map((c) => (
@@ -55,7 +56,7 @@ export default function OnboardingScreen() {
           </>
         ) : (
           <>
-            <Title>Günlük hedefini seç</Title>
+            <Title accessibilityRole="header">Günlük hedefini seç</Title>
             <Body color={colors.textMuted}>Bir ders yaklaşık 10 XP kazandırır.</Body>
             <View style={styles.list}>
               {GOALS.map((g) => (

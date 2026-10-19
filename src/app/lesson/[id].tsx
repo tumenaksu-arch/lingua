@@ -18,9 +18,10 @@ import {
   type LessonState,
 } from '@/domain';
 import { ExerciseView } from '@/features/lesson/ExerciseView';
+import { playComplete, playCorrect, playWrong } from '@/features/sound';
 import { exerciseVocabMap, formatDuration } from '@/features/lesson/helpers';
 import { useAppStore } from '@/features/store';
-import { Body, Button, Caption, FeedbackSheet, Heading, Hearts, ProgressBar, Screen, Title, colors, spacing } from '@/ui';
+import { Body, Button, Caption, FeedbackSheet, Heading, Hearts, ProgressBar, Screen, Title, spacing, useTheme } from '@/ui';
 
 type Params = { id: string; mode?: 'practice' };
 
@@ -58,6 +59,7 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
   const stats = useAppStore((s) => s.stats);
   const saveStats = useAppStore((s) => s.saveStats);
   const finishLesson = useAppStore((s) => s.finishLesson);
+  const { colors } = useTheme();
 
   const lesson = useMemo(() => findLesson(course.units, id), [course, id]);
   const [startedAt] = useState(() => Date.now());
@@ -74,6 +76,7 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
   const onAnswer = useCallback(
     (isCorrect: boolean) => {
       if (!exercise || feedback) return;
+      void (isCorrect ? playCorrect() : playWrong());
       if (!isCorrect && !practice) void saveStats(loseHeart(regenerate(stats, Date.now()), Date.now()));
       setFeedback({ ok: isCorrect, detail: isCorrect ? undefined : correctAnswerText(exercise) });
     },
@@ -101,6 +104,7 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
     // Persist the result once the queue is empty (and the lesson was not failed).
     if (isFinished(next) && !next.failed && !finished) {
       const durationMs = Date.now() - startedAt;
+      void playComplete();
       persist(next, durationMs);
     }
   }, [state, exercise, feedback, lesson, finished, startedAt, persist]);
@@ -132,17 +136,17 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
     const accuracy = Math.round((result.correct / result.total) * 100);
     return (
       <Screen>
-        <View style={styles.center}>
-          <Title center>{summary?.dailyGoalJustReached ? 'Günlük hedef tamam! 🎉' : 'Ders tamamlandı! 🎉'}</Title>
+        <View style={styles.center} accessibilityLiveRegion="polite">
+          <Title center accessibilityRole="header">{summary?.dailyGoalJustReached ? 'Günlük hedef tamam! 🎉' : 'Ders tamamlandı! 🎉'}</Title>
           <View style={styles.statsRow}>
-            <Stat label="XP" value={summary ? `+${summary.xpEarned}` : '…'} color={colors.warning} />
-            <Stat label="Doğruluk" value={`%${accuracy}`} color={colors.primary} />
-            <Stat label="Süre" value={formatDuration(result.durationMs)} color={colors.secondary} />
+            <Stat label="XP" value={summary ? `+${summary.xpEarned}` : '…'} color={colors.xpText} />
+            <Stat label="Doğruluk" value={`%${accuracy}`} color={colors.primaryText} />
+            <Stat label="Süre" value={formatDuration(result.durationMs)} color={colors.secondaryText} />
           </View>
         </View>
         {saveError ? (
           <View style={styles.actions}>
-            <Caption center color={colors.danger}>Kaydedilemedi: {saveError}</Caption>
+            <Caption center color={colors.dangerText} accessibilityRole="alert">Kaydedilemedi: {saveError}</Caption>
             <Button title="Tekrar dene" onPress={() => persist(state, finished?.durationMs ?? 0)} />
             <Button title="Ana sayfa" variant="outline" onPress={() => router.replace('/')} />
           </View>
@@ -159,7 +163,7 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
         <Pressable accessibilityRole="button" accessibilityLabel="Dersi kapat" onPress={confirmQuit} hitSlop={12} style={styles.close}>
           <Heading color={colors.textMuted}>✕</Heading>
         </Pressable>
-        <ProgressBar progress={progress(state)} style={styles.progress} />
+        <ProgressBar progress={progress(state)} style={styles.progress} accessibilityLabel="Ders ilerlemesi" />
         <Hearts hearts={state.hearts} />
       </View>
       <View style={styles.body}>
@@ -180,7 +184,7 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
 
 function Stat({ label, value, color }: { label: string; value: string; color: string }) {
   return (
-    <View style={[styles.stat, { borderColor: color }]}>
+    <View style={[styles.stat, { borderColor: color }]} accessible accessibilityLabel={`${label}: ${value}`}>
       <Caption center color={color}>{label}</Caption>
       <Heading center color={color}>{value}</Heading>
     </View>
@@ -197,8 +201,8 @@ function OutOfHearts({ lessonId }: { lessonId: string }) {
   const wait = msUntilNextHeart(stats, now);
   return (
     <Screen>
-      <View style={styles.center}>
-        <Title center>Kalplerin bitti 💔</Title>
+      <View style={styles.center} accessibilityLiveRegion="polite">
+        <Title center accessibilityRole="header">Kalplerin bitti 💔</Title>
         <Body center>Yeni bir kalp için {formatDuration(wait)} bekle ya da kalp kaybetmeden pratik yap.</Body>
       </View>
       <View style={styles.actions}>

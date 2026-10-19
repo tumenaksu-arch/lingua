@@ -2,13 +2,14 @@
 
 Duolingo esinli, çoklu dil öğrenme mobil uygulaması (Expo SDK 57 · React Native 0.86 · TypeScript).
 
-## Özellikler (MVP)
+## Özellikler
 - **Öğrenme yolu**: Bölüm → ünite → ders; 6 egzersiz türü (çeviri seç, cümle kur, eşleştir, dinle-yaz, konuş, boşluk doldur). Yanlışlar dersin sonunda tekrar sorulur.
-- **Kelime kartları + aralıklı tekrar (SM‑2)**: Derslerde öğrenilen kelimeler otomatik olarak tekrar destesine düşer.
-- **Oyunlaştırma**: XP, günlük hedef, seri (streak) + seri dondurma, 5 kalp (30 dk'da bir yenilenir), pratik modu.
-- **Telaffuz**: `expo-speech` ile seslendirme, `expo-speech-recognition` ile cihaz üstü konuşma tanıma.
-- **Çoklu dil**: TR→EN (3 ünite), TR→DE, TR→ES (2'şer ünite). İçerik `src/content/`.
-- **Hesap + senkron (isteğe bağlı)**: Firebase Authentication (e‑posta/şifre) + Cloud Firestore; çevrimdışı‑öncelikli SQLite + outbox senkronu. `.env` yoksa uygulama tamamen yerel çalışır; misafir ilerlemesi ilk girişte hesaba taşınır.
+- **Kurslar** (`src/content/`): TR→İngilizce 8 ünite / 32 ders (A1→A2), TR→Almanca ve TR→İspanyolca 4 ünite / 12 ders, TR→Fransızca 3 ünite / 9 ders.
+- **Kelime kartları + aralıklı tekrar (SM‑2)**: Derslerde öğrenilen kelimeler otomatik olarak kursa özel tekrar destesine düşer.
+- **Oyunlaştırma**: XP, günlük hedef, seri + seri dondurma (her 7 günde bir, en fazla 2), 5 kalp (30 dk'da bir yenilenir), pratik modu, 12 rozet, son 7 günün XP grafiği, günlük hatırlatma bildirimi.
+- **Telaffuz**: `expo-speech` ile seslendirme, `expo-speech-recognition` ile cihaz üstü konuşma tanıma (development build gerekir).
+- **Görünüm**: açık/koyu tema (sistem, açık, koyu), ses efektleri (kapatılabilir), erişilebilirlik (WCAG AA kontrast, ekran okuyucu etiketleri, hareket azaltma desteği).
+- **Hesap + senkron**: Firebase Authentication (e‑posta/şifre) + Cloud Firestore; çevrimdışı‑öncelikli SQLite + outbox senkronu. Misafir olarak oynanan ilerleme ilk girişte hesaba taşınır.
 
 ## Yerel makinede çalıştırma
 Gereksinimler: Node 22+, Git. Telefonda denemek için **Expo Go** (App Store / Play Store).
@@ -40,4 +41,4 @@ npm run check     # lint + typecheck + test (CI ile aynı)
 ```
 
 ## Mimari
-`docs/ARCHITECTURE.md`. Katmanlar: `src/domain` (saf TS iş kuralları, testli) · `src/data` (SQLite, Firebase Auth/Firestore, senkron) · `src/ui` (tasarım sistemi) · `src/speech` · `src/content` · `src/features` (store, ders akışı) · `src/app` (Expo Router ekranları).
+`docs/ARCHITECTURE.md` · Yayın/Play Store: `docs/RELEASE.md`. Katmanlar: `src/domain` (saf TS iş kuralları, testli) · `src/data` (SQLite, Firebase Auth/Firestore, senkron) · `src/ui` (tasarım sistemi) · `src/speech` · `src/content` · `src/features` (store, ders akışı) · `src/app` (Expo Router ekranları).

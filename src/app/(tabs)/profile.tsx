@@ -7,11 +7,31 @@ import { isFirebaseConfigured } from '@/data';
 import { cancelReminder, isSupported as remindersSupported, requestPermission, scheduleDailyReminder } from '@/features/notifications';
 import { useAppStore } from '@/features/store';
 import { useNow } from '@/features/useNow';
-import { Body, Button, Caption, Heading, ProgressBar, Screen, Title, colors, radii, spacing } from '@/ui';
+import {
+  Body,
+  Button,
+  Caption,
+  Heading,
+  ProgressBar,
+  Screen,
+  Title,
+  radii,
+  setThemePreference,
+  spacing,
+  useSettingsStore,
+  useTheme,
+  useThemeStore,
+  type ThemePreference,
+} from '@/ui';
 
 const GOALS = [10, 20, 30, 50];
 const REMINDER_HOURS = [8, 12, 18, 20];
 const DAY_LABELS = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+const THEMES: { value: ThemePreference; label: string }[] = [
+  { value: 'system', label: 'Sistem' },
+  { value: 'light', label: 'Açık' },
+  { value: 'dark', label: 'Koyu' },
+];
 
 /** Labels for the last 7 days ending today, oldest first. */
 function lastSevenDayLabels(now: number): string[] {
@@ -24,14 +44,15 @@ function lastSevenDayLabels(now: number): string[] {
 }
 
 function WeeklyBars({ values, labels }: { values: number[]; labels: string[] }) {
+  const { colors } = useTheme();
   const max = Math.max(1, ...values);
   return (
     <View style={styles.week} accessibilityRole="summary" accessibilityLabel={`Son 7 gün XP: ${values.join(', ')}`}>
       {values.map((v, i) => (
         <View key={i} style={styles.weekCol}>
           <Caption color={colors.textMuted}>{v}</Caption>
-          <View style={styles.weekTrack}>
-            <View style={[styles.weekFill, { height: `${Math.round((v / max) * 100)}%` }]} />
+          <View style={[styles.weekTrack, { backgroundColor: colors.border }]}>
+            <View style={[styles.weekFill, { backgroundColor: colors.warning, height: `${Math.round((v / max) * 100)}%` }]} />
           </View>
           <Caption color={colors.textMuted}>{labels[i]}</Caption>
         </View>
@@ -41,11 +62,12 @@ function WeeklyBars({ values, labels }: { values: number[]; labels: string[] }) 
 }
 
 function Badge({ id, unlocked }: { id: string; unlocked: boolean }) {
+  const { colors } = useTheme();
   const a = getAchievement(id);
   if (!a) return null;
   return (
     <View
-      style={[styles.badge, !unlocked && styles.badgeLocked]}
+      style={[styles.badge, { borderColor: colors.border }, !unlocked && [styles.badgeLocked, { backgroundColor: colors.surface }]]}
       accessibilityLabel={`${a.title}: ${a.description}${unlocked ? '' : ' (kilitli)'}`}
     >
       <Heading>{unlocked ? a.emoji : '🔒'}</Heading>
@@ -55,8 +77,9 @@ function Badge({ id, unlocked }: { id: string; unlocked: boolean }) {
 }
 
 function Stat({ label, value }: { label: string; value: string | number }) {
+  const { colors } = useTheme();
   return (
-    <View style={styles.stat}>
+    <View style={[styles.stat, { borderColor: colors.border }]}>
       <Heading>{value}</Heading>
       <Caption color={colors.textMuted}>{label}</Caption>
     </View>
@@ -64,6 +87,10 @@ function Stat({ label, value }: { label: string; value: string | number }) {
 }
 
 export default function ProfileScreen() {
+  const { colors } = useTheme();
+  const themePreference = useThemeStore((s) => s.preference);
+  const soundEnabled = useSettingsStore((s) => s.soundEnabled);
+  const setSoundEnabled = useSettingsStore((s) => s.setSoundEnabled);
   const rawStats = useAppStore((s) => s.stats);
   const user = useAppStore((s) => s.user);
   const course = useAppStore((s) => s.course);
@@ -182,6 +209,29 @@ export default function ProfileScreen() {
           </>
         )}
 
+        <Heading>Görünüm ve ses</Heading>
+        <View style={styles.goals}>
+          {THEMES.map((t) => (
+            <Button
+              key={t.value}
+              title={t.label}
+              block={false}
+              variant={t.value === themePreference ? 'primary' : 'outline'}
+              onPress={() => void setThemePreference(t.value)}
+              style={{ flex: 1 }}
+            />
+          ))}
+        </View>
+        <View style={styles.row}>
+          <Body>Ses efektleri</Body>
+          <Switch
+            value={soundEnabled}
+            onValueChange={(on) => void setSoundEnabled(on)}
+            accessibilityLabel="Ses efektleri"
+            trackColor={{ true: colors.primary, false: colors.border }}
+          />
+        </View>
+
         <Heading>Kurs</Heading>
         <Body>{course.title}</Body>
         <Button title="Kurs değiştir" variant="outline" onPress={() => router.push('/courses')} />
@@ -210,14 +260,14 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   content: { padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xxxl },
   statsRow: { flexDirection: 'row', gap: spacing.md, marginVertical: spacing.md },
-  stat: { flex: 1, borderWidth: 2, borderColor: colors.border, borderRadius: radii.lg, padding: spacing.md, alignItems: 'center' },
+  stat: { flex: 1, borderWidth: 2, borderRadius: radii.lg, padding: spacing.md, alignItems: 'center' },
   goals: { flexDirection: 'row', gap: spacing.sm },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', minHeight: 44 },
   week: { flexDirection: 'row', gap: spacing.xs, height: 120, alignItems: 'flex-end' },
   weekCol: { flex: 1, alignItems: 'center', gap: 2, height: '100%', justifyContent: 'flex-end' },
-  weekTrack: { width: '100%', flex: 1, backgroundColor: colors.border, borderRadius: radii.sm, justifyContent: 'flex-end', overflow: 'hidden' },
-  weekFill: { width: '100%', backgroundColor: colors.warning, borderRadius: radii.sm },
+  weekTrack: { width: '100%', flex: 1, borderRadius: radii.sm, justifyContent: 'flex-end', overflow: 'hidden' },
+  weekFill: { width: '100%', borderRadius: radii.sm },
   badges: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
-  badge: { width: '30%', flexGrow: 1, borderWidth: 2, borderColor: colors.border, borderRadius: radii.lg, padding: spacing.sm, alignItems: 'center', gap: 2, minHeight: 72 },
-  badgeLocked: { opacity: 0.5, backgroundColor: colors.surface },
+  badge: { width: '30%', flexGrow: 1, borderWidth: 2, borderRadius: radii.lg, padding: spacing.sm, alignItems: 'center', gap: 2, minHeight: 72 },
+  badgeLocked: { opacity: 0.5 },
 });

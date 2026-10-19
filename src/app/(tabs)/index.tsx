@@ -4,9 +4,10 @@ import { router } from 'expo-router';
 import { activeLessonId, useAppStore } from '@/features/store';
 import { useNow } from '@/features/useNow';
 import { canStartLesson, localDateString, regenerate } from '@/domain';
-import { Body, Button, Caption, Heading, Hearts, PathNode, Screen, StreakFlame, XpBadge, colors, radii, spacing } from '@/ui';
+import { Body, Button, Caption, Heading, Hearts, PathNode, Screen, StreakFlame, XpBadge, radii, spacing, useTheme } from '@/ui';
 
 const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', tr: '🇹🇷' };
+const LANG_NAME: Record<string, string> = { en: 'İngilizce', de: 'Almanca', es: 'İspanyolca', fr: 'Fransızca', tr: 'Türkçe' };
 /** Duolingo-style snake offsets for successive nodes in a unit. */
 const SNAKE = [0, 44, 70, 44, 0, -44, -70, -44];
 
@@ -14,6 +15,7 @@ export default function LearnScreen() {
   const course = useAppStore((s) => s.course);
   const progress = useAppStore((s) => s.progress);
   const rawStats = useAppStore((s) => s.stats);
+  const { colors } = useTheme();
   const now = useNow();
   const stats = regenerate(rawStats, now);
   const active = activeLessonId(course, progress);
@@ -21,9 +23,14 @@ export default function LearnScreen() {
 
   return (
     <Screen padding={0} edges={['top']}>
-      <View style={styles.topBar}>
-        <Pressable onPress={() => router.push('/courses')} accessibilityRole="button" accessibilityLabel="Kurs değiştir" style={styles.flag}>
-          <Body>{LANG_FLAG[course.toLang] ?? '🌐'}</Body>
+      <View style={[styles.topBar, { borderBottomColor: colors.border }]}>
+        <Pressable
+          onPress={() => router.push('/courses')}
+          accessibilityRole="button"
+          accessibilityLabel={`Kurs: ${LANG_NAME[course.toLang] ?? course.toLang}. Kurs değiştir`}
+          style={styles.flag}
+        >
+          <Body accessible={false}>{LANG_FLAG[course.toLang] ?? '🌐'}</Body>
         </Pressable>
         <StreakFlame streak={stats.streak} active={stats.lastActiveDate === today} />
         <XpBadge xp={stats.xp} />
@@ -32,9 +39,9 @@ export default function LearnScreen() {
 
       <ScrollView contentContainerStyle={styles.path}>
         {active === null && (
-          <View style={styles.doneBanner} accessibilityRole="summary">
-            <Heading color={colors.textOnColor}>🏆 Kursu tamamladın!</Heading>
-            <Body color={colors.textOnColor}>Dersleri pratik modunda tekrar edebilir veya kurs değiştirebilirsin.</Body>
+          <View style={[styles.doneBanner, { backgroundColor: colors.warning }]} accessibilityRole="summary">
+            <Heading color={colors.textOnBrand}>🏆 Kursu tamamladın!</Heading>
+            <Body color={colors.textOnBrand}>Dersleri pratik modunda tekrar edebilir veya kurs değiştirebilirsin.</Body>
             <Button title="Kurs değiştir" variant="secondary" onPress={() => router.push('/courses')} />
           </View>
         )}
@@ -42,10 +49,15 @@ export default function LearnScreen() {
           const unitDone = unit.lessons.every((l) => progress[l.id]?.completedAt);
           return (
             <View key={unit.id} style={styles.unit}>
-              <View style={[styles.unitHeader, { backgroundColor: unitDone ? colors.warning : colors.primary }]}>
-                <Caption color={colors.textOnColor}>BÖLÜM {ui + 1}</Caption>
-                <Heading color={colors.textOnColor}>{unit.title}</Heading>
-                <Body color={colors.textOnColor}>{unit.description}</Body>
+              <View
+                style={[styles.unitHeader, { backgroundColor: unitDone ? colors.warning : colors.primary }]}
+                accessible
+                accessibilityRole="header"
+                accessibilityLabel={`Bölüm ${ui + 1}, ${unit.title}${unitDone ? ', tamamlandı' : ''}. ${unit.description}`}
+              >
+                <Caption color={colors.textOnBrand}>BÖLÜM {ui + 1}</Caption>
+                <Heading color={colors.textOnBrand}>{unit.title}</Heading>
+                <Body color={colors.textOnBrand}>{unit.description}</Body>
               </View>
               {unit.lessons.map((lesson, li) => {
                 const p = progress[lesson.id];
@@ -79,10 +91,10 @@ export default function LearnScreen() {
 }
 
 const styles = StyleSheet.create({
-  topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingVertical: spacing.sm, borderBottomWidth: 2, borderBottomColor: colors.border },
+  topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingVertical: spacing.sm, borderBottomWidth: 2 },
   flag: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   path: { paddingBottom: spacing.xxxl },
-  doneBanner: { margin: spacing.lg, marginBottom: 0, padding: spacing.lg, borderRadius: radii.lg, backgroundColor: colors.warning, gap: spacing.sm },
+  doneBanner: { margin: spacing.lg, marginBottom: 0, padding: spacing.lg, borderRadius: radii.lg, gap: spacing.sm },
   unit: { alignItems: 'center', paddingBottom: spacing.xl },
   unitHeader: { alignSelf: 'stretch', margin: spacing.lg, padding: spacing.lg, borderRadius: radii.lg, gap: 4 },
   node: { marginVertical: spacing.sm },

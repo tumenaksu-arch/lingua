@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { isAnswerCorrect, type TranslateBuildExercise } from '@/domain';
-import { WordChip, colors, spacing } from '@/ui';
+import { WordChip, spacing, useTheme } from '@/ui';
 
 import { CheckBar } from '../CheckBar';
 import { buildAnswer, createBuild, pickWord, unpickWord } from '../helpers';
@@ -12,7 +12,9 @@ import type { ExerciseProps } from './types';
 export function TranslateBuild({ exercise, onAnswer, disabled, targetLang }: ExerciseProps<TranslateBuildExercise>) {
   const [state, setState] = useState(() => createBuild(exercise.bank));
   const [checked, setChecked] = useState<boolean | null>(null);
+  const { colors } = useTheme();
   const locked = disabled || checked !== null;
+  const answerBorder = checked === true ? colors.primary : checked === false ? colors.danger : colors.border;
 
   return (
     <View style={styles.root}>
@@ -21,7 +23,12 @@ export function TranslateBuild({ exercise, onAnswer, disabled, targetLang }: Exe
         text={exercise.prompt}
         speakLang={exercise.promptLang === targetLang ? targetLang : undefined}
       />
-      <View style={[styles.answerRow, checked === true && styles.answerOk, checked === false && styles.answerBad]}>
+      <View
+        style={[styles.answerRow, { borderBottomColor: answerBorder }]}
+        accessible
+        accessibilityLabel={state.picked.length ? `Cevabın: ${buildAnswer(state)}` : 'Cevap alanı boş'}
+        accessibilityLiveRegion="polite"
+      >
         {state.picked.map((bankIdx, pos) => (
           <WordChip
             key={`${bankIdx}`}
@@ -32,7 +39,7 @@ export function TranslateBuild({ exercise, onAnswer, disabled, targetLang }: Exe
           />
         ))}
       </View>
-      <View style={styles.bank}>
+      <View style={styles.bank} accessibilityLabel="Kelime bankası">
         {state.bank.map((w, i) => (
           <WordChip
             key={`${w}-${i}`}
@@ -66,11 +73,8 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
     paddingVertical: spacing.sm,
     borderBottomWidth: 2,
-    borderBottomColor: colors.border,
     marginBottom: spacing.xl,
   },
-  answerOk: { borderBottomColor: colors.primary },
-  answerBad: { borderBottomColor: colors.danger },
   bank: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, justifyContent: 'center' },
   spacer: { flex: 1 },
 });

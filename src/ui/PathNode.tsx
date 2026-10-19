@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 import Animated, {
   Easing,
+  cancelAnimation,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
@@ -10,7 +11,9 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import { PRESS_DEPTH, colors, fontSize, fontWeight, radii, spacing } from './theme';
+import { MAX_FONT_SCALE_DENSE, PRESS_DEPTH, fontSize, fontWeight, radii, spacing, type ColorTokens } from './theme';
+import { useReduceMotion } from './useReduceMotion';
+import { useTheme } from './useTheme';
 
 export type PathNodeState = 'locked' | 'active' | 'completed';
 
@@ -28,11 +31,18 @@ export type PathNodeProps = {
   style?: StyleProp<ViewStyle>;
 };
 
-const NODE_COLORS: Record<PathNodeState, { bg: string; shadow: string }> = {
-  locked: { bg: colors.locked, shadow: colors.lockedShadow },
-  active: { bg: colors.primary, shadow: colors.primaryShadow },
-  completed: { bg: colors.warning, shadow: colors.warningShadow },
-};
+function nodeColors(state: PathNodeState, c: ColorTokens): { bg: string; shadow: string; icon: string } {
+  switch (state) {
+    case 'locked':
+      return { bg: c.locked, shadow: c.lockedShadow, icon: c.textMuted };
+    case 'active':
+      return { bg: c.primary, shadow: c.primaryShadow, icon: c.textOnBrand };
+    case 'completed':
+      return { bg: c.warning, shadow: c.warningShadow, icon: c.textOnBrand };
+  }
+}
+
+const STATE_LABEL: Record<PathNodeState, string> = { locked: 'kilitli', active: 'başlanabilir', completed: 'tamamlandı' };
 
 export function PathNode({
   state,
@@ -45,12 +55,18 @@ export function PathNode({
   style,
 }: PathNodeProps) {
   const [pressed, setPressed] = useState(false);
+  const { colors } = useTheme();
+  const reduceMotion = useReduceMotion();
   const bounce = useSharedValue(0);
   const isActive = state === 'active';
-  const palette = NODE_COLORS[state];
+  const node = nodeColors(state, colors);
 
   useEffect(() => {
-    if (!isActive) return;
+    if (!isActive || reduceMotion) {
+      cancelAnimation(bounce);
+      bounce.value = 0;
+      return;
+    }
     bounce.value = withRepeat(
       withSequence(
         withTiming(-6, { duration: 500, easing: Easing.inOut(Easing.quad) }),
@@ -59,24 +75,32 @@ export function PathNode({
       -1,
       false,
     );
-  }, [isActive, bounce]);
+    return () => cancelAnimation(bounce);
+  }, [isActive, reduceMotion, bounce]);
 
   const tooltipStyle = useAnimatedStyle(() => ({ transform: [{ translateY: bounce.value }] }));
 
   const icon = state === 'locked' ? '🔒' : state === 'completed' ? '👑' : '★';
+  const label = `${accessibilityLabel ?? 'Ders'}, ${STATE_LABEL[state]}${crowns ? `, ${crowns} taç` : ''}`;
 
   return (
     <View style={[styles.wrap, { transform: [{ translateX: offsetX }] }, style]}>
       {isActive ? (
-        <Animated.View style={[styles.tooltip, tooltipStyle]} pointerEvents="none">
-          <Text style={styles.tooltipText}>{tooltip}</Text>
-          <View style={styles.tooltipArrow} />
+        <Animated.View
+          style={[styles.tooltip, { backgroundColor: colors.background, borderColor: colors.border }, tooltipStyle]}
+          pointerEvents="none"
+          accessible={false}
+        >
+          <Text style={[styles.tooltipText, { color: colors.primaryText }]} maxFontSizeMultiplier={MAX_FONT_SCALE_DENSE}>
+            {tooltip}
+          </Text>
+          <View style={[styles.tooltipArrow, { backgroundColor: colors.background, borderColor: colors.border }]} />
         </Animated.View>
       ) : null}
 
       <Pressable
         accessibilityRole="button"
-        accessibilityLabel={accessibilityLabel ?? `Lesson, ${state}${crowns ? `, ${crowns} crowns` : ''}`}
+        accessibilityLabel={label}
         accessibilityState={{ disabled: state === 'locked' }}
         disabled={state === 'locked' || !onPress}
         onPressIn={() => setPressed(true)}
@@ -87,7 +111,7 @@ export function PathNode({
         }}
         hitSlop={8}
       >
-        <View style={[styles.shadow, { width: size, height: size, borderRadius: size / 2, backgroundColor: palette.shadow }]}>
+        <View style={[styles.shadow, { width: size, height: size, borderRadius: size / 2, backgroundColor: node.shadow }]}>
           <View
             style={[
               styles.face,
@@ -95,12 +119,12 @@ export function PathNode({
                 width: size,
                 height: size - PRESS_DEPTH * 2,
                 borderRadius: size / 2,
-                backgroundColor: palette.bg,
+                backgroundColor: node.bg,
                 transform: [{ translateY: pressed ? PRESS_DEPTH * 2 : 0 }],
               },
             ]}
           >
-            <Text style={[styles.icon, { fontSize: size * 0.38, color: state === 'locked' ? colors.textMuted : colors.textOnColor }]}>
+            <Text style={[styles.icon, { fontSize: size * 0.38, color: node.icon }]} accessible={false}>
               {icon}
             </Text>
           </View>
@@ -108,8 +132,10 @@ export function PathNode({
       </Pressable>
 
       {crowns > 0 ? (
-        <View style={styles.crownBadge} accessibilityLabel={`${crowns} crowns`}>
-          <Text style={styles.crownText}>👑 {crowns}</Text>
+        <View style={[styles.crownBadge, { backgroundColor: colors.background, borderColor: colors.border }]} accessible={false}>
+          <Text style={[styles.crownText, { color: colors.xpText }]} maxFontSizeMultiplier={MAX_FONT_SCALE_DENSE}>
+            👑 {crowns}
+          </Text>
         </View>
       ) : null}
     </View>
@@ -124,15 +150,13 @@ const styles = StyleSheet.create({
   tooltip: {
     position: 'absolute',
     top: -spacing.xl,
-    backgroundColor: colors.background,
-    borderColor: colors.border,
     borderWidth: 2,
     borderRadius: radii.md,
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.xs,
     zIndex: 2,
   },
-  tooltipText: { color: colors.primary, fontWeight: fontWeight.black, fontSize: fontSize.sm, letterSpacing: 1 },
+  tooltipText: { fontWeight: fontWeight.black, fontSize: fontSize.sm, letterSpacing: 1 },
   tooltipArrow: {
     position: 'absolute',
     bottom: -7,
@@ -140,20 +164,16 @@ const styles = StyleSheet.create({
     marginLeft: -2,
     width: 12,
     height: 12,
-    backgroundColor: colors.background,
     borderRightWidth: 2,
     borderBottomWidth: 2,
-    borderColor: colors.border,
     transform: [{ rotate: '45deg' }],
   },
   crownBadge: {
     marginTop: spacing.xs,
-    backgroundColor: colors.background,
     borderWidth: 2,
-    borderColor: colors.border,
     borderRadius: radii.pill,
     paddingHorizontal: spacing.sm,
     paddingVertical: 2,
   },
-  crownText: { fontSize: fontSize.xs, fontWeight: fontWeight.bold, color: colors.warningShadow },
+  crownText: { fontSize: fontSize.xs, fontWeight: fontWeight.bold },
 });

@@ -4,11 +4,12 @@ import { router } from 'expo-router';
 
 import { authErrorMessage } from '@/data';
 import { useAppStore } from '@/features/store';
-import { Body, Button, Caption, Screen, Title, colors, radii, spacing } from '@/ui';
+import { Body, Button, Caption, Screen, Title, radii, spacing, useTheme } from '@/ui';
 
 export default function AuthScreen() {
   const signIn = useAppStore((s) => s.signIn);
   const signUp = useAppStore((s) => s.signUp);
+  const { colors } = useTheme();
   const [mode, setMode] = useState<'in' | 'up'>('in');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,15 +36,35 @@ export default function AuthScreen() {
     }
   };
 
+  const inputStyle = [styles.input, { borderColor: colors.border, color: colors.text, backgroundColor: colors.surface }];
+
   return (
     <Screen>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.form}>
-        <Title>{mode === 'in' ? 'Giriş yap' : 'Hesap oluştur'}</Title>
+        <Title accessibilityRole="header">{mode === 'in' ? 'Giriş yap' : 'Hesap oluştur'}</Title>
         <Body color={colors.textMuted}>İlerlemen cihazlar arasında senkronize olur.</Body>
-        <TextInput style={styles.input} placeholder="E-posta" autoCapitalize="none" keyboardType="email-address" autoComplete="email" value={email} onChangeText={setEmail} accessibilityLabel="E-posta" />
-        <TextInput style={styles.input} placeholder="Şifre (en az 6 karakter)" secureTextEntry value={password} onChangeText={setPassword} accessibilityLabel="Şifre" />
-        {error && <Caption color={colors.danger}>{error}</Caption>}
-        {info && <Caption color={colors.primary}>{info}</Caption>}
+        <TextInput
+          style={inputStyle}
+          placeholder="E-posta"
+          placeholderTextColor={colors.textMuted}
+          autoCapitalize="none"
+          keyboardType="email-address"
+          autoComplete="email"
+          value={email}
+          onChangeText={setEmail}
+          accessibilityLabel="E-posta"
+        />
+        <TextInput
+          style={inputStyle}
+          placeholder="Şifre (en az 6 karakter)"
+          placeholderTextColor={colors.textMuted}
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+          accessibilityLabel="Şifre, en az 6 karakter"
+        />
+        {error && <Caption color={colors.dangerText} accessibilityRole="alert">{error}</Caption>}
+        {info && <Caption color={colors.primaryText} accessibilityLiveRegion="polite">{info}</Caption>}
         <Button title={mode === 'in' ? 'Giriş yap' : 'Kayıt ol'} loading={busy} disabled={!email || password.length < 6} onPress={submit} />
         <Button title={mode === 'in' ? 'Hesabın yok mu? Kayıt ol' : 'Zaten hesabın var mı? Giriş yap'} variant="outline" onPress={() => setMode(mode === 'in' ? 'up' : 'in')} />
         <View style={{ flex: 1 }} />
@@ -55,5 +76,5 @@ export default function AuthScreen() {
 
 const styles = StyleSheet.create({
   form: { flex: 1, gap: spacing.md },
-  input: { borderWidth: 2, borderColor: colors.border, borderRadius: radii.md, padding: spacing.md, fontSize: 16, color: colors.text, backgroundColor: colors.surface, minHeight: 48 },
+  input: { borderWidth: 2, borderRadius: radii.md, padding: spacing.md, fontSize: 16, minHeight: 48 },
 });
