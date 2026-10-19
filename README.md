@@ -1,6 +1,6 @@
 # Lingua
 
-Duolingo esinli, çoklu dil öğrenme mobil uygulaması (Expo SDK 58 · React Native · TypeScript).
+Duolingo esinli, çoklu dil öğrenme mobil uygulaması (Expo SDK 57 · React Native 0.86 · TypeScript).
 
 ## Özellikler (MVP)
 - **Öğrenme yolu**: Bölüm → ünite → ders; 6 egzersiz türü (çeviri seç, cümle kur, eşleştir, dinle-yaz, konuş, boşluk doldur). Yanlışlar dersin sonunda tekrar sorulur.
