@@ -152,7 +152,7 @@ export default function ProfileScreen() {
   const cloud = isFirebaseConfigured();
 
   return (
-    <Screen padding={0}>
+    <Screen padding={0} edges={['top']}>
       <ScrollView contentContainerStyle={styles.content}>
         <Title>Profil</Title>
         <Body color={colors.textMuted}>{user?.email ?? 'Misafir (yalnızca bu cihaz)'}</Body>

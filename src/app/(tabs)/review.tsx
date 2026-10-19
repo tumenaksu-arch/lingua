@@ -40,12 +40,12 @@ export default function ReviewScreen() {
   // Reset the response timer whenever a different card is shown (new index or a reloaded deck).
   useEffect(() => { shownAt.current = Date.now(); }, [index, deck]);
 
-  if (!deck) return <Screen />;
+  if (!deck) return <Screen edges={['top']} />;
 
   const card = deck.cards[index];
   if (!card) {
     return (
-      <Screen>
+      <Screen edges={['top']}>
         <View style={styles.center}>
           <Title center>{deck.cards.length ? 'Tekrar bitti! 🎉' : 'Bugün tekrar yok ✅'}</Title>
           <Body center color={colors.textMuted}>
@@ -69,7 +69,7 @@ export default function ReviewScreen() {
   };
 
   return (
-    <Screen>
+    <Screen edges={['top']}>
       <View style={styles.header}>
         <ProgressBar progress={index / deck.cards.length} style={{ flex: 1 }} />
         <Caption accessibilityLabel={`Kart ${index + 1} / ${deck.cards.length}`}>{index + 1}/{deck.cards.length}</Caption>

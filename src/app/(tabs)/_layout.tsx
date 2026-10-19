@@ -22,7 +22,9 @@ export default function TabsLayout() {
         tabBarActiveTintColor: colors.primaryText,
         tabBarInactiveTintColor: colors.textMuted,
         tabBarLabelStyle: { fontWeight: '700', fontSize: 11 },
-        tabBarStyle: { borderTopColor: colors.border, backgroundColor: colors.background, height: 64, paddingTop: 6 },
+        // No fixed height: the tab bar adds the bottom safe-area inset (Android nav buttons /
+        // gesture bar) to its default height only when `height` is not overridden.
+        tabBarStyle: { borderTopColor: colors.border, backgroundColor: colors.background, paddingTop: 6 },
         sceneStyle: { backgroundColor: colors.background },
       }}
     >
