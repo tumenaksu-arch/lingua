@@ -45,7 +45,8 @@
     "web": "expo start --web",
     "test": "jest",
     "typecheck": "tsc --noEmit",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "lint:ci": "eslint src --max-warnings 0"
   },
   "private": true,
   "jest": {
