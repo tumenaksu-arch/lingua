@@ -1,5 +1,5 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
 
 import {
@@ -54,13 +54,13 @@ export default function LessonScreen() {
   const finishLesson = useAppStore((s) => s.finishLesson);
 
   const lesson = useMemo(() => findLesson(course.units, id), [course, id]);
-  const startedAt = useRef(Date.now());
+  const [startedAt] = useState(() => Date.now());
   const [state, setState] = useState<LessonState | null>(() =>
-    lesson ? createLesson(lesson.id, lesson.exercises, practice ? Infinity : regenerate(stats, Date.now()).hearts) : null,
+    lesson ? createLesson(lesson.id, lesson.exercises, practice ? Infinity : regenerate(stats, startedAt).hearts) : null,
   );
   const [feedback, setFeedback] = useState<{ ok: boolean; detail?: string } | null>(null);
   const [summary, setSummary] = useState<{ xpEarned: number; dailyGoalJustReached: boolean } | null>(null);
-  const [saving, setSaving] = useState(false);
+  const [finished, setFinished] = useState<{ durationMs: number; saving: boolean } | null>(null);
 
   const exercise = state ? current(state) : undefined;
 
@@ -74,21 +74,20 @@ export default function LessonScreen() {
   );
 
   const onContinue = useCallback(() => {
-    if (!state || !exercise || !feedback) return;
-    setState(answer(state, exercise.id, feedback.ok));
+    if (!state || !exercise || !feedback || !lesson) return;
+    const next = answer(state, exercise.id, feedback.ok);
+    setState(next);
     setFeedback(null);
-  }, [state, exercise, feedback]);
-
-  // Persist the result once the queue is empty (and the lesson was not failed).
-  useEffect(() => {
-    if (!state || !lesson || !isFinished(state) || state.failed || summary || saving) return;
-    setSaving(true);
-    const result = toResult(state, Date.now() - startedAt.current, exerciseVocabMap(lesson));
-    finishLesson(result)
-      .then(setSummary)
-      .catch((e: unknown) => Alert.alert('Kaydedilemedi', e instanceof Error ? e.message : String(e)))
-      .finally(() => setSaving(false));
-  }, [state, lesson, summary, saving, finishLesson]);
+    // Persist the result once the queue is empty (and the lesson was not failed).
+    if (isFinished(next) && !next.failed && !finished) {
+      const durationMs = Date.now() - startedAt;
+      setFinished({ durationMs, saving: true });
+      finishLesson(toResult(next, durationMs, exerciseVocabMap(lesson)))
+        .then(setSummary)
+        .catch((e: unknown) => Alert.alert('Kaydedilemedi', e instanceof Error ? e.message : String(e)))
+        .finally(() => setFinished({ durationMs, saving: false }));
+    }
+  }, [state, exercise, feedback, lesson, finished, startedAt, finishLesson]);
 
   const confirmQuit = () => {
     Alert.alert('Dersi bırak?', 'İlerlemen kaydedilmeyecek.', [
@@ -106,14 +105,14 @@ export default function LessonScreen() {
     );
   }
 
-  if (!practice && state.answered === 0 && !canStartLesson(stats, Date.now())) {
+  if (!practice && state.answered === 0 && !canStartLesson(stats, startedAt)) {
     return <OutOfHearts lessonId={lesson.id} />;
   }
 
   if (state.failed) return <OutOfHearts lessonId={lesson.id} />;
 
   if (isFinished(state)) {
-    const result = toResult(state, Date.now() - startedAt.current);
+    const result = toResult(state, finished?.durationMs ?? 0);
     const accuracy = Math.round((result.correct / result.total) * 100);
     return (
       <Screen>
@@ -125,7 +124,7 @@ export default function LessonScreen() {
             <Stat label="Süre" value={formatDuration(result.durationMs)} color={colors.secondary} />
           </View>
         </View>
-        <Button title="Devam" onPress={() => router.replace('/')} loading={saving} disabled={!summary} />
+        <Button title="Devam" onPress={() => router.replace('/')} loading={finished?.saving ?? false} disabled={!summary} />
       </Screen>
     );
   }
@@ -166,7 +165,7 @@ function Stat({ label, value, color }: { label: string; value: string; color: st
 
 function OutOfHearts({ lessonId }: { lessonId: string }) {
   const stats = useAppStore((s) => s.stats);
-  const [now, setNow] = useState(Date.now());
+  const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
     const t = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(t);

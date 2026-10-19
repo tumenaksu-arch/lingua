@@ -24,7 +24,7 @@ export function Speak({ exercise, onAnswer, disabled }: ExerciseProps<SpeakExerc
       {unavailable ? (
         <View style={styles.box}>
           <Body center>Konuşma tanıma şu an kullanılamıyor.</Body>
-          <Caption center>Expo Go'da veya izin verilmediğinde bu alıştırma atlanabilir.</Caption>
+          <Caption center>{"Expo Go'da veya izin verilmediğinde bu alıştırma atlanabilir."}</Caption>
         </View>
       ) : (
         <>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import type { MatchPairsExercise } from '@/domain';
@@ -13,12 +13,14 @@ export function MatchPairs({ exercise, onAnswer, disabled }: ExerciseProps<Match
   const [state, setState] = useState<MatchState>(() => createMatch(exercise.pairs, hashString(exercise.id)));
   const [done, setDone] = useState(false);
 
-  useEffect(() => {
-    if (!done && isMatchComplete(state)) {
+  const tap = (side: 'left' | 'right', index: number) => {
+    const next = tapMatch(state, side, index);
+    setState(next);
+    if (!done && isMatchComplete(next)) {
       setDone(true);
       onAnswer(true);
     }
-  }, [state, done, onAnswer]);
+  };
 
   const stateFor = (side: 'left' | 'right', i: number) => {
     const matched = side === 'left' ? state.matchedLeft : state.matchedRight;
@@ -34,12 +36,12 @@ export function MatchPairs({ exercise, onAnswer, disabled }: ExerciseProps<Match
       <View style={styles.columns}>
         <View style={styles.col}>
           {state.left.map((w, i) => (
-            <ChoiceCard key={w} label={w} state={stateFor('left', i)} disabled={disabled || done} onPress={() => setState((s) => tapMatch(s, 'left', i))} />
+            <ChoiceCard key={w} label={w} state={stateFor('left', i)} disabled={disabled || done} onPress={() => tap('left', i)} />
           ))}
         </View>
         <View style={styles.col}>
           {state.right.map((w, i) => (
-            <ChoiceCard key={w} label={w} state={stateFor('right', i)} disabled={disabled || done} onPress={() => setState((s) => tapMatch(s, 'right', i))} />
+            <ChoiceCard key={w} label={w} state={stateFor('right', i)} disabled={disabled || done} onPress={() => tap('right', i)} />
           ))}
         </View>
       </View>
