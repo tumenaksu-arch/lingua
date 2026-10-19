@@ -38,7 +38,7 @@ export class FakeDb implements Database {
       const pk = PKS[table] ?? ['id'];
       const rows = this.t(table);
       const idx = rows.findIndex((r) => pk.every((k) => r[k] === row[k]));
-      if (table === 'outbox') row.id = ++this.seq, (row.attempts = 0);
+      if (table === 'outbox') { row.id = ++this.seq; row.attempts = 0; }
       if (idx === -1) rows.push(row);
       else if (mode?.toUpperCase() === 'IGNORE') return;
       else rows[idx] = { ...rows[idx], ...row };

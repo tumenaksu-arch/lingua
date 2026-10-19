@@ -5,7 +5,7 @@ import { colors, spacing } from './theme';
 
 export type ScreenProps = ViewProps & {
   /** Edges that receive safe-area padding. Default: top + bottom. */
-  edges?: Array<'top' | 'bottom'>;
+  edges?: ('top' | 'bottom')[];
   /** Horizontal padding; default spacing.lg. Set 0 for full-bleed. */
   padding?: number;
   background?: string;
