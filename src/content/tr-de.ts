@@ -1,0 +1,92 @@
+import { build, course, fill, lesson, listen, match, sel, speak, unit } from './builder';
+
+/** Türkçe → Almanca. */
+export const trDe = course(
+  { id: 'tr-de', fromLang: 'tr', toLang: 'de', title: 'Almanca' },
+  [
+    ['hallo', 'hallo', 'merhaba'],
+    ['tschuess', 'tschüss', 'hoşça kal'],
+    ['danke', 'danke', 'teşekkürler'],
+    ['bitte', 'bitte', 'lütfen / rica ederim'],
+    ['ja', 'ja', 'evet'],
+    ['nein', 'nein', 'hayır'],
+    ['ichbin', 'ich bin', 'ben ... -im', 'Ich bin Ayşe.'],
+    ['dubist', 'du bist', 'sen ... -sin'],
+    ['mann', 'der Mann', 'adam'],
+    ['frau', 'die Frau', 'kadın'],
+    ['wasser', 'das Wasser', 'su'],
+    ['brot', 'das Brot', 'ekmek'],
+    ['kaffee', 'der Kaffee', 'kahve'],
+    ['tee', 'der Tee', 'çay'],
+    ['essen', 'essen', 'yemek (fiil)', 'Ich esse Brot.'],
+    ['trinken', 'trinken', 'içmek', 'Du trinkst Tee.'],
+    ['apfel', 'der Apfel', 'elma'],
+    ['milch', 'die Milch', 'süt'],
+  ],
+  [
+    unit('tr-de.u1', 1, 'Temeller', 'Selamlaş ve kendini tanıt.', [
+      lesson('tr-de.u1.l1', 1, ['hallo', 'tschuess', 'danke', 'bitte', 'ja', 'nein'], [
+        sel('"merhaba" hangisi?', ['hallo', 'tschüss', 'danke'], 0),
+        match([
+          ['hallo', 'merhaba'],
+          ['danke', 'teşekkürler'],
+          ['ja', 'evet'],
+          ['nein', 'hayır'],
+        ]),
+        build('Evet, lütfen.', ['Ja, bitte', 'Ja bitte'], ['nein', 'danke']),
+        listen('Hallo'),
+        fill('___, danke.', ['Ja', 'Hallo', 'Tschüss'], 0),
+        speak('Danke, tschüss.'),
+        sel('"tschüss" ne demek?', ['merhaba', 'hoşça kal', 'lütfen'], 1, 'to'),
+        build('Hayır, teşekkürler.', ['Nein, danke', 'Nein danke'], ['ja', 'bitte']),
+      ]),
+      lesson('tr-de.u1.l2', 2, ['ichbin', 'dubist', 'mann', 'frau'], [
+        sel('"kadın" hangisi?', ['der Mann', 'die Frau', 'das Brot'], 1),
+        match([
+          ['der Mann', 'adam'],
+          ['die Frau', 'kadın'],
+          ['ich bin', 'ben ... -im'],
+          ['du bist', 'sen ... -sin'],
+        ]),
+        build('Ben bir adamım.', ['Ich bin ein Mann'], ['Frau', 'du', 'bist']),
+        build('Sen bir kadınsın.', ['Du bist eine Frau'], ['Mann', 'ich', 'bin']),
+        listen('Ich bin eine Frau', ['Ich bin eine Frau']),
+        fill('Du ___ ein Mann.', ['bin', 'bist', 'ist'], 1),
+        speak('Ich bin ein Mann.'),
+        fill('Ich ___ eine Frau.', ['bist', 'bin', 'ist'], 1),
+      ]),
+    ]),
+    unit('tr-de.u2', 2, 'Yemek', 'Yiyecek ve içecekleri öğren.', [
+      lesson('tr-de.u2.l1', 1, ['wasser', 'brot', 'kaffee', 'tee', 'trinken', 'essen'], [
+        sel('"su" hangisi?', ['das Brot', 'das Wasser', 'der Tee'], 1),
+        match([
+          ['das Wasser', 'su'],
+          ['das Brot', 'ekmek'],
+          ['der Kaffee', 'kahve'],
+          ['der Tee', 'çay'],
+        ]),
+        build('Ben su içerim.', ['Ich trinke Wasser'], ['esse', 'Brot', 'Tee']),
+        build('Sen ekmek yersin.', ['Du isst Brot'], ['trinkst', 'Wasser', 'ich']),
+        listen('Ich trinke Kaffee', ['Ich trinke Kaffee']),
+        fill('Ich ___ Brot.', ['trinke', 'esse', 'bin'], 1),
+        speak('Ich trinke Tee.'),
+        sel('"der Kaffee" ne demek?', ['çay', 'kahve', 'süt'], 1, 'to'),
+      ]),
+      lesson('tr-de.u2.l2', 2, ['apfel', 'milch', 'essen', 'trinken'], [
+        sel('"elma" hangisi?', ['die Milch', 'der Apfel', 'das Brot'], 1),
+        match([
+          ['der Apfel', 'elma'],
+          ['die Milch', 'süt'],
+          ['essen', 'yemek (fiil)'],
+          ['trinken', 'içmek'],
+        ]),
+        build('Ben bir elma yerim.', ['Ich esse einen Apfel'], ['trinke', 'Milch', 'du']),
+        build('Sen süt içersin.', ['Du trinkst Milch'], ['isst', 'Apfel', 'ich']),
+        listen('Ich esse einen Apfel', ['Ich esse einen Apfel']),
+        fill('Du ___ Milch.', ['isst', 'trinkst', 'bist'], 1),
+        speak('Du trinkst Milch.'),
+        sel('"die Milch" ne demek?', ['elma', 'süt', 'su'], 1, 'to'),
+      ]),
+    ]),
+  ],
+);

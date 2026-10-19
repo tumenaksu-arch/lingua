@@ -1,0 +1,92 @@
+import { build, course, fill, lesson, listen, match, sel, speak, unit } from './builder';
+
+/** Türkçe → İspanyolca. */
+export const trEs = course(
+  { id: 'tr-es', fromLang: 'tr', toLang: 'es', title: 'İspanyolca' },
+  [
+    ['hola', 'hola', 'merhaba'],
+    ['adios', 'adiós', 'hoşça kal'],
+    ['gracias', 'gracias', 'teşekkürler'],
+    ['porfavor', 'por favor', 'lütfen'],
+    ['si', 'sí', 'evet'],
+    ['no', 'no', 'hayır'],
+    ['yosoy', 'yo soy', 'ben ... -im', 'Yo soy Ayşe.'],
+    ['tueres', 'tú eres', 'sen ... -sin'],
+    ['hombre', 'el hombre', 'adam'],
+    ['mujer', 'la mujer', 'kadın'],
+    ['agua', 'el agua', 'su'],
+    ['pan', 'el pan', 'ekmek'],
+    ['cafe', 'el café', 'kahve'],
+    ['te', 'el té', 'çay'],
+    ['comer', 'comer', 'yemek (fiil)', 'Yo como pan.'],
+    ['beber', 'beber', 'içmek', 'Tú bebes té.'],
+    ['manzana', 'la manzana', 'elma'],
+    ['leche', 'la leche', 'süt'],
+  ],
+  [
+    unit('tr-es.u1', 1, 'Temeller', 'Selamlaş ve kendini tanıt.', [
+      lesson('tr-es.u1.l1', 1, ['hola', 'adios', 'gracias', 'porfavor', 'si', 'no'], [
+        sel('"merhaba" hangisi?', ['hola', 'adiós', 'gracias'], 0),
+        match([
+          ['hola', 'merhaba'],
+          ['gracias', 'teşekkürler'],
+          ['sí', 'evet'],
+          ['no', 'hayır'],
+        ]),
+        build('Evet, lütfen.', ['Sí, por favor', 'Sí por favor'], ['no', 'gracias']),
+        listen('Hola'),
+        fill('___, gracias.', ['Sí', 'Hola', 'Adiós'], 0),
+        speak('Gracias, adiós.'),
+        sel('"adiós" ne demek?', ['merhaba', 'hoşça kal', 'lütfen'], 1, 'to'),
+        build('Hayır, teşekkürler.', ['No, gracias', 'No gracias'], ['sí', 'por', 'favor']),
+      ]),
+      lesson('tr-es.u1.l2', 2, ['yosoy', 'tueres', 'hombre', 'mujer'], [
+        sel('"kadın" hangisi?', ['el hombre', 'la mujer', 'el pan'], 1),
+        match([
+          ['el hombre', 'adam'],
+          ['la mujer', 'kadın'],
+          ['yo soy', 'ben ... -im'],
+          ['tú eres', 'sen ... -sin'],
+        ]),
+        build('Ben bir adamım.', ['Yo soy un hombre'], ['mujer', 'tú', 'eres']),
+        build('Sen bir kadınsın.', ['Tú eres una mujer'], ['hombre', 'yo', 'soy']),
+        listen('Yo soy una mujer', ['Yo soy una mujer']),
+        fill('Tú ___ un hombre.', ['soy', 'eres', 'es'], 1),
+        speak('Yo soy un hombre.'),
+        fill('Yo ___ una mujer.', ['eres', 'soy', 'es'], 1),
+      ]),
+    ]),
+    unit('tr-es.u2', 2, 'Yemek', 'Yiyecek ve içecekleri öğren.', [
+      lesson('tr-es.u2.l1', 1, ['agua', 'pan', 'cafe', 'te', 'beber', 'comer'], [
+        sel('"su" hangisi?', ['el pan', 'el agua', 'el té'], 1),
+        match([
+          ['el agua', 'su'],
+          ['el pan', 'ekmek'],
+          ['el café', 'kahve'],
+          ['el té', 'çay'],
+        ]),
+        build('Ben su içerim.', ['Yo bebo agua'], ['como', 'pan', 'té']),
+        build('Sen ekmek yersin.', ['Tú comes pan'], ['bebes', 'agua', 'yo']),
+        listen('Yo bebo café', ['Yo bebo café']),
+        fill('Yo ___ pan.', ['bebo', 'como', 'soy'], 1),
+        speak('Yo bebo té.'),
+        sel('"el café" ne demek?', ['çay', 'kahve', 'süt'], 1, 'to'),
+      ]),
+      lesson('tr-es.u2.l2', 2, ['manzana', 'leche', 'comer', 'beber'], [
+        sel('"elma" hangisi?', ['la leche', 'la manzana', 'el pan'], 1),
+        match([
+          ['la manzana', 'elma'],
+          ['la leche', 'süt'],
+          ['comer', 'yemek (fiil)'],
+          ['beber', 'içmek'],
+        ]),
+        build('Ben bir elma yerim.', ['Yo como una manzana'], ['bebo', 'leche', 'tú']),
+        build('Sen süt içersin.', ['Tú bebes leche'], ['comes', 'manzana', 'yo']),
+        listen('Yo como una manzana', ['Yo como una manzana']),
+        fill('Tú ___ leche.', ['comes', 'bebes', 'eres'], 1),
+        speak('Tú bebes leche.'),
+        sel('"la leche" ne demek?', ['elma', 'süt', 'su'], 1, 'to'),
+      ]),
+    ]),
+  ],
+);

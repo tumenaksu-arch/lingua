@@ -8,6 +8,8 @@ export interface Course {
   toLang: LangCode;
   title: string;
   units: Unit[];
+  /** course vocabulary; referenced by lesson.vocabIds */
+  vocab: VocabItem[];
 }
 
 export interface Unit {
