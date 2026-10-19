@@ -102,16 +102,47 @@ test('tr-en lessons each use all six exercise types', () => {
       const types = new Set(l.exercises.map((e) => e.type));
       for (const t of ALL_TYPES) expect({ lesson: l.id, has: t, ok: types.has(t) }).toEqual({ lesson: l.id, has: t, ok: true });
     }
-  expect(trEn.units).toHaveLength(3);
-  for (const u of trEn.units) expect(u.lessons).toHaveLength(3);
+  expect(trEn.units).toHaveLength(8);
+  for (const u of trEn.units) expect(u.lessons).toHaveLength(4);
 });
 
-test('tr-de and tr-es have 2 units × 2 lessons', () => {
+test('tr-de and tr-es have 4 units × 3 lessons; tr-fr has 3 × 3', () => {
   for (const id of ['tr-de', 'tr-es']) {
     const c = getCourse(id)!;
-    expect(c.units).toHaveLength(2);
-    for (const u of c.units) expect(u.lessons).toHaveLength(2);
+    expect(c.units).toHaveLength(4);
+    for (const u of c.units) expect(u.lessons).toHaveLength(3);
   }
+  const fr = getCourse('tr-fr')!;
+  expect(fr.units).toHaveLength(3);
+  for (const u of fr.units) expect(u.lessons).toHaveLength(3);
+  expect(courses.map((c) => c.id)).toEqual(['tr-en', 'tr-de', 'tr-es', 'tr-fr']);
+});
+
+/** The text a learner sees/hears for an exercise; match_pairs has no single prompt. */
+function promptText(e: Exercise): string | null {
+  switch (e.type) {
+    case 'select_translation':
+    case 'translate_build':
+      return e.prompt;
+    case 'fill_blank':
+      return e.sentence;
+    case 'listen_type':
+      return e.audioText;
+    case 'speak':
+      return e.sentence;
+    case 'match_pairs':
+      return null;
+  }
+}
+
+test('no two exercises in a lesson share the same prompt text', () => {
+  for (const course of courses)
+    for (const u of course.units)
+      for (const l of u.lessons) {
+        const prompts = l.exercises.map(promptText).filter((p): p is string => p !== null);
+        const dupes = prompts.filter((p, i) => prompts.indexOf(p) !== i);
+        expect({ lesson: l.id, dupes }).toEqual({ lesson: l.id, dupes: [] });
+      }
 });
 
 test('lookup helpers', () => {
