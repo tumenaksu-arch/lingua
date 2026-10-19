@@ -36,6 +36,7 @@ import {
 } from '@/data';
 
 const COURSE_KEY = 'selected_course';
+const ONBOARDED_KEY = 'onboarded';
 
 interface Repos {
   stats: ReturnType<typeof createStatsRepo>;
@@ -45,6 +46,8 @@ interface Repos {
 
 export interface AppState {
   ready: boolean;
+  /** false until the first-launch course/goal picker has been completed */
+  onboarded: boolean;
   db: Database | null;
   userId: string;
   session: Session | null;
@@ -57,6 +60,7 @@ export interface AppState {
 
   boot: () => Promise<void>;
   selectCourse: (courseId: string) => Promise<void>;
+  completeOnboarding: (courseId: string, dailyGoalXp: number) => Promise<void>;
   /** Called by the lesson screen when a lesson is finished (not failed). */
   finishLesson: (result: LessonResult) => Promise<{ xpEarned: number; dailyGoalJustReached: boolean }>;
   /** Called by the lesson screen for each lost heart so the regen clock persists. */
@@ -103,6 +107,7 @@ async function ensureCards(srs: Repos['srs'], vocabIds: string[], now: number): 
 
 export const useAppStore = create<AppState>((set, get) => ({
   ready: false,
+  onboarded: false,
   db: null,
   userId: LOCAL_USER_ID,
   session: null,
@@ -120,6 +125,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     const userId = session?.user.id ?? LOCAL_USER_ID;
     repos = reposFor(db, userId);
 
+    const onboarded = (await getMeta(db, ONBOARDED_KEY)) === '1';
     const savedCourse = await getMeta(db, COURSE_KEY);
     const course = (savedCourse && getCourse(savedCourse)) || courses[0]!;
     const now = Date.now();
@@ -128,7 +134,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     const progress = Object.fromEntries(progressList.map((p) => [p.lessonId, p]));
     const dueCount = await repos.srs.countDue(now);
 
-    set({ ready: true, db, userId, session, course, stats, progress, dueCount });
+    set({ ready: true, onboarded, db, userId, session, course, stats, progress, dueCount });
 
     if (isSupabaseConfigured()) {
       authUnsub?.();
@@ -154,6 +160,14 @@ export const useAppStore = create<AppState>((set, get) => ({
     const { db } = get();
     if (db) await setMeta(db, COURSE_KEY, courseId);
     set({ course });
+  },
+
+  async completeOnboarding(courseId, dailyGoalXp) {
+    await get().selectCourse(courseId);
+    await get().setDailyGoal(dailyGoalXp);
+    const { db } = get();
+    if (db) await setMeta(db, ONBOARDED_KEY, '1');
+    set({ onboarded: true });
   },
 
   async finishLesson(result) {

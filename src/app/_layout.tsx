@@ -8,6 +8,7 @@ import { colors } from '@/ui';
 
 export default function RootLayout() {
   const ready = useAppStore((s) => s.ready);
+  const onboarded = useAppStore((s) => s.onboarded);
   const boot = useAppStore((s) => s.boot);
   const [error, setError] = useState<string | null>(null);
 
@@ -34,10 +35,15 @@ export default function RootLayout() {
     <>
       <StatusBar style="dark" />
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="lesson/[id]" options={{ gestureEnabled: false }} />
-        <Stack.Screen name="auth" options={{ presentation: 'modal' }} />
-        <Stack.Screen name="courses" options={{ presentation: 'modal' }} />
+        <Stack.Protected guard={!onboarded}>
+          <Stack.Screen name="onboarding" />
+        </Stack.Protected>
+        <Stack.Protected guard={onboarded}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="lesson/[id]" options={{ gestureEnabled: false }} />
+          <Stack.Screen name="auth" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="courses" options={{ presentation: 'modal' }} />
+        </Stack.Protected>
       </Stack>
     </>
   );

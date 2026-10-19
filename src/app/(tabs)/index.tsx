@@ -4,7 +4,7 @@ import { router } from 'expo-router';
 import { activeLessonId, useAppStore } from '@/features/store';
 import { useNow } from '@/features/useNow';
 import { canStartLesson, localDateString, regenerate } from '@/domain';
-import { Body, Caption, Heading, Hearts, PathNode, Screen, StreakFlame, XpBadge, colors, radii, spacing } from '@/ui';
+import { Body, Button, Caption, Heading, Hearts, PathNode, Screen, StreakFlame, XpBadge, colors, radii, spacing } from '@/ui';
 
 const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', tr: '🇹🇷' };
 /** Duolingo-style snake offsets for successive nodes in a unit. */
@@ -31,6 +31,13 @@ export default function LearnScreen() {
       </View>
 
       <ScrollView contentContainerStyle={styles.path}>
+        {active === null && (
+          <View style={styles.doneBanner} accessibilityRole="summary">
+            <Heading color={colors.textOnColor}>🏆 Kursu tamamladın!</Heading>
+            <Body color={colors.textOnColor}>Dersleri pratik modunda tekrar edebilir veya kurs değiştirebilirsin.</Body>
+            <Button title="Kurs değiştir" variant="secondary" onPress={() => router.push('/courses')} />
+          </View>
+        )}
         {course.units.map((unit, ui) => {
           const unitDone = unit.lessons.every((l) => progress[l.id]?.completedAt);
           return (
@@ -75,6 +82,7 @@ const styles = StyleSheet.create({
   topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingVertical: spacing.sm, borderBottomWidth: 2, borderBottomColor: colors.border },
   flag: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   path: { paddingBottom: spacing.xxxl },
+  doneBanner: { margin: spacing.lg, marginBottom: 0, padding: spacing.lg, borderRadius: radii.lg, backgroundColor: colors.warning, gap: spacing.sm },
   unit: { alignItems: 'center', paddingBottom: spacing.xl },
   unitHeader: { alignSelf: 'stretch', margin: spacing.lg, padding: spacing.lg, borderRadius: radii.lg, gap: 4 },
   node: { marginVertical: spacing.sm },

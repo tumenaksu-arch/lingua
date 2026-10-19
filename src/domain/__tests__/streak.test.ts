@@ -29,6 +29,24 @@ describe('streak', () => {
     expect(s.streak).toBe(1);
     expect(s.streakFreezes).toBe(1);
   });
+  test('reaching day 7 awards a streak freeze', () => {
+    const s = applyActivity({ ...base, streak: 6, streakFreezes: 0 }, '2026-10-11');
+    expect(s.streak).toBe(7);
+    expect(s.streakFreezes).toBe(1);
+  });
+  test('freeze award is capped at 2', () => {
+    const s = applyActivity({ ...base, streak: 13, streakFreezes: 2 }, '2026-10-11');
+    expect(s.streak).toBe(14);
+    expect(s.streakFreezes).toBe(2);
+  });
+  test('non-milestone day awards nothing', () => {
+    expect(applyActivity({ ...base, streak: 4, streakFreezes: 0 }, '2026-10-11').streakFreezes).toBe(0);
+  });
+  test('day 7 reached via a consumed freeze still awards one', () => {
+    const s = applyActivity({ ...base, streak: 6, streakFreezes: 1 }, '2026-10-12');
+    expect(s.streak).toBe(7);
+    expect(s.streakFreezes).toBe(1);
+  });
   test('daysBetween across month boundary', () => {
     expect(daysBetween('2026-01-31', '2026-02-01')).toBe(1);
   });

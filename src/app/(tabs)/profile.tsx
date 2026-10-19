@@ -1,7 +1,7 @@
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 
-import { MAX_HEARTS, msUntilNextHeart, regenerate } from '@/domain';
+import { FREEZE_EVERY_DAYS, MAX_HEARTS, MAX_STREAK_FREEZES, msUntilNextHeart, regenerate } from '@/domain';
 import { isSupabaseConfigured } from '@/data';
 import { useAppStore } from '@/features/store';
 import { useNow } from '@/features/useNow';
@@ -45,6 +45,8 @@ export default function ProfileScreen() {
           <Stat label="Kalp" value={`❤️ ${stats.hearts}/${MAX_HEARTS}`} />
         </View>
         {nextHeartMin > 0 && <Caption color={colors.textMuted}>Sonraki kalp ~{nextHeartMin} dk sonra</Caption>}
+        <Body>❄️ Seri dondurma: {stats.streakFreezes}/{MAX_STREAK_FREEZES}</Body>
+        <Caption color={colors.textMuted}>Bir gün kaçırırsan serini korur. Her {FREEZE_EVERY_DAYS} günlük seride bir tane kazanırsın.</Caption>
 
         <Heading>Günlük hedef</Heading>
         <ProgressBar progress={Math.min(1, stats.xpToday / stats.dailyGoalXp)} color={colors.warning} />
