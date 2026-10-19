@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "lingua",
+    "name": "Lingua",
     "slug": "lingua",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,6 +20,22 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "scheme": "lingua",
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      "expo-secure-store",
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Lingua konuşma alıştırmaları için mikrofonu kullanır.",
+          "speechRecognitionPermission": "Lingua telaffuzunuzu değerlendirmek için konuşma tanımayı kullanır."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
     }
   }
 }
