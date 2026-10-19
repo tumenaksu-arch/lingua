@@ -37,13 +37,15 @@ users/{uid}/events/{eventId}     XP günlüğü (salt ekleme)
 Kurs içeriği uygulama paketinde (`src/content`), sunucuda tutulmaz. Senkron çevrimdışı‑öncelikli: SQLite → outbox → Firestore (`src/data/sync/syncService.ts`); çakışmada son yazan kazanır, SRS'de daha çok tekrar yapılmış kart kazanır. Misafir olarak oynanan ilerleme ilk girişte hesaba taşınır.
 
 ## EAS (development build — konuşma tanıma için zorunlu)
-`expo-speech-recognition` native modül içerdiği için Expo Go'da çalışmaz.
+`expo-speech-recognition` native modül içerdiği için Expo Go'da çalışmaz. Derleme, imzalama ve mağazaya gönderme adımlarının tamamı **`docs/RELEASE.md`**'de.
+Kısa yol (yerelden):
 ```bash
 npx eas-cli@latest login
-npx eas-cli@latest init
-npx eas-cli@latest build --profile development --platform android   # APK
+npx eas-cli@latest init                                              # projectId'yi app.json'a yazar
+npx eas-cli@latest build --profile development --platform android   # dev client APK
 ```
-`.env` değerlerini EAS'e vermek için: `npx eas-cli@latest env:create --scope project --name EXPO_PUBLIC_FIREBASE_API_KEY --value ...` (her değişken için).
+GitHub'dan: `EXPO_TOKEN` secret'ını ekleyip **Actions → EAS Build → Run workflow**.
+`.env` değerlerini EAS'e vermek için `eas env:create` (bkz. RELEASE.md §0).
 
 ## CI
 `.github/workflows/ci.yml`: her push/PR'da lint (0 uyarı), typecheck, jest ve Android Metro bundle derlemesi.

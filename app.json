@@ -8,18 +8,21 @@
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.tumenaksu.lingua"
+      "bundleIdentifier": "com.tumenaksu.lingua",
+      "buildNumber": "1",
+      "icon": "./assets/icon.png"
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "backgroundColor": "#58CC02",
+        "foregroundImage": "./assets/adaptive-icon-foreground.png",
+        "backgroundImage": "./assets/adaptive-icon-background.png",
+        "monochromeImage": "./assets/adaptive-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.tumenaksu.lingua",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -33,6 +36,12 @@
         {
           "microphonePermission": "Lingua konuşma alıştırmaları için mikrofonu kullanır.",
           "speechRecognitionPermission": "Lingua telaffuzunuzu değerlendirmek için konuşma tanımayı kullanır."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#58CC02"
         }
       ]
     ],
