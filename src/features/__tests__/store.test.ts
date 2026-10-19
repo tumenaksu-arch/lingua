@@ -41,7 +41,7 @@ beforeEach(async () => {
   delete process.env.EXPO_PUBLIC_FIREBASE_APP_ID;
   db = new FakeDb();
   setDbForTesting(db);
-  useAppStore.setState({ ready: false, onboarded: false, db: null, progress: {}, dueCount: 0 });
+  useAppStore.setState({ ready: false, onboarded: false, db: null, progress: {}, dueCount: 0, achievements: [], newAchievements: [], reminderHour: null });
   await useAppStore.getState().boot();
 });
 
@@ -134,4 +134,63 @@ test('finishLesson reports when the daily goal is crossed', async () => {
   await useAppStore.getState().setDailyGoal(10);
   const out = await useAppStore.getState().finishLesson(resultFor(firstLesson.id, firstLesson.vocabIds));
   expect(out.dailyGoalJustReached).toBe(true);
+});
+
+describe('achievements, counters and weekly summary', () => {
+  test('finishing the first lesson unlocks first_lesson (+ perfect_lesson when flawless) and persists', async () => {
+    const s = useAppStore.getState();
+    expect(s.achievements).toEqual([]);
+    await s.finishLesson(resultFor(firstLesson.id, firstLesson.vocabIds, true));
+    const after = useAppStore.getState();
+    expect(after.achievements).toEqual(expect.arrayContaining(['first_lesson', 'perfect_lesson']));
+    expect(after.newAchievements).toEqual(after.achievements);
+    after.ackAchievements();
+    expect(useAppStore.getState().newAchievements).toEqual([]);
+
+    // survives a re-boot from sync_meta
+    useAppStore.setState({ ready: false, achievements: [], newAchievements: [] });
+    await useAppStore.getState().boot();
+    expect(useAppStore.getState().achievements).toEqual(expect.arrayContaining(['first_lesson', 'perfect_lesson']));
+  });
+
+  test('a lesson with mistakes does not unlock perfect_lesson; unlocks are never revoked', async () => {
+    await useAppStore.getState().finishLesson(resultFor(firstLesson.id, firstLesson.vocabIds, false));
+    expect(useAppStore.getState().achievements).toContain('first_lesson');
+    expect(useAppStore.getState().achievements).not.toContain('perfect_lesson');
+    await useAppStore.getState().finishLesson(resultFor(firstLesson.id, firstLesson.vocabIds, true));
+    expect(useAppStore.getState().achievements).toContain('perfect_lesson');
+    await useAppStore.getState().finishLesson(resultFor(firstLesson.id, firstLesson.vocabIds, false));
+    expect(useAppStore.getState().achievements).toContain('perfect_lesson');
+  });
+
+  test('review session and reviewed-card counters feed first_review / review_50', async () => {
+    const s = useAppStore.getState();
+    await s.startReviewSession();
+    expect(useAppStore.getState().achievements).toContain('first_review');
+    await s.finishLesson(resultFor(firstLesson.id, firstLesson.vocabIds, true));
+    timeTravel(DAY + 1000); // SM-2: cards learned today are due tomorrow
+    const cards = await useAppStore.getState().loadDueCards(50);
+    expect(cards.length).toBeGreaterThan(0);
+    for (let i = 0; i < 50; i++) await useAppStore.getState().reviewCard(cards[0]!, true, 1000);
+    expect(useAppStore.getState().achievements).toContain('review_50');
+  });
+
+  test('weeklyXp buckets today\'s lesson XP into the last slot', async () => {
+    await useAppStore.getState().finishLesson(resultFor(firstLesson.id, firstLesson.vocabIds, true));
+    const week = await useAppStore.getState().weeklyXp();
+    expect(week).toHaveLength(7);
+    expect(week[6]).toBe(20);
+    expect(week.slice(0, 6)).toEqual([0, 0, 0, 0, 0, 0]);
+  });
+
+  test('reminder hour persists across boot', async () => {
+    await useAppStore.getState().setReminderHour(18);
+    useAppStore.setState({ ready: false, reminderHour: null });
+    await useAppStore.getState().boot();
+    expect(useAppStore.getState().reminderHour).toBe(18);
+    await useAppStore.getState().setReminderHour(null);
+    useAppStore.setState({ ready: false, reminderHour: 5 });
+    await useAppStore.getState().boot();
+    expect(useAppStore.getState().reminderHour).toBeNull();
+  });
 });

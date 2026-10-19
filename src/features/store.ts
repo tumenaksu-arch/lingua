@@ -2,8 +2,11 @@ import { create } from 'zustand';
 
 import { courses, getCourse } from '@/content';
 import {
+  advanceGoalStreak,
   applyLessonResult,
   createCard,
+  evaluate as evaluateAchievements,
+  type GoalStreak,
   gradeFromOutcome,
   localDateString,
   regenerate,
@@ -37,6 +40,11 @@ import {
 
 const COURSE_KEY = 'selected_course';
 const ONBOARDED_KEY = 'onboarded';
+const ACHIEVEMENTS_KEY = 'achievements';
+const REVIEWED_COUNT_KEY = 'srs_reviewed_count';
+const REVIEW_SESSIONS_KEY = 'srs_review_sessions';
+const GOAL_STREAK_KEY = 'goal_streak';
+const REMINDER_KEY = 'reminder_hour';
 
 interface Repos {
   stats: ReturnType<typeof createStatsRepo>;
@@ -57,6 +65,12 @@ export interface AppState {
   dueCount: number;
   syncing: boolean;
   lastSyncError: string | null;
+  /** unlocked achievement ids, catalogue order not guaranteed */
+  achievements: string[];
+  /** ids unlocked by the last action, for a one-time celebration; cleared by `ackAchievements` */
+  newAchievements: string[];
+  /** hour of the daily reminder, null when off */
+  reminderHour: number | null;
 
   boot: () => Promise<void>;
   selectCourse: (courseId: string) => Promise<void>;
@@ -72,6 +86,12 @@ export interface AppState {
   signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   sync: () => Promise<void>;
+  /** Marks the start of a review session (achievement counter). */
+  startReviewSession: () => Promise<void>;
+  ackAchievements: () => void;
+  setReminderHour: (hour: number | null) => Promise<void>;
+  /** XP earned per day for the last 7 days, oldest first (index 6 = today). */
+  weeklyXp: () => Promise<number[]>;
 }
 
 function reposFor(db: Database, userId: string): Repos {
@@ -126,6 +146,47 @@ async function ensureCards(srs: Repos['srs'], vocabIds: string[], now: number): 
   return existing;
 }
 
+async function getNumberMeta(db: Database, key: string): Promise<number> {
+  return Number((await getMeta(db, key)) ?? 0) || 0;
+}
+
+async function getGoalStreak(db: Database): Promise<GoalStreak> {
+  const raw = await getMeta(db, GOAL_STREAK_KEY);
+  if (!raw) return { date: null, count: 0 };
+  try {
+    return JSON.parse(raw) as GoalStreak;
+  } catch {
+    return { date: null, count: 0 };
+  }
+}
+
+/** Evaluates achievements against the current state and persists any new unlock. */
+async function unlockAchievements(
+  db: Database,
+  get: () => AppState,
+  set: (p: Partial<AppState>) => void,
+  extra: { lastLessonPerfect?: boolean } = {},
+): Promise<string[]> {
+  const { stats, course, progress, achievements } = get();
+  const fresh = evaluateAchievements(
+    {
+      stats,
+      course,
+      progress,
+      reviewedCount: await getNumberMeta(db, REVIEWED_COUNT_KEY),
+      reviewSessions: await getNumberMeta(db, REVIEW_SESSIONS_KEY),
+      lastLessonPerfect: extra.lastLessonPerfect ?? false,
+      goalDays: (await getGoalStreak(db)).count,
+    },
+    achievements,
+  );
+  if (fresh.length === 0) return [];
+  const all = [...achievements, ...fresh];
+  await setMeta(db, ACHIEVEMENTS_KEY, JSON.stringify(all));
+  set({ achievements: all, newAchievements: [...get().newAchievements, ...fresh] });
+  return fresh;
+}
+
 export const useAppStore = create<AppState>((set, get) => ({
   ready: false,
   onboarded: false,
@@ -138,6 +199,9 @@ export const useAppStore = create<AppState>((set, get) => ({
   dueCount: 0,
   syncing: false,
   lastSyncError: null,
+  achievements: [],
+  newAchievements: [],
+  reminderHour: null,
 
   async boot() {
     if (get().ready) return;
@@ -154,8 +218,16 @@ export const useAppStore = create<AppState>((set, get) => ({
     const progressList = await repos.progress.all();
     const progress = Object.fromEntries(progressList.map((p) => [p.lessonId, p]));
     const dueCount = await repos.srs.countDue(now, `${course.id}.`);
+    let achievements: string[] = [];
+    try {
+      achievements = JSON.parse((await getMeta(db, ACHIEVEMENTS_KEY)) ?? '[]') as string[];
+    } catch {
+      achievements = [];
+    }
+    const reminderRaw = await getMeta(db, REMINDER_KEY);
+    const reminderHour = reminderRaw === null || reminderRaw === '' ? null : Number(reminderRaw);
 
-    set({ ready: true, onboarded, db, userId, user, course, stats, progress, dueCount });
+    set({ ready: true, onboarded, db, userId, user, course, stats, progress, dueCount, achievements, reminderHour });
 
     if (isFirebaseConfigured()) {
       authUnsub?.();
@@ -220,6 +292,15 @@ export const useAppStore = create<AppState>((set, get) => ({
       progress: { ...s.progress, [lp.lessonId]: lp },
     }));
     set({ dueCount: await r.srs.countDue(now, `${get().course.id}.`) });
+
+    const { db } = get();
+    if (db) {
+      if (outcome.dailyGoalReached) {
+        const next = advanceGoalStreak(await getGoalStreak(db), localDateString(new Date()));
+        await setMeta(db, GOAL_STREAK_KEY, JSON.stringify(next));
+      }
+      await unlockAchievements(db, get, set, { lastLessonPerfect: result.mistakes.length === 0 });
+    }
     void get().sync();
     return { xpEarned: outcome.xpEarned, dailyGoalJustReached: outcome.dailyGoalJustReached };
   },
@@ -238,6 +319,51 @@ export const useAppStore = create<AppState>((set, get) => ({
     const now = Date.now();
     await r.srs.saveMany([review(card, gradeFromOutcome(correct, responseMs), now)], now);
     set({ dueCount: await r.srs.countDue(now, `${get().course.id}.`) });
+    const { db } = get();
+    if (db) {
+      await setMeta(db, REVIEWED_COUNT_KEY, String((await getNumberMeta(db, REVIEWED_COUNT_KEY)) + 1));
+      await unlockAchievements(db, get, set);
+    }
+  },
+
+  async startReviewSession() {
+    const { db } = get();
+    if (!db) return;
+    await setMeta(db, REVIEW_SESSIONS_KEY, String((await getNumberMeta(db, REVIEW_SESSIONS_KEY)) + 1));
+    await unlockAchievements(db, get, set);
+  },
+
+  ackAchievements() {
+    set({ newAchievements: [] });
+  },
+
+  async setReminderHour(hour) {
+    const { db } = get();
+    if (db) await setMeta(db, REMINDER_KEY, hour === null ? '' : String(hour));
+    set({ reminderHour: hour });
+  },
+
+  async weeklyXp() {
+    const { db, userId } = get();
+    if (!db) return [0, 0, 0, 0, 0, 0, 0];
+    const dayMs = 86_400_000;
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+    const from = todayStart.getTime() - 6 * dayMs;
+    const rows = await db.getAll<{ payload: string; created_at: number }>(
+      'SELECT payload, created_at FROM events WHERE user_id = ? AND type = ? AND created_at > ?',
+      [userId, 'lesson_completed', from - 1],
+    );
+    const buckets = [0, 0, 0, 0, 0, 0, 0];
+    for (const r of rows) {
+      const idx = Math.min(6, Math.max(0, Math.floor((r.created_at - from) / dayMs)));
+      try {
+        buckets[idx]! += Number((JSON.parse(r.payload) as { xp?: number }).xp ?? 0);
+      } catch {
+        /* skip malformed payload */
+      }
+    }
+    return buckets;
   },
 
   async setDailyGoal(xp) {
