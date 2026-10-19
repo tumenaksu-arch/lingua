@@ -2,7 +2,7 @@ import type { UserStats } from '@/domain/types';
 import type { Database } from '../database';
 import { enqueue } from '../outbox';
 
-/** Used when the app runs without a Supabase account. */
+/** Used when the app runs without a Firebase account (guest mode). */
 export const LOCAL_USER_ID = 'local';
 
 interface StatsRow {

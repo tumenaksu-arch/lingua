@@ -2,6 +2,11 @@ import type { UserStats } from './types';
 
 /** YYYY-MM-DD in the given IANA tz (default: runtime local tz). */
 export function localDateString(date: Date, tz?: string): string {
+  if (!tz) {
+    // Zero-dependency path: no Intl needed for the device's own time zone.
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+  }
   const parts = new Intl.DateTimeFormat('en-CA', {
     timeZone: tz,
     year: 'numeric',

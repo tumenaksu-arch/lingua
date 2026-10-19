@@ -85,7 +85,7 @@ export class FakeDb implements Database {
     return rows.map((r) => Object.fromEntries(cols.map((c) => [c, r[c]])) as T);
   }
 
-  /** Supports `a = ? AND b <= ?` and `id IN (?,?)`. Params are consumed left to right. */
+  /** Supports `a = ? AND b <= ?`, `id IN (?,?)` and `col LIKE ?` (prefix%). Params are consumed left to right. */
   private where(expr: string, params: SqlParams): (r: Row) => boolean {
     let i = 0;
     const clauses = expr.split(/ AND /i).map((c) => {
@@ -96,6 +96,12 @@ export class FakeDb implements Database {
         i += n;
         const col = m[1];
         return (r: Row) => vals.includes(r[col]);
+      }
+      if ((m = c.match(/^(\w+) LIKE \?$/i))) {
+        const col = m[1];
+        const pattern = String(params[i++]);
+        const prefix = pattern.endsWith('%') ? pattern.slice(0, -1) : pattern;
+        return (r: Row) => typeof r[col] === 'string' && (r[col] as string).startsWith(prefix);
       }
       if ((m = c.match(/^(\w+) (=|<=|>|<)\s*\?$/))) {
         const [, col, op] = m;

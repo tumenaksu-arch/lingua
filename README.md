@@ -8,7 +8,7 @@ Duolingo esinli, çoklu dil öğrenme mobil uygulaması (Expo SDK 58 · React Na
 - **Oyunlaştırma**: XP, günlük hedef, seri (streak) + seri dondurma, 5 kalp (30 dk'da bir yenilenir), pratik modu.
 - **Telaffuz**: `expo-speech` ile seslendirme, `expo-speech-recognition` ile cihaz üstü konuşma tanıma.
 - **Çoklu dil**: TR→EN (3 ünite), TR→DE, TR→ES (2'şer ünite). İçerik `src/content/`.
-- **Hesap + senkron (isteğe bağlı)**: Supabase Auth; çevrimdışı‑öncelikli SQLite + outbox senkronu. `.env` yoksa uygulama tamamen yerel çalışır.
+- **Hesap + senkron (isteğe bağlı)**: Firebase Authentication (e‑posta/şifre) + Cloud Firestore; çevrimdışı‑öncelikli SQLite + outbox senkronu. `.env` yoksa uygulama tamamen yerel çalışır; misafir ilerlemesi ilk girişte hesaba taşınır.
 
 ## Yerel makinede çalıştırma
 Gereksinimler: Node 22+, Git. Telefonda denemek için **Expo Go** (App Store / Play Store).
@@ -19,7 +19,7 @@ cd lingua
 npm install
 npm start            # QR kodu Expo Go ile okutun (aynı Wi‑Fi) — ya da `a` (Android emülatör) / `i` (iOS simülatör)
 ```
-`.env` olmadan uygulama **tamamen yerel** çalışır (SQLite); hesap/senkron için `cp .env.example .env` ve Supabase bilgilerini girin (`docs/SETUP.md`).
+`.env` olmadan uygulama **tamamen yerel** çalışır (SQLite); hesap/senkron için `cp .env.example .env` ve Firebase web yapılandırmasını girin (`docs/SETUP.md`).
 
 **Expo Go sınırı:** konuşma tanıma (`expo-speech-recognition`) native modül olduğundan Expo Go'da *Konuş* egzersizi "Şu an kullanılamıyor" der ve atlanabilir; diğer her şey çalışır. Tam özellik için geliştirme derlemesi:
 
@@ -40,4 +40,4 @@ npm run check     # lint + typecheck + test (CI ile aynı)
 ```
 
 ## Mimari
-`docs/ARCHITECTURE.md`. Katmanlar: `src/domain` (saf TS iş kuralları, testli) · `src/data` (SQLite, Supabase, senkron) · `src/ui` (tasarım sistemi) · `src/speech` · `src/content` · `src/features` (store, ders akışı) · `src/app` (Expo Router ekranları).
+`docs/ARCHITECTURE.md`. Katmanlar: `src/domain` (saf TS iş kuralları, testli) · `src/data` (SQLite, Firebase Auth/Firestore, senkron) · `src/ui` (tasarım sistemi) · `src/speech` · `src/content` · `src/features` (store, ders akışı) · `src/app` (Expo Router ekranları).

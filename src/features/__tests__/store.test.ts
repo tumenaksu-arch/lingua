@@ -1,6 +1,6 @@
 /**
- * Store integration tests against the in-memory FakeDb (no sqlite, no Supabase:
- * EXPO_PUBLIC_SUPABASE_* are unset in jest, so the store runs in local-only mode).
+ * Store integration tests against the in-memory FakeDb (no sqlite, no Firebase:
+ * EXPO_PUBLIC_FIREBASE_* are unset in jest, so the store runs in local-only mode).
  */
 import { FakeDb } from '@/data/__tests__/fakeDb';
 import { setDbForTesting } from '@/data';
@@ -10,7 +10,7 @@ import { activeLessonId, lessonOrder, useAppStore } from '../store';
 
 // db.ts imports expo-sqlite (native); the store is pointed at FakeDb via setDbForTesting.
 // jest.mock calls are hoisted above imports by babel-plugin-jest-hoist.
-jest.mock('expo-sqlite', () => ({ openDatabaseAsync: jest.fn() }));
+
 
 const trEn = courses[0]!;
 const firstLesson = trEn.units[0]!.lessons[0]!;
@@ -36,8 +36,9 @@ function timeTravel(ms: number) {
 }
 
 beforeEach(async () => {
-  delete process.env.EXPO_PUBLIC_SUPABASE_URL;
-  delete process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
+  delete process.env.EXPO_PUBLIC_FIREBASE_API_KEY;
+  delete process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID;
+  delete process.env.EXPO_PUBLIC_FIREBASE_APP_ID;
   db = new FakeDb();
   setDbForTesting(db);
   useAppStore.setState({ ready: false, onboarded: false, db: null, progress: {}, dueCount: 0 });

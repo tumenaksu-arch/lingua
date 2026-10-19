@@ -55,4 +55,9 @@ describe('streak', () => {
     expect(localDateString(d, 'UTC')).toBe('2026-10-10');
     expect(localDateString(d, 'Europe/Istanbul')).toBe('2026-10-11');
   });
+  test('localDateString without tz uses the local calendar date (no Intl)', () => {
+    const d = new Date(2026, 2, 5, 12, 0, 0); // local 2026-03-05
+    expect(localDateString(d)).toBe('2026-03-05');
+    expect(localDateString(d)).toBe(localDateString(d, Intl.DateTimeFormat().resolvedOptions().timeZone));
+  });
 });

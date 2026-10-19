@@ -2,7 +2,7 @@ import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 
 import { FREEZE_EVERY_DAYS, MAX_HEARTS, MAX_STREAK_FREEZES, msUntilNextHeart, regenerate } from '@/domain';
-import { isSupabaseConfigured } from '@/data';
+import { isFirebaseConfigured } from '@/data';
 import { useAppStore } from '@/features/store';
 import { useNow } from '@/features/useNow';
 import { Body, Button, Caption, Heading, ProgressBar, Screen, Title, colors, radii, spacing } from '@/ui';
@@ -20,7 +20,7 @@ function Stat({ label, value }: { label: string; value: string | number }) {
 
 export default function ProfileScreen() {
   const rawStats = useAppStore((s) => s.stats);
-  const session = useAppStore((s) => s.session);
+  const user = useAppStore((s) => s.user);
   const course = useAppStore((s) => s.course);
   const syncing = useAppStore((s) => s.syncing);
   const lastSyncError = useAppStore((s) => s.lastSyncError);
@@ -31,13 +31,13 @@ export default function ProfileScreen() {
   const now = useNow();
   const stats = regenerate(rawStats, now);
   const nextHeartMin = stats.hearts < MAX_HEARTS ? Math.ceil(msUntilNextHeart(stats, now) / 60000) : 0;
-  const cloud = isSupabaseConfigured();
+  const cloud = isFirebaseConfigured();
 
   return (
     <Screen padding={0}>
       <ScrollView contentContainerStyle={styles.content}>
         <Title>Profil</Title>
-        <Body color={colors.textMuted}>{session?.user.email ?? 'Misafir (yalnızca bu cihaz)'}</Body>
+        <Body color={colors.textMuted}>{user?.email ?? 'Misafir (yalnızca bu cihaz)'}</Body>
 
         <View style={styles.statsRow}>
           <Stat label="Seri" value={`🔥 ${stats.streak}`} />
@@ -63,8 +63,8 @@ export default function ProfileScreen() {
 
         <Heading>Hesap</Heading>
         {!cloud ? (
-          <Caption color={colors.textMuted}>Bulut senkronu kapalı: .env dosyasında EXPO_PUBLIC_SUPABASE_URL ve ANON_KEY tanımlayın.</Caption>
-        ) : session ? (
+          <Caption color={colors.textMuted}>Bulut senkronu kapalı: .env dosyasında EXPO_PUBLIC_FIREBASE_* değerlerini tanımlayın (docs/SETUP.md).</Caption>
+        ) : user ? (
           <>
             <Button title={syncing ? 'Senkronize ediliyor…' : 'Şimdi senkronize et'} variant="secondary" loading={syncing} onPress={sync} />
             {lastSyncError && <Caption color={colors.danger}>Senkron hatası: {lastSyncError}</Caption>}

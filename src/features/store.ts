@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import type { Session } from '@supabase/supabase-js';
 
 import { courses, getCourse } from '@/content';
 import {
@@ -22,15 +21,16 @@ import {
   createStatsRepo,
   getDb,
   getMeta,
-  getSession,
-  isSupabaseConfigured,
+  firestoreRemote,
+  getCurrentUser,
+  isFirebaseConfigured,
   onAuthStateChange,
   setMeta,
   signIn,
   signOut,
   signUp,
-  supabaseRemote,
   syncNow,
+  type AuthUser,
   type Database,
   type LessonProgress,
 } from '@/data';
@@ -50,7 +50,7 @@ export interface AppState {
   onboarded: boolean;
   db: Database | null;
   userId: string;
-  session: Session | null;
+  user: AuthUser | null;
   course: Course;
   stats: UserStats;
   progress: Record<string, LessonProgress>;
@@ -85,6 +85,27 @@ function reposFor(db: Database, userId: string): Repos {
 let repos: Repos | null = null;
 let authUnsub: (() => void) | null = null;
 
+/**
+ * First sign-in on this device: copy the guest ("local") progress into the new
+ * account so nothing played before creating an account is lost. Only runs when
+ * the account has no stats yet (fresh account); an existing account keeps its own.
+ * Writes go through the normal repos so they are queued for the next sync.
+ */
+async function adoptGuestProgress(db: Database, target: Repos, now: number): Promise<void> {
+  const guest = reposFor(db, LOCAL_USER_ID);
+  const guestStats = await guest.stats.get();
+  const guestProgress = await guest.progress.all();
+  if (guestStats.xp === 0 && guestProgress.length === 0) return;
+  const targetStats = await target.stats.get();
+  const targetProgress = await target.progress.all();
+  if (targetStats.xp > 0 || targetProgress.length > 0) return;
+
+  await target.stats.save({ ...guestStats }, now);
+  for (const p of guestProgress) await target.progress.adopt(p, now);
+  const cards = await guest.srs.all();
+  if (cards.length) await target.srs.saveMany(cards, now);
+}
+
 function requireRepos(): Repos {
   if (!repos) throw new Error('Store not booted');
   return repos;
@@ -110,7 +131,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   onboarded: false,
   db: null,
   userId: LOCAL_USER_ID,
-  session: null,
+  user: null,
   course: courses[0]!,
   stats: DEFAULT_STATS,
   progress: {},
@@ -121,8 +142,8 @@ export const useAppStore = create<AppState>((set, get) => ({
   async boot() {
     if (get().ready) return;
     const db = await getDb();
-    const session = isSupabaseConfigured() ? await getSession() : null;
-    const userId = session?.user.id ?? LOCAL_USER_ID;
+    const user = isFirebaseConfigured() ? await getCurrentUser() : null;
+    const userId = user?.uid ?? LOCAL_USER_ID;
     repos = reposFor(db, userId);
 
     const onboarded = (await getMeta(db, ONBOARDED_KEY)) === '1';
@@ -132,25 +153,28 @@ export const useAppStore = create<AppState>((set, get) => ({
     const stats = regenerate(await repos.stats.get(), now);
     const progressList = await repos.progress.all();
     const progress = Object.fromEntries(progressList.map((p) => [p.lessonId, p]));
-    const dueCount = await repos.srs.countDue(now);
+    const dueCount = await repos.srs.countDue(now, `${course.id}.`);
 
-    set({ ready: true, onboarded, db, userId, session, course, stats, progress, dueCount });
+    set({ ready: true, onboarded, db, userId, user, course, stats, progress, dueCount });
 
-    if (isSupabaseConfigured()) {
+    if (isFirebaseConfigured()) {
       authUnsub?.();
-      authUnsub = onAuthStateChange(async (s) => {
-        const uid = s?.user.id ?? LOCAL_USER_ID;
+      authUnsub = onAuthStateChange(async (u) => {
+        const uid = u?.uid ?? LOCAL_USER_ID;
         if (uid === get().userId) {
-          set({ session: s });
+          set({ user: u });
           return;
         }
-        repos = reposFor(db, uid);
+        const next = reposFor(db, uid);
+        if (u) await adoptGuestProgress(db, next, Date.now());
+        repos = next;
         const st = regenerate(await repos.stats.get(), Date.now());
         const pl = await repos.progress.all();
-        set({ session: s, userId: uid, stats: st, progress: Object.fromEntries(pl.map((p) => [p.lessonId, p])) });
-        if (s) void get().sync();
+        set({ user: u, userId: uid, stats: st, progress: Object.fromEntries(pl.map((p) => [p.lessonId, p])) });
+        set({ dueCount: await repos.srs.countDue(Date.now(), `${get().course.id}.`) });
+        if (u) void get().sync();
       });
-      if (session) void get().sync();
+      if (user) void get().sync();
     }
   },
 
@@ -160,6 +184,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     const { db } = get();
     if (db) await setMeta(db, COURSE_KEY, courseId);
     set({ course });
+    if (repos) set({ dueCount: await repos.srs.countDue(Date.now(), `${course.id}.`) });
   },
 
   async completeOnboarding(courseId, dailyGoalXp) {
@@ -194,7 +219,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       stats: outcome.stats,
       progress: { ...s.progress, [lp.lessonId]: lp },
     }));
-    set({ dueCount: await r.srs.countDue(now) });
+    set({ dueCount: await r.srs.countDue(now, `${get().course.id}.`) });
     void get().sync();
     return { xpEarned: outcome.xpEarned, dailyGoalJustReached: outcome.dailyGoalJustReached };
   },
@@ -205,14 +230,14 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   async loadDueCards(limit = 20) {
-    return requireRepos().srs.due(Date.now(), limit);
+    return requireRepos().srs.due(Date.now(), limit, `${get().course.id}.`);
   },
 
   async reviewCard(card, correct, responseMs) {
     const r = requireRepos();
     const now = Date.now();
     await r.srs.saveMany([review(card, gradeFromOutcome(correct, responseMs), now)], now);
-    set({ dueCount: await r.srs.countDue(now) });
+    set({ dueCount: await r.srs.countDue(now, `${get().course.id}.`) });
   },
 
   async setDailyGoal(xp) {
@@ -233,7 +258,7 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   async sync() {
     const { db, userId, syncing } = get();
-    const remote = supabaseRemote();
+    const remote = firestoreRemote();
     if (!db || !remote || userId === LOCAL_USER_ID || syncing) return;
     set({ syncing: true, lastSyncError: null });
     try {
@@ -244,7 +269,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       set({
         stats: regenerate(await r.stats.get(), now),
         progress: Object.fromEntries(pl.map((p) => [p.lessonId, p])),
-        dueCount: await r.srs.countDue(now),
+        dueCount: await r.srs.countDue(now, `${get().course.id}.`),
       });
     } catch (e) {
       set({ lastSyncError: e instanceof Error ? e.message : String(e) });

@@ -8,12 +8,12 @@ Referans ürün: **Duolingo**. Hedef: çoklu dil (ör. TR→EN/DE/ES), hesap + b
 - Egzersiz türleri: `select_translation`, `translate_build` (kelime bloklarından cümle), `match_pairs`, `listen_type` (TTS), `speak` (STT), `fill_blank`.
 - Kelime kartları + aralıklı tekrar (SM‑2; her kelime için `due_at`).
 - Oyunlaştırma: XP, günlük hedef, seri (streak) + seri dondurma, kalp (hearts, 5 → hata başına −1, zamanla yenilenir).
-- Hesap: e‑posta/şifre (Supabase Auth); ilerleme bulutta.
+- Hesap: e‑posta/şifre (Firebase Authentication); ilerleme Cloud Firestore'da.
 
 **Fonksiyonel olmayan**
-- Çevrimdışı‑öncelikli: tüm yazmalar önce SQLite'a, sonra senkron kuyruğu ile Supabase'e.
+- Çevrimdışı‑öncelikli: tüm yazmalar önce SQLite'a, sonra senkron kuyruğu ile Firestore'a.
 - Ders içi gecikme < 16 ms/frame (animasyonlar Reanimated, JS thread'de ağır iş yok).
-- Tek kişilik ekip → yönetilen backend (Supabase), sunucu kodu minimum.
+- Tek kişilik ekip → yönetilen backend (Firebase), sunucu kodu yok.
 
 ## 2. Yüksek seviye
 ```
@@ -25,27 +25,27 @@ Referans ürün: **Duolingo**. Hedef: çoklu dil (ör. TR→EN/DE/ES), hesap + b
 │        ↓                        ↓                    │
 │  speech/* (expo-speech, expo-speech-recognition)     │
 │  data/local  (expo-sqlite, repo'lar, outbox)         │
-│  data/remote (supabase-js: auth, sync)               │
+│  data/remote (firebase: Auth, Firestore)             │
 └──────────────────────────┬───────────────────────────┘
-                           │ HTTPS (PostgREST + Auth)
+                           │ HTTPS (Firebase SDK)
                    ┌───────▼────────┐
-                   │ Supabase       │ Postgres + RLS
-                   │ profiles,      │ courses/units/lessons (içerik)
-                   │ progress,      │ user_progress, srs_cards, events
-                   │ srs_cards      │
+                   │ Firebase       │ Auth (e‑posta/şifre)
+                   │ Firestore:     │ users/{uid}/stats|progress|srs|events
+                   │ (içerik yok;   │ firestore.rules: yalnızca sahibi
+                   │  pakette)      │
                    └────────────────┘
 ```
-Veri akışı: Ders biter → `domain` sonucu hesaplar (XP, streak, SRS güncellemeleri) → `data/local` tek transaction'da yazar + `outbox` satırı ekler → `SyncService` çevrimiçi olunca outbox'ı Supabase'e push eder, sunucudan `updated_at > last_sync` kayıtlarını pull eder (son‑yazan‑kazanır, SRS için `max(reps)`).
+Veri akışı: Ders biter → `domain` sonucu hesaplar (XP, streak, SRS güncellemeleri) → `data/local` tek transaction'da yazar + `outbox` satırı ekler → `SyncService` çevrimiçi olunca outbox'ı Firestore'a (batch `set` + merge) push eder, sunucudan `updated_at > last_sync` belgelerini pull eder (son‑yazan‑kazanır, SRS için `max(reps)`; bekleyen outbox kaydı olan belgeler pull'da atlanır).
 
 ## 3. Veri modeli (özet)
-- `courses(id, from_lang, to_lang, title)`; `units(id, course_id, order, title)`; `lessons(id, unit_id, order)`; `exercises(id, lesson_id, type, payload jsonb)`; `vocab(id, course_id, term, translation, audio_hint)`.
-- `user_progress(user_id, lesson_id, crowns, completed_at)`; `srs_cards(user_id, vocab_id, ease, interval_days, reps, due_at)`; `user_stats(user_id, xp, streak, last_active_date, hearts, hearts_updated_at, daily_goal)`; `events(id, user_id, type, payload, created_at)` (XP günlüğü).
-- İçerik salt‑okunur public; kullanıcı tabloları RLS: `auth.uid() = user_id`.
+- İçerik (kurs/ünite/ders/egzersiz/kelime) uygulama paketinde (`src/content`), yerel SQLite'a aynalanabilir; sunucuda tutulmaz.
+- Firestore: `users/{uid}/stats/current`, `users/{uid}/progress/{lessonId}`, `users/{uid}/srs/{vocabId}`, `users/{uid}/events/{eventId}`; alanlar snake_case, zaman damgaları ISO string.
+- Erişim: yalnızca `request.auth.uid == uid`; her belge create/update'te şema doğrulayıcıdan geçer (`firestore.rules`).
 
 ## 4. Trade‑off'lar
 | Karar | Alternatif | Neden |
 |---|---|---|
-| Supabase | Kendi Node API | Sıfır sunucu bakımı, Auth+RLS hazır; bedeli: karmaşık iş kuralları istemcide |
+| Firebase (Auth + Firestore) | Supabase / kendi API | Sıfır sunucu; Web SDK Expo Go'da çalışır; kurallar belge‑bazlı doğrulama yapar. Bedeli: iş kuralları istemcide, sorgular kısıtlı |
 | SQLite + outbox | Sadece online | Ders ortasında bağlantı kopsa ilerleme kaybolmaz |
 | SM‑2 | FSRS | Basit, test edilebilir; FSRS'e geçiş `domain/srs` arkasında izole |
 | Zustand | Redux | Küçük API, ekran başına store |

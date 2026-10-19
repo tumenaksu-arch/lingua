@@ -29,10 +29,12 @@ export default function ReviewScreen() {
     setIndex(0);
     setFlipped(false);
     setDone({ right: 0, wrong: 0 });
+    shownAt.current = Date.now();
   }, [course.id, loadDueCards]);
 
   useFocusEffect(useCallback(() => { void load(); }, [load]));
-  useEffect(() => { shownAt.current = Date.now(); }, [index]);
+  // Reset the response timer whenever a different card is shown (new index or a reloaded deck).
+  useEffect(() => { shownAt.current = Date.now(); }, [index, deck]);
 
   if (!deck) return <Screen />;
 

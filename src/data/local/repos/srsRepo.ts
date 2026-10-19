@@ -43,10 +43,11 @@ export function createSrsRepo(db: Database, userId: string) {
     return rows.map(fromRow);
   }
 
-  async function due(now: number, limit = 20): Promise<SrsCard[]> {
+  /** Optional `vocabIdPrefix` scopes to one course (bundled ids are `<courseId>.<term>`). */
+  async function due(now: number, limit = 20, vocabIdPrefix?: string): Promise<SrsCard[]> {
     const rows = await db.getAll<SrsRow>(
-      'SELECT * FROM srs_cards WHERE user_id = ? AND due_at <= ? ORDER BY due_at ASC LIMIT ?',
-      [userId, now, limit],
+      `SELECT * FROM srs_cards WHERE user_id = ? AND due_at <= ?${vocabIdPrefix ? ' AND vocab_id LIKE ?' : ''} ORDER BY due_at ASC LIMIT ?`,
+      vocabIdPrefix ? [userId, now, `${vocabIdPrefix}%`, limit] : [userId, now, limit],
     );
     return rows.map(fromRow);
   }
@@ -56,11 +57,11 @@ export function createSrsRepo(db: Database, userId: string) {
     return r ? { ...fromRow(r), updatedAt: r.updated_at } : null;
   }
 
-  async function countDue(now: number): Promise<number> {
-    const r = await db.getFirst<{ n: number }>('SELECT COUNT(*) AS n FROM srs_cards WHERE user_id = ? AND due_at <= ?', [
-      userId,
-      now,
-    ]);
+  async function countDue(now: number, vocabIdPrefix?: string): Promise<number> {
+    const r = await db.getFirst<{ n: number }>(
+      `SELECT COUNT(*) AS n FROM srs_cards WHERE user_id = ? AND due_at <= ?${vocabIdPrefix ? ' AND vocab_id LIKE ?' : ''}`,
+      vocabIdPrefix ? [userId, now, `${vocabIdPrefix}%`] : [userId, now],
+    );
     return r?.n ?? 0;
   }
 

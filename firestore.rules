@@ -1,0 +1,183 @@
+rules_version = '2';
+
+// ===============================================================
+// Assumed Data Model (written by src/data/remote/firestoreRemote.ts)
+// ===============================================================
+//
+// All user data lives under users/{uid}; the client never reads or writes
+// another user's subtree. Course content is bundled in the app, not stored here.
+// Timestamps are ISO-8601 strings so `where('updated_at', '>', since)` works.
+//
+// Collection: users/{uid}/stats          Document ID: "current"
+//   - user_id: string (required, immutable, == uid)
+//   - xp, streak, streak_freezes, hearts, daily_goal_xp, xp_today: number (required, >= 0)
+//   - last_active_date: string|null (optional, YYYY-MM-DD)
+//   - hearts_updated_at, updated_at: string (required, ISO date)
+//
+// Collection: users/{uid}/progress       Document ID: {lessonId}
+//   - user_id: string (required, immutable, == uid)
+//   - lesson_id: string (required, == document id)
+//   - crowns: number (required, 0..5)
+//   - completed_at: string|null (optional, ISO date)
+//   - updated_at: string (required, ISO date)
+//
+// Collection: users/{uid}/srs            Document ID: {vocabId}
+//   - user_id: string (required, immutable, == uid)
+//   - vocab_id: string (required, == document id)
+//   - ease: number (required, >= 1.3)
+//   - interval_days, reps: number (required, >= 0)
+//   - due_at, updated_at: string (required, ISO date)
+//   - last_reviewed_at: string|null (optional, ISO date)
+//
+// Collection: users/{uid}/events         Document ID: {eventId}
+//   - id: string (required, == document id)
+//   - user_id: string (required, immutable, == uid)
+//   - type: string (required, 1..64 chars)
+//   - payload: map (required)
+//   - created_at, updated_at: string (required, ISO date)
+//
+// ===============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function data() {
+      return request.resource.data;
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return data().keys().hasOnly(fields);
+    }
+
+    function hasRequiredFields(fields) {
+      return data().keys().hasAll(fields);
+    }
+
+    // Format-only check for the ISO strings the client writes (toISOString()).
+    function isIsoDate(v) {
+      return v is string && v.matches('^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$');
+    }
+
+    function isOptionalIsoDate(field) {
+      return !(field in data()) || data()[field] == null || isIsoDate(data()[field]);
+    }
+
+    function isNonNegativeNumber(v) {
+      return v is number && v >= 0;
+    }
+
+    // user_id must always equal the path uid (never another user's data).
+    function ownsRow(userId) {
+      return data().user_id is string && data().user_id == userId;
+    }
+
+    // ===============================================================
+    // Domain Validators (used in BOTH create and update)
+    // ===============================================================
+    function isValidStats(userId) {
+      return hasOnlyAllowedFields(['user_id', 'xp', 'streak', 'last_active_date', 'streak_freezes',
+                                   'hearts', 'hearts_updated_at', 'daily_goal_xp', 'xp_today', 'updated_at'])
+        && hasRequiredFields(['user_id', 'xp', 'streak', 'streak_freezes', 'hearts',
+                              'hearts_updated_at', 'daily_goal_xp', 'xp_today', 'updated_at'])
+        && ownsRow(userId)
+        && isNonNegativeNumber(data().xp)
+        && isNonNegativeNumber(data().streak)
+        && isNonNegativeNumber(data().streak_freezes) && data().streak_freezes <= 2
+        && isNonNegativeNumber(data().hearts) && data().hearts <= 5
+        && isNonNegativeNumber(data().daily_goal_xp) && data().daily_goal_xp <= 1000
+        && isNonNegativeNumber(data().xp_today)
+        && (!('last_active_date' in data()) || data().last_active_date == null
+            || (data().last_active_date is string && data().last_active_date.matches('^\\d{4}-\\d{2}-\\d{2}$')))
+        && isIsoDate(data().hearts_updated_at)
+        && isIsoDate(data().updated_at);
+    }
+
+    function isValidProgress(userId, lessonId) {
+      return hasOnlyAllowedFields(['user_id', 'lesson_id', 'crowns', 'completed_at', 'updated_at'])
+        && hasRequiredFields(['user_id', 'lesson_id', 'crowns', 'updated_at'])
+        && ownsRow(userId)
+        && data().lesson_id == lessonId
+        && isNonNegativeNumber(data().crowns) && data().crowns <= 5
+        && isOptionalIsoDate('completed_at')
+        && isIsoDate(data().updated_at);
+    }
+
+    function isValidSrsCard(userId, vocabId) {
+      return hasOnlyAllowedFields(['user_id', 'vocab_id', 'ease', 'interval_days', 'reps',
+                                   'due_at', 'last_reviewed_at', 'updated_at'])
+        && hasRequiredFields(['user_id', 'vocab_id', 'ease', 'interval_days', 'reps', 'due_at', 'updated_at'])
+        && ownsRow(userId)
+        && data().vocab_id == vocabId
+        && data().ease is number && data().ease >= 1.3 && data().ease <= 10
+        && isNonNegativeNumber(data().interval_days)
+        && isNonNegativeNumber(data().reps)
+        && isIsoDate(data().due_at)
+        && isOptionalIsoDate('last_reviewed_at')
+        && isIsoDate(data().updated_at);
+    }
+
+    function isValidEvent(userId, eventId) {
+      return hasOnlyAllowedFields(['id', 'user_id', 'type', 'payload', 'created_at', 'updated_at'])
+        && hasRequiredFields(['id', 'user_id', 'type', 'payload', 'created_at', 'updated_at'])
+        && ownsRow(userId)
+        && data().id == eventId
+        && data().type is string && data().type.size() > 0 && data().type.size() <= 64
+        && data().payload is map
+        && isIsoDate(data().created_at)
+        && isIsoDate(data().updated_at);
+    }
+
+    // ===============================================================
+    // Rules — default deny; only the owner touches their own subtree
+    // ===============================================================
+    match /users/{userId} {
+      // No document is written at this level by the client; keep it owner-readable
+      // so a future profile document can be added without widening access.
+      allow read: if isOwner(userId);
+      allow write: if false;
+
+      match /stats/{docId} {
+        allow read: if isOwner(userId);
+        allow create, update: if isOwner(userId) && docId == 'current' && isValidStats(userId);
+        allow delete: if false;
+      }
+
+      match /progress/{lessonId} {
+        allow read: if isOwner(userId);
+        allow create, update: if isOwner(userId) && isValidProgress(userId, lessonId);
+        allow delete: if false;
+      }
+
+      match /srs/{vocabId} {
+        allow read: if isOwner(userId);
+        allow create, update: if isOwner(userId) && isValidSrsCard(userId, vocabId);
+        allow delete: if false;
+      }
+
+      match /events/{eventId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidEvent(userId, eventId);
+        // Re-pushing an already-synced event (outbox retry) must stay idempotent,
+        // so updates are allowed only when they keep the same validated shape.
+        allow update: if isOwner(userId) && isValidEvent(userId, eventId)
+                      && data().created_at == resource.data.created_at;
+        allow delete: if false;
+      }
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -5,6 +5,7 @@ export { DEFAULT_STATS, LOCAL_USER_ID, createStatsRepo, statsToServerRow, type S
 export { cardToServerRow, createSrsRepo, type SrsRepo } from './local/repos/srsRepo';
 export { createProgressRepo, progressToServerRow, type LessonProgress, type ProgressRepo } from './local/repos/progressRepo';
 export { createContentRepo, type ContentRepo } from './local/repos/contentRepo';
-export { chunkedSecureStorage, getSupabase, isSupabaseConfigured } from './remote/supabase';
+export { firebaseConfig, getFirebaseApp, getFirebaseAuth, getFirestoreDb, isFirebaseConfigured } from './remote/firebase';
+export { docIdFor, firestoreRemote } from './remote/firestoreRemote';
 export * from './remote/auth';
 export * from './sync/syncService';

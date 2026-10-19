@@ -63,6 +63,14 @@ export function createProgressRepo(db: Database, userId: string) {
     return next;
   }
 
+  /** Copies a progress row as-is (used when a guest signs in) and queues it for sync. */
+  async function adopt(p: LessonProgress, now = Date.now()): Promise<void> {
+    await db.transaction(async () => {
+      await writeLocal(p, now);
+      await enqueue(db, 'user_progress', 'upsert', progressToServerRow(userId, p, now), now);
+    });
+  }
+
   /** Append-only XP/activity log; synced via outbox. */
   async function logEvent(id: string, type: string, payload: Record<string, unknown>, now = Date.now()): Promise<void> {
     await db.transaction(async () => {
@@ -77,13 +85,13 @@ export function createProgressRepo(db: Database, userId: string) {
         db,
         'events',
         'upsert',
-        { id, user_id: userId, type, payload, created_at: new Date(now).toISOString() },
+        { id, user_id: userId, type, payload, created_at: new Date(now).toISOString(), updated_at: new Date(now).toISOString() },
         now,
       );
     });
   }
 
-  return { all, get, writeLocal, completeLesson, logEvent };
+  return { all, get, writeLocal, completeLesson, adopt, logEvent };
 }
 
 export type ProgressRepo = ReturnType<typeof createProgressRepo>;

@@ -1,52 +1,88 @@
-import type { Session } from '@supabase/supabase-js';
-import { getSupabase } from './supabase';
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut as fbSignOut,
+  updateProfile,
+  type User,
+} from 'firebase/auth';
+import { getFirebaseAuth } from './firebase';
+
+/** The subset of the Firebase user the app needs; keeps screens SDK-agnostic. */
+export interface AuthUser {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+}
 
 export class AuthUnavailableError extends Error {
   constructor() {
-    super('Supabase is not configured; set EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY.');
+    super('Firebase is not configured; set EXPO_PUBLIC_FIREBASE_* in .env.');
   }
 }
 
-function client() {
-  const c = getSupabase();
-  if (!c) throw new AuthUnavailableError();
-  return c;
+/** Firebase error codes → Turkish messages shown in the auth screen. */
+const MESSAGES: Record<string, string> = {
+  'auth/invalid-email': 'E-posta adresi geçersiz.',
+  'auth/missing-password': 'Şifre gerekli.',
+  'auth/weak-password': 'Şifre en az 6 karakter olmalı.',
+  'auth/email-already-in-use': 'Bu e-posta zaten kayıtlı.',
+  'auth/user-not-found': 'E-posta veya şifre hatalı.',
+  'auth/wrong-password': 'E-posta veya şifre hatalı.',
+  'auth/invalid-credential': 'E-posta veya şifre hatalı.',
+  'auth/too-many-requests': 'Çok fazla deneme. Biraz sonra tekrar dene.',
+  'auth/network-request-failed': 'Ağ hatası. Bağlantını kontrol et.',
+  'auth/operation-not-allowed': 'E-posta/şifre girişi bu projede etkin değil.',
+};
+
+export function authErrorMessage(e: unknown): string {
+  const code = typeof e === 'object' && e && 'code' in e ? String((e as { code: unknown }).code) : '';
+  return MESSAGES[code] ?? (e instanceof Error ? e.message : String(e));
 }
 
-export async function signUp(email: string, password: string, displayName?: string): Promise<Session | null> {
-  const { data, error } = await client().auth.signUp({
-    email,
-    password,
-    options: { data: displayName ? { display_name: displayName } : undefined },
-  });
-  if (error) throw error;
-  return data.session;
+function toUser(u: User | null): AuthUser | null {
+  return u ? { uid: u.uid, email: u.email, displayName: u.displayName } : null;
 }
 
-export async function signIn(email: string, password: string): Promise<Session> {
-  const { data, error } = await client().auth.signInWithPassword({ email, password });
-  if (error) throw error;
-  return data.session;
+function auth() {
+  const a = getFirebaseAuth();
+  if (!a) throw new AuthUnavailableError();
+  return a;
+}
+
+export async function signUp(email: string, password: string, displayName?: string): Promise<AuthUser> {
+  const cred = await createUserWithEmailAndPassword(auth(), email, password);
+  if (displayName) await updateProfile(cred.user, { displayName });
+  return toUser(cred.user)!;
+}
+
+export async function signIn(email: string, password: string): Promise<AuthUser> {
+  const cred = await signInWithEmailAndPassword(auth(), email, password);
+  return toUser(cred.user)!;
 }
 
 export async function signOut(): Promise<void> {
-  const { error } = await client().auth.signOut();
-  if (error) throw error;
+  await fbSignOut(auth());
 }
 
-/** Null when signed out or when Supabase is not configured. */
-export async function getSession(): Promise<Session | null> {
-  const c = getSupabase();
-  if (!c) return null;
-  const { data, error } = await c.auth.getSession();
-  if (error) throw error;
-  return data.session;
+/**
+ * Resolves with the persisted user once Firebase has restored the session
+ * (null when signed out or when Firebase is not configured).
+ */
+export function getCurrentUser(): Promise<AuthUser | null> {
+  const a = getFirebaseAuth();
+  if (!a) return Promise.resolve(null);
+  return new Promise((resolve) => {
+    const unsub = onAuthStateChanged(a, (u) => {
+      unsub();
+      resolve(toUser(u));
+    });
+  });
 }
 
-/** Returns an unsubscribe function. No-op when Supabase is not configured. */
-export function onAuthStateChange(cb: (session: Session | null) => void): () => void {
-  const c = getSupabase();
-  if (!c) return () => {};
-  const { data } = c.auth.onAuthStateChange((_event, session) => cb(session));
-  return () => data.subscription.unsubscribe();
+/** Returns an unsubscribe function. No-op when Firebase is not configured. */
+export function onAuthStateChange(cb: (user: AuthUser | null) => void): () => void {
+  const a = getFirebaseAuth();
+  if (!a) return () => {};
+  return onAuthStateChanged(a, (u) => cb(toUser(u)));
 }

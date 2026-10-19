@@ -4,7 +4,6 @@ import { bumpAttempts, deleteOutbox, getMeta, listOutbox, setMeta, type OutboxRo
 import { createProgressRepo, type LessonProgress } from '../local/repos/progressRepo';
 import { createSrsRepo } from '../local/repos/srsRepo';
 import { createStatsRepo } from '../local/repos/statsRepo';
-import { getSupabase } from '../remote/supabase';
 
 /** Narrow remote surface so sync can be tested without a network. */
 export interface RemoteApi {
@@ -14,27 +13,6 @@ export interface RemoteApi {
 }
 
 export class AuthRequiredError extends Error {}
-
-export function supabaseRemote(): RemoteApi | null {
-  const c = getSupabase();
-  if (!c) return null;
-  return {
-    async upsert(table, rows) {
-      const { error } = await c.from(table).upsert(rows);
-      if (error) {
-        if (error.code === 'PGRST301' || error.code === '42501' || /JWT|auth/i.test(error.message)) {
-          throw new AuthRequiredError(error.message);
-        }
-        throw new Error(`${table} upsert failed: ${error.message}`);
-      }
-    },
-    async pull(table, userId, sinceIso) {
-      const { data, error } = await c.from(table).select('*').eq('user_id', userId).gt('updated_at', sinceIso);
-      if (error) throw new Error(`${table} pull failed: ${error.message}`);
-      return data ?? [];
-    },
-  };
-}
 
 const LAST_SYNC_KEY = 'last_sync_at';
 const MAX_ATTEMPTS = 8;
@@ -121,8 +99,12 @@ export async function pullChanges(opts: SyncOptions, sinceIso: string): Promise<
   const srs = createSrsRepo(db, userId);
   const progress = createProgressRepo(db, userId);
   let applied = 0;
+  // Rows with a pending local write are newer than anything on the server by definition;
+  // skipping them prevents a pull from regressing state the next push will overwrite anyway.
+  const pending = new Set((await listOutbox(db, 500)).map((r) => `${r.tbl}:${pkOf(r.tbl, JSON.parse(r.payload))}`));
 
   for (const r of await remote.pull('user_stats', userId, sinceIso)) {
+    if (pending.has(`user_stats:${userId}`)) break;
     const remoteAt = ms(r.updated_at);
     if (remoteAt > (await stats.getUpdatedAt())) {
       const s: UserStats = {
@@ -135,6 +117,7 @@ export async function pullChanges(opts: SyncOptions, sinceIso: string): Promise<
   }
 
   for (const r of await remote.pull('srs_cards', userId, sinceIso)) {
+    if (pending.has(`srs_cards:${userId}:${r.vocab_id}`)) continue;
     const local = await srs.get(r.vocab_id);
     const remoteAt = ms(r.updated_at);
     const remoteWins = !local || r.reps > local.reps || (r.reps === local.reps && remoteAt > local.updatedAt);
@@ -149,6 +132,7 @@ export async function pullChanges(opts: SyncOptions, sinceIso: string): Promise<
   }
 
   for (const r of await remote.pull('user_progress', userId, sinceIso)) {
+    if (pending.has(`user_progress:${userId}:${r.lesson_id}`)) continue;
     const local = await progress.get(r.lesson_id);
     const remoteAt = ms(r.updated_at);
     if (!local || remoteAt > local.updatedAt) {

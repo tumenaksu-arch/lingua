@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, StyleSheet, TextInput, View } from 'react-native';
 import { router } from 'expo-router';
 
+import { authErrorMessage } from '@/data';
 import { useAppStore } from '@/features/store';
 import { Body, Button, Caption, Screen, Title, colors, radii, spacing } from '@/ui';
 
@@ -24,11 +25,11 @@ export default function AuthScreen() {
         router.back();
       } else {
         await signUp(email.trim(), password);
-        setInfo('Kayıt alındı. E-postanı doğruladıktan sonra giriş yapabilirsin.');
-        setMode('in');
+        setInfo('Hesabın oluşturuldu, giriş yapıldı.');
+        router.back();
       }
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
+      setError(authErrorMessage(e));
     } finally {
       setBusy(false);
     }

@@ -4,7 +4,7 @@ import type { Database, SqlParams } from './database';
 export const DB_NAME = 'lingua.db';
 
 /**
- * Local schema mirrors the server (supabase/migrations/0001_init.sql) plus
+ * Local schema mirrors the Firestore documents (see src/data/remote/firestoreRemote.ts) plus
  * `outbox` (pending writes) and `sync_meta` (cursors). Each entry bumps
  * PRAGMA user_version; append new migrations, never edit old ones.
  */

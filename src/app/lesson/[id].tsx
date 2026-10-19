@@ -48,6 +48,12 @@ function correctAnswerText(e: Exercise): string | undefined {
 export default function LessonScreen() {
   const { id, mode } = useLocalSearchParams<Params>();
   const practice = mode === 'practice';
+  // `router.replace` to the same route only updates params; keying on them forces a
+  // fresh lesson state (e.g. "Pratik yap" after running out of hearts).
+  return <LessonRunner key={`${id}:${practice ? 'practice' : 'normal'}`} id={id} practice={practice} />;
+}
+
+function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
   const course = useAppStore((s) => s.course);
   const stats = useAppStore((s) => s.stats);
   const saveStats = useAppStore((s) => s.saveStats);
@@ -61,6 +67,7 @@ export default function LessonScreen() {
   const [feedback, setFeedback] = useState<{ ok: boolean; detail?: string } | null>(null);
   const [summary, setSummary] = useState<{ xpEarned: number; dailyGoalJustReached: boolean } | null>(null);
   const [finished, setFinished] = useState<{ durationMs: number; saving: boolean } | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   const exercise = state ? current(state) : undefined;
 
@@ -73,6 +80,19 @@ export default function LessonScreen() {
     [exercise, feedback, practice, saveStats, stats],
   );
 
+  const persist = useCallback(
+    (finalState: LessonState, durationMs: number) => {
+      if (!lesson) return;
+      setFinished({ durationMs, saving: true });
+      setSaveError(null);
+      finishLesson(toResult(finalState, durationMs, exerciseVocabMap(lesson)))
+        .then(setSummary)
+        .catch((e: unknown) => setSaveError(e instanceof Error ? e.message : String(e)))
+        .finally(() => setFinished({ durationMs, saving: false }));
+    },
+    [lesson, finishLesson],
+  );
+
   const onContinue = useCallback(() => {
     if (!state || !exercise || !feedback || !lesson) return;
     const next = answer(state, exercise.id, feedback.ok);
@@ -81,13 +101,9 @@ export default function LessonScreen() {
     // Persist the result once the queue is empty (and the lesson was not failed).
     if (isFinished(next) && !next.failed && !finished) {
       const durationMs = Date.now() - startedAt;
-      setFinished({ durationMs, saving: true });
-      finishLesson(toResult(next, durationMs, exerciseVocabMap(lesson)))
-        .then(setSummary)
-        .catch((e: unknown) => Alert.alert('Kaydedilemedi', e instanceof Error ? e.message : String(e)))
-        .finally(() => setFinished({ durationMs, saving: false }));
+      persist(next, durationMs);
     }
-  }, [state, exercise, feedback, lesson, finished, startedAt, finishLesson]);
+  }, [state, exercise, feedback, lesson, finished, startedAt, persist]);
 
   const confirmQuit = () => {
     Alert.alert('Dersi bırak?', 'İlerlemen kaydedilmeyecek.', [
@@ -124,7 +140,15 @@ export default function LessonScreen() {
             <Stat label="Süre" value={formatDuration(result.durationMs)} color={colors.secondary} />
           </View>
         </View>
-        <Button title="Devam" onPress={() => router.replace('/')} loading={finished?.saving ?? false} disabled={!summary} />
+        {saveError ? (
+          <View style={styles.actions}>
+            <Caption center color={colors.danger}>Kaydedilemedi: {saveError}</Caption>
+            <Button title="Tekrar dene" onPress={() => persist(state, finished?.durationMs ?? 0)} />
+            <Button title="Ana sayfa" variant="outline" onPress={() => router.replace('/')} />
+          </View>
+        ) : (
+          <Button title="Devam" onPress={() => router.replace('/')} loading={finished?.saving ?? false} disabled={finished?.saving ?? false} />
+        )}
       </Screen>
     );
   }
