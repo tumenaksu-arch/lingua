@@ -1,9 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  ExpoSpeechRecognitionModule,
-  useSpeechRecognitionEvent,
-  type ExpoSpeechRecognitionErrorCode,
-} from 'expo-speech-recognition';
+import type { ExpoSpeechRecognitionErrorCode } from 'expo-speech-recognition';
 import type { LangCode } from '@/domain/types';
 import { toLocale } from './locale';
 
@@ -26,11 +22,29 @@ const UNAVAILABLE_CODES: ReadonlySet<ExpoSpeechRecognitionErrorCode> = new Set([
   'language-not-supported',
 ]);
 
+/**
+ * The package calls `requireNativeModule` at import time, which throws in Expo Go
+ * (no native module). Loading it lazily keeps the rest of the app bootable there;
+ * the Speak exercise then reports `unavailable` and can be skipped.
+ */
+type SttModule = typeof import('expo-speech-recognition')['ExpoSpeechRecognitionModule'];
+let cached: SttModule | null | undefined;
+function loadModule(): SttModule | null {
+  if (cached !== undefined) return cached;
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const mod = require('expo-speech-recognition') as typeof import('expo-speech-recognition');
+    cached = mod.ExpoSpeechRecognitionModule;
+  } catch {
+    cached = null;
+  }
+  return cached;
+}
+
 function isAvailable(): boolean {
   try {
-    return ExpoSpeechRecognitionModule.isRecognitionAvailable();
+    return loadModule()?.isRecognitionAvailable() ?? false;
   } catch {
-    // Expo Go / web without the native module: the module proxy throws.
     return false;
   }
 }
@@ -38,7 +52,7 @@ function isAvailable(): boolean {
 /**
  * Thin hook over expo-speech-recognition (SDK 58).
  * Verified API: `ExpoSpeechRecognitionModule.start/stop/abort/requestPermissionsAsync/
- * isRecognitionAvailable` and `useSpeechRecognitionEvent('result'|'error'|'start'|'end')`.
+ * isRecognitionAvailable` and `NativeModule.addListener('result'|'error'|'start'|'end')`.
  */
 export function useSpeechRecognition(lang: LangCode): SpeechRecognitionHandle {
   const [status, setStatus] = useState<SttStatus>(() => (isAvailable() ? 'idle' : 'unavailable'));
@@ -46,45 +60,58 @@ export function useSpeechRecognition(lang: LangCode): SpeechRecognitionHandle {
   const [error, setError] = useState<string | null>(null);
   const listening = useRef(false);
 
-  useSpeechRecognitionEvent('start', () => {
-    listening.current = true;
-    setStatus('listening');
-  });
-
-  useSpeechRecognitionEvent('result', (event) => {
-    const best = event.results[0]?.transcript ?? '';
-    setTranscript(best);
-    if (event.isFinal) setStatus('done');
-  });
-
-  useSpeechRecognitionEvent('end', () => {
-    listening.current = false;
-    setStatus((s) => (s === 'listening' ? 'done' : s));
-  });
-
-  useSpeechRecognitionEvent('error', (event) => {
-    listening.current = false;
-    // "aborted" is our own stop()/reset(); "no-speech" just means try again.
-    if (event.error === 'aborted') return;
-    setError(event.message || event.error);
-    setStatus(UNAVAILABLE_CODES.has(event.error) ? 'unavailable' : 'error');
-  });
+  useEffect(() => {
+    const mod = loadModule();
+    if (!mod) return;
+    const subs = [
+      mod.addListener('start', () => {
+        listening.current = true;
+        setStatus('listening');
+      }),
+      mod.addListener('result', (event) => {
+        const best = event.results[0]?.transcript ?? '';
+        setTranscript(best);
+        if (event.isFinal) setStatus('done');
+      }),
+      mod.addListener('end', () => {
+        listening.current = false;
+        setStatus((s) => (s === 'listening' ? 'done' : s));
+      }),
+      mod.addListener('error', (event) => {
+        listening.current = false;
+        // "aborted" is our own stop()/reset(); "no-speech" just means try again.
+        if (event.error === 'aborted') return;
+        setError(event.message || event.error);
+        setStatus(UNAVAILABLE_CODES.has(event.error) ? 'unavailable' : 'error');
+      }),
+    ];
+    return () => {
+      for (const s of subs) s.remove();
+      // Never leave the microphone open when the exercise unmounts.
+      try {
+        if (listening.current) mod.abort();
+      } catch {
+        /* ignore */
+      }
+    };
+  }, []);
 
   const start = useCallback(async () => {
-    if (!isAvailable()) {
+    const mod = loadModule();
+    if (!mod || !isAvailable()) {
       setStatus('unavailable');
       return;
     }
     setError(null);
     setTranscript('');
     try {
-      const perm = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
+      const perm = await mod.requestPermissionsAsync();
       if (!perm.granted) {
         setError('permission-denied');
         setStatus('unavailable');
         return;
       }
-      ExpoSpeechRecognitionModule.start({
+      mod.start({
         lang: toLocale(lang),
         interimResults: true,
         maxAlternatives: 1,
@@ -99,7 +126,7 @@ export function useSpeechRecognition(lang: LangCode): SpeechRecognitionHandle {
   const stop = useCallback(() => {
     if (!listening.current) return;
     try {
-      ExpoSpeechRecognitionModule.stop();
+      loadModule()?.stop();
     } catch {
       /* ignore */
     }
@@ -107,7 +134,7 @@ export function useSpeechRecognition(lang: LangCode): SpeechRecognitionHandle {
 
   const reset = useCallback(() => {
     try {
-      if (listening.current) ExpoSpeechRecognitionModule.abort();
+      if (listening.current) loadModule()?.abort();
     } catch {
       /* ignore */
     }
@@ -115,17 +142,6 @@ export function useSpeechRecognition(lang: LangCode): SpeechRecognitionHandle {
     setTranscript('');
     setError(null);
     setStatus(isAvailable() ? 'idle' : 'unavailable');
-  }, []);
-
-  // Never leave the microphone open when the exercise unmounts.
-  useEffect(() => {
-    return () => {
-      try {
-        if (listening.current) ExpoSpeechRecognitionModule.abort();
-      } catch {
-        /* ignore */
-      }
-    };
   }, []);
 
   return { status, transcript, error, start, stop, reset };

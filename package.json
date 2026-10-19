@@ -28,6 +28,7 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "@testing-library/react-native": "^14.1.0",
     "@types/jest": "^30.0.0",
     "@types/react": "~19.3.0",
     "babel-preset-expo": "~58.0.17",
@@ -40,13 +41,16 @@
   },
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "start:clear": "expo start --clear",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
+    "prebuild": "expo prebuild",
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "lint": "expo lint",
-    "lint:ci": "eslint src --max-warnings 0"
+    "lint:ci": "eslint src --max-warnings 0",
+    "check": "npm run lint:ci && npm run typecheck && npm test"
   },
   "private": true,
   "jest": {
