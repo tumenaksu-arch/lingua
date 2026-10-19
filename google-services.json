@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "495226488809",
+    "project_id": "lingotr-18fbb",
+    "storage_bucket": "lingotr-18fbb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:495226488809:android:2e5705b52de915281aad78",
+        "android_client_info": {
+          "package_name": "com.tumenaksu.lingua"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrCjeS87j7k1c9HgV1oHSydfrD8DiSluA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

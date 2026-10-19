@@ -1,7 +1,7 @@
 node_modules/
 .expo/
 dist/
-.env
+# .env is committed on purpose: it holds only public Firebase identifiers (see .env.example)
 *.log
 # Continuous Native Generation output (expo run:* / prebuild)
 android/

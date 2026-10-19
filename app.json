@@ -18,7 +18,8 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.tumenaksu.lingua"
+      "package": "com.tumenaksu.lingua",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -30,8 +31,8 @@
       [
         "expo-speech-recognition",
         {
-          "microphonePermission": "Lingua konu\u015fma al\u0131\u015ft\u0131rmalar\u0131 i\u00e7in mikrofonu kullan\u0131r.",
-          "speechRecognitionPermission": "Lingua telaffuzunuzu de\u011ferlendirmek i\u00e7in konu\u015fma tan\u0131may\u0131 kullan\u0131r."
+          "microphonePermission": "Lingua konuşma alıştırmaları için mikrofonu kullanır.",
+          "speechRecognitionPermission": "Lingua telaffuzunuzu değerlendirmek için konuşma tanımayı kullanır."
         }
       ]
     ],
