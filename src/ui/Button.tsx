@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import { MIN_TOUCH, PRESS_DEPTH, fontSize, fontWeight, radii, spacing, type ColorTokens } from './theme';
+import { upperTr } from './upperTr';
 import { useTheme } from './useTheme';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'danger';
@@ -104,7 +105,7 @@ export function Button({
               style={[styles.label, { color: inactive ? colors.disabledText : face.text }]}
               maxFontSizeMultiplier={1.6}
             >
-              {title.toUpperCase()}
+              {upperTr(title)}
             </Text>
           )}
         </View>
