@@ -41,4 +41,4 @@ npm run check     # lint + typecheck + test (CI ile aynı)
 ```
 
 ## Mimari
-`docs/ARCHITECTURE.md` · Yayın/Play Store: `docs/RELEASE.md`. Katmanlar: `src/domain` (saf TS iş kuralları, testli) · `src/data` (SQLite, Firebase Auth/Firestore, senkron) · `src/ui` (tasarım sistemi) · `src/speech` · `src/content` · `src/features` (store, ders akışı) · `src/app` (Expo Router ekranları).
+`docs/ARCHITECTURE.md` · Yayın/Play Store: `docs/RELEASE.md` · Devir notu: `docs/HANDOFF.md`. Katmanlar: `src/domain` (saf TS iş kuralları, testli) · `src/data` (SQLite, Firebase Auth/Firestore, senkron) · `src/ui` (tasarım sistemi) · `src/speech` · `src/content` · `src/features` (store, ders akışı) · `src/app` (Expo Router ekranları).
