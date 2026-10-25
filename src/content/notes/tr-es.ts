@@ -50,7 +50,7 @@ export const trEsNotes: CourseNotes = {
       {
         heading: 'Artikeller: el ve la',
         body: [
-          'Türkçede artikel yoktur ama İspanyolcada her isim ya eril (el) ya dişil (la) artikel alır. su, pan, café, té eril olduğu için el su, el pan, el café, el té denir; manzana ve leche dişil olduğu için la manzana, la leche denir.',
+          'Türkçede artikel yoktur ama İspanyolcada her isim ya eril (el) ya dişil (la) artikel alır. su, pan, café, té eril olduğu için el agua, el pan, el café, el té denir; manzana ve leche dişil olduğu için la manzana, la leche denir.',
           'Artikeli kelimeyle birlikte ezberle; zaten kelimenin sonu genelde cinsiyeti ele verir: -a ile bitenler çoğunlukla dişil, -o ile bitenler eril.',
         ],
         examples: [
@@ -74,7 +74,7 @@ export const trEsNotes: CourseNotes = {
       {
         heading: 'Restoranda kullanışlı ifadeler',
         body: [
-          'Aç olmak İspanyolcada fiil değil, tener hambre kalıbıyla söylenir: Tengo hambre (açım). Hesap istemek için La cuenta, por favor dersin.',
+          'Türkçedeki açım ifadesi İspanyolcada sıfatla değil, tener hambre kalıbıyla kurulur: Tengo hambre (açım). Hesap istemek için La cuenta, por favor dersin.',
           'Lezzetli demek için rico kullanılır; Türkçedeki zengin anlamını kastetmez, yemek için lezzetli demektir.',
         ],
         examples: [
@@ -133,8 +133,8 @@ export const trEsNotes: CourseNotes = {
       {
         heading: 'Nerede sorusu ve estar',
         body: [
-          'Nerede? sorusu İspanyolcada ¿Dónde ...? ile sorulur ve cevapta yer bildiren estar fiili kullanılır: Dónde está el hotel? (Otel nerede?).',
-          'esta (estar) bir yerde olma durumunu anlatır; soy gibi değildir. Türkçedeki otel nerede kelime dizisi yerine İspanyolcada soru kelimesi cümle başına gelir: ¿Dónde está el hotel?',
+          'Nerede? sorusu İspanyolcada ¿Dónde ...? ile sorulur ve cevapta yer bildiren estar fiili kullanılır: ¿Dónde está el hotel? (Otel nerede?).',
+          'está (estar) bir yerde olma durumunu anlatır; soy gibi değildir. Türkçedeki otel nerede kelime dizisi yerine İspanyolcada soru kelimesi cümle başına gelir: ¿Dónde está el hotel?',
         ],
         examples: [
           { target: '¿Dónde está el hotel?', tr: 'Otel nerede?' },
@@ -146,7 +146,7 @@ export const trEsNotes: CourseNotes = {
         heading: 'Yön ve mesafe kelimeleri',
         body: [
           'Sol ve sağ İspanyolcada izquierda ve derecha; yakın cerca, uzak lejos. Yön bildirirken a edatı kullanılır: a la izquierda (sola), a la derecha (sağa).',
-          'Bu kelimeler cinsiyetsizdir, yani the/la/los ayrımı yapmazsın; ama yanlarındaki isimler artikel alır.',
+          'Yönler zarf olarak kullanıldığında biçim değiştirmezler; ama isim olarak kullanılırlarsa dişildir: a la izquierda, a la derecha.',
         ],
         examples: [
           { target: 'El hotel está a la derecha.', tr: 'Otel sağda.' },
@@ -157,7 +157,7 @@ export const trEsNotes: CourseNotes = {
         heading: 'Yardım isteme ve ulaşım',
         body: [
           'Yardım istemek için Necesito ayuda (Yardıma ihtiyacım var) ya da Perdón (affedersiniz) ile cümleye nazikçe başlayabilirsin.',
-          'Bilet billete, uçak avión, araba coche, bavul maleta kelimeleri bu ünitede geçer; hepsi eril: el billete, el avión, el coche, la maleta (dişil).',
+          'Bilet billete, uçak avión, araba coche, bavul maleta kelimeleri bu ünitede geçer; billete, avión ve coche erildir (el billete, el avión, el coche), maleta ise dişildir (la maleta).',
         ],
         examples: [
           { target: 'Necesito ayuda.', tr: 'Yardıma ihtiyacım var.' },
@@ -186,7 +186,7 @@ export const trEsNotes: CourseNotes = {
       {
         heading: 'Pahalı ve ucuz',
         body: [
-          'Caro pahalı, barato ucuz demektir. İspanyolcada bu sıfatlar ukladıkları isimle cinsiyet ve sayı bakımından uyumlu olur: la tienda es cara (dükkân pahalı), los zapatos son baratos.',
+          'Caro pahalı, barato ucuz demektir. İspanyolcada bu sıfatlar uydukları isimle cinsiyet ve sayı bakımından uyumlu olur: la tienda es cara (dükkân pahalı), los zapatos son baratos.',
           'Türkçede sıfatlar hiç çekimlenmez; İspanyolcada ise -a/-o ve -s eklerine dikkat et.',
         ],
         examples: [
@@ -217,7 +217,7 @@ export const trEsNotes: CourseNotes = {
         heading: 'Meslek söyleme',
         body: [
           'Meslek bildirirken İspanyolcada Türkçeden farklı olarak genelde belirsiz artikel (bir) kullanılmaz: Soy médico (Doktorum), Mi padre es ingeniero (Babam mühendis).',
-          'Meslekler erilse el, dişilse la alır: el médico, el ingeniero. İspanyolcada (İspanya) bilgisayar kelimesi ordenador’dur; Latino İspanyolcasında bilgisayar denir.',
+          'Meslekler erilse el, dişilse la alır: el médico, el ingeniero. İspanyolcada (İspanya) bilgisayar kelimesi ordenador’dur; Latin Amerika İspanyolcasında ise computadora denir.',
         ],
         examples: [
           { target: 'Mi padre es médico.', tr: 'Babam doktordur.' },
