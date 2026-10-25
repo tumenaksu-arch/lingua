@@ -1,8 +1,9 @@
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { router } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import type { Story } from '@/content/stories';
+import { getUnitStory } from '@/content/stories';
 import { DEFAULT_STATS } from '@/data';
 import { useAppStore } from '@/features/store';
 
@@ -49,10 +50,12 @@ jest.mock('@/content/stories', () => ({
 }));
 
 const mockBack = router.back as jest.Mock;
+const getUnitStoryMock = getUnitStory as jest.Mock;
 let finishStory: jest.Mock;
 
 beforeEach(() => {
   finishStory = jest.fn(() => Promise.resolve({ xpEarned: 16 }));
+  getUnitStoryMock.mockImplementation(() => mockStory);
   useAppStore.setState({
     progress: {},
     stats: { ...DEFAULT_STATS, hearts: 5, heartsUpdatedAt: Date.now() },
@@ -150,5 +153,88 @@ describe('story screen', () => {
     expect(await screen.findByText('Hikâye tamamlandı! 🎉')).toBeTruthy();
     expect(finishStory).toHaveBeenCalledWith('tr-en.u1.story', 2, 2);
     expect(screen.getByLabelText('Doğru: 2/2')).toBeTruthy();
+  });
+});
+
+describe('story screen finish robustness', () => {
+  it('calls finishStory only once when Devam is double-pressed during a pending save', async () => {
+    let resolveFinish!: (v: { xpEarned: number }) => void;
+    finishStory.mockImplementation(() => new Promise((res) => { resolveFinish = res; }));
+    await renderStory();
+    await readToQuestions();
+    await answer('Merhaba!');
+    await continueFromSheet();
+    await answer('Nasılsın?'); // last question answered, feedback sheet open
+
+    const devam = screen.getByRole('button', { name: 'Devam' });
+    const kontrol = screen.getByRole('button', { name: 'Kontrol et' });
+    await fireEvent.press(devam); // starts the save; promise stays pending
+
+    // non-interactive saving state: question controls are gone
+    expect(screen.queryByRole('button', { name: 'Kontrol et' })).toBeNull();
+    expect(screen.getByText('Sonuçlar kaydediliyor…')).toBeTruthy();
+    expect(finishStory).toHaveBeenCalledTimes(1);
+
+    // stale nodes pressed again while the save is pending must not re-trigger
+    await fireEvent.press(devam);
+    await fireEvent.press(kontrol);
+    expect(finishStory).toHaveBeenCalledTimes(1);
+
+    await act(async () => resolveFinish({ xpEarned: 16 }));
+    expect(await screen.findByText('Hikâye tamamlandı! 🎉')).toBeTruthy();
+    expect(finishStory).toHaveBeenCalledTimes(1);
+  });
+
+  it('finishes a story with zero questions straight from the last line', async () => {
+    const noQuestions: Story = { ...mockStory, questions: [] };
+    getUnitStoryMock.mockReturnValue(noQuestions);
+    finishStory.mockResolvedValue({ xpEarned: 10 });
+    await renderStory();
+
+    // after the last line the button goes straight to finishing — no questions phase
+    await fireEvent.press(screen.getByRole('button', { name: 'Devam' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Bitir' }));
+    expect(finishStory).toHaveBeenCalledTimes(1);
+    expect(finishStory).toHaveBeenCalledWith('tr-en.u1.story', 0, 0);
+
+    expect(await screen.findByText('Hikâye tamamlandı! 🎉')).toBeTruthy();
+    expect(screen.getByLabelText('Doğru: 0/0')).toBeTruthy();
+    expect(screen.getByLabelText('XP: +10')).toBeTruthy();
+  });
+
+  it('shows Kaydedilemedi with Tekrar dene / Ana sayfa when the save fails', async () => {
+    finishStory
+      .mockRejectedValueOnce(new Error('offline'))
+      .mockResolvedValueOnce({ xpEarned: 16 });
+    await renderStory();
+    await readToQuestions();
+    await answer('Merhaba!');
+    await continueFromSheet();
+    await answer('Nasılsın?');
+    await continueFromSheet();
+
+    // error state replaces the unreachable summary
+    expect(await screen.findByText('Kaydedilemedi: offline')).toBeTruthy();
+    expect(screen.queryByText('Hikâye tamamlandı! 🎉')).toBeNull();
+    expect(finishStory).toHaveBeenCalledTimes(1);
+
+    // retrying the save succeeds and reaches the summary
+    await fireEvent.press(screen.getByRole('button', { name: 'Tekrar dene' }));
+    expect(await screen.findByText('Hikâye tamamlandı! 🎉')).toBeTruthy();
+    expect(finishStory).toHaveBeenCalledTimes(2);
+    expect(screen.getByLabelText('XP: +16')).toBeTruthy();
+  });
+
+  it('navigates home from the error state via Ana sayfa', async () => {
+    finishStory.mockRejectedValue(new Error('offline'));
+    await renderStory();
+    await readToQuestions();
+    await answer('Merhaba!');
+    await continueFromSheet();
+    await answer('Nasılsın?');
+    await continueFromSheet();
+
+    await fireEvent.press(await screen.findByRole('button', { name: 'Ana sayfa' }));
+    expect(mockBack).toHaveBeenCalledTimes(1);
   });
 });

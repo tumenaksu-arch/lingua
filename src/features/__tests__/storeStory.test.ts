@@ -60,22 +60,35 @@ test('finishStory counts toward the daily goal exactly like a lesson', async () 
   expect(s.stats.xpToday).toBe(16);
   expect(s.stats.xp).toBe(16);
 
-  await useAppStore.getState().finishStory(storyId, 4, 4); // +18: crosses the 20 XP goal
+  await useAppStore.getState().finishStory(storyId, 4, 4); // repeat: flat 5 XP, crosses the 20 XP goal
   s = useAppStore.getState();
-  expect(s.stats.xp).toBe(34);
-  expect(s.stats.xpToday).toBe(34);
+  expect(s.stats.xp).toBe(21);
+  expect(s.stats.xpToday).toBe(21);
   // completing the daily goal advances the goal streak (sync_meta row)
   const goalRow = (db.tables.sync_meta ?? []).find((r) => r.key === 'goal_streak');
   expect(goalRow).toBeTruthy();
 });
 
-test('re-finishing a story still works and never affects hearts or due cards', async () => {
-  await useAppStore.getState().finishStory(storyId, 4, 4);
+test('re-finishing a story awards a flat 5 XP and never affects hearts or due cards', async () => {
+  const first = await useAppStore.getState().finishStory(storyId, 4, 4);
+  expect(first.xpEarned).toBe(18); // first completion: 10 + 2*4
   const out = await useAppStore.getState().finishStory(storyId, 2, 4);
-  expect(out.xpEarned).toBe(14);
+  expect(out.xpEarned).toBe(5); // repeat completion: flat 5, independent of score
   const s = useAppStore.getState();
-  expect(s.stats.xp).toBe(18 + 14);
+  expect(s.stats.xp).toBe(18 + 5);
   expect(s.stats.hearts).toBe(5);
   expect(s.dueCount).toBe(0);
   expect(db.tables.srs_cards ?? []).toHaveLength(0);
+  // the repeat event also carries the actually-awarded xp payload
+  const events = (db.tables.events ?? []).filter((e) => e.type === 'story_completed');
+  expect(events).toHaveLength(2);
+  expect(JSON.parse(String(events[1]!.payload))).toMatchObject({ xp: 5 });
+});
+
+test('weeklyXp counts story XP in today\'s bucket via the story_completed event', async () => {
+  await useAppStore.getState().finishStory(storyId, 3, 4); // 16 XP
+  const week = await useAppStore.getState().weeklyXp();
+  expect(week).toHaveLength(7);
+  expect(week[6]).toBe(16);
+  expect(week.slice(0, 6)).toEqual([0, 0, 0, 0, 0, 0]);
 });

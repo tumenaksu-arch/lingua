@@ -1,5 +1,5 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { courses } from '@/content';
@@ -10,7 +10,7 @@ import { useAppStore } from '@/features/store';
 import { Body, Button, Caption, ChoiceCard, FeedbackSheet, Heading, Screen, Title, spacing, upperTr, useTheme } from '@/ui';
 
 type Params = { unitId: string };
-type Phase = 'reading' | 'questions' | 'summary';
+type Phase = 'reading' | 'questions' | 'saving' | 'summary';
 
 /**
  * End-of-unit story (roadmap item 2), opened as a modal from the learning path.
@@ -34,9 +34,12 @@ export default function StoryScreen() {
   const [selected, setSelected] = useState<number | null>(null);
   const [feedback, setFeedback] = useState<{ ok: boolean } | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
-  const [finishing, setFinishing] = useState(false);
   const [summary, setSummary] = useState<{ xpEarned: number } | null>(null);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [finishing, setFinishing] = useState(false);
+  // Guards against double finish: finishStory is called at most once per visit
+  // (a failed save may be retried explicitly via "Tekrar dene").
+  const finishStartedRef = useRef(false);
 
   if (!story) {
     return (
@@ -46,6 +49,21 @@ export default function StoryScreen() {
       </Screen>
     );
   }
+
+  const startFinish = () => {
+    if (finishStartedRef.current) return;
+    finishStartedRef.current = true;
+    setFinishing(true);
+    setSaveError(null);
+    // Non-interactive saving state BEFORE awaiting finishStory.
+    setPhase('saving');
+    finishStory(`${unitId}.story`, correctCount, story.questions.length)
+      .then((out) => {
+        setSummary(out);
+        setPhase('summary');
+      })
+      .catch((e: unknown) => setSaveError(e instanceof Error ? e.message : String(e)));
+  };
 
   if (phase === 'reading') {
     const lines = story.lines.slice(0, visibleLines);
@@ -82,8 +100,8 @@ export default function StoryScreen() {
           </Pressable>
         </ScrollView>
         <Button
-          title={allRevealed ? 'Sorulara geç' : 'Devam'}
-          onPress={() => (allRevealed ? setPhase('questions') : setVisibleLines((n) => n + 1))}
+          title={allRevealed ? (story.questions.length > 0 ? 'Sorulara geç' : 'Bitir') : 'Devam'}
+          onPress={() => (allRevealed ? (story.questions.length > 0 ? setPhase('questions') : startFinish()) : setVisibleLines((n) => n + 1))}
         />
       </Screen>
     );
@@ -92,23 +110,17 @@ export default function StoryScreen() {
   if (phase === 'questions') {
     const question = story.questions[qIndex]!;
     const check = () => {
-      if (selected === null || feedback) return;
+      if (selected === null || feedback || finishStartedRef.current) return;
       const ok = selected === question.correctIndex;
       if (ok) setCorrectCount((c) => c + 1);
       setFeedback({ ok });
     };
     const advance = () => {
+      if (finishStartedRef.current) return; // saving already started: no double finish
       setFeedback(null);
       setSelected(null);
       if (qIndex + 1 >= story.questions.length) {
-        setFinishing(true);
-        finishStory(`${unitId}.story`, correctCount, story.questions.length)
-          .then((out) => {
-            setSummary(out);
-            setPhase('summary');
-          })
-          .catch((e: unknown) => setSaveError(e instanceof Error ? e.message : String(e)))
-          .finally(() => setFinishing(false));
+        startFinish();
       } else {
         setQIndex((i) => i + 1);
       }
@@ -144,7 +156,7 @@ export default function StoryScreen() {
             })}
           </View>
         </ScrollView>
-        <Button title="Kontrol et" disabled={selected === null || !!feedback} onPress={check} />
+        <Button title="Kontrol et" disabled={selected === null || !!feedback || finishing} onPress={check} />
         <FeedbackSheet
           result={feedback ? (feedback.ok ? 'correct' : 'wrong') : null}
           title={feedback?.ok ? 'Harika!' : 'Doğru cevap:'}
@@ -153,6 +165,40 @@ export default function StoryScreen() {
           continueLabel="Devam"
           onContinue={advance}
         />
+      </Screen>
+    );
+  }
+
+  if (phase === 'saving') {
+    // Non-interactive: either the error state (retry / go home) or a wait spinner.
+    if (saveError) {
+      return (
+        <Screen>
+          <View style={styles.center}>
+            <Title center accessibilityRole="header">Kaydedilemedi</Title>
+            <Caption center color={colors.dangerText} accessibilityRole="alert">
+              Kaydedilemedi: {saveError}
+            </Caption>
+          </View>
+          <View style={styles.actions}>
+            <Button
+              title="Tekrar dene"
+              onPress={() => {
+                finishStartedRef.current = false;
+                startFinish();
+              }}
+            />
+            <Button title="Ana sayfa" variant="outline" onPress={() => router.back()} />
+          </View>
+        </Screen>
+      );
+    }
+    return (
+      <Screen>
+        <View style={styles.center} accessibilityLiveRegion="polite">
+          <Title center accessibilityRole="header">Sonuçlar kaydediliyor…</Title>
+          <Body center color={colors.textMuted}>Biraz bekle, hemen bitiyor.</Body>
+        </View>
       </Screen>
     );
   }
@@ -166,16 +212,7 @@ export default function StoryScreen() {
           <Stat label="XP" value={summary ? `+${summary.xpEarned}` : '…'} color={colors.xpText} />
         </View>
       </View>
-      {saveError ? (
-        <View style={styles.actions}>
-          <Caption center color={colors.dangerText} accessibilityRole="alert">
-            Kaydedilemedi: {saveError}
-          </Caption>
-          <Button title="Ana sayfa" variant="outline" onPress={() => router.back()} />
-        </View>
-      ) : (
-        <Button title="Bitir" onPress={() => router.back()} loading={finishing} disabled={finishing} />
-      )}
+      <Button title="Bitir" onPress={() => router.back()} />
     </Screen>
   );
 }

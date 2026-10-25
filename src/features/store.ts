@@ -52,6 +52,8 @@ const REMINDER_KEY = 'reminder_hour';
 /** Story XP: base 10, +2 per correct comprehension answer (roadmap item 2). */
 export const STORY_BASE_XP = 10;
 export const STORY_PER_CORRECT_XP = 2;
+/** Flat XP for re-completing an already completed story. */
+export const STORY_REPEAT_XP = 5;
 
 export function storyXp(correct: number): number {
   return STORY_BASE_XP + STORY_PER_CORRECT_XP * correct;
@@ -342,8 +344,9 @@ export const useAppStore = create<AppState>((set, get) => ({
   async finishStory(storyId, correct, total) {
     const r = requireRepos();
     const now = Date.now();
-    // Same stats pipeline as lessons (streak, daily goal), story XP formula.
-    const xpEarned = storyXp(correct);
+    // First completion: 10 + 2 per correct answer; re-completions: flat 5 XP.
+    // Same stats pipeline as lessons (streak, daily goal).
+    const xpEarned = get().progress[storyId]?.completedAt ? STORY_REPEAT_XP : storyXp(correct);
     const localDate = localDateString(new Date());
     const prev = get().stats;
     const newDay = prev.lastActiveDate !== localDate;
@@ -353,7 +356,8 @@ export const useAppStore = create<AppState>((set, get) => ({
     next = applyActivity(next, localDate);
     await r.stats.save(next, now);
     const lp = await r.progress.completeLesson(storyId, now);
-    await r.progress.logEvent(`${storyId}:${now}`, 'story_completed', { xp: xpEarned, correct, total }, now);
+    // Unique id even for same-millisecond repeats (events are INSERT OR IGNORE).
+    await r.progress.logEvent(`${storyId}:${now}:${Math.random().toString(36).slice(2, 8)}`, 'story_completed', { xp: xpEarned, correct, total }, now);
 
     set((s) => ({ stats: next, progress: { ...s.progress, [lp.lessonId]: lp } }));
 
@@ -415,8 +419,9 @@ export const useAppStore = create<AppState>((set, get) => ({
     todayStart.setHours(0, 0, 0, 0);
     const from = todayStart.getTime() - 6 * dayMs;
     const rows = await db.getAll<{ payload: string; created_at: number }>(
-      'SELECT payload, created_at FROM events WHERE user_id = ? AND type = ? AND created_at > ?',
-      [userId, 'lesson_completed', from - 1],
+      // Lessons and stories both log their XP under the `xp` payload field.
+      "SELECT payload, created_at FROM events WHERE user_id = ? AND type IN (?, ?) AND created_at > ?",
+      [userId, 'lesson_completed', 'story_completed', from - 1],
     );
     const buckets = [0, 0, 0, 0, 0, 0, 0];
     for (const r of rows) {
