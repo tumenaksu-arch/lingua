@@ -2,7 +2,7 @@ import { Text, type ColorValue } from 'react-native';
 import { Tabs } from 'expo-router/tabs';
 
 import { useAppStore } from '@/features/store';
-import { useTheme } from '@/ui';
+import { fonts, useTheme } from '@/ui';
 
 function TabIcon({ glyph, color }: { glyph: string; color: ColorValue }) {
   return (
@@ -19,12 +19,12 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.primaryText,
+        tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textMuted,
-        tabBarLabelStyle: { fontWeight: '700', fontSize: 11 },
+        tabBarLabelStyle: { fontFamily: fonts.mono, fontSize: 10, letterSpacing: 1.5 },
         // No fixed height: the tab bar adds the bottom safe-area inset (Android nav buttons /
         // gesture bar) to its default height only when `height` is not overridden.
-        tabBarStyle: { borderTopColor: colors.border, backgroundColor: colors.background, paddingTop: 6 },
+        tabBarStyle: { borderTopColor: colors.border, borderTopWidth: 1, backgroundColor: colors.background, paddingTop: 6 },
         sceneStyle: { backgroundColor: colors.background },
       }}
     >

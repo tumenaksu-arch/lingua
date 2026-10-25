@@ -2,7 +2,7 @@ import * as Haptics from 'expo-haptics';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
-import { MAX_FONT_SCALE_DENSE, MIN_TOUCH, PRESS_DEPTH, fontSize, fontWeight, radii, spacing, type ColorTokens } from './theme';
+import { MAX_FONT_SCALE_DENSE, MIN_TOUCH, spacing, type ColorTokens } from './theme';
 import { useTheme } from './useTheme';
 
 export type WordChipState = 'idle' | 'selected' | 'correct' | 'wrong' | 'used';
@@ -15,22 +15,23 @@ export type WordChipProps = {
   style?: StyleProp<ViewStyle>;
 };
 
-function styleFor(state: WordChipState, c: ColorTokens): { border: string; bg: string; text: string } {
+function styleFor(state: WordChipState, c: ColorTokens): { border: string; width: number; bg: string; text: string } {
   switch (state) {
     case 'idle':
-      return { border: c.border, bg: c.background, text: c.text };
+      return { border: c.borderStrong, width: 1, bg: c.surface, text: c.text };
     case 'selected':
-      return { border: c.secondary, bg: c.secondaryTint, text: c.secondaryText };
+      return { border: c.primary, width: 1.5, bg: c.primaryTint, text: c.primaryText };
     case 'correct':
-      return { border: c.primary, bg: c.primaryTint, text: c.primaryText };
+      return { border: c.success, width: 1.5, bg: c.successTint, text: c.successText };
     case 'wrong':
-      return { border: c.danger, bg: c.dangerTint, text: c.dangerText };
+      return { border: c.danger, width: 1.5, bg: c.dangerTint, text: c.dangerText };
     case 'used':
-      // leaves an empty slot in the word bank, like Duolingo
-      return { border: c.border, bg: c.border, text: c.border };
+      // leaves an empty slot in the word bank
+      return { border: c.border, width: 1, bg: c.border, text: c.border };
   }
 }
 
+/** Flat word-bank chip with hairline border — no 3D edge. */
 export function WordChip({ word, state = 'idle', disabled, onPress, style }: WordChipProps) {
   const [pressed, setPressed] = useState(false);
   const { colors } = useTheme();
@@ -50,37 +51,33 @@ export function WordChip({ word, state = 'idle', disabled, onPress, style }: Wor
       }}
       style={style}
     >
-      <View style={[styles.shell, { backgroundColor: s.border }]}>
-        <View
-          style={[
-            styles.face,
-            {
-              backgroundColor: s.bg,
-              borderColor: s.border,
-              transform: [{ translateY: pressed ? PRESS_DEPTH : 0 }],
-              marginBottom: pressed ? 0 : PRESS_DEPTH,
-            },
-          ]}
-        >
-          <Text style={[styles.text, { color: s.text }]} maxFontSizeMultiplier={MAX_FONT_SCALE_DENSE}>
-            {word}
-          </Text>
-        </View>
+      <View
+        style={[
+          styles.face,
+          {
+            backgroundColor: s.bg,
+            borderColor: s.border,
+            borderWidth: s.width,
+            opacity: pressed && !inert ? 0.8 : 1,
+          },
+        ]}
+      >
+        <Text style={[styles.text, { color: s.text }]} maxFontSizeMultiplier={MAX_FONT_SCALE_DENSE}>
+          {word}
+        </Text>
       </View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  shell: { borderRadius: radii.md },
   face: {
-    minHeight: MIN_TOUCH,
-    borderRadius: radii.md,
-    borderWidth: 2,
+    minHeight: MIN_TOUCH - 8,
+    borderRadius: 10,
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text: { fontSize: fontSize.md, fontWeight: fontWeight.medium },
+  text: { fontSize: 16 },
 });

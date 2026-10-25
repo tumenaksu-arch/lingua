@@ -7,7 +7,7 @@ import type { SrsCard, VocabItem } from '@/domain';
 import { playCorrect, playWrong } from '@/features/sound';
 import { useAppStore } from '@/features/store';
 import { speak } from '@/speech';
-import { Body, Button, Caption, Heading, ProgressBar, Screen, Title, radii, spacing, useTheme } from '@/ui';
+import { Body, Button, Caption, Heading, ProgressBar, Screen, Title, spacing, useTheme } from '@/ui';
 
 interface Deck { cards: SrsCard[]; vocab: Map<string, VocabItem>; }
 
@@ -109,7 +109,7 @@ export default function ReviewScreen() {
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: 'center', gap: spacing.lg },
   header: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, marginBottom: spacing.xl },
-  card: { flex: 1, borderWidth: 2, borderRadius: radii.xl, padding: spacing.xl, alignItems: 'center', justifyContent: 'center', gap: spacing.md, marginBottom: spacing.xl },
+  card: { flex: 1, borderWidth: 1, borderRadius: 10, padding: spacing.xl, alignItems: 'center', justifyContent: 'center', gap: spacing.md, marginBottom: spacing.xl },
   speaker: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   actions: { flexDirection: 'row', gap: spacing.md },
 });

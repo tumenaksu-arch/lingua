@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
-import { radii } from './theme';
 import { useReduceMotion } from './useReduceMotion';
 import { useTheme } from './useTheme';
 
@@ -16,7 +15,8 @@ export type ProgressBarProps = {
   style?: StyleProp<ViewStyle>;
 };
 
-export function ProgressBar({ progress, height = 16, color, trackColor, accessibilityLabel, style }: ProgressBarProps) {
+/** Thin flat progress track: border-coloured track, accent fill, no gloss. */
+export function ProgressBar({ progress, height = 6, color, trackColor, accessibilityLabel, style }: ProgressBarProps) {
   const { colors } = useTheme();
   const reduceMotion = useReduceMotion();
   const width = useSharedValue(clamp(progress));
@@ -38,9 +38,7 @@ export function ProgressBar({ progress, height = 16, color, trackColor, accessib
         style,
       ]}
     >
-      <Animated.View style={[styles.fill, { backgroundColor: color ?? colors.primary, borderRadius: height / 2 }, fill]}>
-        <View style={[styles.gloss, { height: height / 4, top: height / 4, borderRadius: height / 8 }]} />
-      </Animated.View>
+      <Animated.View style={[styles.fill, { backgroundColor: color ?? colors.primary, borderRadius: height / 2 }, fill]} />
     </View>
   );
 }
@@ -52,11 +50,4 @@ function clamp(v: number) {
 const styles = StyleSheet.create({
   track: { width: '100%', overflow: 'hidden' },
   fill: { height: '100%', minWidth: 0 },
-  gloss: {
-    position: 'absolute',
-    left: 8,
-    right: 8,
-    backgroundColor: 'rgba(255,255,255,0.3)',
-    borderRadius: radii.pill,
-  },
 });

@@ -3,7 +3,7 @@ import { StyleSheet, TextInput, View } from 'react-native';
 
 import { isAnswerCorrect, type ListenTypeExercise } from '@/domain';
 import { speak } from '@/speech';
-import { Heading, fontSize, radii, spacing, useSettingsStore, useTheme } from '@/ui';
+import { Heading, fontSize, spacing, useSettingsStore, useTheme } from '@/ui';
 
 import { CheckBar } from '../CheckBar';
 import { SpeakerButton } from './Prompt';
@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
   speakers: { flexDirection: 'row', alignItems: 'flex-end', gap: spacing.md, marginBottom: spacing.xl },
   input: {
     minHeight: 120,
-    borderWidth: 2,
-    borderRadius: radii.lg,
+    borderWidth: 1,
+    borderRadius: 10,
     padding: spacing.md,
     fontSize: fontSize.lg,
     textAlignVertical: 'top',

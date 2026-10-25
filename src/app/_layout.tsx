@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { Inter_300Light, Inter_400Regular } from '@expo-google-fonts/inter';
+import { SpaceGrotesk_400Regular } from '@expo-google-fonts/space-grotesk';
+import { SpaceMono_400Regular } from '@expo-google-fonts/space-mono';
+import { useFonts } from 'expo-font';
 
 import { useAppStore } from '@/features/store';
 import { ShellUpdateBanner, useAutoUpdate } from '@/platform/autoUpdate';
@@ -19,6 +23,14 @@ export default function RootLayout() {
   useSystemBars(colors.background, !isDark);
   const [error, setError] = useState<string | null>(null);
   useAutoUpdate();
+  // EduPilot typefaces, loaded once for the whole app. Rendering is NOT blocked:
+  // text uses the platform fallback until the fonts are ready.
+  useFonts({
+    SpaceGrotesk_400Regular,
+    Inter_300Light,
+    Inter_400Regular,
+    SpaceMono_400Regular,
+  });
 
   useEffect(() => {
     void hydrateTheme();

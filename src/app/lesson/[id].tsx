@@ -165,7 +165,7 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
 
   return (
     <Screen padding={0}>
-      <View style={styles.topBar}>
+      <View style={[styles.topBar, { borderBottomColor: colors.border }]}>
         <Pressable accessibilityRole="button" accessibilityLabel="Dersi kapat" onPress={confirmQuit} hitSlop={12} style={styles.close}>
           <Heading color={colors.textMuted}>✕</Heading>
         </Pressable>
@@ -189,8 +189,9 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
 }
 
 function Stat({ label, value, color }: { label: string; value: string; color: string }) {
+  const { colors } = useTheme();
   return (
-    <View style={[styles.stat, { borderColor: color }]} accessible accessibilityLabel={`${label}: ${value}`}>
+    <View style={[styles.stat, { borderColor: color, backgroundColor: colors.surface }]} accessible accessibilityLabel={`${label}: ${value}`}>
       <Caption center color={color}>{label}</Caption>
       <Heading center color={color}>{value}</Heading>
     </View>
@@ -233,12 +234,12 @@ function OutOfHearts({ lessonId }: { lessonId: string }) {
 }
 
 const styles = StyleSheet.create({
-  topBar: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingHorizontal: spacing.lg, paddingVertical: spacing.sm },
+  topBar: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingHorizontal: spacing.lg, paddingVertical: spacing.sm, borderBottomWidth: 1 },
   close: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   progress: { flex: 1 },
   body: { flex: 1, paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.lg },
   center: { flex: 1, justifyContent: 'center', gap: spacing.xl },
   statsRow: { flexDirection: 'row', gap: spacing.md, justifyContent: 'center' },
-  stat: { flex: 1, borderWidth: 2, borderRadius: 16, padding: spacing.md, gap: spacing.xs },
+  stat: { flex: 1, borderWidth: 1, borderRadius: 10, padding: spacing.md, gap: spacing.xs },
   actions: { gap: spacing.md },
 });
