@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
+import { Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import WelcomeScreen from '@/app/welcome';
@@ -78,7 +79,7 @@ describe('AuthForm', () => {
 });
 
 describe('WelcomeScreen', () => {
-  it('offers sign-in and lets the user continue without an account', async () => {
+  it('offers sign-in, the platform downloads, and continuing without an account', async () => {
     const metrics = { frame: { x: 0, y: 0, width: 390, height: 844 }, insets: { top: 0, left: 0, right: 0, bottom: 0 } };
     await render(
       <SafeAreaProvider initialMetrics={metrics}>
@@ -86,8 +87,31 @@ describe('WelcomeScreen', () => {
       </SafeAreaProvider>,
     );
     expect(screen.getByRole('button', { name: 'Giriş yap' })).toBeTruthy();
-    expect(screen.getByText('İngilizce', { exact: false })).toBeTruthy();
+    expect(screen.getAllByText('İngilizce', { exact: false }).length).toBeGreaterThan(0);
+    // EduPilot-style sections, with the downloadable platforms outside the Android shell.
+    for (const label of ['Android uygulamasını indir', "Lingua'yı cihaza yükle (PWA)", 'Kurulum yardımını göster']) {
+      expect(screen.getByRole('button', { name: label })).toBeTruthy();
+    }
     await press('Hesapsız dene →');
     expect(continueAsGuest).toHaveBeenCalledTimes(1);
+  });
+
+  it('hides the download/install platforms inside the Android shell (it already is the app)', async () => {
+    const os = Platform.OS;
+    Object.defineProperty(Platform, 'OS', { get: () => 'web', configurable: true });
+    (globalThis as { Capacitor?: unknown }).Capacitor = { isNativePlatform: () => true, Plugins: {} };
+    try {
+      const metrics = { frame: { x: 0, y: 0, width: 390, height: 844 }, insets: { top: 0, left: 0, right: 0, bottom: 0 } };
+      await render(
+        <SafeAreaProvider initialMetrics={metrics}>
+          <WelcomeScreen />
+        </SafeAreaProvider>,
+      );
+      expect(screen.queryByRole('button', { name: 'Android uygulamasını indir' })).toBeNull();
+      expect(screen.getByRole('button', { name: 'Giriş yap' })).toBeTruthy();
+    } finally {
+      delete (globalThis as { Capacitor?: unknown }).Capacitor;
+      Object.defineProperty(Platform, 'OS', { get: () => os, configurable: true });
+    }
   });
 });
