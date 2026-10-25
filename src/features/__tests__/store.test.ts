@@ -5,7 +5,8 @@
 import { FakeDb } from '@/data/__tests__/fakeDb';
 import { setDbForTesting } from '@/data';
 import { courses } from '@/content';
-import type { LessonResult } from '@/domain';
+import type { Exercise, LessonResult } from '@/domain';
+import { answer, createLesson, isFinished, toResult } from '@/domain/lesson';
 import { activeLessonId, lessonOrder, useAppStore } from '../store';
 
 // db.ts imports expo-sqlite (native); the store is pointed at FakeDb via setDbForTesting.
@@ -21,6 +22,7 @@ function resultFor(lessonId: string, vocabIds: string[], allCorrect = true): Les
     correct: allCorrect ? 8 : 6,
     total: 8,
     mistakes: allCorrect ? [] : ['x1', 'x2'],
+    mistakesByType: {},
     durationMs: 60_000,
     vocabOutcomes: Object.fromEntries(vocabIds.map((v, i) => [v, allCorrect || i % 2 === 0])),
   };
@@ -90,6 +92,55 @@ test('finishLesson with mistakes: wrong vocab resets to reps 0 and all cards are
   expect(useAppStore.getState().dueCount).toBe(0);
   timeTravel(DAY + 1000);
   expect(await useAppStore.getState().loadDueCards()).toHaveLength(firstLesson.vocabIds.length);
+});
+
+describe('lesson_completed event payload (teacher "Zorlanılanlar")', () => {
+  // Real exercises answered through the lesson state machine, so mistakesByType
+  // is produced by toResult exactly as in the lesson flow (practice/repeat included).
+  const exercises: Exercise[] = [
+    { id: 'e1', type: 'translate_build', promptLang: 'tr', prompt: 'p', bank: ['a'], answers: ['a'] },
+    { id: 'e2', type: 'translate_build', promptLang: 'tr', prompt: 'p', bank: ['b'], answers: ['b'] },
+    { id: 'e3', type: 'listen_type', promptLang: 'tr', audioText: 'x', audioLang: 'en', answers: ['x'] },
+    { id: 'e4', type: 'select_translation', promptLang: 'tr', prompt: 'p', options: ['a', 'b'], correctIndex: 0 },
+  ];
+
+  /** Runs the lesson once; ids in `wrongOnce` are answered wrong on the first pass (then re-answered right). */
+  function runLesson(wrongOnce: string[]): LessonResult {
+    let s = createLesson(firstLesson.id, exercises, Infinity);
+    const wrong = new Set(wrongOnce);
+    while (!isFinished(s)) {
+      const id = s.queue[0]!;
+      s = answer(s, id, !(s.answered < exercises.length && wrong.has(id)));
+    }
+    return toResult(s, 60_000);
+  }
+
+  function eventPayload(): Record<string, unknown> {
+    const row = (db.tables.events ?? []).find((r) => r.type === 'lesson_completed');
+    expect(row).toBeTruthy();
+    return JSON.parse(row!.payload as string) as Record<string, unknown>;
+  }
+
+  test('payload carries lessonId and mistakes_by_type counted per exercise type', async () => {
+    const result = runLesson(['e1', 'e2', 'e3']);
+    expect(result.mistakesByType).toEqual({ translate_build: 2, listen_type: 1 });
+    await useAppStore.getState().finishLesson(result);
+
+    const payload = eventPayload();
+    expect(payload.lessonId).toBe(firstLesson.id);
+    expect(payload.mistakes_by_type).toEqual({ translate_build: 2, listen_type: 1 });
+    expect(payload.correct).toBe(result.correct);
+    expect(payload.total).toBe(result.total);
+    expect(payload.perfect).toBe(false);
+  });
+
+  test('perfect lesson sends an empty mistakes_by_type', async () => {
+    await useAppStore.getState().finishLesson(runLesson([]));
+    const payload = eventPayload();
+    expect(payload.lessonId).toBe(firstLesson.id);
+    expect(payload.mistakes_by_type).toEqual({});
+    expect(payload.perfect).toBe(true);
+  });
 });
 
 test('reviewCard reschedules a due card: correct → 6 days, wrong → 1 day', async () => {
