@@ -1,92 +1,102 @@
 /**
- * Design tokens — Duolingo-inspired, in a light and a dark palette.
+ * Design tokens — EduPilot design language (dark navy + apricot accent, teal success,
+ * flat hairline-bordered surfaces), in a dark (default) and a light palette.
  * `colors` is the light palette (kept as a static export for code that cannot
  * use hooks); components should read the active palette through `useTheme()`.
  *
  * Contrast (WCAG 2.1 AA, computed): body text ≥ 4.5:1 and button labels
- * (19px bold = "large text") ≥ 3:1 in both palettes — see docs in useTheme.ts.
+ * (treated as large text) ≥ 3:1 in both palettes — see docs in useTheme.ts.
  */
 
 export const palette = {
-  green: '#58CC02',
-  greenDark: '#46A302',
-  greenDeep: '#2F7A00',
-  greenLight: '#D7FFB8',
-  greenNight: '#1F3B13',
-  blue: '#1CB0F6',
-  blueDark: '#1899D6',
-  blueDeep: '#0E7CB8',
-  blueText: '#0B6698',
-  blueLight: '#DDF4FF',
-  blueNight: '#12303F',
-  red: '#FF4B4B',
-  redDark: '#EA2B2B',
-  redDeep: '#D32020',
-  redText: '#B81C1C',
-  redLight: '#FFDFE0',
-  redNight: '#3E1A1A',
-  yellow: '#FFC800',
-  yellowDark: '#E5B400',
-  yellowText: '#8A6B00',
-  orange: '#FF9600',
-  orangeDark: '#E58700',
-  orangeText: '#B35200',
-  purple: '#CE82FF',
-  purpleDark: '#A560E8',
-  white: '#FFFFFF',
+  // EduPilot dark neutrals
+  navy: '#0e1220',
+  navySurface: '#161c30',
+  navyDisabled: '#1f2538',
+  navyBorder: '#262c40',
+  navyBorderStrong: '#3a4157',
+  slate: '#5b6480',
+  mist: '#8e97b5',
+  cloud: '#e8eaf2',
+  // apricot accent
+  apricot: '#d18b63',
+  apricotDeep: '#a86a47',
+  apricotDark: '#b8714a',
+  apricotDeeper: '#96532f',
+  apricotInk: '#8a4f2e',
+  apricotPale: '#2a2120',
+  // deep blue secondary
+  blue: '#2e5894',
+  blueDeep: '#244573',
+  bluePale: '#17223a',
+  blueLight: '#8fb0e6',
+  // teal success (deliberately NOT Duolingo green)
+  teal: '#4fb286',
+  tealDark: '#2f8f66',
+  tealPale: '#13291f',
+  tealLight: '#7fd1aa',
+  tealInk: '#20684a',
+  // coral danger
+  coral: '#e5675b',
+  coralDark: '#c94f44',
+  coralDeeper: '#93352c',
+  coralPale: '#2e1716',
+  coralLight: '#f08f85',
+  coralInk: '#a03a31',
+  // amber warning / streak / xp
+  amber: '#e0a24a',
+  amberLight: '#f0bf73',
+  amberInk: '#8a6420',
+  // light-palette-only neutrals & tints
+  paper: '#f6f4f0',
+  sand: '#e3dfd6',
+  stone: '#cfc9bd',
+  porcelain: '#e9e5dc',
+  porcelainText: '#9a948a',
+  apricotWash: '#f4e8de',
+  blueWash: '#e8eef8',
+  tealWash: '#e2f0e9',
+  coralWash: '#f8e4e1',
+  white: '#ffffff',
   black: '#000000',
-  navy: '#131F24',
-  navySurface: '#202F36',
-  navyBorder: '#37464F',
-  navyBorderStrong: '#4A5A64',
-  navyDisabled: '#2A3A42',
-  navyDisabledText: '#6B7A82',
-  snow: '#F1F7FB',
-  gray50: '#F7F7F7',
-  gray100: '#E5E5E5',
-  gray200: '#CFCFCF',
-  gray300: '#AFAFAF',
-  gray400: '#6F6F6F',
-  gray500: '#4B4B4B',
-  gray600: '#3C3C3C',
 } as const;
 
 export interface ColorTokens {
-  /** Brand accents (fills for non-text UI such as path nodes and progress bars). */
+  /** Brand accent (fills: progress, active node, selected states). */
   primary: string;
   primaryShadow: string;
   primaryTint: string;
-  /** Text colour that passes AA on `primaryTint` / background. */
+  /** Accent text on background/tint (≥ 4.5:1). */
   primaryText: string;
   secondary: string;
-  secondaryShadow: string;
   secondaryTint: string;
   secondaryText: string;
+  /** Correct answers (teal-green, not Duolingo green). */
+  success: string;
+  successTint: string;
+  successText: string;
   danger: string;
-  dangerShadow: string;
   dangerTint: string;
   dangerText: string;
   warning: string;
-  warningShadow: string;
   streak: string;
-  streakShadow: string;
-  accent: string;
-  accentShadow: string;
-  /** Button faces are slightly darker than the accents so white 19px-bold labels reach ≥ 3:1. */
-  buttonPrimary: string;
-  buttonPrimaryShadow: string;
-  buttonSecondary: string;
-  buttonSecondaryShadow: string;
-  buttonDanger: string;
-  buttonDangerShadow: string;
-  /** Stat chip text colours (≥ 4.5:1 on background). */
   streakText: string;
   xpText: string;
   heartsText: string;
+  buttonPrimary: string;
+  /** Label colour for the primary button face (navy on apricot in dark, white in light). */
+  buttonPrimaryText: string;
+  buttonSecondary: string;
+  /** Darker edge shade of the secondary button face (used by a few custom controls). */
+  buttonSecondaryShadow: string;
+  buttonDanger: string;
+  /** Darker edge shade of the danger button face (used by a few custom controls). */
+  buttonDangerShadow: string;
   text: string;
   textMuted: string;
+  /** White text for coloured faces (secondary/danger buttons, badges). */
   textOnColor: string;
-  /** Dark text for bright brand fills (green/yellow/blue headers and banners). */
+  /** Dark navy text for bright brand fills (primary face, warning banners). */
   textOnBrand: string;
   border: string;
   borderStrong: string;
@@ -95,72 +105,86 @@ export interface ColorTokens {
   disabled: string;
   disabledText: string;
   locked: string;
-  lockedShadow: string;
 }
 
+/** Light palette — "Açık" theme, same EduPilot design language. */
 export const colors: ColorTokens = {
-  primary: palette.green,
-  primaryShadow: palette.greenDark,
-  primaryTint: palette.greenLight,
-  primaryText: palette.greenDeep,
+  primary: palette.apricotDark,
+  primaryShadow: palette.apricotDeeper,
+  primaryTint: palette.apricotWash,
+  primaryText: palette.apricotInk,
   secondary: palette.blue,
-  secondaryShadow: palette.blueDark,
-  secondaryTint: palette.blueLight,
-  secondaryText: palette.blueText,
-  danger: palette.red,
-  dangerShadow: palette.redDark,
-  dangerTint: palette.redLight,
-  dangerText: palette.redText,
-  warning: palette.yellow,
-  warningShadow: palette.yellowDark,
-  streak: palette.orange,
-  streakShadow: palette.orangeDark,
-  accent: palette.purple,
-  accentShadow: palette.purpleDark,
-  buttonPrimary: palette.greenDark,
-  buttonPrimaryShadow: palette.greenDeep,
-  buttonSecondary: palette.blueDark,
+  secondaryTint: palette.blueWash,
+  secondaryText: palette.blue,
+  success: palette.tealDark,
+  successTint: palette.tealWash,
+  successText: palette.tealInk,
+  danger: palette.coralDark,
+  dangerTint: palette.coralWash,
+  dangerText: palette.coralInk,
+  warning: palette.amber,
+  streak: palette.amber,
+  streakText: palette.amberInk,
+  xpText: palette.apricotInk,
+  heartsText: '#b03e34',
+  buttonPrimary: palette.apricotDark,
+  // White on #b8714a is 3.82:1 ≥ 3:1 (large-text threshold) — see useTheme.ts.
+  buttonPrimaryText: palette.white,
+  buttonSecondary: palette.blue,
   buttonSecondaryShadow: palette.blueDeep,
-  buttonDanger: palette.redDark,
-  buttonDangerShadow: palette.redText,
-  streakText: palette.orangeText,
-  xpText: palette.yellowText,
-  heartsText: palette.redDeep,
-  text: palette.gray500,
-  textMuted: palette.gray400,
+  buttonDanger: palette.coralDark,
+  buttonDangerShadow: '#a03e34',
+  text: palette.navy,
+  textMuted: palette.slate,
   textOnColor: palette.white,
   textOnBrand: palette.navy,
-  border: palette.gray100,
-  borderStrong: palette.gray200,
-  background: palette.white,
-  surface: palette.gray50,
-  disabled: palette.gray100,
-  disabledText: palette.gray300,
-  locked: palette.gray100,
-  lockedShadow: palette.gray200,
+  border: palette.sand,
+  borderStrong: palette.stone,
+  background: palette.paper,
+  surface: palette.white,
+  disabled: palette.porcelain,
+  disabledText: palette.porcelainText,
+  locked: palette.porcelain,
 };
 
+/** Dark palette — the DEFAULT theme (EduPilot navy). */
 export const darkColors: ColorTokens = {
-  ...colors,
-  primaryTint: palette.greenNight,
-  primaryText: palette.green,
-  secondaryTint: palette.blueNight,
-  secondaryText: palette.blue,
-  dangerTint: palette.redNight,
-  dangerText: palette.red,
-  streakText: palette.orange,
-  xpText: palette.yellow,
-  heartsText: palette.red,
-  text: palette.snow,
-  textMuted: palette.gray300,
+  primary: palette.apricot,
+  primaryShadow: palette.apricotDeep,
+  primaryTint: palette.apricotPale,
+  primaryText: '#e0a684',
+  secondary: palette.blue,
+  secondaryTint: palette.bluePale,
+  secondaryText: palette.blueLight,
+  success: palette.teal,
+  successTint: palette.tealPale,
+  successText: palette.tealLight,
+  danger: palette.coral,
+  dangerTint: palette.coralPale,
+  dangerText: palette.coralLight,
+  warning: palette.amber,
+  streak: palette.amber,
+  streakText: palette.amberLight,
+  xpText: '#e0a684',
+  heartsText: palette.coralLight,
+  buttonPrimary: palette.apricot,
+  // Navy on #d18b63 is 6.74:1 — the primary label MUST be dark, not white.
+  buttonPrimaryText: palette.navy,
+  buttonSecondary: palette.blue,
+  buttonSecondaryShadow: palette.blueDeep,
+  buttonDanger: palette.coralDark,
+  buttonDangerShadow: palette.coralDeeper,
+  text: palette.cloud,
+  textMuted: palette.mist,
+  textOnColor: palette.white,
+  textOnBrand: palette.navy,
   border: palette.navyBorder,
   borderStrong: palette.navyBorderStrong,
   background: palette.navy,
   surface: palette.navySurface,
   disabled: palette.navyDisabled,
-  disabledText: palette.navyDisabledText,
-  locked: palette.navyBorder,
-  lockedShadow: palette.navyDisabled,
+  disabledText: palette.slate,
+  locked: palette.navyDisabled,
 };
 
 export const spacing = {
@@ -197,6 +221,18 @@ export const fontWeight = {
   black: '800',
 } as const;
 
+/** Bundled EduPilot font families, loaded once in src/app/_layout.tsx (platform fallback until then). */
+export const fonts = {
+  /** Display / headings — Space Grotesk. */
+  display: 'SpaceGrotesk_400Regular',
+  /** Body — Inter. */
+  body: 'Inter_400Regular',
+  /** Light body (landing page lead text). */
+  bodyLight: 'Inter_300Light',
+  /** Labels, numerals, captions — Space Mono. */
+  mono: 'SpaceMono_400Regular',
+} as const;
+
 export const shadows = {
   card: {
     shadowColor: palette.black,
@@ -214,8 +250,6 @@ export const shadows = {
   },
 } as const;
 
-/** Depth of the "3D" bottom edge on pressable elements. */
-export const PRESS_DEPTH = 4;
 /** Minimum touch target (a11y). */
 export const MIN_TOUCH = 44;
 /** Cap for dynamic type on dense chips so labels do not overflow their cards. */

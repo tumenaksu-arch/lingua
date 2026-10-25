@@ -1,6 +1,6 @@
 import { StyleSheet, Text, type TextProps } from 'react-native';
 
-import { fontSize, fontWeight } from './theme';
+import { fontSize, fonts } from './theme';
 import { useTheme } from './useTheme';
 
 type Props = TextProps & { color?: string; center?: boolean };
@@ -18,10 +18,13 @@ function make(base: object, muted = false) {
 }
 
 const styles = StyleSheet.create({
-  title: { fontSize: fontSize.xl, fontWeight: fontWeight.black },
-  heading: { fontSize: fontSize.lg, fontWeight: fontWeight.bold },
-  body: { fontSize: fontSize.md, fontWeight: fontWeight.regular, lineHeight: 24 },
-  caption: { fontSize: fontSize.sm, fontWeight: fontWeight.bold, letterSpacing: 0.8 },
+  // Title/Heading: Space Grotesk display face (EduPilot); falls back to the platform
+  // font until the bundled fonts are loaded in src/app/_layout.tsx.
+  title: { fontSize: 28, letterSpacing: -0.5, fontFamily: fonts.display },
+  heading: { fontSize: 20, fontFamily: fonts.display },
+  body: { fontSize: fontSize.md, lineHeight: 24, fontFamily: fonts.body },
+  // Mono caption, uppercase-style tracking; the text content is left as passed.
+  caption: { fontSize: fontSize.xs, letterSpacing: 1.5, fontFamily: fonts.mono },
   center: { textAlign: 'center' },
 });
 

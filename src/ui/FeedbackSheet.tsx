@@ -5,7 +5,7 @@ import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown } from 'react-nati
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from './Button';
-import { fontSize, fontWeight, radii, shadows, spacing } from './theme';
+import { fonts, radii, spacing } from './theme';
 import { useReduceMotion } from './useReduceMotion';
 import { useTheme } from './useTheme';
 
@@ -21,8 +21,9 @@ export type FeedbackSheetProps = {
 };
 
 /**
- * Slides up from the bottom after an answer. Green for correct, red for wrong,
- * with a CONTINUE button that matches the outcome colour.
+ * Slides up from the bottom after an answer. Teal-tinted for correct, red-tinted
+ * for wrong, with a flat hairline top border and a CONTINUE button that matches
+ * the outcome colour.
  */
 export function FeedbackSheet({
   result,
@@ -47,8 +48,8 @@ export function FeedbackSheet({
   }, [result, correct, headline, detail]);
 
   if (!result) return null;
-  const tint = correct ? colors.primaryTint : colors.dangerTint;
-  const ink = correct ? colors.primaryText : colors.dangerText;
+  const tint = correct ? colors.successTint : colors.dangerTint;
+  const ink = correct ? colors.successText : colors.dangerText;
 
   return (
     <Animated.View
@@ -56,7 +57,7 @@ export function FeedbackSheet({
       exiting={reduceMotion ? FadeOut.duration(100) : SlideOutDown.duration(200)}
       accessibilityLiveRegion="assertive"
       accessibilityRole="alert"
-      style={[styles.sheet, { backgroundColor: tint, paddingBottom: insets.bottom + spacing.lg }]}
+      style={[styles.sheet, { backgroundColor: tint, borderTopColor: colors.borderStrong, paddingBottom: insets.bottom + spacing.lg }]}
     >
       <View style={styles.header}>
         <Text style={styles.icon} accessible={false}>
@@ -78,16 +79,16 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    borderTopWidth: 1,
     borderTopLeftRadius: radii.xl,
     borderTopRightRadius: radii.xl,
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.xl,
     gap: spacing.lg,
-    ...shadows.sheet,
   },
   header: { flexDirection: 'row', gap: spacing.md, alignItems: 'flex-start' },
-  icon: { fontSize: fontSize.xl },
+  icon: { fontSize: 24 },
   textCol: { flex: 1, gap: spacing.xs },
-  title: { fontSize: fontSize.xl, fontWeight: fontWeight.black },
-  detail: { fontSize: fontSize.md, fontWeight: fontWeight.medium, lineHeight: 22 },
+  title: { fontSize: 24, fontFamily: fonts.display },
+  detail: { fontSize: 16, lineHeight: 22, fontFamily: fonts.body },
 });

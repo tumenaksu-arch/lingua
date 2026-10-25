@@ -16,15 +16,19 @@ function isPreference(v: unknown): v is ThemePreference {
   return v === 'system' || v === 'light' || v === 'dark';
 }
 
-/** Theme override, persisted per device. 'system' follows the OS appearance. */
+/**
+ * Theme override, persisted per device. 'system' follows the OS appearance.
+ * When nothing is stored the default is 'dark' (the EduPilot default theme);
+ * a stored value is always respected.
+ */
 export const useThemeStore = create<ThemeState>((set, get) => ({
-  preference: 'system',
+  preference: 'dark',
   hydrated: false,
   async hydrate() {
     if (get().hydrated) return;
     try {
       const v = await AsyncStorage.getItem(KEY);
-      set({ preference: isPreference(v) ? v : 'system', hydrated: true });
+      set({ preference: isPreference(v) ? v : 'dark', hydrated: true });
     } catch {
       set({ hydrated: true });
     }

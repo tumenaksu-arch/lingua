@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
-import { MAX_FONT_SCALE_DENSE, fontSize, fontWeight, spacing } from './theme';
+import { MAX_FONT_SCALE_DENSE, fontSize, fonts, spacing } from './theme';
 import { useTheme } from './useTheme';
 
 type ChipProps = { style?: StyleProp<ViewStyle> };
@@ -70,5 +70,5 @@ const styles = StyleSheet.create({
     minHeight: 32,
   },
   icon: { fontSize: fontSize.lg },
-  value: { fontSize: fontSize.md, fontWeight: fontWeight.bold },
+  value: { fontSize: fontSize.md, fontFamily: fonts.mono },
 });

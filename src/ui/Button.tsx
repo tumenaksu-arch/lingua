@@ -11,7 +11,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 
-import { MIN_TOUCH, PRESS_DEPTH, fontSize, fontWeight, radii, spacing, type ColorTokens } from './theme';
+import { MIN_TOUCH, fonts, radii, spacing, type ColorTokens } from './theme';
 import { upperTr } from './upperTr';
 import { useTheme } from './useTheme';
 
@@ -28,22 +28,22 @@ export type ButtonProps = Omit<PressableProps, 'style' | 'children'> & {
   style?: StyleProp<ViewStyle>;
 };
 
-function faceFor(variant: ButtonVariant, c: ColorTokens): { bg: string; shadow: string; text: string; border?: string } {
+function faceFor(variant: ButtonVariant, c: ColorTokens): { bg: string; text: string; border?: string } {
   switch (variant) {
     case 'primary':
-      return { bg: c.buttonPrimary, shadow: c.buttonPrimaryShadow, text: c.textOnColor };
+      return { bg: c.buttonPrimary, text: c.buttonPrimaryText };
     case 'secondary':
-      return { bg: c.buttonSecondary, shadow: c.buttonSecondaryShadow, text: c.textOnColor };
+      return { bg: c.buttonSecondary, text: c.textOnColor };
     case 'danger':
-      return { bg: c.buttonDanger, shadow: c.buttonDangerShadow, text: c.textOnColor };
+      return { bg: c.buttonDanger, text: c.textOnColor };
     case 'outline':
-      return { bg: c.background, shadow: c.border, text: c.secondaryText, border: c.border };
+      return { bg: 'transparent', text: c.text, border: c.borderStrong };
   }
 }
 
 /**
- * Duolingo-style 3D button: a solid bottom edge that collapses when pressed,
- * so the face appears to sink into the shadow.
+ * Flat EduPilot pill button: no 3D bottom edge — the pressed state is a simple
+ * opacity dip. Label is a Turkish-uppercased Space Mono caption.
  */
 export function Button({
   title,
@@ -84,31 +84,27 @@ export function Button({
       style={[block ? styles.block : null, style]}
       {...rest}
     >
-      <View style={[styles.shell, { backgroundColor: inactive ? colors.disabled : face.shadow }]}>
-        <View
-          style={[
-            styles.face,
-            {
-              backgroundColor: inactive ? colors.disabled : face.bg,
-              borderColor: face.border ?? 'transparent',
-              borderWidth: face.border ? 2 : 0,
-              // pressed: face drops onto the shadow edge
-              transform: [{ translateY: pressed ? PRESS_DEPTH : 0 }],
-              marginBottom: pressed ? 0 : PRESS_DEPTH,
-            },
-          ]}
-        >
-          {loading ? (
-            <ActivityIndicator color={face.text} />
-          ) : (
-            <Text
-              style={[styles.label, { color: inactive ? colors.disabledText : face.text }]}
-              maxFontSizeMultiplier={1.6}
-            >
-              {upperTr(title)}
-            </Text>
-          )}
-        </View>
+      <View
+        style={[
+          styles.face,
+          {
+            backgroundColor: inactive ? colors.disabled : face.bg,
+            borderColor: face.border ?? 'transparent',
+            borderWidth: face.border ? 1 : 0,
+            opacity: pressed && !inactive ? 0.8 : 1,
+          },
+        ]}
+      >
+        {loading ? (
+          <ActivityIndicator color={face.text} />
+        ) : (
+          <Text
+            style={[styles.label, { color: inactive ? colors.disabledText : face.text }]}
+            maxFontSizeMultiplier={1.6}
+          >
+            {upperTr(title)}
+          </Text>
+        )}
       </View>
     </Pressable>
   );
@@ -116,15 +112,12 @@ export function Button({
 
 const styles = StyleSheet.create({
   block: { alignSelf: 'stretch' },
-  shell: { borderRadius: radii.lg },
   face: {
-    minHeight: MIN_TOUCH + PRESS_DEPTH,
-    borderRadius: radii.lg,
+    minHeight: Math.max(MIN_TOUCH, 48),
+    borderRadius: radii.pill,
     paddingHorizontal: spacing.xl,
-    paddingVertical: spacing.md,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  // 19px bold counts as WCAG "large text", so white on the button faces needs ≥ 3:1.
-  label: { fontSize: fontSize.lg, fontWeight: fontWeight.bold, letterSpacing: 0.8, textAlign: 'center' },
+  label: { fontSize: 13, letterSpacing: 1.5, fontFamily: fonts.mono, textAlign: 'center' },
 });
