@@ -1,6 +1,7 @@
 # Madde 5 — Öğretmen / Sınıf (tasarım, onay bekliyor)
 
 Kararlar (kullanıcı, 2026-10-26):
+- Tek yönlü **sınıf duyurusu** (öğretmen → sınıf, yanıt yok) eklendi; EduPilot Sınıf Defteri bağlantısı (ödev aktarma) SONRAYA bırakıldı.
 - Panel Love-Vox içinde; EduPilot panelinde yalnızca kısayol kartı.
 - Öğrenci takma adla ve e-postasız katılır.
 - İlk sürümde dört özellik var: ilerleme özeti, ödev, zorlanılan konular, sınıf ligi.
@@ -11,7 +12,7 @@ Kararlar (kullanıcı, 2026-10-26):
 2. "Sınıf aç" der ve sınıf adını (ör. "9-A İngilizce") ile kursu seçer.
 3. "Velileri bilgilendirdim; öğrenciler yalnız takma adla katılır" kutusunu işaretlemek zorunludur.
 4. Sistem 6 haneli bir sınıf kodu üretir. Kod büyük gösterilir; kopyalanabilir ve paylaşılabilir.
-5. Sınıf ekranında dört sekme vardır: **Öğrenciler**, **Ödevler**, **Zorlanılanlar**, **Lig**.
+5. Sınıf ekranında beş sekme vardır: **Öğrenciler**, **Ödevler**, **Duyurular**, **Zorlanılanlar**, **Lig**. Duyuru en çok 500 karakterdir, düzenlenmez (silinip yeniden yazılır), öğrenciler yanıt veremez.
 6. Öğretmen öğrenciyi sınıftan çıkarabilir, sınıfı arşivleyebilir (arşivlemek üyelikleri siler) ve kodu yenileyebilir.
 
 **Öğrenci**
@@ -19,7 +20,7 @@ Kararlar (kullanıcı, 2026-10-26):
 2. E-posta istenmez: Supabase'in anonim hesabı kullanılır.
 3. Katılırken kısa bir bilgi gösterilir: "Öğretmenin takma adını ve ilerlemeni görecek."
 4. Kurs, sınıfın kursuna ayarlanır.
-5. Ana sayfada ödevler görev kartı olarak görünür (örneğin "Ödev: Ünite 3 — Cuma'ya kadar").
+5. Ana sayfada ödevler görev kartı olarak görünür (örneğin "Ödev: Ünite 3 — Cuma'ya kadar"); son duyuru da kartta gösterilir, tamamı sınıf ekranındadır.
 6. Profilde "Sınıftan ayrıl ve sınıf verimi sil" seçeneği vardır.
 7. Öğrenci isterse sonradan e-posta ekleyip hesabını kalıcı yapabilir. Eklemezse cihaz verisi silinince hesap kaybolur; öğretmen aynı kodla yeniden ekleyebilir.
 8. Anonim öğrenciler genel Lig'de ve arkadaş sisteminde görünmez; yalnızca sınıf liginde yer alır (en az veri).
@@ -35,6 +36,7 @@ Tablolar:
 | `classes` | id, teacher_id, ad, course_id, join_code (benzersiz, 6 haneli), veli_bilgilendirildi (true olmak zorunda), created_at, archived_at | Yalnızca sahibi öğretmen |
 | `class_members` | class_id, user_id, takma_ad (3–20 karakter), joined_at | Öğrenci kendi satırını; öğretmen kendi sınıfının üyelerini |
 | `assignments` | id, class_id, unit_id, son_tarih, created_at | Öğretmen yazar; sınıf üyeleri okur |
+| `class_announcements` (0003) | id, class_id, metin (1–500), created_at | Öğretmen yazar/siler; sınıf üyeleri okur; düzenleme yok |
 
 Ayrıca:
 - **Katılma:** Kod listelenemez. Katılma, `join_class(code, takma_ad)` adlı korumalı bir fonksiyonla yapılır.
