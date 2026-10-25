@@ -36,6 +36,34 @@ rules_version = '2';
 //   - payload: map (required)
 //   - created_at, updated_at: string (required, ISO date)
 //
+// Roadmap item 3b — nickname + weekly leaderboard + friends (KVKK: no e-mail,
+// no personal data beyond the nickname is stored in these docs).
+//
+// Collection: users/{uid}/profile        Document ID: "current"
+//   - user_id: string (required, immutable, == uid)
+//   - nickname: string (required, 3..20 chars, ^[A-Za-z0-9ÇĞİÖŞÜçğıöşu_. -]+$)
+//   - invite_code: string (required, 6 chars from A-Z minus I/O + digits 2-9)
+//   - updated_at: string (required, ISO date)
+//   Owner read/write only.
+//
+// Collection: invites                    Document ID: {code} (6-char invite code)
+//   - uid: string (required, immutable, == auth.uid of creator)
+//   - nickname: string (required, same pattern as profile nickname)
+//   - created_at: string (required, ISO date)
+//   Get by any signed-in user; list never; create only by its owner; update/delete only owner.
+//
+// Collection: leaderboard/{weekId}/entries Document ID: {uid}   (weekId = YYYY-Www, ISO-8601)
+//   - nickname: string (required, same pattern as profile nickname)
+//   - xp: number (required, 0..100000)
+//   - updated_at: string (required, ISO date)
+//   Get + list(query) by any signed-in user; create/update only by owner uid; delete never.
+//
+// Collection: users/{uid}/friends        Document ID: {friendUid}   (friendUid != uid)
+//   - friend_uid: string (required, immutable, == document id)
+//   - nickname: string (required, same pattern as profile nickname)
+//   - added_at: string (required, ISO date)
+//   Owner read/write/delete only; no one else can read the friend list.
+//
 // ===============================================================
 
 service cloud.firestore {
@@ -139,6 +167,59 @@ service cloud.firestore {
     }
 
     // ===============================================================
+    // Social validators (roadmap item 3b)
+    // ===============================================================
+    function isValidNickname(v) {
+      return v is string && v.size() >= 3 && v.size() <= 20
+        && v.matches('^[A-Za-z0-9ÇĞİÖŞÜçğıöşu_. -]+$');
+    }
+
+    function isValidInviteCode(v) {
+      // 6 chars from A-Z minus I/O plus digits 2-9 (unambiguous alphabet).
+      return v is string && v.matches('^[A-HJ-NP-Z2-9]{6}$');
+    }
+
+    function isValidWeekId(v) {
+      // ISO-8601 week id YYYY-Www (Monday start, computed in UTC), weeks 01..53.
+      return v is string && v.matches('^\\d{4}-W(0[1-9]|[1-4]\\d|5[0-3])$');
+    }
+
+    function isValidProfile(userId) {
+      return hasOnlyAllowedFields(['user_id', 'nickname', 'invite_code', 'updated_at'])
+        && hasRequiredFields(['user_id', 'nickname', 'invite_code', 'updated_at'])
+        && ownsRow(userId)
+        && isValidNickname(data().nickname)
+        && isValidInviteCode(data().invite_code)
+        && isIsoDate(data().updated_at);
+    }
+
+    function isValidInvite(code) {
+      return hasOnlyAllowedFields(['uid', 'nickname', 'created_at'])
+        && hasRequiredFields(['uid', 'nickname', 'created_at'])
+        && data().uid is string && data().uid == request.auth.uid
+        && isValidInviteCode(code)
+        && isValidNickname(data().nickname)
+        && isIsoDate(data().created_at);
+    }
+
+    function isValidLeaderboardEntry(uid) {
+      return hasOnlyAllowedFields(['nickname', 'xp', 'updated_at'])
+        && hasRequiredFields(['nickname', 'xp', 'updated_at'])
+        && isValidNickname(data().nickname)
+        && data().xp is number && data().xp >= 0 && data().xp <= 100000
+        && isIsoDate(data().updated_at);
+    }
+
+    function isValidFriend(userId, friendUid) {
+      return hasOnlyAllowedFields(['friend_uid', 'nickname', 'added_at'])
+        && hasRequiredFields(['friend_uid', 'nickname', 'added_at'])
+        && data().friend_uid is string && data().friend_uid == friendUid
+        && friendUid != userId
+        && isValidNickname(data().nickname)
+        && isIsoDate(data().added_at);
+    }
+
+    // ===============================================================
     // Rules — default deny; only the owner touches their own subtree
     // ===============================================================
     match /users/{userId} {
@@ -172,6 +253,45 @@ service cloud.firestore {
         // so updates are allowed only when they keep the same validated shape.
         allow update: if isOwner(userId) && isValidEvent(userId, eventId)
                       && data().created_at == resource.data.created_at;
+        allow delete: if false;
+      }
+
+      // Roadmap item 3b: nickname + invite code. Owner only; no e-mail stored.
+      match /profile/{docId} {
+        allow read: if isOwner(userId);
+        allow create, update: if isOwner(userId) && docId == 'current' && isValidProfile(userId);
+        allow delete: if false;
+      }
+
+      // Roadmap item 3b: friend list. Owner only; a user can never add themselves.
+      match /friends/{friendUid} {
+        allow read: if isOwner(userId);
+        allow create, update: if isOwner(userId) && isValidFriend(userId, friendUid);
+        allow delete: if isOwner(userId);
+      }
+    }
+
+    // Invite codes: anyone signed in can resolve a code; only the owner can
+    // create/update their own invite doc; listing all codes is never allowed.
+    match /invites/{code} {
+      allow get: if isAuthenticated();
+      allow list: if false;
+      allow create: if isValidInvite(code);
+      allow update: if isAuthenticated() && isValidInvite(code)
+                    && request.auth.uid == resource.data.uid;
+      allow delete: if isAuthenticated() && request.auth.uid == resource.data.uid;
+    }
+
+    // Weekly leaderboard: signed-in users can read and query; each player may
+    // only create/update their own entry under a valid ISO week id.
+    match /leaderboard/{weekId} {
+      allow read, write: if false;
+
+      match /entries/{uid} {
+        allow get, list: if isAuthenticated();
+        allow create, update: if isAuthenticated() && request.auth.uid == uid
+                              && isValidWeekId(weekId)
+                              && isValidLeaderboardEntry(uid);
         allow delete: if false;
       }
     }
