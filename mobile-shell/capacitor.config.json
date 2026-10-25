@@ -1,0 +1,12 @@
+{
+  "appId": "com.tumenaksu.lingua",
+  "appName": "Lingua",
+  "webDir": "www",
+  "server": {
+    "url": "https://ankaxai.ai/lingua/",
+    "allowNavigation": ["ankaxai.ai"],
+    "androidScheme": "https",
+    "errorPath": "index.html"
+  },
+  "android": { "adjustMarginsForEdgeToEdge": "auto" }
+}
