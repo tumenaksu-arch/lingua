@@ -25,7 +25,10 @@
       "versionCode": 1
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "lang": "tr",
+      "themeColor": "#58CC02",
+      "description": "Türkçe'den İngilizce, Almanca, İspanyolca ve Fransızca öğren: kısa dersler, aralıklı tekrar, günlük seri."
     },
     "scheme": "lingua",
     "plugins": [

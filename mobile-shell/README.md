@@ -23,4 +23,11 @@ Needs Android SDK build-tools 35.0.0 (`ANDROID_HOME`, default `~/android-sdk`), 
 `~/ankaokul-secrets/lingua-mobile.keystore` (alias `lingua-mobile`, password in the `.README`
 next to it). **Back up the keystore**: an APK signed with another key cannot update the installed app.
 
-Publish the APK as a GitHub release asset (`gh release create mobile-v<x.y.z> dist/Lingua-<x.y.z>.apk`).
+Publish it as a GitHub release with **two** assets — the versioned file and a copy named
+`Lingua.apk`, which the welcome page's "APK indir" button downloads via
+`releases/latest/download/Lingua.apk` (src/platform/pwa.ts):
+
+```bash
+cp dist/Lingua-0.1.1.apk dist/Lingua.apk
+gh release create mobile-v0.1.1 dist/Lingua-0.1.1.apk dist/Lingua-0.1.1.apk.sha256 dist/Lingua.apk
+```
