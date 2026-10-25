@@ -20,6 +20,7 @@ import com.getcapacitor.BridgeActivity;
 public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        registerPlugin(SystemBarsPlugin.class);
         super.onCreate(savedInstanceState);
         // Android 15 edge-to-edge: the area behind the system bars is the window background
         // (adjustMarginsForEdgeToEdge keeps the WebView between the bars). White + dark icons.

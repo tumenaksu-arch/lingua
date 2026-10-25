@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 
 import { useAppStore } from '@/features/store';
 import { ShellUpdateBanner, useAutoUpdate } from '@/platform/autoUpdate';
+import { useSystemBars } from '@/platform/systemBars';
 import { useSettingsStore, useTheme, useThemeStore } from '@/ui';
 
 export default function RootLayout() {
@@ -15,6 +16,7 @@ export default function RootLayout() {
   const hydrateTheme = useThemeStore((s) => s.hydrate);
   const hydrateSettings = useSettingsStore((s) => s.hydrate);
   const { colors, isDark } = useTheme();
+  useSystemBars(colors.background, !isDark);
   const [error, setError] = useState<string | null>(null);
   useAutoUpdate();
 
