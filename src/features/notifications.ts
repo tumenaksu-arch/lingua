@@ -1,5 +1,7 @@
 import { Platform } from 'react-native';
 
+import { shellPlugin } from '@/platform/nativeShell';
+
 /**
  * Daily study reminder via expo-notifications (SDK 57).
  * Verified API (node_modules/expo-notifications/build/*.d.ts):
@@ -35,13 +37,25 @@ function load(): Notifications | null {
   return mod;
 }
 
+/** Numeric id for the shell's LocalNotifications plugin (expo-notifications uses REMINDER_ID). */
+const SHELL_REMINDER_ID = 1;
+
 export function isSupported(): boolean {
-  if (Platform.OS === 'web') return false;
+  // In the Android web shell the reminder goes through the shell's LocalNotifications plugin.
+  if (Platform.OS === 'web') return shellPlugin('LocalNotifications') !== null;
   return load() !== null;
 }
 
 /** true when the OS permission is granted (asks the user when undetermined). */
 export async function requestPermission(): Promise<boolean> {
+  const shell = shellPlugin('LocalNotifications');
+  if (shell) {
+    try {
+      return (await shell.requestPermissions()).display === 'granted';
+    } catch {
+      return false;
+    }
+  }
   const n = load();
   if (!n) return false;
   try {
@@ -57,6 +71,25 @@ export async function requestPermission(): Promise<boolean> {
 
 /** Replaces any existing reminder with one firing every day at hour:minute (device local time). */
 export async function scheduleDailyReminder(hour: number, minute = 0): Promise<boolean> {
+  const shell = shellPlugin('LocalNotifications');
+  if (shell) {
+    try {
+      await cancelReminder();
+      await shell.schedule({
+        notifications: [
+          {
+            id: SHELL_REMINDER_ID,
+            title: 'Lingua ⏰',
+            body: 'Bugünkü dersini yapıp serini koru!',
+            schedule: { on: { hour, minute }, repeats: true, allowWhileIdle: true },
+          },
+        ],
+      });
+      return true;
+    } catch {
+      return false;
+    }
+  }
   const n = load();
   if (!n) return false;
   try {
@@ -87,6 +120,15 @@ export async function scheduleDailyReminder(hour: number, minute = 0): Promise<b
 }
 
 export async function cancelReminder(): Promise<void> {
+  const shell = shellPlugin('LocalNotifications');
+  if (shell) {
+    try {
+      await shell.cancel({ notifications: [{ id: SHELL_REMINDER_ID }] });
+    } catch {
+      /* nothing scheduled */
+    }
+    return;
+  }
   const n = load();
   if (!n) return;
   try {

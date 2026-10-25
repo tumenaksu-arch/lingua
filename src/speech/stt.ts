@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { ExpoSpeechRecognitionErrorCode } from 'expo-speech-recognition';
 import type { LangCode } from '@/domain/types';
+import { isNativeShell, shellPlugin, type ListenerHandle } from '@/platform/nativeShell';
 import { toLocale } from './locale';
 
 export type SttStatus = 'idle' | 'listening' | 'done' | 'error' | 'unavailable';
@@ -50,11 +51,23 @@ function isAvailable(): boolean {
 }
 
 /**
+ * Speech recognition for the Speak exercise: expo-speech-recognition in Expo/EAS builds and
+ * browsers, the device recognizer (via the shell's SpeechRecognition plugin) in the Android
+ * web shell, whose WebView has no working Web Speech API. The shell injects `window.Capacitor`
+ * before the page scripts run and it never changes, so the same implementation (and hook
+ * order) is used on every render.
+ */
+export function useSpeechRecognition(lang: LangCode): SpeechRecognitionHandle {
+  const impl = isNativeShell() ? useShellSpeechRecognition : useExpoSpeechRecognition;
+  return impl(lang);
+}
+
+/**
  * Thin hook over expo-speech-recognition (SDK 58).
  * Verified API: `ExpoSpeechRecognitionModule.start/stop/abort/requestPermissionsAsync/
  * isRecognitionAvailable` and `NativeModule.addListener('result'|'error'|'start'|'end')`.
  */
-export function useSpeechRecognition(lang: LangCode): SpeechRecognitionHandle {
+function useExpoSpeechRecognition(lang: LangCode): SpeechRecognitionHandle {
   const [status, setStatus] = useState<SttStatus>(() => (isAvailable() ? 'idle' : 'unavailable'));
   const [transcript, setTranscript] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -146,3 +159,92 @@ export function useSpeechRecognition(lang: LangCode): SpeechRecognitionHandle {
 
   return { status, transcript, error, start, stop, reset };
 }
+
+/**
+ * Shell path (@capacitor-community/speech-recognition 7). With `partialResults: true`
+ * Android resolves `start` immediately and streams `partialResults`; `listeningState`
+ * reports when the recognizer stops.
+ */
+function useShellSpeechRecognition(lang: LangCode): SpeechRecognitionHandle {
+  const [status, setStatus] = useState<SttStatus>(() => (shellPlugin('SpeechRecognition') ? 'idle' : 'unavailable'));
+  const [transcript, setTranscript] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const listening = useRef(false);
+
+  useEffect(() => {
+    const plugin = shellPlugin('SpeechRecognition');
+    if (!plugin) return;
+    let alive = true;
+    let handles: ListenerHandle[] = [];
+    plugin
+      .available()
+      .then((r) => {
+        if (alive && !r.available) setStatus('unavailable');
+      })
+      .catch(() => {
+        if (alive) setStatus('unavailable');
+      });
+    void Promise.all([
+      plugin.addListener('partialResults', (data) => {
+        if (alive) setTranscript(data.matches[0] ?? '');
+      }),
+      plugin.addListener('listeningState', (data) => {
+        if (!alive) return;
+        listening.current = data.status === 'started';
+        if (data.status === 'started') setStatus('listening');
+        else setStatus((s) => (s === 'listening' ? 'done' : s));
+      }),
+    ]).then((h) => {
+      if (alive) handles = h;
+      else for (const x of h) void x.remove();
+    });
+    return () => {
+      alive = false;
+      for (const x of handles) void x.remove();
+      // Never leave the microphone open when the exercise unmounts.
+      if (listening.current) void plugin.stop().catch(() => {});
+    };
+  }, []);
+
+  const start = useCallback(async () => {
+    const plugin = shellPlugin('SpeechRecognition');
+    if (!plugin) {
+      setStatus('unavailable');
+      return;
+    }
+    setError(null);
+    setTranscript('');
+    try {
+      const perm = await plugin.requestPermissions();
+      if (perm.speechRecognition !== 'granted') {
+        setError('permission-denied');
+        setStatus('unavailable');
+        return;
+      }
+      listening.current = true;
+      setStatus('listening');
+      const r = await plugin.start({ language: toLocale(lang), maxResults: 1, partialResults: true, popup: false });
+      if (r?.matches?.[0]) setTranscript(r.matches[0]);
+    } catch (e) {
+      listening.current = false;
+      setError(e instanceof Error ? e.message : String(e));
+      setStatus('error');
+    }
+  }, [lang]);
+
+  const stop = useCallback(() => {
+    if (!listening.current) return;
+    void shellPlugin('SpeechRecognition')?.stop().catch(() => {});
+  }, []);
+
+  const reset = useCallback(() => {
+    if (listening.current) void shellPlugin('SpeechRecognition')?.stop().catch(() => {});
+    listening.current = false;
+    setTranscript('');
+    setError(null);
+    setStatus(shellPlugin('SpeechRecognition') ? 'idle' : 'unavailable');
+  }, []);
+
+  return { status, transcript, error, start, stop, reset };
+}
+
