@@ -12,18 +12,59 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
+import { SpaceGrotesk_400Regular, useFonts } from '@expo-google-fonts/space-grotesk';
+import { Inter_300Light, Inter_400Regular } from '@expo-google-fonts/inter';
+import { SpaceMono_400Regular } from '@expo-google-fonts/space-mono';
 import { courses } from '@/content';
 import { AuthForm } from '@/features/auth/AuthForm';
 import { useAppStore } from '@/features/store';
 import { isNativeShell } from '@/platform/nativeShell';
 import { ANDROID_APK_URL, WEB_APP_URL, usePwaInstall } from '@/platform/pwa';
-import { Body, Caption, fontSize, fontWeight, radii, spacing, upperTr, useTheme, type ColorTokens } from '@/ui';
+import {
+  Body,
+  Caption,
+  colors as baseColors,
+  fontSize,
+  radii,
+  spacing,
+  upperTr,
+  type ColorTokens,
+} from '@/ui';
 
 const LANG_NAME: Record<string, string> = { en: 'İngilizce', de: 'Almanca', es: 'İspanyolca', fr: 'Fransızca', tr: 'Türkçe' };
 const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', tr: '🇹🇷' };
 /** Two columns (pitch | sign-in card) and the top menu from this width — same split as EduPilot. */
 const WIDE = 900;
+
+/** EduPilot landing palette (edu-pilot.ai) — the welcome page always uses these, whatever the app theme. */
+const ep = {
+  background: '#0e1220',
+  surface: '#161c30',
+  text: '#e8eaf2',
+  dim: '#8e97b5',
+  accent: '#d18b63',
+  onAccent: '#0e1220',
+  hairline: 'rgba(232,234,242,0.10)',
+  inputBorder: 'rgba(232,234,242,0.18)',
+  inputBg: 'rgba(14,18,32,0.45)',
+  nav: 'rgba(232,234,242,0.62)',
+  danger: '#ff8080',
+};
+
+/** The page's colors expressed as ColorTokens so the section helpers below can keep their shape. */
+const landingColors: ColorTokens = {
+  ...baseColors,
+  primaryText: ep.accent,
+  text: ep.text,
+  textMuted: ep.dim,
+  secondaryText: ep.nav,
+  border: ep.hairline,
+  borderStrong: ep.inputBorder,
+  background: ep.background,
+  surface: ep.surface,
+  textOnColor: ep.onAccent,
+  buttonPrimary: ep.accent,
+};
 
 const totals = courses.reduce(
   (t, c) => {
@@ -38,13 +79,14 @@ type SectionId = 'yaklasim' | 'kurslar' | 'platformlar' | 'nasil';
 /**
  * Welcome / sign-in page modelled on the EduPilot landing (edu-pilot.ai): top menu, platform
  * strip, pitch + sign-in card, then Yaklaşım / Kurslar / Platformlar / Nasıl çalışır sections
- * with numbered cards — in Lingua's palette. Platformlar offers the web app, the Android APK
- * and the installable PWA; it is hidden inside the Android shell (already the installed app).
- * Shown until the user signs in or picks "Hesapsız dene".
+ * with numbered cards — in EduPilot's dark palette and fonts (Space Grotesk / Inter / Space
+ * Mono), independent of the app theme. Platformlar offers the web app, the Android APK and the
+ * installable PWA; it is hidden inside the Android shell (already the installed app). Shown
+ * until the user signs in or picks "Hesapsız dene".
  */
 export default function WelcomeScreen() {
   const continueAsGuest = useAppStore((s) => s.continueAsGuest);
-  const { colors } = useTheme();
+  const colors = landingColors;
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const wide = width >= WIDE;
@@ -53,6 +95,16 @@ export default function WelcomeScreen() {
   // Section positions for the menu; a plain mutable map (layout callbacks write it, presses read it).
   const [offsets] = useState<Partial<Record<SectionId | 'card', number>>>(() => ({}));
   const [guestBusy, setGuestBusy] = useState(false);
+  // Bundled fonts; the page renders with system fallbacks until they are loaded (no blocking).
+  const [fontsLoaded] = useFonts({
+    SpaceGrotesk_400Regular,
+    Inter_300Light,
+    Inter_400Regular,
+    SpaceMono_400Regular,
+  });
+  const display = fontsLoaded ? 'SpaceGrotesk_400Regular' : undefined;
+  const bodyFont = fontsLoaded ? 'Inter_300Light' : undefined;
+  const monoFont = fontsLoaded ? 'SpaceMono_400Regular' : undefined;
 
   const goTo = (id: SectionId | 'card') => scroll.current?.scrollTo({ y: Math.max(0, (offsets[id] ?? 0) - spacing.lg), animated: true });
   const mark = (id: SectionId | 'card') => (e: { nativeEvent: { layout: { y: number } } }) => {
@@ -74,7 +126,7 @@ export default function WelcomeScreen() {
     ...(inApp ? [] : [{ id: 'platformlar' as const, label: 'Platformlar' }]),
     { id: 'nasil', label: 'Nasıl çalışır' },
   ];
-  const mono = [styles.mono, { color: colors.textMuted }];
+  const mono = [styles.mono, { color: colors.textMuted, fontFamily: monoFont }];
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1, backgroundColor: colors.background }}>
@@ -88,13 +140,13 @@ export default function WelcomeScreen() {
           <View style={styles.header}>
             <View style={styles.brand} accessibilityRole="header">
               <Image source={require('../../assets/icon.png')} style={styles.logo} accessibilityIgnoresInvertColors />
-              <Text style={[styles.brandName, { color: colors.text }]}>Love-Vox</Text>
+              <Text style={[styles.brandName, { color: colors.text, fontFamily: display }]}>Love-Vox</Text>
             </View>
             {wide && (
               <View style={styles.nav}>
                 {nav.map((n) => (
                   <Pressable key={n.id} onPress={() => goTo(n.id)} accessibilityRole="link" style={styles.navItem}>
-                    <Text style={[styles.navText, { color: colors.textMuted }]}>{upperTr(n.label)}</Text>
+                    <Text style={[styles.navText, { color: ep.nav, fontFamily: monoFont }]}>{upperTr(n.label)}</Text>
                   </Pressable>
                 ))}
               </View>
@@ -103,9 +155,9 @@ export default function WelcomeScreen() {
               onPress={() => goTo('card')}
               accessibilityRole="button"
               accessibilityLabel="Giriş formuna git"
-              style={[styles.pill, { backgroundColor: colors.buttonPrimary }]}
+              style={[styles.pill, { backgroundColor: ep.accent }]}
             >
-              <Text style={[styles.pillText, { color: colors.textOnColor }]}>{upperTr('Giriş')}</Text>
+              <Text style={[styles.pillText, { color: ep.onAccent, fontFamily: monoFont }]}>{upperTr('Giriş')}</Text>
             </Pressable>
           </View>
 
@@ -119,56 +171,61 @@ export default function WelcomeScreen() {
           {/* Hero: pitch | sign-in card */}
           <View style={[styles.columns, wide && styles.columnsWide]}>
             <View style={[styles.pitch, wide && styles.pitchWide]}>
-              <Text style={[styles.eyebrow, { color: colors.primaryText }]}>{upperTr('Türkçe konuşanlar için dil okulu')}</Text>
-              <Text style={[styles.hero, wide && styles.heroWide, { color: colors.text }]} accessibilityRole="header">
+              <Text style={[styles.eyebrow, { color: ep.accent, fontFamily: monoFont }]}>{upperTr('Türkçe konuşanlar için dil okulu')}</Text>
+              <Text
+                style={[styles.hero, wide && styles.heroWide, { color: colors.text, fontFamily: display }]}
+                accessibilityRole="header"
+              >
                 Günde 10 dakikayla{'\n'}
-                <Text style={[styles.heroAccent, { color: colors.primaryText }]}>yeni bir dil</Text>
+                <Text style={[styles.heroAccent, { color: ep.accent, fontFamily: display }]}>yeni bir dil</Text>
                 {'\n'}konuşmaya başla.
               </Text>
-              <Body color={colors.textMuted} style={styles.lead}>
+              <Body color={colors.textMuted} style={[styles.lead, { fontFamily: bodyFont }]}>
                 Kısa dersler, aralıklı tekrar ve günlük seriyle her gün biraz daha ilerle. Telefonda ve bilgisayarda aynı hesapla.
               </Body>
               <View style={styles.chips}>
                 {courses.map((c) => (
-                  <View key={c.id} style={[styles.chip, { borderColor: colors.border, backgroundColor: colors.surface }]}>
-                    <Text style={[styles.chipText, { color: colors.text }]}>
+                  <View key={c.id} style={[styles.chip, { borderColor: ep.hairline, backgroundColor: ep.surface }]}>
+                    <Text style={[styles.chipText, { color: colors.text, fontFamily: bodyFont }]}>
                       {LANG_FLAG[c.toLang] ?? '🌐'} {LANG_NAME[c.toLang] ?? c.toLang}
                     </Text>
                   </View>
                 ))}
               </View>
-              <Text style={[styles.tagline, { color: colors.primaryText }]}>Love-Vox — her gün biraz daha.</Text>
+              <Text style={[styles.tagline, { color: ep.accent, fontFamily: display }]}>Love-Vox — her gün biraz daha.</Text>
               <Text style={mono}>Çevrimdışı çalışır · İlerlemen hesabında saklanır · Reklamsız</Text>
             </View>
 
             <View style={[styles.cardCol, wide && styles.cardColWide]} onLayout={mark('card')}>
-              <View style={[styles.card, { borderColor: colors.border, backgroundColor: colors.surface }]}>
-                <Text style={[styles.cardTitle, { color: colors.text }]}>Giriş yap</Text>
-                <Body color={colors.textMuted} style={styles.cardLead}>
+              <View style={[styles.card, { borderColor: ep.hairline, backgroundColor: ep.surface }]}>
+                <Text style={[styles.cardTitle, { color: colors.text, fontFamily: display }]}>Giriş yap</Text>
+                <Body color={colors.textMuted} style={[styles.cardLead, { fontFamily: bodyFont }]}>
                   Hesabınla devam et; ilerlemen tüm cihazlarında seninle.
                 </Body>
-                <AuthForm />
+                <AuthForm appearance="landing" />
               </View>
               <Pressable onPress={guest} disabled={guestBusy} accessibilityRole="button" style={styles.guest}>
-                <Body color={colors.textMuted}>Hesapsız dene →</Body>
+                <Body color={colors.textMuted} style={{ fontFamily: bodyFont }}>
+                  Hesapsız dene →
+                </Body>
               </Pressable>
             </View>
           </View>
 
-          <Section id="yaklasim" eyebrow="Yaklaşım" title="Her gün birkaç dakika, kalıcı bir dil." colors={colors} onLayout={mark('yaklasim')}>
-            <Body color={colors.textMuted} style={styles.lead}>
+          <Section id="yaklasim" eyebrow="Yaklaşım" title="Her gün birkaç dakika, kalıcı bir dil." colors={colors} fonts={{ display, body: bodyFont, mono: monoFont }} onLayout={mark('yaklasim')}>
+            <Body color={colors.textMuted} style={[styles.lead, { fontFamily: bodyFont }]}>
               Love-Vox, dil öğrenmeyi küçük ve düzenli adımlara böler. Her ders birkaç dakika sürer; öğrendiğin kelimeler aralıklı
               tekrarla, unutmaya başladığın anda yeniden karşına çıkar. Seri, günlük hedef ve rozetler alışkanlığı canlı tutar.
             </Body>
             <View style={[styles.grid, wide && styles.gridWide]}>
-              <Stat value={String(courses.length)} label="Dil" colors={colors} wide={wide} />
-              <Stat value={String(totals.lessons)} label="Ders" colors={colors} wide={wide} />
-              <Stat value={String(totals.words)} label="Kelime" colors={colors} wide={wide} />
-              <Stat value="6" label="Alıştırma türü" colors={colors} wide={wide} />
+              <Stat value={String(courses.length)} label="Dil" colors={colors} fonts={{ display, mono: monoFont }} wide={wide} />
+              <Stat value={String(totals.lessons)} label="Ders" colors={colors} fonts={{ display, mono: monoFont }} wide={wide} />
+              <Stat value={String(totals.words)} label="Kelime" colors={colors} fonts={{ display, mono: monoFont }} wide={wide} />
+              <Stat value="6" label="Alıştırma türü" colors={colors} fonts={{ display, mono: monoFont }} wide={wide} />
             </View>
           </Section>
 
-          <Section id="kurslar" eyebrow="Kurslar" title="Türkçe'den dört dil." colors={colors} onLayout={mark('kurslar')}>
+          <Section id="kurslar" eyebrow="Kurslar" title="Türkçe'den dört dil." colors={colors} fonts={{ display, body: bodyFont, mono: monoFont }} onLayout={mark('kurslar')}>
             <View style={[styles.grid, wide && styles.gridWide]}>
               {courses.map((c, i) => {
                 const lessons = c.units.reduce((n, u) => n + u.lessons.length, 0);
@@ -180,6 +237,7 @@ export default function WelcomeScreen() {
                     text={`${c.units.length} ünite · ${lessons} ders · ${c.vocab.length} kelime`}
                     tag={upperTr('Ücretsiz')}
                     colors={colors}
+                    fonts={{ display, body: bodyFont, mono: monoFont }}
                     wide={wide}
                   />
                 );
@@ -187,22 +245,22 @@ export default function WelcomeScreen() {
             </View>
           </Section>
 
-          {!inApp && <Platforms colors={colors} wide={wide} onWeb={() => goTo('card')} onLayout={mark('platformlar')} />}
+          {!inApp && <Platforms colors={colors} fonts={{ display, body: bodyFont, mono: monoFont }} wide={wide} onWeb={() => goTo('card')} onLayout={mark('platformlar')} />}
 
-          <Section id="nasil" eyebrow="Nasıl çalışır" title="Dört adımda başla." colors={colors} onLayout={mark('nasil')}>
+          <Section id="nasil" eyebrow="Nasıl çalışır" title="Dört adımda başla." colors={colors} fonts={{ display, body: bodyFont, mono: monoFont }} onLayout={mark('nasil')}>
             <View style={[styles.grid, wide && styles.gridWide]}>
-              <NumberedCard no="01" title="Dilini seç" text="İngilizce, Almanca, İspanyolca ya da Fransızca; istediğin zaman değiştir." colors={colors} wide={wide} />
-              <NumberedCard no="02" title="Günlük hedef" text="Günde 1 ile 5 ders arası bir hedef belirle; seri her gün büyüsün." colors={colors} wide={wide} />
-              <NumberedCard no="03" title="Kısa dersler" text="Çeviri, dinleme, konuşma, eşleştirme: her ders birkaç dakika." colors={colors} wide={wide} />
-              <NumberedCard no="04" title="Tekrar et" text="Kelimeler unutmaya başladığın anda tekrar destesine düşer." colors={colors} wide={wide} />
+              <NumberedCard no="01" title="Dilini seç" text="İngilizce, Almanca, İspanyolca ya da Fransızca; istediğin zaman değiştir." colors={colors} fonts={{ display, body: bodyFont, mono: monoFont }} wide={wide} />
+              <NumberedCard no="02" title="Günlük hedef" text="Günde 1 ile 5 ders arası bir hedef belirle; seri her gün büyüsün." colors={colors} fonts={{ display, body: bodyFont, mono: monoFont }} wide={wide} />
+              <NumberedCard no="03" title="Kısa dersler" text="Çeviri, dinleme, konuşma, eşleştirme: her ders birkaç dakika." colors={colors} fonts={{ display, body: bodyFont, mono: monoFont }} wide={wide} />
+              <NumberedCard no="04" title="Tekrar et" text="Kelimeler unutmaya başladığın anda tekrar destesine düşer." colors={colors} fonts={{ display, body: bodyFont, mono: monoFont }} wide={wide} />
             </View>
           </Section>
 
-          <View style={[styles.footer, { borderColor: colors.border }]}>
+          <View style={[styles.footer, { borderColor: ep.hairline }]}>
             <Text style={mono}>Love-Vox · Bir ANKAXAI çözümü</Text>
             {!inApp && (
               <Pressable onPress={() => void Linking.openURL('https://ankaxai.ai/')} accessibilityRole="link">
-                <Text style={[styles.mono, { color: colors.secondaryText }]}>ankaxai.ai ↗</Text>
+                <Text style={[styles.mono, { color: ep.nav, fontFamily: monoFont }]}>ankaxai.ai ↗</Text>
               </Pressable>
             )}
           </View>
@@ -212,11 +270,15 @@ export default function WelcomeScreen() {
   );
 }
 
+/** EduPilot font families active on the welcome page (undefined until the bundled fonts load). */
+type LandingFonts = { display?: string; body?: string; mono?: string };
+
 function Section({
   id,
   eyebrow,
   title,
   colors,
+  fonts,
   children,
   onLayout,
 }: {
@@ -224,13 +286,14 @@ function Section({
   eyebrow: string;
   title: string;
   colors: ColorTokens;
+  fonts: LandingFonts;
   children: ReactNode;
   onLayout: (e: { nativeEvent: { layout: { y: number } } }) => void;
 }) {
   return (
-    <View nativeID={id} onLayout={onLayout} style={[styles.section, { borderColor: colors.border }]}>
-      <Text style={[styles.eyebrow, { color: colors.primaryText }]}>{upperTr(eyebrow)}</Text>
-      <Text style={[styles.sectionTitle, { color: colors.text }]} accessibilityRole="header">
+    <View nativeID={id} onLayout={onLayout} style={[styles.section, { borderColor: ep.hairline }]}>
+      <Text style={[styles.eyebrow, { color: ep.accent, fontFamily: fonts.mono }]}>{upperTr(eyebrow)}</Text>
+      <Text style={[styles.sectionTitle, { color: colors.text, fontFamily: fonts.display }]} accessibilityRole="header">
         {title}
       </Text>
       {children}
@@ -238,11 +301,11 @@ function Section({
   );
 }
 
-function Stat({ value, label, colors, wide }: { value: string; label: string; colors: ColorTokens; wide: boolean }) {
+function Stat({ value, label, colors, fonts, wide }: { value: string; label: string; colors: ColorTokens; fonts: LandingFonts; wide: boolean }) {
   return (
-    <View style={[styles.tile, wide && styles.tileWide, { borderColor: colors.border }]}>
-      <Text style={[styles.statValue, { color: colors.primaryText }]}>{value}</Text>
-      <Text style={[styles.mono, { color: colors.textMuted }]}>{upperTr(label)}</Text>
+    <View style={[styles.tile, wide && styles.tileWide, { borderColor: ep.hairline, backgroundColor: ep.surface }]}>
+      <Text style={[styles.statValue, { color: ep.accent, fontFamily: fonts.display }]}>{value}</Text>
+      <Text style={[styles.mono, { color: colors.textMuted, fontFamily: fonts.mono }]}>{upperTr(label)}</Text>
     </View>
   );
 }
@@ -253,6 +316,7 @@ function NumberedCard({
   text,
   tag,
   colors,
+  fonts,
   wide,
   onPress,
   action,
@@ -263,6 +327,7 @@ function NumberedCard({
   /** Shown as given: callers uppercase Turkish words with upperTr, never addresses. */
   tag?: string;
   colors: ColorTokens;
+  fonts: LandingFonts;
   wide: boolean;
   onPress?: () => void;
   /** Label for screen readers when the card is a button. */
@@ -270,21 +335,23 @@ function NumberedCard({
 }) {
   const body = (
     <>
-      <Text style={[styles.mono, { color: colors.textMuted }]}>{no}</Text>
-      <Text style={[styles.cardHeading, { color: colors.text }]}>{title}</Text>
-      <Body color={colors.textMuted}>{text}</Body>
+      <Text style={[styles.mono, { color: colors.textMuted, fontFamily: fonts.mono }]}>{no}</Text>
+      <Text style={[styles.cardHeading, { color: colors.text, fontFamily: fonts.display }]}>{title}</Text>
+      <Body color={colors.textMuted} style={{ fontFamily: fonts.body }}>
+        {text}
+      </Body>
       {(tag || onPress) && (
         <View style={styles.cardFoot}>
-          {tag ? <Text style={[styles.mono, { color: colors.primaryText }]}>{tag}</Text> : <View />}
-          {onPress && <Text style={[styles.arrow, { color: colors.primaryText }]}>↗</Text>}
+          {tag ? <Text style={[styles.mono, { color: ep.accent, fontFamily: fonts.mono }]}>{tag}</Text> : <View />}
+          {onPress && <Text style={[styles.arrow, { color: ep.accent }]}>↗</Text>}
         </View>
       )}
     </>
   );
-  const style = [styles.tile, wide && styles.tileWide, { borderColor: colors.border, backgroundColor: colors.background }];
+  const style = [styles.tile, wide && styles.tileWide, { borderColor: ep.hairline, backgroundColor: ep.surface }];
   if (!onPress) return <View style={style}>{body}</View>;
   return (
-    <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={action ?? title} style={({ pressed }) => [style, pressed && { backgroundColor: colors.surface }]}>
+    <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={action ?? title} style={({ pressed }) => [style, pressed && { backgroundColor: 'rgba(232,234,242,0.06)' }]}>
       {body}
     </Pressable>
   );
@@ -292,11 +359,13 @@ function NumberedCard({
 
 function Platforms({
   colors,
+  fonts,
   wide,
   onWeb,
   onLayout,
 }: {
   colors: ColorTokens;
+  fonts: LandingFonts;
   wide: boolean;
   onWeb: () => void;
   onLayout: (e: { nativeEvent: { layout: { y: number } } }) => void;
@@ -313,7 +382,7 @@ function Platforms({
   };
 
   return (
-    <Section id="platformlar" eyebrow="Platformlar" title="Nerede istersen, Love-Vox orada." colors={colors} onLayout={onLayout}>
+    <Section id="platformlar" eyebrow="Platformlar" title="Nerede istersen, Love-Vox orada." colors={colors} fonts={fonts} onLayout={onLayout}>
       <View style={[styles.grid, wide && styles.gridWide]}>
         <NumberedCard
           no="001"
@@ -321,6 +390,7 @@ function Platforms({
           text="Tarayıcıdan gir, kurulum gerekmez. Bilgisayar, tablet ve telefonda çalışır."
           tag="ankaxai.ai/lovevox"
           colors={colors}
+          fonts={fonts}
           wide={wide}
           onPress={onWeb}
           action="Web: tarayıcıdan giriş yap"
@@ -331,6 +401,7 @@ function Platforms({
           text="Telefon ve tablet için uygulama. Seslendirme, konuşma tanıma ve günlük hatırlatma telefonun kendi özellikleriyle."
           tag={upperTr('APK indir')}
           colors={colors}
+          fonts={fonts}
           wide={wide}
           onPress={() => void Linking.openURL(ANDROID_APK_URL)}
           action="Android uygulamasını indir"
@@ -341,6 +412,7 @@ function Platforms({
           text="Tarayıcıdan cihaza kurulan sürüm: ana ekranda kendi simgesiyle, ayrı pencerede açılır."
           tag={pwaTag}
           colors={colors}
+          fonts={fonts}
           wide={wide}
           onPress={pwa.state === 'installed' ? undefined : () => void onPwa()}
           action="Love-Vox'u cihaza yükle (PWA)"
@@ -351,36 +423,41 @@ function Platforms({
           text="Android, iPhone ve bilgisayar için adım adım kurulum."
           tag={upperTr('Rehber')}
           colors={colors}
+          fonts={fonts}
           wide={wide}
           onPress={() => setHelp(help === 'all' ? null : 'all')}
           action="Kurulum yardımını göster"
         />
       </View>
       {help && (
-        <View style={[styles.help, { borderColor: colors.border, backgroundColor: colors.surface }]} accessibilityLiveRegion="polite">
+        <View style={[styles.help, { borderColor: ep.hairline, backgroundColor: ep.surface }]} accessibilityLiveRegion="polite">
           {help === 'all' && (
-            <HelpBlock title="Android (APK)" colors={colors}>
+            <HelpBlock title="Android (APK)" colors={colors} fonts={fonts}>
               {'1. "APK indir"e dokun, Love-Vox.apk iner.\n2. İnen dosyayı aç; telefon "bilinmeyen kaynak" izni isterse tarayıcına izin ver.\n3. Yükle\'ye dokun. Uygulama güncellemeleri kendiliğinden gelir.'}
             </HelpBlock>
           )}
-          <HelpBlock title="iPhone / iPad (Safari)" colors={colors}>
+          <HelpBlock title="iPhone / iPad (Safari)" colors={colors} fonts={fonts}>
             {"1. Bu sayfayı Safari'de aç.\n2. Alttaki Paylaş düğmesine (kare ve ok) dokun.\n3. \"Ana Ekrana Ekle\"yi seç, sonra Ekle'ye dokun."}
           </HelpBlock>
-          <HelpBlock title="Bilgisayar ve Android (Chrome / Edge)" colors={colors}>
+          <HelpBlock title="Bilgisayar ve Android (Chrome / Edge)" colors={colors} fonts={fonts}>
             {'Adres çubuğundaki "Yükle" simgesine ya da tarayıcı menüsündeki "Uygulamayı yükle" / "Ana ekrana ekle" seçeneğine tıkla.'}
           </HelpBlock>
-          <Caption>Web adresi: {WEB_APP_URL}</Caption>
+          <Caption color={colors.textMuted} style={{ fontFamily: fonts.mono, letterSpacing: 2 }}>
+            Web adresi: {WEB_APP_URL}
+          </Caption>
         </View>
       )}
     </Section>
   );
 }
 
-function HelpBlock({ title, children, colors }: { title: string; children: string; colors: ColorTokens }) {
+function HelpBlock({ title, children, colors, fonts }: { title: string; children: string; colors: ColorTokens; fonts: LandingFonts }) {
   return (
     <View style={styles.helpBlock}>
-      <Text style={[styles.cardHeading, { color: colors.text }]}>{title}</Text>
-      <Body color={colors.textMuted}>{children}</Body>
+      <Text style={[styles.cardHeading, { color: colors.text, fontFamily: fonts.display }]}>{title}</Text>
+      <Body color={colors.textMuted} style={{ fontFamily: fonts.body }}>
+        {children}
+      </Body>
     </View>
   );
 }
@@ -391,45 +468,45 @@ const styles = StyleSheet.create({
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.md },
   brand: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   logo: { width: 36, height: 36, borderRadius: radii.sm },
-  brandName: { fontSize: fontSize.lg, fontWeight: fontWeight.black },
+  brandName: { fontSize: fontSize.lg, fontFamily: 'SpaceGrotesk_400Regular' },
   nav: { flexDirection: 'row', gap: spacing.xl },
   navItem: { paddingVertical: spacing.sm },
-  navText: { fontSize: fontSize.xs, fontWeight: fontWeight.bold, letterSpacing: 3 },
-  pill: { borderRadius: radii.pill, paddingHorizontal: spacing.xl, paddingVertical: spacing.sm, minHeight: 44, justifyContent: 'center' },
-  pillText: { fontSize: fontSize.sm, fontWeight: fontWeight.bold, letterSpacing: 2 },
+  navText: { fontSize: 10, letterSpacing: 2 },
+  pill: { borderRadius: 100, paddingHorizontal: spacing.xl, paddingVertical: spacing.sm, minHeight: 44, justifyContent: 'center' },
+  pillText: { fontSize: 11, letterSpacing: 1.5 },
   strip: { gap: spacing.xs },
   stripWide: { flexDirection: 'row', justifyContent: 'space-between' },
-  mono: { fontSize: fontSize.xs, fontWeight: fontWeight.bold, letterSpacing: 2.5 },
+  mono: { fontSize: 10, letterSpacing: 2.4 },
   columns: { gap: spacing.xxl },
   columnsWide: { flexDirection: 'row', alignItems: 'center', paddingVertical: spacing.xxl },
   pitch: { gap: spacing.lg },
   pitchWide: { flex: 1, paddingRight: spacing.xxl },
-  eyebrow: { fontSize: fontSize.xs, fontWeight: fontWeight.bold, letterSpacing: 3 },
-  hero: { fontSize: 34, lineHeight: 42, fontWeight: fontWeight.black },
+  eyebrow: { fontSize: 10, letterSpacing: 2.4 },
+  hero: { fontSize: 34, lineHeight: 42, letterSpacing: -1, fontFamily: 'SpaceGrotesk_400Regular' },
   heroWide: { fontSize: 52, lineHeight: 62 },
-  heroAccent: { fontStyle: 'italic' },
-  lead: { maxWidth: 640 },
+  heroAccent: { fontStyle: 'italic', fontFamily: 'SpaceGrotesk_400Regular' },
+  lead: { maxWidth: 640, fontSize: 15, lineHeight: 24 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
-  chip: { borderWidth: 2, borderRadius: radii.pill, paddingHorizontal: spacing.md, paddingVertical: spacing.xs },
-  chipText: { fontSize: fontSize.sm, fontWeight: fontWeight.bold },
-  tagline: { fontSize: fontSize.lg, fontWeight: fontWeight.bold },
+  chip: { borderWidth: 1, borderRadius: radii.pill, paddingHorizontal: spacing.md, paddingVertical: spacing.xs },
+  chipText: { fontSize: fontSize.sm },
+  tagline: { fontSize: fontSize.lg, fontFamily: 'SpaceGrotesk_400Regular' },
   cardCol: { gap: spacing.sm },
   cardColWide: { width: 400 },
-  card: { borderWidth: 2, borderRadius: radii.lg, padding: spacing.xl, gap: spacing.xs },
-  cardTitle: { fontSize: fontSize.xl, fontWeight: fontWeight.black },
+  card: { borderWidth: 1, borderRadius: 8, padding: spacing.xl, gap: spacing.xs },
+  cardTitle: { fontSize: 25, letterSpacing: -0.25, fontFamily: 'SpaceGrotesk_400Regular' },
   cardLead: { marginBottom: spacing.sm },
   guest: { alignSelf: 'center', paddingVertical: spacing.md, minHeight: 44, justifyContent: 'center' },
   section: { borderTopWidth: 1, paddingTop: spacing.xxl, gap: spacing.lg },
-  sectionTitle: { fontSize: 28, lineHeight: 36, fontWeight: fontWeight.black },
+  sectionTitle: { fontSize: 28, lineHeight: 36, letterSpacing: -0.5, fontFamily: 'SpaceGrotesk_400Regular' },
   grid: { gap: spacing.md },
   gridWide: { flexDirection: 'row', flexWrap: 'wrap' },
-  tile: { borderWidth: 2, borderRadius: radii.lg, padding: spacing.lg, gap: spacing.sm },
+  tile: { borderWidth: 1, borderRadius: 8, padding: spacing.lg, gap: spacing.sm },
   tileWide: { flexBasis: 240, flexGrow: 1 },
-  statValue: { fontSize: 40, fontWeight: fontWeight.black },
-  cardHeading: { fontSize: fontSize.lg, fontWeight: fontWeight.bold },
+  statValue: { fontSize: 40, fontFamily: 'SpaceGrotesk_400Regular' },
+  cardHeading: { fontSize: 25, letterSpacing: -0.25, lineHeight: 32, fontFamily: 'SpaceGrotesk_400Regular' },
   cardFoot: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', paddingTop: spacing.sm },
-  arrow: { fontSize: fontSize.lg, fontWeight: fontWeight.bold },
-  help: { borderWidth: 2, borderRadius: radii.lg, padding: spacing.lg, gap: spacing.lg },
+  arrow: { fontSize: fontSize.lg },
+  help: { borderWidth: 1, borderRadius: 8, padding: spacing.lg, gap: spacing.lg },
   helpBlock: { gap: spacing.xs },
   footer: { borderTopWidth: 1, paddingTop: spacing.lg, flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', gap: spacing.sm },
 });
