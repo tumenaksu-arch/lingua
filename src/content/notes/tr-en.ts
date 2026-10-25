@@ -248,7 +248,7 @@ export const trEnNotes: CourseNotes = {
       {
         heading: 'Saat sormak ve söylemek',
         body: [
-          "'Saat kaç?' = What time is it? Tam saatler 'It is three o'clock' biçiminde söylenir; o'clock kısaltması 'of the clock'tan gelir. Süre bildiren 'saat' (hour) ile saat-i gösteren 'saat kaç' (what time) farklıdır.",
+          "'Saat kaç?' = What time is it? Tam saatler 'It is three o'clock' biçiminde söylenir; o'clock kısaltması 'of the clock'tan gelir. Süre bildiren 'saat' (hour) ile saati gösteren 'saat kaç' (what time) farklıdır.",
         ],
         examples: [
           { target: 'What time is it?', tr: 'Saat kaç?' },
@@ -382,7 +382,7 @@ export const trEnNotes: CourseNotes = {
       {
         heading: 'Belirtileri anlatma',
         body: [
-          "Ateş, öksürük, grip gibi belirtiler 'have a ile söylenir: I have a fever, I have a bad cough. 'I am sick' ise genel olarak hastayım demektir; Türkçedeki 'hastayım' gibi.",
+          "Ateş, öksürük, grip gibi belirtiler 'have a' ile söylenir: I have a fever, I have a bad cough. 'I am sick' ise genel olarak hastayım demektir; Türkçedeki 'hastayım' gibi.",
         ],
         examples: [
           { target: 'I have a high fever.', tr: 'Yüksek ateşim var.' },
