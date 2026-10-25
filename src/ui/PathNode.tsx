@@ -21,7 +21,9 @@ export type PathNodeProps = {
   state: PathNodeState;
   /** 0..5 crowns earned for this lesson. */
   crowns?: number;
-  /** Tooltip text shown as a small mono pill next to the active node. Default "START". */
+  /** Optional numeral rendered inside the node (e.g. the lesson number in a vertical list). */
+  label?: string;
+  /** Tooltip text shown as a small mono pill next to the active node. Rendered only when provided. */
   tooltip?: string;
   /** Horizontal offset in px so the path can snake left/right. */
   offsetX?: number;
@@ -48,7 +50,8 @@ const STATE_LABEL: Record<PathNodeState, string> = { locked: 'kilitli', active: 
 export function PathNode({
   state,
   crowns = 0,
-  tooltip = 'START',
+  label,
+  tooltip,
   offsetX = 0,
   size = 44,
   onPress,
@@ -81,17 +84,17 @@ export function PathNode({
 
   const tooltipStyle = useAnimatedStyle(() => ({ transform: [{ translateY: bounce.value }] }));
 
-  // Numbered node: the crown count is the numeral while the lesson has crowns;
-  // otherwise a plain dot marks the active step.
-  const glyph = state === 'locked' ? '🔒' : state === 'completed' ? '✓' : crowns > 0 ? String(crowns) : '•';
-  const label = `${accessibilityLabel ?? 'Ders'}, ${STATE_LABEL[state]}${crowns ? `, ${crowns} taç` : ''}`;
+  // Numbered node: an explicit label (lesson number) wins; otherwise completed shows ✓,
+  // and a crowned active step falls back to its crown count.
+  const glyph = state === 'locked' ? '🔒' : (label ?? (state === 'completed' ? '✓' : crowns > 0 ? String(crowns) : '•'));
+  const a11yLabel = `${accessibilityLabel ?? 'Ders'}, ${STATE_LABEL[state]}${crowns ? `, ${crowns} taç` : ''}`;
 
   return (
     <View style={[styles.wrap, { transform: [{ translateX: offsetX }] }, style]}>
       <View style={styles.row}>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel={label}
+          accessibilityLabel={a11yLabel}
           accessibilityState={{ disabled: state === 'locked' }}
           disabled={state === 'locked' || !onPress}
           onPressIn={() => setPressed(true)}
@@ -123,7 +126,7 @@ export function PathNode({
           </View>
         </Pressable>
 
-        {isActive ? (
+        {isActive && tooltip ? (
           <Animated.View
             style={[
               styles.tooltip,
@@ -141,10 +144,10 @@ export function PathNode({
       </View>
 
       {crowns > 0 ? (
-        <View style={[styles.crownBadge, { backgroundColor: colors.surface, borderColor: colors.border }]} accessible={false}>
-          <Text style={[styles.crownText, { color: colors.xpText }]} maxFontSizeMultiplier={MAX_FONT_SCALE_DENSE}>
-            👑 {crowns}
-          </Text>
+        <View style={styles.crowns} accessible={false}>
+          {Array.from({ length: crowns }, (_, i) => (
+            <View key={i} style={[styles.crownDot, { backgroundColor: colors.warning }]} />
+          ))}
         </View>
       ) : null}
     </View>
@@ -168,12 +171,6 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xs,
   },
   tooltipText: { fontFamily: fonts.mono, fontSize: 11, letterSpacing: 1.5 },
-  crownBadge: {
-    marginTop: spacing.xs,
-    borderWidth: 1,
-    borderRadius: radii.pill,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 2,
-  },
-  crownText: { fontSize: 11, fontFamily: fonts.mono },
+  crowns: { flexDirection: 'row', gap: 3, marginTop: spacing.xs },
+  crownDot: { width: 5, height: 5, borderRadius: 2.5 },
 });

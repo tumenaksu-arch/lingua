@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import type { LangCode } from '@/domain';
 import { speak } from '@/speech';
-import { Body, Heading, MIN_TOUCH, radii, spacing, useTheme } from '@/ui';
+import { Body, Heading, MIN_TOUCH, spacing, useTheme } from '@/ui';
 
 /** Instruction line + prompt sentence, with an optional speaker button. */
 export function Prompt({ instruction, text, speakLang }: { instruction: string; text?: string; speakLang?: LangCode }) {
@@ -28,8 +28,7 @@ export function SpeakerButton({ text, lang, rate, size = 48 }: { text: string; l
       onPress={() => void speak(text, lang, { rate })}
       style={({ pressed }) => [
         styles.speaker,
-        { width: size, height: size, backgroundColor: colors.buttonSecondary, borderBottomColor: colors.buttonSecondaryShadow },
-        pressed && styles.pressed,
+        { width: size, height: size, backgroundColor: colors.buttonSecondary, borderColor: colors.buttonSecondaryShadow, opacity: pressed ? 0.8 : 1 },
       ]}
     >
       <Body color={colors.textOnColor} style={{ fontSize: size * 0.45 }} accessible={false}>{rate ? '🐢' : '🔊'}</Body>
@@ -44,10 +43,9 @@ const styles = StyleSheet.create({
   speaker: {
     minWidth: MIN_TOUCH,
     minHeight: MIN_TOUCH,
-    borderRadius: radii.md,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomWidth: 4,
+    borderWidth: 1,
   },
-  pressed: { borderBottomWidth: 0, transform: [{ translateY: 4 }] },
 });

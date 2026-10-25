@@ -21,6 +21,8 @@ import {
   setThemePreference,
   showAlert,
   spacing,
+  fonts,
+  upperTr,
   useSettingsStore,
   useTheme,
   useThemeStore,
@@ -78,7 +80,7 @@ function Badge({ id, unlocked }: { id: string; unlocked: boolean }) {
   if (!a) return null;
   return (
     <View
-      style={[styles.badge, { borderColor: colors.border }, !unlocked && [styles.badgeLocked, { backgroundColor: colors.surface }]]}
+      style={[styles.badge, { borderColor: colors.border, backgroundColor: colors.surface }, !unlocked && styles.badgeLocked]}
       accessibilityLabel={`${a.title}: ${a.description}${unlocked ? '' : ' (kilitli)'}`}
     >
       <Heading>{unlocked ? a.emoji : '🔒'}</Heading>
@@ -90,10 +92,41 @@ function Badge({ id, unlocked }: { id: string; unlocked: boolean }) {
 function Stat({ label, value }: { label: string; value: string | number }) {
   const { colors } = useTheme();
   return (
-    <View style={[styles.stat, { borderColor: colors.border }]}>
+    <View style={[styles.stat, { borderColor: colors.border, backgroundColor: colors.surface }]}>
       <Heading>{value}</Heading>
       <Caption color={colors.textMuted}>{label}</Caption>
     </View>
+  );
+}
+
+/** Compact selectable mono chip (daily goal, theme, slow-rate) — hairline outline, flat fill when selected. */
+function Chip({
+  label,
+  selected,
+  onPress,
+  disabled,
+  accessibilityLabel,
+}: {
+  label: string;
+  selected: boolean;
+  onPress: () => void;
+  disabled?: boolean;
+  accessibilityLabel?: string;
+}) {
+  const { colors } = useTheme();
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel ?? label}
+      accessibilityState={{ selected, disabled: !!disabled }}
+      disabled={disabled}
+      onPress={onPress}
+      style={[styles.chip, { backgroundColor: selected ? colors.primary : 'transparent', borderColor: selected ? colors.primary : colors.borderStrong }]}
+    >
+      <Text style={[styles.chipText, { color: selected ? colors.textOnBrand : colors.text }]} maxFontSizeMultiplier={1.6}>
+        {upperTr(label)}
+      </Text>
+    </Pressable>
   );
 }
 
@@ -184,9 +217,9 @@ export default function ProfileScreen() {
         <Heading>Günlük hedef</Heading>
         <ProgressBar progress={Math.min(1, stats.xpToday / stats.dailyGoalXp)} color={colors.warning} />
         <Caption color={colors.textMuted}>{stats.xpToday} / {stats.dailyGoalXp} XP bugün</Caption>
-        <View style={styles.goals}>
+        <View style={styles.chips}>
           {GOALS.map((g) => (
-            <Button key={g} title={`${g} XP`} block={false} variant={g === stats.dailyGoalXp ? 'primary' : 'outline'} onPress={() => setDailyGoal(g)} style={{ flex: 1 }} />
+            <Chip key={g} label={`${g} XP`} selected={g === stats.dailyGoalXp} onPress={() => setDailyGoal(g)} />
           ))}
         </View>
 
@@ -237,16 +270,9 @@ export default function ProfileScreen() {
         <Caption color={colors.textMuted}>Açıkken yanlış cevaplarda kalp gitmez; tüm dersleri sırayla, beklemeden geçebilirsin.</Caption>
 
         <Heading>Görünüm ve ses</Heading>
-        <View style={styles.goals}>
+        <View style={styles.chips}>
           {THEMES.map((t) => (
-            <Button
-              key={t.value}
-              title={t.label}
-              block={false}
-              variant={t.value === themePreference ? 'primary' : 'outline'}
-              onPress={() => void setThemePreference(t.value)}
-              style={{ flex: 1 }}
-            />
+            <Chip key={t.value} label={t.label} selected={t.value === themePreference} onPress={() => void setThemePreference(t.value)} />
           ))}
         </View>
         <View style={styles.row}>
@@ -262,30 +288,16 @@ export default function ProfileScreen() {
           <Body>Yavaş seslendirme hızı</Body>
           <Caption color={colors.textMuted}>%{Math.round(slowRate * 100)}</Caption>
         </View>
-        <View style={styles.rateChips}>
-          {SLOW_RATES.map((r) => {
-            const selected = r === slowRate;
-            return (
-              <Pressable
-                key={r}
-                accessibilityRole="button"
-                accessibilityLabel={`Yavaş hız yüzde ${Math.round(r * 100)}`}
-                accessibilityState={{ selected }}
-                onPress={() => void setSlowRate(r)}
-                style={[
-                  styles.rateChip,
-                  {
-                    backgroundColor: selected ? colors.primary : 'transparent',
-                    borderColor: colors.primary,
-                  },
-                ]}
-              >
-                <Text style={[styles.rateChipText, { color: selected ? colors.textOnColor : colors.primaryText }]} maxFontSizeMultiplier={1.6}>
-                  {`%${Math.round(r * 100)}`}
-                </Text>
-              </Pressable>
-            );
-          })}
+        <View style={styles.chips}>
+          {SLOW_RATES.map((r) => (
+            <Chip
+              key={r}
+              label={`%${Math.round(r * 100)}`}
+              accessibilityLabel={`Yavaş hız yüzde ${Math.round(r * 100)}`}
+              selected={r === slowRate}
+              onPress={() => void setSlowRate(r)}
+            />
+          ))}
         </View>
         <Button
           title="Dene 🐢"
@@ -325,26 +337,33 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   content: { padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xxxl },
   statsRow: { flexDirection: 'row', gap: spacing.md, marginVertical: spacing.md },
-  stat: { flex: 1, borderWidth: 2, borderRadius: radii.lg, padding: spacing.md, alignItems: 'center' },
+  stat: { flex: 1, borderWidth: 1, borderRadius: 10, padding: spacing.md, alignItems: 'center' },
   goals: { flexDirection: 'row', gap: spacing.sm },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', minHeight: 44 },
-  // Compact selectable chips: six of these in one row overflowed on narrow phones.
-  rateChips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
-  rateChip: {
-    minHeight: 44,
-    minWidth: 64,
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
+  chip: {
+    minHeight: 40,
     paddingHorizontal: spacing.md,
     borderRadius: 999,
-    borderWidth: 2,
+    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  rateChipText: { fontSize: 16, fontWeight: 'bold' },
+  chipText: { fontSize: 13, letterSpacing: 1, fontFamily: fonts.mono },
   week: { flexDirection: 'row', gap: spacing.xs, height: 120, alignItems: 'flex-end' },
   weekCol: { flex: 1, alignItems: 'center', gap: 2, height: '100%', justifyContent: 'flex-end' },
   weekTrack: { width: '100%', flex: 1, borderRadius: radii.sm, justifyContent: 'flex-end', overflow: 'hidden' },
   weekFill: { width: '100%', borderRadius: radii.sm },
   badges: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
-  badge: { width: '30%', flexGrow: 1, borderWidth: 2, borderRadius: radii.lg, padding: spacing.sm, alignItems: 'center', gap: 2, minHeight: 72 },
+  badge: {
+    width: '30%',
+    flexGrow: 1,
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: spacing.sm,
+    alignItems: 'center',
+    gap: 2,
+    minHeight: 72,
+  },
   badgeLocked: { opacity: 0.5 },
 });

@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { isSpeechCorrect, type SpeakExercise } from '@/domain';
 import { useSpeechRecognition } from '@/speech';
-import { Body, Caption, Heading, radii, spacing, useTheme } from '@/ui';
+import { Body, Caption, Heading, spacing, useTheme } from '@/ui';
 
 import { CheckBar } from '../CheckBar';
 import { SpeakerButton } from './Prompt';
@@ -38,9 +38,9 @@ export function Speak({ exercise, onAnswer, disabled }: ExerciseProps<SpeakExerc
             style={({ pressed }) => [
               styles.mic,
               listening
-                ? { backgroundColor: colors.buttonDanger, borderBottomColor: colors.buttonDangerShadow }
-                : { backgroundColor: colors.buttonSecondary, borderBottomColor: colors.buttonSecondaryShadow },
-              pressed && styles.pressed,
+                ? { backgroundColor: colors.buttonDanger, borderColor: colors.buttonDangerShadow }
+                : { backgroundColor: colors.buttonSecondary, borderColor: colors.buttonSecondaryShadow },
+              pressed && { opacity: 0.8 },
             ]}
           >
             <Body color={colors.textOnColor} style={styles.micIcon} accessible={false}>🎤</Body>
@@ -84,16 +84,15 @@ const styles = StyleSheet.create({
     borderRadius: 48,
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomWidth: 6,
+    borderWidth: 1,
     marginBottom: spacing.sm,
   },
-  pressed: { borderBottomWidth: 0, transform: [{ translateY: 6 }] },
   micIcon: { fontSize: 40 },
   box: {
     marginTop: spacing.lg,
     padding: spacing.md,
-    borderRadius: radii.lg,
-    borderWidth: 2,
+    borderRadius: 10,
+    borderWidth: 1,
     gap: spacing.xs,
   },
   spacer: { flex: 1 },

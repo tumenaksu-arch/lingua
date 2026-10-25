@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
-import { MAX_FONT_SCALE_DENSE, fontSize, fonts, spacing } from './theme';
+import { MAX_FONT_SCALE_DENSE, fontSize, fonts, radii, spacing } from './theme';
 import { useTheme } from './useTheme';
 
 type ChipProps = { style?: StyleProp<ViewStyle> };
@@ -12,8 +12,14 @@ function Chip({
   label,
   style,
 }: ChipProps & { icon: string; value: string | number; color: string; label: string }) {
+  const { colors } = useTheme();
   return (
-    <View accessible accessibilityRole="text" accessibilityLabel={label} style={[styles.chip, style]}>
+    <View
+      accessible
+      accessibilityRole="text"
+      accessibilityLabel={label}
+      style={[styles.chip, { backgroundColor: colors.surface, borderColor: colors.border }, style]}
+    >
       <Text style={styles.icon} accessible={false} maxFontSizeMultiplier={MAX_FONT_SCALE_DENSE}>
         {icon}
       </Text>
@@ -68,7 +74,9 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
     paddingHorizontal: spacing.sm,
     minHeight: 32,
+    borderWidth: 1,
+    borderRadius: radii.pill,
   },
   icon: { fontSize: fontSize.lg },
-  value: { fontSize: fontSize.md, fontFamily: fonts.mono },
+  value: { fontSize: fontSize.sm, fontFamily: fonts.mono },
 });
