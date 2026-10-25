@@ -37,6 +37,20 @@ describe('AuthForm', () => {
     expect(onDone).toHaveBeenCalledTimes(1);
   });
 
+  it('signs in with the trimmed e-mail in the landing appearance', async () => {
+    const onDone = jest.fn();
+    await render(<AuthForm appearance="landing" onDone={onDone} />);
+    expect(screen.getByRole('button', { name: 'Giriş yap' })).toBeDisabled();
+
+    await type('E-posta', '  ali@example.com ');
+    await type('Şifre, en az 6 karakter', 'gizli123');
+    await press('Giriş yap');
+
+    expect(signIn).toHaveBeenCalledWith('ali@example.com', 'gizli123');
+    expect(signUp).not.toHaveBeenCalled();
+    expect(onDone).toHaveBeenCalledTimes(1);
+  });
+
   it('switches to sign-up and creates the account', async () => {
     await render(<AuthForm />);
     await press('Ücretsiz kayıt ol');

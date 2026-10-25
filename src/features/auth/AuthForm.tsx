@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { authErrorMessage } from '@/data';
 import { useAppStore } from '@/features/store';
-import { Body, Button, Caption, radii, spacing, useTheme } from '@/ui';
+import { Body, Button, Caption, spacing, upperTr, useTheme } from '@/ui';
 
 export type AuthMode = 'in' | 'up';
 
@@ -11,13 +11,31 @@ export type AuthFormProps = {
   initialMode?: AuthMode;
   /** Called after a successful sign-in or sign-up. */
   onDone?: () => void;
+  /**
+   * 'app' (default) is the in-app style used by the profile auth modal; 'landing' is the
+   * EduPilot-styled variant used on the welcome page (fixed palette, pill buttons, mono labels).
+   */
+  appearance?: 'app' | 'landing';
+};
+
+/** EduPilot landing palette — fixed, independent of the app theme. */
+const ep = {
+  text: '#e8eaf2',
+  dim: '#8e97b5',
+  accent: '#d18b63',
+  accentDisabled: 'rgba(209,139,99,0.35)',
+  onAccent: '#0e1220',
+  inputBorder: 'rgba(232,234,242,0.18)',
+  inputBg: 'rgba(14,18,32,0.45)',
+  hairline: 'rgba(232,234,242,0.10)',
+  danger: '#ff8080',
 };
 
 /**
  * E-mail/password form shared by the welcome screen and the auth modal:
  * sign in / sign up toggle, show-password, and Firebase password reset.
  */
-export function AuthForm({ initialMode = 'in', onDone }: AuthFormProps) {
+export function AuthForm({ initialMode = 'in', onDone, appearance = 'app' }: AuthFormProps) {
   const signIn = useAppStore((s) => s.signIn);
   const signUp = useAppStore((s) => s.signUp);
   const resetPassword = useAppStore((s) => s.resetPassword);
@@ -65,6 +83,86 @@ export function AuthForm({ initialMode = 'in', onDone }: AuthFormProps) {
     setError(null);
     setInfo(null);
   };
+
+  if (appearance === 'landing') {
+    const canSubmit = Boolean(email) && password.length >= 6;
+    const submitTitle = mode === 'in' ? 'Giriş yap' : 'Hesap oluştur';
+    const switchTitle = mode === 'in' ? 'Ücretsiz kayıt ol' : 'Zaten hesabım var';
+    return (
+      <View style={landingStyles.form}>
+        <Text style={landingStyles.label}>E-POSTA</Text>
+        <TextInput
+          style={landingStyles.input}
+          placeholder="ornek@eposta.com"
+          placeholderTextColor={ep.dim}
+          autoCapitalize="none"
+          keyboardType="email-address"
+          autoComplete="email"
+          value={email}
+          onChangeText={setEmail}
+          accessibilityLabel="E-posta"
+        />
+        <Text style={landingStyles.label}>ŞİFRE</Text>
+        <View>
+          <TextInput
+            style={[landingStyles.input, landingStyles.passwordInput]}
+            placeholder="En az 6 karakter"
+            placeholderTextColor={ep.dim}
+            secureTextEntry={!showPassword}
+            autoComplete={mode === 'in' ? 'current-password' : 'new-password'}
+            value={password}
+            onChangeText={setPassword}
+            onSubmitEditing={() => {
+              if (email && password.length >= 6 && !busy) void submit();
+            }}
+            accessibilityLabel="Şifre, en az 6 karakter"
+          />
+          <Pressable
+            style={landingStyles.eye}
+            onPress={() => setShowPassword(!showPassword)}
+            accessibilityRole="button"
+            accessibilityLabel={showPassword ? 'Şifreyi gizle' : 'Şifreyi göster'}
+            hitSlop={8}
+          >
+            <Text style={landingStyles.eyeText}>{showPassword ? 'GİZLE' : 'GÖSTER'}</Text>
+          </Pressable>
+        </View>
+        {error && (
+          <Text style={landingStyles.error} accessibilityRole="alert">
+            {error}
+          </Text>
+        )}
+        {info && (
+          <Text style={landingStyles.info} accessibilityLiveRegion="polite">
+            {info}
+          </Text>
+        )}
+        <Pressable
+          onPress={submit}
+          disabled={!canSubmit}
+          accessibilityRole="button"
+          accessibilityLabel={submitTitle}
+          style={[landingStyles.primaryButton, !canSubmit && { backgroundColor: ep.accentDisabled }]}
+        >
+          <Text style={landingStyles.primaryButtonText}>{upperTr(submitTitle)}</Text>
+        </Pressable>
+        {mode === 'in' && (
+          <Pressable onPress={forgot} accessibilityRole="button" style={landingStyles.link}>
+            <Text style={landingStyles.linkText}>Şifremi unuttum</Text>
+          </Pressable>
+        )}
+        <View style={landingStyles.divider} />
+        <Pressable
+          onPress={switchMode}
+          accessibilityRole="button"
+          accessibilityLabel={switchTitle}
+          style={landingStyles.secondaryButton}
+        >
+          <Text style={landingStyles.secondaryButtonText}>{upperTr(switchTitle)}</Text>
+        </Pressable>
+      </View>
+    );
+  }
 
   const inputStyle = [styles.input, { borderColor: colors.border, color: colors.text, backgroundColor: colors.background }];
 
@@ -132,9 +230,69 @@ export function AuthForm({ initialMode = 'in', onDone }: AuthFormProps) {
 
 const styles = StyleSheet.create({
   form: { gap: spacing.sm },
-  input: { borderWidth: 2, borderRadius: radii.md, padding: spacing.md, fontSize: 16, minHeight: 48 },
+  input: { borderWidth: 2, borderRadius: 12, padding: spacing.md, fontSize: 16, minHeight: 48 },
   passwordInput: { paddingRight: 80 },
   eye: { position: 'absolute', right: spacing.md, top: 0, bottom: 0, justifyContent: 'center' },
   link: { alignSelf: 'flex-start', paddingVertical: spacing.xs },
   divider: { height: 1, marginVertical: spacing.sm },
+});
+
+const landingStyles = StyleSheet.create({
+  form: { gap: spacing.sm },
+  label: {
+    fontFamily: 'SpaceMono_400Regular',
+    fontSize: 9,
+    letterSpacing: 2,
+    color: ep.dim,
+    textTransform: 'uppercase',
+  },
+  input: {
+    borderWidth: 1,
+    borderRadius: 4,
+    borderColor: ep.inputBorder,
+    backgroundColor: ep.inputBg,
+    paddingHorizontal: spacing.md,
+    height: 44,
+    fontFamily: 'Inter_400Regular',
+    fontSize: 14,
+    color: ep.text,
+  },
+  passwordInput: { paddingRight: 80 },
+  eye: { position: 'absolute', right: spacing.md, top: 0, bottom: 0, justifyContent: 'center' },
+  eyeText: { fontFamily: 'SpaceMono_400Regular', fontSize: 10, letterSpacing: 1.5, color: ep.dim },
+  error: { fontFamily: 'Inter_400Regular', fontSize: 13, lineHeight: 20, color: ep.danger },
+  info: { fontFamily: 'Inter_400Regular', fontSize: 13, lineHeight: 20, color: ep.accent },
+  primaryButton: {
+    borderRadius: 100,
+    minHeight: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: spacing.xl,
+    backgroundColor: ep.accent,
+    marginTop: spacing.xs,
+  },
+  primaryButtonText: {
+    fontFamily: 'SpaceMono_400Regular',
+    fontSize: 11,
+    letterSpacing: 1.5,
+    color: ep.onAccent,
+  },
+  link: { alignSelf: 'flex-start', paddingVertical: spacing.xs },
+  linkText: { fontFamily: 'Inter_400Regular', fontSize: 14, color: ep.text },
+  divider: { height: 1, backgroundColor: ep.hairline, marginVertical: spacing.sm },
+  secondaryButton: {
+    borderRadius: 100,
+    minHeight: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: spacing.xl,
+    borderWidth: 1,
+    borderColor: ep.accent,
+  },
+  secondaryButtonText: {
+    fontFamily: 'SpaceMono_400Regular',
+    fontSize: 11,
+    letterSpacing: 1.5,
+    color: ep.accent,
+  },
 });
