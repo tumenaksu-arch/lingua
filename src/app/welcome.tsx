@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from 'react';
+import { useMemo, useRef, useState, type ReactNode } from 'react';
 import {
   Image,
   KeyboardAvoidingView,
@@ -29,6 +29,7 @@ import {
   radii,
   spacing,
   upperTr,
+  useTheme,
   type ColorTokens,
 } from '@/ui';
 
@@ -98,9 +99,12 @@ export default function WelcomeScreen() {
   const { width } = useWindowDimensions();
   const wide = width >= WIDE;
   const inApp = isNativeShell();
+  const { colors: themeColors, isDark } = useTheme();
   // Inside the shell tint the strip behind the clock/battery with the page's navy and keep
-  // light icons; on unmount the layout's useSystemBars(colors.background, !isDark) wins again.
-  useSystemBars(ep.background, false);
+  // light icons; on unmount the cleanup restores the app theme strip (parent effects don't
+  // re-run on child unmount, so the restore fallback has to do the hand-back explicitly).
+  const systemBarsRestore = useMemo(() => ({ color: themeColors.background, darkIcons: !isDark }), [themeColors.background, isDark]);
+  useSystemBars(ep.background, false, systemBarsRestore);
   const scroll = useRef<ScrollView>(null);
   // Section positions for the menu; a plain mutable map (layout callbacks write it, presses read it).
   const [offsets] = useState<Partial<Record<SectionId | 'card', number>>>(() => ({}));

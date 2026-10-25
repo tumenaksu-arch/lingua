@@ -1,7 +1,9 @@
 package com.tumenaksu.lingua;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.view.View;
+import android.view.Window;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import com.getcapacitor.Plugin;
@@ -29,14 +31,22 @@ public class SystemBarsPlugin extends Plugin {
             return;
         }
         final boolean lightBars = darkIcons;
-        getActivity()
-            .runOnUiThread(() -> {
-                View decor = getActivity().getWindow().getDecorView();
-                decor.setBackgroundColor(parsed);
-                WindowInsetsControllerCompat bars = WindowCompat.getInsetsController(getActivity().getWindow(), decor);
-                bars.setAppearanceLightStatusBars(lightBars);
-                bars.setAppearanceLightNavigationBars(lightBars);
-            });
+        // Capture everything before posting: if the activity is destroyed before the runnable
+        // runs (user quits/backgrounds mid-call) getActivity() returns null inside it.
+        final Activity activity = getActivity();
+        if (activity == null) {
+            call.reject("no activity");
+            return;
+        }
+        final Window window = activity.getWindow();
+        final View decor = window.getDecorView();
+        final WindowInsetsControllerCompat bars = WindowCompat.getInsetsController(window, decor);
+        activity.runOnUiThread(() -> {
+            if (getActivity() == null) return; // torn down before the runnable executed
+            decor.setBackgroundColor(parsed);
+            bars.setAppearanceLightStatusBars(lightBars);
+            bars.setAppearanceLightNavigationBars(lightBars);
+        });
         call.resolve();
     }
 }

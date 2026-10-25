@@ -49,10 +49,25 @@ test('inside the shell set() is called with the color/darkIcons and re-called wh
   expect(() => unmount()).not.toThrow();
 });
 
+test('unmount hands the strip back to the theme values when a restore fallback is given', async () => {
+  const { set } = enterShell();
+  const { unmount } = await renderHook(() =>
+    useSystemBars('#0e1220', false, { color: '#FFFFFF', darkIcons: true }),
+  );
+  expect(set).toHaveBeenCalledTimes(1);
+  expect(set).toHaveBeenLastCalledWith({ color: '#0e1220', darkIcons: false });
+  // Passive effect cleanups are flushed inside act.
+  await act(async () => {
+    unmount();
+  });
+  expect(set).toHaveBeenCalledTimes(2);
+  expect(set).toHaveBeenLastCalledWith({ color: '#FFFFFF', darkIcons: true });
+});
+
 test('plugin errors are swallowed', async () => {
   const { set } = enterShell();
   set.mockRejectedValue(new Error('invalid color'));
-  expect(async () => await renderHook(() => useSystemBars('#0e1220', false))).not.toThrow();
+  await expect(renderHook(() => useSystemBars('#0e1220', false))).resolves.toBeDefined();
   // Let the rejected promise settle so an unhandled rejection would surface.
   await new Promise((resolve) => setTimeout(resolve, 0));
   expect(set).toHaveBeenCalledWith({ color: '#0e1220', darkIcons: false });
