@@ -23,6 +23,7 @@ describe('lesson state machine', () => {
     expect(r.correct).toBe(2);
     expect(r.total).toBe(3);
     expect(r.mistakes).toEqual(['e1']);
+    expect(r.mistakesByType).toEqual({ select_translation: 1 });
     expect(r.vocabOutcomes).toEqual({ v1: false, v2: true });
   });
 

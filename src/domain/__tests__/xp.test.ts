@@ -2,7 +2,7 @@ import { lessonXp, applyLessonResult } from '../xp';
 import type { LessonResult, UserStats } from '../types';
 
 const result = (correct: number, total: number, mistakes: string[]): LessonResult => ({
-  lessonId: 'l1', correct, total, mistakes, durationMs: 1000, vocabOutcomes: {},
+  lessonId: 'l1', correct, total, mistakes, mistakesByType: {}, durationMs: 1000, vocabOutcomes: {},
 });
 const stats: UserStats = {
   xp: 100, streak: 2, lastActiveDate: '2026-10-10', streakFreezes: 0,

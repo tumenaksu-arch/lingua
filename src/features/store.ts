@@ -480,6 +480,9 @@ export const useAppStore = create<AppState>((set, get) => ({
       total: result.total,
       perfect: result.mistakes.length === 0,
       durationMs: result.durationMs,
+      // teacher "Zorlanılanlar" (class_struggles) groups by lesson and exercise type
+      lessonId: result.lessonId,
+      mistakes_by_type: result.mistakesByType,
     }, now);
 
     const vocabIds = Object.keys(result.vocabOutcomes);

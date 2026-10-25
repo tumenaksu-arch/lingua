@@ -88,6 +88,11 @@ export function toResult(
   exerciseVocabMap: Record<string, string[]> = {},
 ): LessonResult {
   const total = Object.keys(state.exercises).length;
+  const mistakesByType: Record<string, number> = {};
+  for (const id of state.mistakes) {
+    const t = state.exercises[id]?.type;
+    if (t) mistakesByType[t] = (mistakesByType[t] ?? 0) + 1;
+  }
   const vocabOutcomes: Record<string, boolean> = {};
   for (const [exId, vocabIds] of Object.entries(exerciseVocabMap)) {
     const wrong = state.mistakes.includes(exId);
@@ -98,6 +103,7 @@ export function toResult(
     correct: total - state.mistakes.length,
     total,
     mistakes: [...state.mistakes],
+    mistakesByType,
     durationMs,
     vocabOutcomes,
   };

@@ -122,6 +122,8 @@ export interface LessonResult {
   correct: number;
   total: number;
   mistakes: string[]; // exercise ids
+  /** wrong answers per exercise type (Exercise['type'] → count); {} when perfect */
+  mistakesByType: Record<string, number>;
   durationMs: number;
   /** vocab ids answered correctly / incorrectly, for SRS */
   vocabOutcomes: Record<string, boolean>;
