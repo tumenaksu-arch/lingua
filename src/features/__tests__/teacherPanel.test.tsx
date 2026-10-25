@@ -45,6 +45,9 @@ jest.mock('expo-router', () => ({
 // fails if the corresponding feature stops using it.
 jest.mock('@/data/remote/classes', () => ({
   isTeacher: jest.fn(),
+  isAnonymousSession: jest.fn(async () => false),
+  myClasses: jest.fn(async () => []),
+  leaveClass: jest.fn(),
   becomeTeacher: jest.fn(),
   listMyClasses: jest.fn(),
   createClass: jest.fn(),
