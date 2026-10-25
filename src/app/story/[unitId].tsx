@@ -99,10 +99,12 @@ export default function StoryScreen() {
             <Body color={colors.primaryText}>{showTr ? 'Çeviriyi gizle' : 'Çeviri'}</Body>
           </Pressable>
         </ScrollView>
-        <Button
-          title={allRevealed ? (story.questions.length > 0 ? 'Sorulara geç' : 'Bitir') : 'Devam'}
-          onPress={() => (allRevealed ? (story.questions.length > 0 ? setPhase('questions') : startFinish()) : setVisibleLines((n) => n + 1))}
-        />
+        <View style={styles.footer}>
+          <Button
+            title={allRevealed ? (story.questions.length > 0 ? 'Sorulara geç' : 'Bitir') : 'Devam'}
+            onPress={() => (allRevealed ? (story.questions.length > 0 ? setPhase('questions') : startFinish()) : setVisibleLines((n) => n + 1))}
+          />
+        </View>
       </Screen>
     );
   }
@@ -156,7 +158,9 @@ export default function StoryScreen() {
             })}
           </View>
         </ScrollView>
-        <Button title="Kontrol et" disabled={selected === null || !!feedback || finishing} onPress={check} />
+        <View style={styles.footer}>
+          <Button title="Kontrol et" disabled={selected === null || !!feedback || finishing} onPress={check} />
+        </View>
         <FeedbackSheet
           result={feedback ? (feedback.ok ? 'correct' : 'wrong') : null}
           title={feedback?.ok ? 'Harika!' : 'Doğru cevap:'}
@@ -228,7 +232,8 @@ function Stat({ label, value, color }: { label: string; value: string; color: st
 }
 
 const styles = StyleSheet.create({
-  scroll: { paddingBottom: spacing.xl, gap: spacing.md },
+  scroll: { paddingHorizontal: spacing.lg, paddingBottom: spacing.xl, gap: spacing.md },
+  footer: { paddingHorizontal: spacing.lg, paddingBottom: spacing.md },
   header: { gap: spacing.sm },
   lines: { gap: spacing.lg },
   line: { gap: spacing.xs },
