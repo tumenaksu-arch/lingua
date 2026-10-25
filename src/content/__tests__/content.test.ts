@@ -102,7 +102,7 @@ test('tr-en lessons each use all six exercise types', () => {
       const types = new Set(l.exercises.map((e) => e.type));
       for (const t of ALL_TYPES) expect({ lesson: l.id, has: t, ok: types.has(t) }).toEqual({ lesson: l.id, has: t, ok: true });
     }
-  expect(trEn.units).toHaveLength(8);
+  expect(trEn.units).toHaveLength(12); // A1→B1: u1–u8 + u9–u12
   for (const u of trEn.units) expect(u.lessons).toHaveLength(4);
 });
 
