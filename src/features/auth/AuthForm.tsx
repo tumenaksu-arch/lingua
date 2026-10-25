@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { authErrorMessage } from '@/data';
 import { useAppStore } from '@/features/store';
-import { Body, Button, Caption, spacing, upperTr, useTheme } from '@/ui';
+import { Body, Button, Caption, radii, spacing, upperTr, useTheme } from '@/ui';
 
 export type AuthMode = 'in' | 'up';
 
@@ -139,12 +139,14 @@ export function AuthForm({ initialMode = 'in', onDone, appearance = 'app' }: Aut
         )}
         <Pressable
           onPress={submit}
-          disabled={!canSubmit}
+          disabled={!canSubmit || busy}
           accessibilityRole="button"
-          accessibilityLabel={submitTitle}
-          style={[landingStyles.primaryButton, !canSubmit && { backgroundColor: ep.accentDisabled }]}
+          accessibilityLabel={busy ? `${submitTitle} (yükleniyor)` : submitTitle}
+          style={[landingStyles.primaryButton, (!canSubmit || busy) && { backgroundColor: ep.accentDisabled }]}
         >
-          <Text style={landingStyles.primaryButtonText}>{upperTr(submitTitle)}</Text>
+          <Text style={landingStyles.primaryButtonText}>
+            {busy ? upperTr('Yükleniyor…') : upperTr(submitTitle)}
+          </Text>
         </Pressable>
         {mode === 'in' && (
           <Pressable onPress={forgot} accessibilityRole="button" style={landingStyles.link}>
@@ -230,7 +232,7 @@ export function AuthForm({ initialMode = 'in', onDone, appearance = 'app' }: Aut
 
 const styles = StyleSheet.create({
   form: { gap: spacing.sm },
-  input: { borderWidth: 2, borderRadius: 12, padding: spacing.md, fontSize: 16, minHeight: 48 },
+  input: { borderWidth: 2, borderRadius: radii.md, padding: spacing.md, fontSize: 16, minHeight: 48 },
   passwordInput: { paddingRight: 80 },
   eye: { position: 'absolute', right: spacing.md, top: 0, bottom: 0, justifyContent: 'center' },
   link: { alignSelf: 'flex-start', paddingVertical: spacing.xs },

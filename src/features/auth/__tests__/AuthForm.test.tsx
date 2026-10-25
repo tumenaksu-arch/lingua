@@ -51,6 +51,23 @@ describe('AuthForm', () => {
     expect(onDone).toHaveBeenCalledTimes(1);
   });
 
+  it('keeps the landing submit disabled while sign-in is in flight', async () => {
+    let resolveSignIn!: () => void;
+    signIn.mockImplementation(() => new Promise<void>((res) => { resolveSignIn = res; }));
+    await render(<AuthForm appearance="landing" />);
+    await type('E-posta', 'ali@example.com');
+    await type('Şifre, en az 6 karakter', 'gizli123');
+    press('Giriş yap'); // not awaited: fireEvent's thenable would block on the in-flight signIn promise
+    expect(signIn).toHaveBeenCalledTimes(1);
+
+    const busy = await screen.findByRole('button', { name: 'Giriş yap (yükleniyor)' });
+    expect(busy).toBeDisabled();
+
+    resolveSignIn();
+    const idle = await screen.findByRole('button', { name: 'Giriş yap' });
+    expect(idle).toBeEnabled();
+  });
+
   it('switches to sign-up and creates the account', async () => {
     await render(<AuthForm />);
     await press('Ücretsiz kayıt ol');
