@@ -3,6 +3,7 @@ import { create } from 'zustand';
 import { courses, getCourse } from '@/content';
 import {
   advanceGoalStreak,
+  applyActivity,
   applyLessonResult,
   createCard,
   evaluate as evaluateAchievements,
@@ -48,6 +49,16 @@ const REVIEW_SESSIONS_KEY = 'srs_review_sessions';
 const GOAL_STREAK_KEY = 'goal_streak';
 const REMINDER_KEY = 'reminder_hour';
 
+/** Story XP: base 10, +2 per correct comprehension answer (roadmap item 2). */
+export const STORY_BASE_XP = 10;
+export const STORY_PER_CORRECT_XP = 2;
+/** Flat XP for re-completing an already completed story. */
+export const STORY_REPEAT_XP = 5;
+
+export function storyXp(correct: number): number {
+  return STORY_BASE_XP + STORY_PER_CORRECT_XP * correct;
+}
+
 interface Repos {
   stats: ReturnType<typeof createStatsRepo>;
   srs: ReturnType<typeof createSrsRepo>;
@@ -84,6 +95,12 @@ export interface AppState {
   completeOnboarding: (courseId: string, dailyGoalXp: number) => Promise<void>;
   /** Called by the lesson screen when a lesson is finished (not failed). */
   finishLesson: (result: LessonResult) => Promise<{ xpEarned: number; dailyGoalJustReached: boolean }>;
+  /**
+   * Called by the story screen when a story is finished. Story ids are
+   * '<unitId>.story' and are stored as progress rows like lessons (they are
+   * not in lessonOrder, so they never gate the learning path).
+   */
+  finishStory: (storyId: string, correct: number, total: number) => Promise<{ xpEarned: number }>;
   /** Called by the lesson screen for each lost heart so the regen clock persists. */
   saveStats: (stats: UserStats) => Promise<void>;
   loadDueCards: (limit?: number) => Promise<SrsCard[]>;
@@ -324,6 +341,38 @@ export const useAppStore = create<AppState>((set, get) => ({
     return { xpEarned: outcome.xpEarned, dailyGoalJustReached: outcome.dailyGoalJustReached };
   },
 
+  async finishStory(storyId, correct, total) {
+    const r = requireRepos();
+    const now = Date.now();
+    // First completion: 10 + 2 per correct answer; re-completions: flat 5 XP.
+    // Same stats pipeline as lessons (streak, daily goal).
+    const xpEarned = get().progress[storyId]?.completedAt ? STORY_REPEAT_XP : storyXp(correct);
+    const localDate = localDateString(new Date());
+    const prev = get().stats;
+    const newDay = prev.lastActiveDate !== localDate;
+    const xpBefore = newDay ? 0 : prev.xpToday;
+    const xpToday = xpBefore + xpEarned;
+    let next: UserStats = { ...prev, xp: prev.xp + xpEarned, xpToday };
+    next = applyActivity(next, localDate);
+    await r.stats.save(next, now);
+    const lp = await r.progress.completeLesson(storyId, now);
+    // Unique id even for same-millisecond repeats (events are INSERT OR IGNORE).
+    await r.progress.logEvent(`${storyId}:${now}:${Math.random().toString(36).slice(2, 8)}`, 'story_completed', { xp: xpEarned, correct, total }, now);
+
+    set((s) => ({ stats: next, progress: { ...s.progress, [lp.lessonId]: lp } }));
+
+    const { db } = get();
+    if (db) {
+      if (xpToday >= next.dailyGoalXp && xpBefore < next.dailyGoalXp) {
+        const goal = advanceGoalStreak(await getGoalStreak(db), localDate);
+        await setMeta(db, GOAL_STREAK_KEY, JSON.stringify(goal));
+      }
+      await unlockAchievements(db, get, set);
+    }
+    void get().sync();
+    return { xpEarned };
+  },
+
   async saveStats(stats) {
     await requireRepos().stats.save(stats, Date.now());
     set({ stats });
@@ -370,8 +419,9 @@ export const useAppStore = create<AppState>((set, get) => ({
     todayStart.setHours(0, 0, 0, 0);
     const from = todayStart.getTime() - 6 * dayMs;
     const rows = await db.getAll<{ payload: string; created_at: number }>(
-      'SELECT payload, created_at FROM events WHERE user_id = ? AND type = ? AND created_at > ?',
-      [userId, 'lesson_completed', from - 1],
+      // Lessons and stories both log their XP under the `xp` payload field.
+      "SELECT payload, created_at FROM events WHERE user_id = ? AND type IN (?, ?) AND created_at > ?",
+      [userId, 'lesson_completed', 'story_completed', from - 1],
     );
     const buckets = [0, 0, 0, 0, 0, 0, 0];
     for (const r of rows) {
