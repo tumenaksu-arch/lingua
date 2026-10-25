@@ -9,6 +9,8 @@ export const SLOW_RATES = [0.3, 0.4, 0.5, 0.6, 0.7, 0.8] as const;
 interface Settings {
   soundEnabled: boolean;
   slowRate: number;
+  /** "Rahat mod": no heart limit, lessons never block on hearts. */
+  relaxedHearts: boolean;
 }
 
 interface SettingsState extends Settings {
@@ -16,9 +18,10 @@ interface SettingsState extends Settings {
   hydrate: () => Promise<void>;
   setSoundEnabled: (on: boolean) => Promise<void>;
   setSlowRate: (rate: number) => Promise<void>;
+  setRelaxedHearts: (on: boolean) => Promise<void>;
 }
 
-const DEFAULTS: Settings = { soundEnabled: true, slowRate: 0.6 };
+const DEFAULTS: Settings = { soundEnabled: true, slowRate: 0.6, relaxedHearts: false };
 
 /** Snap an arbitrary rate to the nearest allowed SLOW_RATES value. */
 function snapRate(rate: number): number {
@@ -48,6 +51,8 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
       set({
         soundEnabled: typeof parsed.soundEnabled === 'boolean' ? parsed.soundEnabled : DEFAULTS.soundEnabled,
         slowRate: storedRate ?? DEFAULTS.slowRate,
+        // stored data from before Rahat mod: missing ⇒ off
+        relaxedHearts: typeof parsed.relaxedHearts === 'boolean' ? parsed.relaxedHearts : DEFAULTS.relaxedHearts,
         hydrated: true,
       });
     } catch {
@@ -56,11 +61,15 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   },
   async setSoundEnabled(soundEnabled) {
     set({ soundEnabled });
-    await persist({ soundEnabled, slowRate: get().slowRate });
+    await persist({ soundEnabled, slowRate: get().slowRate, relaxedHearts: get().relaxedHearts });
   },
   async setSlowRate(rate) {
     const slowRate = snapRate(rate);
     set({ slowRate });
-    await persist({ soundEnabled: get().soundEnabled, slowRate });
+    await persist({ soundEnabled: get().soundEnabled, slowRate, relaxedHearts: get().relaxedHearts });
+  },
+  async setRelaxedHearts(relaxedHearts) {
+    set({ relaxedHearts });
+    await persist({ soundEnabled: get().soundEnabled, slowRate: get().slowRate, relaxedHearts });
   },
 }));

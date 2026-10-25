@@ -3,7 +3,7 @@ import { router } from 'expo-router';
 
 import { activeLessonId, useAppStore } from '@/features/store';
 import { useNow } from '@/features/useNow';
-import { canStartLesson, localDateString, regenerate } from '@/domain';
+import { localDateString, regenerate } from '@/domain';
 import { Body, Button, Caption, Heading, Hearts, PathNode, Screen, StreakFlame, XpBadge, radii, spacing, useTheme } from '@/ui';
 
 const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', it: '🇮🇹', tr: '🇹🇷' };
@@ -72,10 +72,8 @@ export default function LearnScreen() {
                     tooltip={isActive ? 'BAŞLA' : undefined}
                     accessibilityLabel={`${unit.title} ders ${li + 1}`}
                     onPress={() => {
-                      if (state === 'active' && !canStartLesson(stats, now)) {
-                        router.push('/profile');
-                        return;
-                      }
+                      // Always open the lesson; its OutOfHearts screen explains the
+                      // no-heart case instead of silently redirecting away.
                       router.push({ pathname: '/lesson/[id]', params: { id: lesson.id, mode: state === 'completed' ? 'practice' : undefined } });
                     }}
                     style={styles.node}

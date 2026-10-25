@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SLOW_RATES, useSettingsStore } from '../settingsStore';
 
 function resetStore() {
-  useSettingsStore.setState({ soundEnabled: true, slowRate: 0.6, hydrated: false });
+  useSettingsStore.setState({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, hydrated: false });
 }
 
 describe('settingsStore', () => {
@@ -25,10 +25,40 @@ describe('settingsStore', () => {
     expect(useSettingsStore.getState().slowRate).toBe(0.4);
   });
 
-  it('persists BOTH soundEnabled and slowRate after setSlowRate', async () => {
+  it('defaults relaxedHearts to false', () => {
+    expect(useSettingsStore.getState().relaxedHearts).toBe(false);
+  });
+
+  it('persists the FULL settings object after setSlowRate', async () => {
     await useSettingsStore.getState().setSlowRate(0.5);
     const stored = JSON.parse((await AsyncStorage.getItem('settings_v1'))!);
-    expect(stored).toEqual({ soundEnabled: true, slowRate: 0.5 });
+    expect(stored).toEqual({ soundEnabled: true, slowRate: 0.5, relaxedHearts: false });
+  });
+
+  it('persists relaxedHearts together with soundEnabled and slowRate (no erase regression)', async () => {
+    await useSettingsStore.getState().setSlowRate(0.4);
+    await useSettingsStore.getState().setSoundEnabled(false);
+    await useSettingsStore.getState().setRelaxedHearts(true);
+
+    // re-hydrate a fresh store state from storage: every field must survive
+    resetStore();
+    await useSettingsStore.getState().hydrate();
+    expect(useSettingsStore.getState().relaxedHearts).toBe(true);
+    expect(useSettingsStore.getState().soundEnabled).toBe(false);
+    expect(useSettingsStore.getState().slowRate).toBe(0.4);
+
+    // and toggling one setting never erases the others
+    await useSettingsStore.getState().setRelaxedHearts(false);
+    const stored = JSON.parse((await AsyncStorage.getItem('settings_v1'))!);
+    expect(stored).toEqual({ soundEnabled: false, slowRate: 0.4, relaxedHearts: false });
+  });
+
+  it('hydrates legacy data without relaxedHearts: relaxedHearts false', async () => {
+    await AsyncStorage.setItem('settings_v1', JSON.stringify({ soundEnabled: false, slowRate: 0.5 }));
+    await useSettingsStore.getState().hydrate();
+    expect(useSettingsStore.getState().relaxedHearts).toBe(false);
+    expect(useSettingsStore.getState().soundEnabled).toBe(false);
+    expect(useSettingsStore.getState().slowRate).toBe(0.5);
   });
 
   it('persists BOTH soundEnabled and slowRate after setSoundEnabled (no erase regression)', async () => {

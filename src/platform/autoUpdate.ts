@@ -1,10 +1,16 @@
 import { createElement, useEffect, useRef, useState } from 'react';
-import { Linking, Platform, StyleSheet, View } from 'react-native';
+import { Linking, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { usePathname } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Body, Button, spacing, useTheme } from '@/ui';
+import { Body, spacing } from '@/ui';
 import { isNativeShell, shellPlugin } from './nativeShell';
+
+/** EduPilot landing-page palette (dark navy + apricot accent). */
+const BANNER_BG = '#0e1220';
+const BANNER_TEXT = '#e8eaf2';
+const BANNER_ACCENT = '#d18b63';
+const BANNER_OUTLINE = 'rgba(232,234,242,0.3)';
 
 /**
  * Auto-update on open (web build only).
@@ -159,7 +165,6 @@ function writeDismissedVersion(version: string) {
  * one check per 6 hours). The user can dismiss it per version.
  */
 export function ShellUpdateBanner() {
-  const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const [update, setUpdate] = useState<{ version: string; url: string } | null>(null);
   const lastCheck = useRef(0);
@@ -218,42 +223,57 @@ export function ShellUpdateBanner() {
   return createElement(
     View,
     {
-      style: [
-        styles.banner,
-        { backgroundColor: colors.surface, borderBottomColor: colors.border, paddingTop: insets.top + spacing.sm },
-      ],
+      style: [styles.banner, { backgroundColor: BANNER_BG, paddingTop: insets.top + spacing.sm }],
     },
-    createElement(Body, { style: styles.text }, `Love-Vox'un yeni Android sürümü hazır (${update.version}).`),
+    createElement(Body, { style: [styles.text, { color: BANNER_TEXT }] }, `Love-Vox'un yeni Android sürümü hazır (${update.version}).`),
     createElement(
       View,
       { style: styles.buttons },
-      createElement(Button, {
-        title: 'Güncelle',
-        block: false,
-        onPress: () => {
-          Linking.openURL(update.url).catch(() => {});
+      createElement(
+        Pressable,
+        {
+          accessibilityRole: 'button',
+          accessibilityLabel: 'Güncelle',
+          onPress: () => {
+            Linking.openURL(update.url).catch(() => {});
+          },
+          style: [styles.pill, { backgroundColor: BANNER_ACCENT }],
         },
-      }),
-      createElement(Button, {
-        title: 'Sonra',
-        variant: 'outline',
-        block: false,
-        onPress: () => {
-          writeDismissedVersion(update.version);
-          setUpdate(null);
+        createElement(Text, { style: [styles.pillLabel, { color: BANNER_BG }] }, 'Güncelle'),
+      ),
+      createElement(
+        Pressable,
+        {
+          accessibilityRole: 'button',
+          accessibilityLabel: 'Sonra',
+          onPress: () => {
+            writeDismissedVersion(update.version);
+            setUpdate(null);
+          },
+          style: [styles.pill, styles.pillOutline, { borderColor: BANNER_OUTLINE }],
         },
-      }),
+        createElement(Text, { style: [styles.pillLabel, { color: BANNER_TEXT }] }, 'Sonra'),
+      ),
     ),
   );
 }
 
 const styles = StyleSheet.create({
   banner: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: spacing.lg,
     paddingBottom: spacing.sm,
     gap: spacing.sm,
   },
   text: { textAlign: 'center' },
   buttons: { flexDirection: 'row', justifyContent: 'center', gap: spacing.md },
+  pill: {
+    minHeight: 44,
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.sm,
+    borderRadius: 999,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  pillOutline: { borderWidth: 2 },
+  pillLabel: { fontSize: 16, fontWeight: 'bold' },
 });

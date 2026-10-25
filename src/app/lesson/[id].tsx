@@ -21,7 +21,7 @@ import { ExerciseView } from '@/features/lesson/ExerciseView';
 import { playComplete, playCorrect, playWrong } from '@/features/sound';
 import { exerciseVocabMap, formatDuration } from '@/features/lesson/helpers';
 import { useAppStore } from '@/features/store';
-import { Body, Button, Caption, FeedbackSheet, Heading, Hearts, ProgressBar, Screen, Title, showAlert, spacing, useTheme } from '@/ui';
+import { Body, Button, Caption, FeedbackSheet, Heading, Hearts, ProgressBar, Screen, Title, showAlert, spacing, useSettingsStore, useTheme } from '@/ui';
 
 type Params = { id: string; mode?: 'practice' };
 
@@ -49,9 +49,11 @@ function correctAnswerText(e: Exercise): string | undefined {
 export default function LessonScreen() {
   const { id, mode } = useLocalSearchParams<Params>();
   const practice = mode === 'practice';
+  const relaxed = useSettingsStore((s) => s.relaxedHearts);
   // `router.replace` to the same route only updates params; keying on them forces a
-  // fresh lesson state (e.g. "Pratik yap" after running out of hearts).
-  return <LessonRunner key={`${id}:${practice ? 'practice' : 'normal'}`} id={id} practice={practice} />;
+  // fresh lesson state (e.g. "Pratik yap" after running out of hearts, or Rahat mod
+  // being enabled from the OutOfHearts screen).
+  return <LessonRunner key={`${id}:${practice ? 'practice' : 'normal'}:${relaxed ? 'relaxed' : 'strict'}`} id={id} practice={practice} />;
 }
 
 function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
@@ -59,12 +61,16 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
   const stats = useAppStore((s) => s.stats);
   const saveStats = useAppStore((s) => s.saveStats);
   const finishLesson = useAppStore((s) => s.finishLesson);
+  const relaxed = useSettingsStore((s) => s.relaxedHearts);
   const { colors } = useTheme();
 
   const lesson = useMemo(() => findLesson(course.units, id), [course, id]);
   const [startedAt] = useState(() => Date.now());
+  // Rahat mod runs the lesson with Infinity hearts: mistakes cost nothing, the lesson
+  // still counts as completed and unlocks the next one (unlike practice mode).
+  const hearts = relaxed || practice ? Infinity : regenerate(stats, startedAt).hearts;
   const [state, setState] = useState<LessonState | null>(() =>
-    lesson ? createLesson(lesson.id, lesson.exercises, practice ? Infinity : regenerate(stats, startedAt).hearts) : null,
+    lesson ? createLesson(lesson.id, lesson.exercises, hearts) : null,
   );
   const [feedback, setFeedback] = useState<{ ok: boolean; detail?: string } | null>(null);
   const [summary, setSummary] = useState<{ xpEarned: number; dailyGoalJustReached: boolean } | null>(null);
@@ -77,10 +83,10 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
     (isCorrect: boolean) => {
       if (!exercise || feedback) return;
       void (isCorrect ? playCorrect() : playWrong());
-      if (!isCorrect && !practice) void saveStats(loseHeart(regenerate(stats, Date.now()), Date.now()));
+      if (!isCorrect && !practice && !relaxed) void saveStats(loseHeart(regenerate(stats, Date.now()), Date.now()));
       setFeedback({ ok: isCorrect, detail: isCorrect ? undefined : correctAnswerText(exercise) });
     },
-    [exercise, feedback, practice, saveStats, stats],
+    [exercise, feedback, practice, relaxed, saveStats, stats],
   );
 
   const persist = useCallback(
@@ -125,7 +131,7 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
     );
   }
 
-  if (!practice && state.answered === 0 && !canStartLesson(stats, startedAt)) {
+  if (!practice && !relaxed && state.answered === 0 && !canStartLesson(stats, startedAt)) {
     return <OutOfHearts lessonId={lesson.id} />;
   }
 
@@ -193,6 +199,8 @@ function Stat({ label, value, color }: { label: string; value: string; color: st
 
 function OutOfHearts({ lessonId }: { lessonId: string }) {
   const stats = useAppStore((s) => s.stats);
+  const setRelaxedHearts = useSettingsStore((s) => s.setRelaxedHearts);
+  const { colors } = useTheme();
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
     const t = setInterval(() => setNow(Date.now()), 1000);
@@ -204,9 +212,20 @@ function OutOfHearts({ lessonId }: { lessonId: string }) {
       <View style={styles.center} accessibilityLiveRegion="polite">
         <Title center accessibilityRole="header">Kalplerin bitti 💔</Title>
         <Body center>Yeni bir kalp için {formatDuration(wait)} bekle ya da kalp kaybetmeden pratik yap.</Body>
+        <Caption center color={colors.textMuted}>
+          Rahat modda yanlış cevaplarda kalp gitmez; tüm dersleri sırayla, beklemeden geçebilirsin.
+        </Caption>
       </View>
       <View style={styles.actions}>
-        <Button title="Pratik yap" onPress={() => router.replace({ pathname: '/lesson/[id]', params: { id: lessonId, mode: 'practice' } })} />
+        <Button
+          title="Rahat modu aç ve devam et"
+          onPress={() => {
+            void setRelaxedHearts(true);
+            // Same lesson, normal mode (no 'practice' param): it counts as completed.
+            router.replace({ pathname: '/lesson/[id]', params: { id: lessonId } });
+          }}
+        />
+        <Button title="Pratik yap" variant="secondary" onPress={() => router.replace({ pathname: '/lesson/[id]', params: { id: lessonId, mode: 'practice' } })} />
         <Button title="Ana sayfa" variant="outline" onPress={() => router.replace('/')} />
       </View>
     </Screen>
