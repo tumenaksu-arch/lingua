@@ -21,7 +21,7 @@ export const trItNotes: CourseNotes = {
       {
         heading: 'Io sono, tu sei',
         body: [
-          'Türkçedeki "ben öğrenciyim" gibi cümlelerde ek (-im) kullanılır; İtalyancada ise "io sono" (ben ...-im) ve "tu sei" (sen ...-sin) kalıplarıyla ayrı bir fiil kullanılır. Pronoun (io, tu) genellikle düşer ama vurgu için kalabilir.',
+          'Türkçedeki "ben öğrenciyim" gibi cümlelerde ek (-im) kullanılır; İtalyancada ise "io sono" (ben ...-im) ve "tu sei" (sen ...-sin) kalıplarıyla ayrı bir fiil kullanılır. Zamir (io, tu) genellikle düşer ama vurgu için kalabilir.',
           'İtalyancada "bir" için artikel gerekir: "un uomo" (bir adam), "una ragazza" (bir kız). Eril isimler "un", dişil isimler "una" alır; Türkçede böyle bir cinsiyet ayrımı yoktur.',
         ],
         examples: [
@@ -117,7 +117,7 @@ export const trItNotes: CourseNotes = {
       {
         heading: 'Kibar yardım isteme',
         body: [
-          'Yabancılardan yardım isterken "Scusi" (affedersiniz) ile başlanır; bu resmî hitaptır. "Mi può aiutare?" (Bana yardım edebilir misiniz?) kalıbında "mi" edatı fiilden önce gelir, Türkçeden farklı olarak soru parçası kullanılmaz.',
+          'Yabancılardan yardım isterken "Scusi" (affedersiniz) ile başlanır; bu resmî hitaptır. "Mi può aiutare?" (Bana yardım edebilir misiniz?) kalıbında "mi" nesne zamiri fiilden önce gelir, Türkçeden farklı olarak soru parçası kullanılmaz.',
           '"Tardi" (geç) ve "presto" (erken) zıt çiftidir; tren gecikince "Il treno è in ritardo" (tren rötarlı) denir, tek başına "tardi" fiil olarak kullanılmaz.',
         ],
         examples: [
@@ -201,7 +201,7 @@ export const trItNotes: CourseNotes = {
       {
         heading: 'Mi piace: hoşlanmak',
         body: [
-          '"Beğeniyorum / seviyorum" demenin yaygın yolu "piacere" fiilidir ve yapı Türkçenin tersine işler: "Mi piace la musica" (müzik hoşuma gidiyor), kelimesi kelimesine "(bana) müzik hoş geliyor". Edat "mi" fiilden önce gelir.',
+          '"Beğeniyorum / seviyorum" demenin yaygın yolu "piacere" fiilidir ve yapı Türkçenin tersine işler: "Mi piace la musica" (müzik hoşuma gidiyor), kelimesi kelimesine "(bana) müzik hoş geliyor". Nesne zamiri "mi" fiilden önce gelir.',
           'Nesne tekilse "piace", çoğulsa "piacciono" kullanılır: "Mi piace questo vestito" (bu elbiseyi beğeniyorum), "Mi piacciono le scarpe blu" (mavi ayakkabıları beğeniyorum).',
         ],
         examples: [
@@ -218,7 +218,7 @@ export const trItNotes: CourseNotes = {
       {
         heading: '-are fiilleri çekimi',
         body: [
-          'Türkçedeki "çalışırım, okurum" ekleri yerine İtalyanca fiil köküne kişi eki gelir: lavoro (çalışırım), imparo (öğrenirim), leggo (okurum), scrivo (yazarım), parla (konuşur). Birinci tekil kişi hep -o ile biter; Türkçeden farklı olarak öznenin çekimi zorunlu değildir.',
+          'Türkçedeki "çalışırım, okurum" ekleri yerine İtalyanca fiil köküne kişi eki gelir: lavoro (çalışırım), imparo (öğrenirim), leggo (okurum), scrivo (yazarım), parlo (konuşurum). Birinci tekil kişi hep -o ile biter; Türkçeden farklı olarak öznenin çekimi zorunlu değildir.',
           '"Lavoro in un ufficio" cümlesinde hem "ofiste çalışırım" hem "ofiste çalışıyorum" anlamı vardır; şimdiki zaman için "sto lavorando" da kullanılabilir ama basit zaman genellikle yeterlidir.',
         ],
         examples: [
@@ -282,7 +282,7 @@ export const trItNotes: CourseNotes = {
       {
         heading: 'Günler ve zaman zarfları',
         body: [
-          'Gün adları küçük harfle yazılır ve önlerinde artikel olur: "lunedì" (pazartesi), "domenica" (pazar). Tekrarlanan eylemlerde "di" kullanılır: "di domenica" (pazar günleri).',
+          'Gün adları küçük harfle yazılır ve artikelsiz kullanılır: "lunedì" (pazartesi), "domenica" (pazar); artikel yalnızca tekrarlanan günlerde eklenir ("il lunedì" = her pazartesi). Tekrarlanan eylemlerde "di" kullanılır: "di domenica" (pazar günleri).',
           '"Oggi" (bugün), "domani" (yarın), "adesso" (şimdi) cümle başına gelir: "Domani è lunedì" (yarın pazartesi). Ayrılırken "A domani!" (yarın görüşürüz) denir.',
         ],
         examples: [
