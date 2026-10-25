@@ -6,6 +6,10 @@ import WelcomeScreen from '@/app/welcome';
 import { useAppStore } from '@/features/store';
 import { AuthForm } from '../AuthForm';
 
+jest.mock('expo-router', () => ({
+  router: { push: jest.fn(), back: jest.fn(), replace: jest.fn() },
+}));
+
 const press = (name: string | RegExp) => fireEvent.press(screen.getByRole('button', { name }));
 const type = (label: string, text: string) => fireEvent.changeText(screen.getByLabelText(label), text);
 

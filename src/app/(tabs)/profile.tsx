@@ -5,6 +5,9 @@ import { router, useFocusEffect } from 'expo-router';
 
 import { ACHIEVEMENTS, FREEZE_EVERY_DAYS, MAX_HEARTS, MAX_STREAK_FREEZES, getAchievement, msUntilNextHeart, regenerate } from '@/domain';
 import { isSupabaseConfigured } from '@/data';
+import { isAnonymousSession } from '@/data/remote/classes';
+import { AddEmailForm, AnonymousAccountNote } from '@/features/classes/AddEmailForm';
+import { useClassStore } from '@/features/classes/classStore';
 import { speak } from '@/speech';
 import { cancelReminder, isSupported as remindersSupported, requestPermission, scheduleDailyReminder } from '@/features/notifications';
 import { useAppStore } from '@/features/store';
@@ -160,6 +163,31 @@ export default function ProfileScreen() {
   const reminderHour = useAppStore((s) => s.reminderHour);
   const setReminderHour = useAppStore((s) => s.setReminderHour);
   const weeklyXp = useAppStore((s) => s.weeklyXp);
+  const myClasses = useClassStore((s) => s.myClasses);
+  const leaveClass = useClassStore((s) => s.leave);
+  const loadClasses = useClassStore((s) => s.load);
+  const [anonymous, setAnonymous] = useState(false);
+  const [addEmailOpen, setAddEmailOpen] = useState(false);
+
+  // Anonymous class accounts (no e-mail) get the "add e-mail to keep the
+  // account" note and a softer sign-out warning.
+  useEffect(() => {
+    let alive = true;
+    if (user) {
+      void isAnonymousSession().then((v) => {
+        if (alive) setAnonymous(v);
+      });
+    }
+    return () => {
+      alive = false;
+    };
+  }, [user]);
+
+  useFocusEffect(
+    useCallback(() => {
+      void loadClasses();
+    }, [loadClasses]),
+  );
 
   const [week, setWeek] = useState<number[]>([0, 0, 0, 0, 0, 0, 0]);
   const [reminderBusy, setReminderBusy] = useState(false);
@@ -320,7 +348,48 @@ export default function ProfileScreen() {
         <Body>{course.title}</Body>
         <Button title="Kurs değiştir" variant="outline" onPress={() => router.push('/courses')} />
 
+        <Heading>Sınıfım</Heading>
+        {myClasses.length === 0 ? (
+          <>
+            <Caption color={colors.textMuted}>Henüz bir sınıfa katılmadın. Öğretmeninin koduyla sınıfına katıl.</Caption>
+            <Button title="Sınıfa katıl" variant="outline" onPress={() => router.push('/sinif-katil')} />
+          </>
+        ) : (
+          myClasses.map((c) => (
+            <View key={c.classId} style={styles.classCard}>
+              <View style={styles.classInfo}>
+                <Body>{c.ad}</Body>
+                <Caption color={colors.textMuted}>Takma adın: {c.takmaAd}</Caption>
+              </View>
+              <Button
+                title="Sınıftan ayrıl ve sınıf verimi sil"
+                variant="danger"
+                onPress={() =>
+                  showAlert(
+                    'Sınıftan ayrıl',
+                    'Ayrılınca öğretmen seni ve öğrenme özetini (XP, biten dersler, seri) artık görmez; sınıf verin silinir.',
+                    [
+                      { text: 'Vazgeç', style: 'cancel' },
+                      { text: 'Ayrıl', style: 'destructive', onPress: () => void leaveClass(c.classId) },
+                    ],
+                  )
+                }
+              />
+            </View>
+          ))
+        )}
+
         <Heading>Hesap</Heading>
+        {user && anonymous && (
+          <>
+            <AnonymousAccountNote />
+            {addEmailOpen ? (
+              <AddEmailForm onDone={() => setAddEmailOpen(false)} />
+            ) : (
+              <Button title="E-posta ekle" variant="outline" onPress={() => setAddEmailOpen(true)} />
+            )}
+          </>
+        )}
         {!cloud ? (
           <Caption color={colors.textMuted}>Bulut senkronu kapalı: .env dosyasında EXPO_PUBLIC_SUPABASE_URL ve EXPO_PUBLIC_SUPABASE_ANON_KEY değerlerini tanımlayın (docs/SETUP.md).</Caption>
         ) : user ? (
@@ -330,7 +399,22 @@ export default function ProfileScreen() {
             <Button
               title="Çıkış yap"
               variant="danger"
-              onPress={() => showAlert('Çıkış', 'Hesaptan çıkılsın mı?', [{ text: 'Vazgeç' }, { text: 'Çık', style: 'destructive', onPress: () => void signOut() }])}
+              onPress={() =>
+                showAlert(
+                  'Çıkış',
+                  anonymous
+                    ? 'Bu hesap anonim: yalnızca bu cihazda durur. Çıkış yaparsan hesabın ve ilerlemen kalıcı olarak kaybolur. Kalıcı yapmak için önce e-posta ekle.'
+                    : 'Hesaptan çıkılsın mı?',
+                  [
+                    { text: 'Vazgeç' },
+                    {
+                      text: anonymous ? 'Yine de çık' : 'Çık',
+                      style: 'destructive',
+                      onPress: () => void signOut(),
+                    },
+                  ],
+                )
+              }
             />
           </>
         ) : (
@@ -344,6 +428,8 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   content: { padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xxxl },
   statsRow: { flexDirection: 'row', gap: spacing.md, marginVertical: spacing.md },
+  classCard: { gap: spacing.sm },
+  classInfo: { gap: 2 },
   stat: { flex: 1, borderWidth: 1, borderRadius: 10, padding: spacing.md, alignItems: 'center' },
   goals: { flexDirection: 'row', gap: spacing.sm },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', minHeight: 44 },

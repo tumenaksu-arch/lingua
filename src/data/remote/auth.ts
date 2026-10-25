@@ -129,6 +129,28 @@ export async function resetPassword(email: string): Promise<void> {
   await sendLoginCode(email);
 }
 
+/**
+ * Adds an e-mail to the SIGNED-IN anonymous account (madde 5): GoTrue sends a
+ * 6-digit confirmation code to the address; the change applies once the code
+ * is verified with `verifyEmailChange`. Throws the GoTrue error (map it with
+ * authErrorMessage for the screen).
+ */
+export async function addEmailToAnonymous(email: string): Promise<void> {
+  const { error } = await client().auth.updateUser({ email });
+  if (error) throw error;
+}
+
+/**
+ * Verifies the 6-digit `email_change` code sent by `addEmailToAnonymous`;
+ * on success the anonymous account becomes a permanent e-mail account (same
+ * uid, so class memberships and progress are kept).
+ */
+export async function verifyEmailChange(email: string, code: string): Promise<AuthUser> {
+  const { data, error } = await client().auth.verifyOtp({ email, token: code, type: 'email_change' });
+  if (error) throw error;
+  return toUser(data.user)!;
+}
+
 export async function signOut(): Promise<void> {
   await client().auth.signOut();
 }
