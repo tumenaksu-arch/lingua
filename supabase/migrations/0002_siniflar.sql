@@ -1,7 +1,10 @@
 -- Love-Vox madde 5 — öğretmen / sınıf (docs/tasarim/madde5-ogretmen-sinif.md).
 -- Students join anonymously (GoTrue anonymous sign-in) with a class code + class nickname.
--- No real names, e-mails or school numbers are stored. Teachers only ever see SUMMARIES
--- through the security-definer functions below; they never read members' raw rows.
+-- No real names, e-mails or school numbers are stored. Teachers read only their own classes'
+-- membership rows (user_id, takma_ad, joined_at) and learning SUMMARIES through the security-definer
+-- functions below (class course only); they never read members' answers, cards or other courses.
+-- Code guessing: join_class allows 10 failures/user/hour; anonymous sign-ups are limited per real
+-- client IP by GoTrue (GOTRUE_RATE_LIMIT_ANONYMOUS_USERS + X-Lovevox-Client-IP), 32^6 code space.
 
 begin;
 
@@ -210,13 +213,19 @@ end $$;
 create function public.class_struggles(p_class uuid, p_since timestamptz)
 returns table (lesson_id text, attempts bigint, correct bigint, total bigint, mistakes_by_type jsonb)
 language plpgsql stable security definer set search_path = public as $$
+declare v_course text;
 begin
   if not public.owns_class(p_class) then raise exception 'not_teacher' using errcode = '42501'; end if;
+  select c.course_id into v_course from public.classes c where c.id = p_class;
   return query
   with ev as (
-    select coalesce(e.payload ->> 'lessonId', split_part(e.id, ':', 1)) as lid, e.payload
-    from public.events e join public.class_members m on m.user_id = e.user_id and m.class_id = p_class
-    where e.type = 'lesson_completed' and e.created_at >= p_since
+    select x.lid, x.payload from (
+      select coalesce(e.payload ->> 'lessonId', split_part(e.id, ':', 1)) as lid, e.payload
+      from public.events e join public.class_members m on m.user_id = e.user_id and m.class_id = p_class
+      where e.type = 'lesson_completed' and e.created_at >= p_since
+    ) x
+    -- only the class course: a member's private study of other languages stays private
+    where x.lid like v_course || '.%'
   ),
   agg as (
     select lid, count(*) as attempts,
