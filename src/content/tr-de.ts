@@ -61,7 +61,7 @@ export const trDe = course(
     // Unit 2 — extra (Yemek tekrar)
     ['fisch', 'der Fisch', 'balık', 'Ich esse Fisch.'],
     ['haehnchen', 'das Hähnchen', 'tavuk', 'Das Hähnchen ist lecker.'],
-    ['reis', 'der Reis', 'pilav', 'Ich esse Reis.'],
+    ['reis', 'der Reis', 'pirinç', 'Ich esse Reis.'],
     ['salat', 'der Salat', 'salata', 'Der Salat ist frisch.'],
     ['zucker', 'der Zucker', 'şeker', 'Der Zucker ist süß.'],
     ['salz', 'das Salz', 'tuz', 'Ich nehme Salz.'],
@@ -90,7 +90,7 @@ export const trDe = course(
     ['blau', 'blau', 'mavi', 'Der Himmel ist blau.'],
     ['mogen', 'mögen', 'hoşlanmak', 'Ich mag Musik.'],
     // Unit 6 — İş ve Okul
-    ['arbeiten', 'arbeiten', 'çalışmak / iş', 'Ich arbeite in einem Büro.'],
+    ['arbeiten', 'arbeiten', 'çalışmak', 'Ich arbeite in einem Büro.'],
     ['buero', 'das Büro', 'ofis', 'Mein Büro ist klein.'],
     ['schule', 'die Schule', 'okul', 'Die Schule ist groß.'],
     ['arzt', 'der Arzt', 'doktor', 'Mein Vater ist Arzt.'],
@@ -257,7 +257,7 @@ export const trDe = course(
         match([
           ['der Fisch', 'balık'],
           ['das Hähnchen', 'tavuk'],
-          ['der Reis', 'pilav'],
+          ['der Reis', 'pirinç'],
           ['der Salat', 'salata'],
         ]),
         build('Ben tavuk ve pilav yerim.', ['Ich esse Hähnchen und Reis'], ['Fisch', 'Salat', 'trinke']),
@@ -476,7 +476,7 @@ export const trDe = course(
         sel('"doktor" hangisi?', ['der Ingenieur', 'der Arzt', 'der Lehrer'], 1),
         sel('"okul" hangisi?', ['das Büro', 'die Schule', 'der Laden'], 1),
         match([
-          ['arbeiten', 'çalışmak / iş'],
+          ['arbeiten', 'çalışmak'],
           ['das Büro', 'ofis'],
           ['der Arzt', 'doktor'],
           ['der Ingenieur', 'mühendis'],
