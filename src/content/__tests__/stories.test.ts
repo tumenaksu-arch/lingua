@@ -1,5 +1,6 @@
 import type { Story } from '../stories/types';
 import { getUnitStory } from '../stories';
+import { courses } from '..';
 
 // The real story content ships in the course files (written by the content worker);
 // inject a fixture through the tr-en module to test the lookup in isolation.
@@ -34,7 +35,13 @@ describe('getUnitStory', () => {
 
   it('returns undefined for an unknown unit', () => {
     expect(getUnitStory('tr-en.u99')).toBeUndefined();
-    // placeholder course files export empty objects until the content ships
-    expect(getUnitStory('tr-de.u1')).toBeUndefined();
+  });
+
+  it('finds the shipped story of every unit of the other courses', () => {
+    for (const course of courses.filter((c) => c.id !== 'tr-en')) {
+      for (const unit of course.units) {
+        expect(getUnitStory(unit.id)?.id).toBe(`${unit.id}.story`);
+      }
+    }
   });
 });
