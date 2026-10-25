@@ -5,6 +5,7 @@ import { router } from 'expo-router';
 import { activeLessonId, useAppStore } from '@/features/store';
 import { useNow } from '@/features/useNow';
 import { localDateString, regenerate } from '@/domain';
+import { getUnitNote } from '@/content/notes';
 import { Body, Button, Caption, Heading, Hearts, PathNode, Screen, StreakFlame, XpBadge, spacing, upperTr, useTheme, type PathNodeState } from '@/ui';
 
 const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', it: '🇮🇹', tr: '🇹🇷' };
@@ -54,15 +55,26 @@ export default function LearnScreen() {
           const unitDone = unit.lessons.every((l) => progress[l.id]?.completedAt);
           return (
             <View key={unit.id} style={styles.unit}>
-              <View
-                style={[styles.unitHeader, { backgroundColor: colors.surface, borderColor: unitDone ? colors.warning : colors.border }]}
-                accessible
-                accessibilityRole="header"
-                accessibilityLabel={`Bölüm ${ui + 1}, ${unit.title}${unitDone ? ', tamamlandı' : ''}. ${unit.description}`}
-              >
-                <Caption color={colors.primaryText}>{upperTr(`Bölüm ${ui + 1}`)}</Caption>
-                <Heading>{unit.title}</Heading>
-                <Body color={colors.textMuted}>{unit.description}</Body>
+              <View style={[styles.unitHeader, { backgroundColor: colors.surface, borderColor: unitDone ? colors.warning : colors.border }]}>
+                <View
+                  accessible
+                  accessibilityRole="header"
+                  accessibilityLabel={`Bölüm ${ui + 1}, ${unit.title}${unitDone ? ', tamamlandı' : ''}. ${unit.description}`}
+                >
+                  <Caption color={colors.primaryText}>{upperTr(`Bölüm ${ui + 1}`)}</Caption>
+                  <Heading>{unit.title}</Heading>
+                  <Body color={colors.textMuted}>{unit.description}</Body>
+                </View>
+                {getUnitNote(unit.id) ? (
+                  <Pressable
+                    accessibilityRole="button"
+                    accessibilityLabel={`${unit.title} notları`}
+                    onPress={() => router.push({ pathname: '/notes/[unitId]', params: { unitId: unit.id } })}
+                    style={({ pressed }) => [styles.notesChip, { borderColor: colors.primary, opacity: pressed ? 0.8 : 1 }]}
+                  >
+                    <Body color={colors.primaryText}>Notlar</Body>
+                  </Pressable>
+                ) : null}
               </View>
               <View style={styles.lessons}>
                 <View style={[styles.track, { backgroundColor: colors.border }]} pointerEvents="none" />
@@ -116,7 +128,8 @@ const styles = StyleSheet.create({
   path: { paddingBottom: spacing.xxxl },
   doneBanner: { margin: spacing.lg, marginBottom: 0, padding: spacing.lg, borderRadius: 10, borderWidth: 1, gap: spacing.sm },
   unit: { paddingBottom: spacing.lg },
-  unitHeader: { margin: spacing.lg, marginBottom: spacing.sm, padding: spacing.lg, borderRadius: 10, borderWidth: 1, gap: 4 },
+  unitHeader: { margin: spacing.lg, marginBottom: spacing.sm, padding: spacing.lg, borderRadius: 10, borderWidth: 1, gap: spacing.sm },
+  notesChip: { alignSelf: 'flex-start', borderWidth: 1, borderRadius: 8, paddingHorizontal: spacing.md, paddingVertical: spacing.xs },
   lessons: { marginHorizontal: spacing.lg, marginBottom: spacing.md },
   track: { position: 'absolute', left: NODE_SIZE / 2, top: 30, bottom: 30, width: 1 },
   lesson: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, minHeight: 56 },
