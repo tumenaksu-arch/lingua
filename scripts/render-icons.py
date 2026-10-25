@@ -37,12 +37,15 @@ SS = 2  # supersampling for smooth edges
 HEIGHTS = (0.42, 0.68, 1.0, 0.68, 0.42)
 
 
-def mark(size, color, scale=1.0, dot_color=None):
+def mark(size, color, scale=1.0, dot_color=None, max_extent=None):
     """Voice wave (5 rounded bars) in `color`, centred, on a transparent canvas.
 
     The wave spans ~0.62*size horizontally and ~0.60*size vertically (times
     `scale`); `scale` < 1 keeps it inside the Android adaptive safe zone.
-    A small light dot at the top-right suggests speech.
+    A small light dot at the top-right suggests speech. If `max_extent` is
+    given (fraction of `size` from the centre), the whole mark — bars and dot —
+    is scaled down so its farthest point stays within that radius (round
+    launcher icons and maskable safe zones never clip it).
     """
     w = size * SS
     img = Image.new("RGBA", (w, w), CLEAR)
@@ -61,10 +64,26 @@ def mark(size, color, scale=1.0, dot_color=None):
         )
         x += bw + gap
     if dot_color is not None:
-        r = bw * 0.42
+        r = bw * 0.55
         dx = c + wave_w / 2 + gap * 0.7
         dy = c - wave_h / 2 - gap * 0.4
         d.ellipse([dx - r, dy - r, dx + r, dy + r], fill=dot_color)
+    if max_extent is not None:
+        bbox = img.getbbox()
+        if bbox is not None:
+            x0, y0, x1, y1 = bbox
+            extent = max(
+                ((px - c) ** 2 + (py - c) ** 2) ** 0.5
+                for px in (x0, x1)
+                for py in (y0, y1)
+            )
+            limit = max_extent * w
+            if extent > limit:
+                f = limit / extent
+                nw = max(1, int(round(w * f)))
+                scaled = img.resize((nw, nw), Image.LANCZOS)
+                img = Image.new("RGBA", (w, w), CLEAR)
+                img.alpha_composite(scaled, ((w - nw) // 2, (w - nw) // 2))
     return img.resize((size, size), Image.LANCZOS)
 
 
@@ -76,7 +95,8 @@ def on_background(fg, size, bg_color=NAVY):
 
 def main():
     # --- root assets/ ---
-    on_background(mark(1024, COPPER, 1.0, LIGHT), 1024).convert("RGB").save("assets/icon.png")
+    # whole mark (bars + dot) within 0.42*size of centre: round icons keep the dot
+    on_background(mark(1024, COPPER, 1.0, LIGHT, max_extent=0.42), 1024).convert("RGB").save("assets/icon.png")
     # Android adaptive: keep the whole mark (incl. dot) inside the inner 66% safe zone
     mark(1024, COPPER, 0.80, LIGHT).save("assets/adaptive-icon-foreground.png")
     Image.new("RGBA", (1024, 1024), NAVY).convert("RGB").save("assets/adaptive-icon-background.png")
@@ -88,13 +108,13 @@ def main():
     os.makedirs("public/icons", exist_ok=True)
     on_background(mark(192, COPPER, 1.0, LIGHT), 192).convert("RGB").save("public/icons/icon-192.png")
     on_background(mark(512, COPPER, 1.0, LIGHT), 512).convert("RGB").save("public/icons/icon-512.png")
-    # maskable: mark within the central 80%
-    on_background(mark(512, COPPER, 1.15, LIGHT), 512).convert("RGB").save("public/icons/maskable-512.png")
+    # maskable: whole mark within the central 80% circle (radius 0.40*size)
+    on_background(mark(512, COPPER, 0.95, LIGHT, max_extent=0.40), 512).convert("RGB").save("public/icons/maskable-512.png")
     on_background(mark(180, COPPER, 1.0, LIGHT), 180).convert("RGB").save("public/icons/apple-touch-icon.png")
 
     # --- Android shell sources ---
     os.makedirs("mobile-shell/assets", exist_ok=True)
-    on_background(mark(1024, COPPER, 1.0, LIGHT), 1024).convert("RGB").save("mobile-shell/assets/icon-only.png")
+    on_background(mark(1024, COPPER, 1.0, LIGHT, max_extent=0.42), 1024).convert("RGB").save("mobile-shell/assets/icon-only.png")
     mark(1024, COPPER, 0.80, LIGHT).save("mobile-shell/assets/icon-foreground.png")
     Image.new("RGBA", (1024, 1024), NAVY).convert("RGB").save("mobile-shell/assets/icon-background.png")
     for name in ("splash.png", "splash-dark.png"):
