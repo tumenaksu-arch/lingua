@@ -8,12 +8,12 @@ Referans ürün: **Duolingo**. Hedef: çoklu dil (ör. TR→EN/DE/ES), hesap + b
 - Egzersiz türleri: `select_translation`, `translate_build` (kelime bloklarından cümle), `match_pairs`, `listen_type` (TTS), `speak` (STT), `fill_blank`.
 - Kelime kartları + aralıklı tekrar (SM‑2; her kelime için `due_at`).
 - Oyunlaştırma: XP, günlük hedef, seri (streak) + seri dondurma, kalp (hearts, 5 → hata başına −1, zamanla yenilenir).
-- Hesap: e‑posta/şifre (Firebase Authentication); ilerleme Cloud Firestore'da.
+- Hesap: e‑posta/şifre ya da e‑posta + 6 haneli kod (self-hosted Supabase Auth/GoTrue); ilerleme sunucudaki Postgres'te (RLS korumalı). (2026-10-25'e kadar Firebase Auth/Firestore.)
 
 **Fonksiyonel olmayan**
-- Çevrimdışı‑öncelikli: tüm yazmalar önce SQLite'a, sonra senkron kuyruğu ile Firestore'a.
+- Çevrimdışı‑öncelikli: tüm yazmalar önce SQLite'a, sonra senkron kuyruğu ile PostgREST'e.
 - Ders içi gecikme < 16 ms/frame (animasyonlar Reanimated, JS thread'de ağır iş yok).
-- Tek kişilik ekip → yönetilen backend (Firebase), sunucu kodu yok.
+- Tek kişilik ekip → self-hosted Supabase (ankaxai.ai): yönetilen servis yok, tam denetim; sunucu tarafı `ankaokul` deposunda (`docs/SUPABASE.md`).
 
 ## 2. Yüksek seviye
 ```
@@ -25,27 +25,28 @@ Referans ürün: **Duolingo**. Hedef: çoklu dil (ör. TR→EN/DE/ES), hesap + b
 │        ↓                        ↓                    │
 │  speech/* (expo-speech, expo-speech-recognition)     │
 │  data/local  (expo-sqlite, repo'lar, outbox)         │
-│  data/remote (firebase: Auth, Firestore)             │
+│  data/remote (supabase-js: Auth/GoTrue, PostgREST)   │
 └──────────────────────────┬───────────────────────────┘
-                           │ HTTPS (Firebase SDK)
-                   ┌───────▼────────┐
-                   │ Firebase       │ Auth (e‑posta/şifre)
-                   │ Firestore:     │ users/{uid}/stats|progress|srs|events
-                   │ (içerik yok;   │ firestore.rules: yalnızca sahibi
-                   │  pakette)      │
-                   └────────────────┘
+                           │ HTTPS (supabase-js, anon key)
+                   ┌───────▼─────────────────────────┐
+                   │ Self-hosted Supabase (ankaxai.ai) │ Auth (GoTrue),
+                   │ Postgres + RLS:                   │ PostgREST;
+                   │ user_stats, user_progress,        │ RLS: yalnızca sahibi
+                   │ srs_cards, events, profiles,      │ (anon key herkese
+                   │ friends, leaderboard              │  açık; RLS korur)
+                   └───────────────────────────────────┘
 ```
-Veri akışı: Ders biter → `domain` sonucu hesaplar (XP, streak, SRS güncellemeleri) → `data/local` tek transaction'da yazar + `outbox` satırı ekler → `SyncService` çevrimiçi olunca outbox'ı Firestore'a (batch `set` + merge) push eder, sunucudan `updated_at > last_sync` belgelerini pull eder (son‑yazan‑kazanır, SRS için `max(reps)`; bekleyen outbox kaydı olan belgeler pull'da atlanır).
+Veri akışı: Ders biter → `domain` sonucu hesaplar (XP, streak, SRS güncellemeleri) → `data/local` tek transaction'da yazar + `outbox` satırı ekler → `SyncService` çevrimiçi olunca outbox'ı PostgREST'e (upsert) push eder, sunucudan `updated_at > last_sync` satırlarını pull eder (son‑yazan‑kazanır, SRS için `max(reps)`; bekleyen outbox kaydı olan satırlar pull'da atlanır).
 
 ## 3. Veri modeli (özet)
 - İçerik (kurs/ünite/ders/egzersiz/kelime) uygulama paketinde (`src/content`), yerel SQLite'a aynalanabilir; sunucuda tutulmaz.
-- Firestore: `users/{uid}/stats/current`, `users/{uid}/progress/{lessonId}`, `users/{uid}/srs/{vocabId}`, `users/{uid}/events/{eventId}`; alanlar snake_case, zaman damgaları ISO string.
-- Erişim: yalnızca `request.auth.uid == uid`; her belge create/update'te şema doğrulayıcıdan geçer (`firestore.rules`).
+- Postgres tabloları: `user_stats`, `user_progress`, `srs_cards`, `events` (öğrenme verisi), `profiles`, `friends`, `leaderboard` (sosyal); her satır `user_id = auth.uid()`; alanlar snake_case, zaman damgaları `timestamptz`/ISO string.
+- Erişim: RLS politikaları (`supabase/migrations/0001_lovevox.sql`); istemci yalnızca anon key taşır, RLS erişimi zorlar. Tablo adları yerel outbox adlarıyla birebir aynıdır.
 
 ## 4. Trade‑off'lar
 | Karar | Alternatif | Neden |
 |---|---|---|
-| Firebase (Auth + Firestore) | Supabase / kendi API | Sıfır sunucu; Web SDK Expo Go'da çalışır; kurallar belge‑bazlı doğrulama yapar. Bedeli: iş kuralları istemcide, sorgular kısıtlı |
+| Self-hosted Supabase (Auth + Postgres/PostgREST) | Firebase / kendi API | Yönetilen servis bağımlılığı yok; SQL + RLS ile sunucu tarafı doğrulama; anon key public, erişimi RLS korur. Bedeli: altyapı sunucuda bizde (`ankaokul` deposu, `docs/SUPABASE.md`) |
 | SQLite + outbox | Sadece online | Ders ortasında bağlantı kopsa ilerleme kaybolmaz |
 | SM‑2 | FSRS | Basit, test edilebilir; FSRS'e geçiş `domain/srs` arkasında izole |
 | Zustand | Redux | Küçük API, ekran başına store |

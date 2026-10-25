@@ -9,11 +9,11 @@ Bu belge, uygulamayı Expo'nun bulut derleme servisi (**EAS Build**) ile paketle
    npx eas-cli@latest login
    npx eas-cli@latest init          # app.json → expo.extra.eas.projectId yazar; commit edin
    ```
-3. `.env` değerleri EAS derlemesine otomatik girmez. Her birini proje ortam değişkeni olarak ekleyin (değerler `.env` dosyasında; gizli değildir):
+3. `.env` değerleri EAS derlemesine otomatik girmez. İkisini de proje ortam değişkeni olarak ekleyin (değerler `.env` dosyasında; anon key gizli değildir, erişimi RLS korur):
    ```bash
-   npx eas-cli@latest env:create --scope project --environment production --environment preview --environment development --name EXPO_PUBLIC_FIREBASE_API_KEY --value "..." --visibility plaintext
+   npx eas-cli@latest env:create --scope project --environment production --environment preview --environment development --name EXPO_PUBLIC_SUPABASE_URL --value "..." --visibility plaintext
+   npx eas-cli@latest env:create --scope project --environment production --environment preview --environment development --name EXPO_PUBLIC_SUPABASE_ANON_KEY --value "..." --visibility plaintext
    ```
-   (`EXPO_PUBLIC_FIREBASE_PROJECT_ID`, `..._APP_ID`, `..._AUTH_DOMAIN`, `..._STORAGE_BUCKET`, `..._MESSAGING_SENDER_ID` için tekrarlayın.)
 
 ## 1. GitHub'dan derleme (önerilen)
 `.github/workflows/eas-build.yml` elle tetiklenen bir iş akışıdır.
@@ -39,7 +39,7 @@ Yerelden aynı şey: `npx eas-cli@latest build --profile <profil> --platform and
 1. https://play.google.com/console → geliştirici hesabı (tek seferlik ücret) → **Uygulama oluştur** (ad: Lingua, varsayılan dil: Türkçe, ücretsiz).
 2. **Uygulama içeriği** bölümü (yayın engelleyiciler):
    - **Gizlilik politikası URL'si** zorunlu — uygulama hesap (e‑posta) ve öğrenme verisi topluyor. Basit bir sayfa yeterli (ör. GitHub Pages).
-   - **Veri güvenliği** formu: e‑posta adresi (hesap yönetimi), uygulama etkinliği (ilerleme) toplandığını, Firebase'e şifreli iletildiğini ve kullanıcının hesabını silerek kaldırabileceğini beyan edin.
+   - **Veri güvenliği** formu: e‑posta adresi (hesap yönetimi), uygulama etkinliği (ilerleme) toplandığını, kendi sunucumuzdaki (ankaxai.ai) Supabase'e şifreli iletildiğini ve kullanıcının hesabını silerek kaldırabileceğini beyan edin.
    - **İçerik derecelendirmesi** anketi (eğitim uygulaması → genelde "Herkes").
    - Hedef kitle: 13+ seçin (çocuklara yönelik değilse ek yükümlülükler azalır).
    - Reklam yok, hassas izin yok; **mikrofon** izni için kısa açıklama hazır olsun (konuşma alıştırmaları).
@@ -55,5 +55,5 @@ npx eas-cli@latest submit --platform android --latest
 `submit` için Play Console'da bir **hizmet hesabı JSON anahtarı** gerekir (Kurulum → API erişimi); EAS ilk çalıştırmada yolunu sorar. İlk yüklemeyi Play Console'dan elle yapmak da mümkündür.
 
 ## 6. Yayın sonrası
-- Çökme takibi için Firebase Crashlytics veya Sentry eklenebilir (henüz yok).
+- Çökme takibi için Sentry eklenebilir (henüz yok; eski Firebase Crashlytics artık bağlı değil).
 - Küçük JS düzeltmeleri mağaza incelemesi olmadan `npx eas-cli@latest update --branch production` (EAS Update) ile gönderilebilir; native modül değişikliklerinde yeni derleme şarttır.

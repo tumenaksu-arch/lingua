@@ -9,7 +9,7 @@ Duolingo esinli, çoklu dil öğrenme mobil uygulaması (Expo SDK 57 · React Na
 - **Oyunlaştırma**: XP, günlük hedef, seri + seri dondurma (her 7 günde bir, en fazla 2), 5 kalp (30 dk'da bir yenilenir), pratik modu, 12 rozet, son 7 günün XP grafiği, günlük hatırlatma bildirimi.
 - **Telaffuz**: `expo-speech` ile seslendirme, `expo-speech-recognition` ile cihaz üstü konuşma tanıma (development build gerekir).
 - **Görünüm**: açık/koyu tema (sistem, açık, koyu), ses efektleri (kapatılabilir), erişilebilirlik (WCAG AA kontrast, ekran okuyucu etiketleri, hareket azaltma desteği).
-- **Hesap + senkron**: Firebase Authentication (e‑posta/şifre) + Cloud Firestore; çevrimdışı‑öncelikli SQLite + outbox senkronu. Misafir olarak oynanan ilerleme ilk girişte hesaba taşınır.
+- **Hesap + senkron**: self-hosted Supabase (ankaxai.ai sunucusu; Auth + PostgREST, erişimi Postgres RLS korur); çevrimdışı‑öncelikli SQLite + outbox senkronu. Misafir olarak oynanan ilerleme ilk girişte hesaba taşınır. (2026-10-25'e kadar Firebase.)
 
 ## Yerel makinede çalıştırma
 Gereksinimler: Node 22+, Git. Telefonda denemek için **Expo Go** (App Store / Play Store).
@@ -20,7 +20,7 @@ cd lingua
 npm install
 npm start            # QR kodu Expo Go ile okutun (aynı Wi‑Fi) — ya da `a` (Android emülatör) / `i` (iOS simülatör)
 ```
-`.env` olmadan uygulama **tamamen yerel** çalışır (SQLite); hesap/senkron için `cp .env.example .env` ve Firebase web yapılandırmasını girin (`docs/SETUP.md`).
+`.env` olmadan uygulama **tamamen yerel** çalışır (SQLite); hesap/senkron için `cp .env.example .env` ve Supabase URL + anon key girin (`docs/SETUP.md`, ayrıntı: `docs/SUPABASE.md`).
 
 **Expo Go sınırı:** konuşma tanıma (`expo-speech-recognition`) native modül olduğundan Expo Go'da *Konuş* egzersizi "Şu an kullanılamıyor" der ve atlanabilir; diğer her şey çalışır. Tam özellik için geliştirme derlemesi:
 
@@ -41,4 +41,4 @@ npm run check     # lint + typecheck + test (CI ile aynı)
 ```
 
 ## Mimari
-`docs/ARCHITECTURE.md` · Yayın/Play Store: `docs/RELEASE.md` · Devir notu: `docs/HANDOFF.md`. Katmanlar: `src/domain` (saf TS iş kuralları, testli) · `src/data` (SQLite, Firebase Auth/Firestore, senkron) · `src/ui` (tasarım sistemi) · `src/speech` · `src/content` · `src/features` (store, ders akışı) · `src/app` (Expo Router ekranları).
+`docs/ARCHITECTURE.md` · Yayın/Play Store: `docs/RELEASE.md` · Devir notu: `docs/HANDOFF.md`. Katmanlar: `src/domain` (saf TS iş kuralları, testli) · `src/data` (SQLite, Supabase Auth/PostgREST, senkron) · `src/ui` (tasarım sistemi) · `src/speech` · `src/content` · `src/features` (store, ders akışı) · `src/app` (Expo Router ekranları).
