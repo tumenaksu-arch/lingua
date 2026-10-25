@@ -2,11 +2,13 @@
  * Home tab daily-quests card (roadmap item 3a): renders today's 3 quests with
  * progress and claims a reward through the store.
  */
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { courses } from '@/content';
-import { DEFAULT_STATS } from '@/data';
+import { FakeDb } from '@/data/__tests__/fakeDb';
+import { DEFAULT_STATS, setDbForTesting } from '@/data';
+import { localDateString } from '@/domain';
 import type { QuestStatus } from '@/features/quests';
 import { useAppStore } from '@/features/store';
 
@@ -37,16 +39,29 @@ const TODAY_QUESTS: QuestStatus[] = [
 
 let claimMock: jest.Mock;
 
+// Captured before any beforeEach swap: the real store actions the mock-based
+// tests replace, so one test can exercise the actual store↔screen wiring.
+const realClaimQuest = useAppStore.getState().claimQuest;
+const realRefreshQuests = useAppStore.getState().refreshQuests;
+
 beforeEach(() => {
+  delete process.env.EXPO_PUBLIC_FIREBASE_API_KEY;
+  delete process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID;
+  delete process.env.EXPO_PUBLIC_FIREBASE_APP_ID;
   claimMock = jest.fn().mockResolvedValue({ xpEarned: 10 });
   useAppStore.setState({
     course: trEn,
     progress: {},
     stats: { ...DEFAULT_STATS, hearts: 5, heartsUpdatedAt: Date.now() },
     quests: TODAY_QUESTS,
+    questDate: null,
+    claimingQuestIds: [],
+    refreshQuests: realRefreshQuests,
     claimQuest: claimMock as unknown as (questId: string) => Promise<{ xpEarned: number }>,
   });
 });
+
+afterAll(() => setDbForTesting(null));
 
 async function renderHome() {
   return render(
@@ -74,6 +89,42 @@ it('pressing "… ödülünü al" calls claimQuest for that quest', async () => 
   await fireEvent.press(btn);
   expect(claimMock).toHaveBeenCalledTimes(1);
   expect(claimMock).toHaveBeenCalledWith('lessons_2');
+});
+
+it('pressing "… ödülünü al" runs the REAL claimQuest: +10 XP, one claim event, card flips to claimed', async () => {
+  // Boot the real store against a FakeDb so the actual claimQuest action runs.
+  const db = new FakeDb();
+  setDbForTesting(db);
+  useAppStore.setState({ ready: false, db: null, progress: {}, quests: [], questDate: null, claimingQuestIds: [] });
+  await useAppStore.getState().boot();
+  useAppStore.setState({
+    quests: TODAY_QUESTS,
+    questDate: localDateString(new Date()),
+    stats: { ...DEFAULT_STATS, hearts: 5, heartsUpdatedAt: Date.now() },
+    claimQuest: realClaimQuest,
+  });
+
+  await renderHome();
+  await fireEvent.press(screen.getByRole('button', { name: '2 ders bitir ödülünü al' }));
+
+  const today = localDateString(new Date());
+  await waitFor(() => {
+    const claims = (db.tables.events ?? []).filter((r) => r.type === 'quest_claimed');
+    expect(claims).toHaveLength(1);
+    expect(claims[0]!.id).toBe(`quest:${today}:lessons_2`);
+    expect(useAppStore.getState().stats.xp).toBe(10);
+    expect(useAppStore.getState().claimingQuestIds).toEqual([]);
+  });
+});
+
+it('refreshes the quests when the stored quest date falls behind the local day', async () => {
+  const refreshMock = jest.fn().mockResolvedValue(undefined);
+  useAppStore.setState({
+    questDate: '2020-01-01',
+    refreshQuests: refreshMock as unknown as () => Promise<void>,
+  });
+  await renderHome();
+  expect(refreshMock).toHaveBeenCalled();
 });
 
 it('renders nothing when there are no quests', async () => {

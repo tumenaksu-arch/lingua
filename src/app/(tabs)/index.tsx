@@ -1,4 +1,5 @@
 import * as Haptics from 'expo-haptics';
+import { useEffect } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 
@@ -27,7 +28,16 @@ export default function LearnScreen() {
   const now = useNow();
   const stats = regenerate(rawStats, now);
   const active = activeLessonId(course, progress);
-  const today = localDateString(new Date());
+  const today = localDateString(new Date(now));
+
+  // Day-rollover refresh: the store only refreshes on activity, so an app left
+  // open overnight would show yesterday's quests all day. useNow ticks on every
+  // focus; when the stored quest date falls behind the local day, recompute.
+  const questDate = useAppStore((s) => s.questDate);
+  const refreshQuests = useAppStore((s) => s.refreshQuests);
+  useEffect(() => {
+    if (questDate !== null && questDate !== today) void refreshQuests();
+  }, [questDate, today, refreshQuests]);
 
   return (
     <Screen padding={0} edges={['top']}>
@@ -176,6 +186,7 @@ function DailyQuestsCard() {
 
 function QuestRow({ quest, onClaim }: { quest: QuestStatus; onClaim: () => void }) {
   const { colors } = useTheme();
+  const claiming = useAppStore((s) => s.claimingQuestIds.includes(quest.id));
   return (
     <View style={styles.questRow}>
       <View style={styles.questMain}>
@@ -195,8 +206,10 @@ function QuestRow({ quest, onClaim }: { quest: QuestStatus; onClaim: () => void 
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={`${quest.title} ödülünü al`}
+          accessibilityState={{ disabled: claiming }}
+          disabled={claiming}
           onPress={onClaim}
-          style={({ pressed }) => [styles.claimBtn, { borderColor: colors.primary, opacity: pressed ? 0.8 : 1 }]}
+          style={({ pressed }) => [styles.claimBtn, { borderColor: colors.primary, opacity: pressed || claiming ? 0.5 : 1 }]}
         >
           <Caption color={colors.primaryText}>{upperTr('Ödülü al')}</Caption>
         </Pressable>

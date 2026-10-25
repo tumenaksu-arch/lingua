@@ -42,6 +42,18 @@ export interface QuestEvent {
   payload: Record<string, unknown>;
 }
 
+/**
+ * The local-day window [from, to) containing `now`: `from` = local midnight,
+ * `to` = the NEXT local midnight. `setDate` handles DST days, where the local
+ * day is 23h or 25h long — a fixed +86_400_000 span would cut off (or leak)
+ * events at the edges of the local day.
+ */
+export function localDayWindow(now: Date): { from: number; to: number } {
+  const dayStart = new Date(now.getTime());
+  dayStart.setHours(0, 0, 0, 0);
+  return { from: dayStart.getTime(), to: new Date(dayStart).setDate(dayStart.getDate() + 1) };
+}
+
 /** FNV-1a hash of the date string — a stable, device-independent seed. */
 function seedFrom(date: string): number {
   let h = 2166136261;

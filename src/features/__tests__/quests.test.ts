@@ -2,7 +2,9 @@
  * Pure daily-quest logic (roadmap item 3a): deterministic per-date selection,
  * exclusivity rules and progress counting from today's events.
  */
-import { QUEST_POOL, questProgress, questsForDate, type Quest, type QuestEvent } from '../quests';
+import { execFileSync } from 'node:child_process';
+
+import { QUEST_POOL, localDayWindow, questProgress, questsForDate, type Quest, type QuestEvent } from '../quests';
 
 const IDS = QUEST_POOL.map((q) => q.id);
 
@@ -122,5 +124,57 @@ describe('questProgress', () => {
     expect(byId.xp_50!.claimed).toBe(true);
     expect(byId.xp_goal!.claimed).toBe(false);
     expect(byId.xp_50!.done).toBe(true);
+  });
+});
+
+
+describe('localDayWindow', () => {
+  test('normal day: spans local midnight to next local midnight (24h)', () => {
+    const { from, to } = localDayWindow(new Date('2026-10-15T12:00:00'));
+    expect(to - from).toBe(24 * 3600 * 1000);
+    expect(new Date(from).getHours()).toBe(0);
+    expect(new Date(to).getHours()).toBe(0);
+  });
+
+  // DST assertions need a real IANA time zone. Jest workers pin libc's TZ at
+  // process start (a runtime process.env.TZ change is ignored), so this runs
+  // the REAL localDayWindow in a child node process spawned with TZ set.
+  test('DST days: window reaches the next LOCAL midnight, not +86_400_000', () => {
+    const babelCore = require.resolve('@babel/core');
+    const presetTs = require.resolve('@babel/preset-typescript');
+    const questsPath = require.resolve('../quests');
+    const script = `
+      const babel = require(${JSON.stringify(babelCore)});
+      const fs = require('fs');
+      const os = require('os');
+      const path = require('path');
+      const { code } = babel.transformSync(fs.readFileSync(${JSON.stringify(questsPath)}, 'utf8'), {
+        filename: 'quests.ts',
+        presets: [require(${JSON.stringify(presetTs)})],
+        babelrc: false,
+        configFile: false,
+      });
+      const tmp = path.join(os.tmpdir(), 'quests-localDayWindow-' + process.pid + '.js');
+      fs.writeFileSync(tmp, code);
+      const { localDayWindow } = require(tmp);
+      fs.unlinkSync(tmp);
+      const fail = (msg) => { console.error('FAIL: ' + msg); process.exit(1); };
+      // 2026-11-01 (America/New_York): fall back EDT → EST, a 25h local day.
+      let w = localDayWindow(new Date('2026-11-01T12:00:00-04:00'));
+      if (w.to - w.from !== 25 * 3600 * 1000) fail('25h day span, got ' + (w.to - w.from));
+      if (new Date(w.to).getHours() !== 0) fail('window end is not local midnight');
+      const late = new Date('2026-11-01T23:30:00').getTime(); // 23:30 local
+      if (!(late > w.from + 86_400_000)) fail('test setup: late lesson should exceed a fixed 24h span');
+      if (!(late > w.from && late < w.to)) fail('late lesson must count toward the 25h local day');
+      // 2026-03-08: spring forward EST → EDT, a 23h local day.
+      w = localDayWindow(new Date('2026-03-08T12:00:00-05:00'));
+      if (w.to - w.from !== 23 * 3600 * 1000) fail('23h day span, got ' + (w.to - w.from));
+      if (new Date(w.to).getHours() !== 0) fail('window end is not local midnight');
+      console.log('OK');
+    `;
+    const out = execFileSync(process.execPath, ['-e', script], {
+      env: { ...process.env, TZ: 'America/New_York' },
+    }).toString();
+    expect(out).toContain('OK');
   });
 });

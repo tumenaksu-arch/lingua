@@ -41,6 +41,7 @@ import {
 } from '@/data';
 import {
   QUEST_REWARD_XP,
+  localDayWindow,
   questProgress,
   questsForDate,
   type QuestStatus,
@@ -97,6 +98,10 @@ export interface AppState {
   reminderHour: number | null;
   /** today's daily quests with live progress (empty until the first refresh) */
   quests: QuestStatus[];
+  /** local date (YYYY-MM-DD) the quests state belongs to; null before the first refresh */
+  questDate: string | null;
+  /** quest ids with a claim in flight — synchronously blocks a double-tap double payout */
+  claimingQuestIds: string[];
 
   boot: () => Promise<void>;
   selectCourse: (courseId: string) => Promise<void>;
@@ -234,6 +239,48 @@ async function unlockAchievements(
   return fresh;
 }
 
+/**
+ * Pays out a quest reward (+QUEST_REWARD_XP) through the same stats pipeline as
+ * lessons/stories and logs the idempotent `quest_claimed` event. Called from
+ * `claimQuest` after the synchronous in-memory guards; the DB existence check
+ * below keeps stats and the event log consistent even across processes.
+ */
+async function claimQuestPayout(r: Repos, questId: string): Promise<{ xpEarned: number }> {
+  const { db } = useAppStore.getState();
+  if (!db) return { xpEarned: 0 };
+  const now = Date.now();
+  const date = localDateString(new Date());
+  const xpEarned = QUEST_REWARD_XP;
+  // Same stats pipeline as lessons/stories: total + today XP, streak activity.
+  const prev = useAppStore.getState().stats;
+  const newDay = prev.lastActiveDate !== date;
+  const xpBefore = newDay ? 0 : prev.xpToday;
+  const xpToday = xpBefore + xpEarned;
+  let next: UserStats = { ...prev, xp: prev.xp + xpEarned, xpToday };
+  next = applyActivity(next, date);
+  // Payout and the claim event must move together: if the event already
+  // exists (e.g. a claim from another tab/process), abort BEFORE saving stats
+  // so stats.xp can never disagree with the event log.
+  const existing = await db.getFirst<{ id: string }>(
+    "SELECT id FROM events WHERE user_id = ? AND type = ? AND id LIKE ?",
+    [useAppStore.getState().userId, 'quest_claimed', `quest:${date}:${questId}`],
+  );
+  if (existing) {
+    await useAppStore.getState().refreshQuests();
+    return { xpEarned: 0 };
+  }
+  await r.stats.save(next, now);
+  await r.progress.logEvent(`quest:${date}:${questId}`, 'quest_claimed', { xp: xpEarned, questId, date }, now);
+  useAppStore.setState({ stats: next });
+  if (xpToday >= next.dailyGoalXp && xpBefore < next.dailyGoalXp) {
+    await setMeta(db, GOAL_STREAK_KEY, JSON.stringify(advanceGoalStreak(await getGoalStreak(db), date)));
+  }
+  await useAppStore.getState().refreshQuests();
+  await unlockAchievements(db, useAppStore.getState, useAppStore.setState);
+  void useAppStore.getState().sync();
+  return { xpEarned };
+}
+
 export const useAppStore = create<AppState>((set, get) => ({
   ready: false,
   onboarded: false,
@@ -251,6 +298,8 @@ export const useAppStore = create<AppState>((set, get) => ({
   newAchievements: [],
   reminderHour: null,
   quests: [],
+  questDate: null,
+  claimingQuestIds: [],
 
   async boot() {
     if (get().ready) return;
@@ -458,16 +507,15 @@ export const useAppStore = create<AppState>((set, get) => ({
   async refreshQuests() {
     const { db, userId, stats } = get();
     if (!db) {
-      set({ quests: [] });
+      set({ quests: [], questDate: null });
       return;
     }
     const today = localDateString(new Date());
-    const dayStart = new Date();
-    dayStart.setHours(0, 0, 0, 0);
-    const from = dayStart.getTime();
+    // Upper bound = next LOCAL midnight (setDate handles DST days, unlike +86_400_000).
+    const { from, to } = localDayWindow(new Date());
     const rows = await db.getAll<{ type: string; payload: string }>(
       "SELECT type, payload FROM events WHERE user_id = ? AND type IN (?, ?, ?) AND created_at > ? AND created_at < ?",
-      [userId, 'lesson_completed', 'story_completed', 'quest_claimed', from - 1, from + 86_400_000],
+      [userId, 'lesson_completed', 'story_completed', 'quest_claimed', from - 1, to],
     );
     const events = rows.map((r) => {
       try {
@@ -476,41 +524,34 @@ export const useAppStore = create<AppState>((set, get) => ({
         return { type: r.type, payload: {} };
       }
     });
-    set({ quests: questProgress(questsForDate(today, stats.dailyGoalXp), events) });
+    set({ quests: questProgress(questsForDate(today, stats.dailyGoalXp), events), questDate: today });
   },
 
   async claimQuest(questId) {
     const r = requireRepos();
     const quest = get().quests.find((q) => q.id === questId);
-    const { db } = get();
-    // Guard in memory: only a completed, unclaimed quest pays out. The event
-    // id `quest:<date>:<questId>` (INSERT OR IGNORE) makes a double claim
-    // impossible on disk as well.
+    const { db, questDate } = get();
+    // Guard in memory, synchronously: only a completed, unclaimed quest from
+    // TODAY pays out, and a double tap lands in `claimingQuestIds` before the
+    // first await, so a rapid second press returns 0 instead of paying twice.
+    // The event id `quest:<date>:<questId>` (INSERT OR IGNORE) plus the
+    // existence pre-check below make a double claim impossible on disk too.
     if (!db || !quest || !quest.done || quest.claimed) return { xpEarned: 0 };
-    const now = Date.now();
-    const date = localDateString(new Date());
-    const xpEarned = QUEST_REWARD_XP;
-    // Same stats pipeline as lessons/stories: total + today XP, streak activity.
-    const prev = get().stats;
-    const newDay = prev.lastActiveDate !== date;
-    const xpBefore = newDay ? 0 : prev.xpToday;
-    const xpToday = xpBefore + xpEarned;
-    let next: UserStats = { ...prev, xp: prev.xp + xpEarned, xpToday };
-    next = applyActivity(next, date);
-    await r.stats.save(next, now);
-    await r.progress.logEvent(`quest:${date}:${questId}`, 'quest_claimed', { xp: xpEarned, questId, date }, now);
-    set({ stats: next });
-    if (xpToday >= next.dailyGoalXp && xpBefore < next.dailyGoalXp) {
-      await setMeta(db, GOAL_STREAK_KEY, JSON.stringify(advanceGoalStreak(await getGoalStreak(db), date)));
+    if (questDate !== localDateString(new Date())) return { xpEarned: 0 };
+    if (get().claimingQuestIds.includes(questId)) return { xpEarned: 0 };
+    set((s) => ({ claimingQuestIds: [...s.claimingQuestIds, questId] }));
+    try {
+      return await claimQuestPayout(r, questId);
+    } finally {
+      set((s) => ({ claimingQuestIds: s.claimingQuestIds.filter((id) => id !== questId) }));
     }
-    await get().refreshQuests();
-    await unlockAchievements(db, get, set);
-    void get().sync();
-    return { xpEarned };
   },
 
   async setDailyGoal(xp) {
     await get().saveStats({ ...get().stats, dailyGoalXp: xp });
+    // The xp_goal quest's target follows the daily goal — refresh immediately
+    // so a fresh onboarding (or a profile change) never shows a stale target.
+    await get().refreshQuests();
   },
 
   async signIn(email, password) {
