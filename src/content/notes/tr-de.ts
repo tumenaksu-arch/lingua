@@ -9,8 +9,8 @@ export const trDeNotes: CourseNotes = {
       {
         heading: 'Selamlaşma ve kısa ifadeler',
         body: [
-          'Almanca günlük selamlaşmalar çoğu zaman Türkçedeki gibi kısa ve doğrudandır. Hallo hem merhaba hem de açlık (hâllo diye okunmaz!) demek değildir; karıştırma. Tschüss gibi yazılan kelimelerde ü/ä/ö seslerine dikkat et: tschüss yaklaşık "çüss" diye okunur.',
-          'Bitte çok yönlü bir kelimedir: hem lütfen hem de rica ederim anlamına gelir. Danke schön ise teşekkürler demenin kibar yoludur; kelime kelime "güzel teşekkür" değil, tek parça olarak öğren.',
+          'Almanca günlük selamlaşmalar çoğu zaman Türkçedeki gibi kısa ve doğrudandır. Hallo yalnızca "merhaba" demektir; "hâllo" diye okunmaz, ağza "halo" gibi gelir. Tschüss gibi yazılan kelimelerde ü/ä/ö seslerine dikkat et: tschüss yaklaşık "çüss" diye okunur.',
+          'Bitte çok yönlü bir kelimedir: hem lütfen hem de rica ederim anlamına gelir. Danke schön ise güzel teşekkür demenin kibar biçimidir; tek parça olarak öğren.',
         ],
         examples: [
           { target: 'Hallo, ich bin Ayşe.', tr: 'Merhaba, ben Ayşe.' },
@@ -22,7 +22,7 @@ export const trDeNotes: CourseNotes = {
         heading: 'Artikeller: der, die, das',
         body: [
           'Türkçede artikel yoktur; Almancada ise her ismin bir cinsiyeti vardır: der (eril), die (dişil), das (nötr). Cinsiyeti tahmin etmeye çalışma; kelimeyi artikeliyle birlikte ezberle: das Wasser, der Kaffee, die Frau.',
-          'Önünde ein/a bir olan kelimelerde cinsiyet yine de hissedicidir: eril der Mann → ein Mann, dişil die Frau → eine Frau. Bu yüzden Mann ve Frau cümlelerinde ein ile eine seçenekleri farklıdır.',
+          'Önünde ein/a bir olan kelimelerde cinsiyet yine de belirleyicidir: eril der Mann → ein Mann, dişil die Frau → eine Frau. Bu yüzden Mann ve Frau cümlelerinde ein ile eine seçenekleri farklıdır.',
         ],
         examples: [
           { target: 'Der Mann trinkt Tee.', tr: 'Adam çay içiyor.' },
@@ -93,7 +93,7 @@ export const trDeNotes: CourseNotes = {
       {
         heading: "Aile sözcükleri ve 'mein'",
         body: [
-          "Türkçede iyelik eki isme yapışır (annem, babam); Almancada ayrı bir kelime gelir: mein (benim), de/meine. Eril ve nötr isimlerde mein, dişil ve çoğulda meine kullanılır: mein Vater ama meine Mutter.",
+          "Türkçede iyelik eki isme yapışır (annem, babam); Almancada ayrı bir kelime gelir: mein (benim), dein (senin) / meine. Eril ve nötr isimlerde mein, dişil ve çoğulda meine kullanılır: mein Vater ama meine Mutter.",
           'Aile üyelerinde cinsiyete dikkat: die Mutter (dişil), der Vater (eril), die Schwester (dişil), der Bruder (eril). Artikeliyle birlikte öğren.',
         ],
         examples: [
@@ -189,7 +189,7 @@ export const trDeNotes: CourseNotes = {
       {
         heading: "kein: 'yok' demenin yolu",
         body: [
-          "Türkçede yok kelimesi ile olumsuz kurarsın (param yok). Almancada isimleri olumsuzlamak için kein kullanılır: Ich habe kein Geld. kein, ein kelimesinin olumsuzu gibidir; Geld nötr olduğu için kein kalır, eril olsaydı keinen olurdu.",
+          "Türkçede yok kelimesi ile olumsuz kurarsın (param yok). Almancada isimleri olumsuzlamak için kein kullanılır: Ich habe kein Geld. kein, ein kelimesinin olumsuzu gibidir; Geld nötr olduğu için kein kalır; belirtme durumundaki eril bir isim olsaydı keinen olurdu.",
           'Ayakkabılar çoğul olduğundan fiil çoğul olur: Die Schuhe sind billig. Türkçedeki ayakkabı ucuz ifadesindeki tekil algıya dikkat; Almancada die Schuhe daima çoğuldur.',
         ],
         examples: [
@@ -201,7 +201,7 @@ export const trDeNotes: CourseNotes = {
       {
         heading: 'Renkler ve sıfat ekleri',
         body: [
-          "Türkçede renk isme yapışmaz ek alır (mavi elbise); Almancada renk sıfatı artikelden ipucu alır: das blaue Kleid, das rote Hemd. das + sıfat kalıbında sona -e eklenir. die ile kullanınca die blauen Schuhe gibi -en görürsün.",
+          "Türkçede renk isme yapışmaz ek alır (mavi elbise); Almancada renk sıfatı artikelden ipucu alır: das blaue Kleid, das rote Hemd. das + sıfat kalıbında sona -e eklenir. çoğul die ile kullanınca -en görürsün: die blauen Schuhe.",
           'mögen hoşlanmak demektir ve fiil ikinci sırada gelir: Ich mag das blaue Kleid. Türkçedeki beğeniyorum fiilini cümle sonuna koyma; Almancada fiil özneden hemen sonra.',
         ],
         examples: [
@@ -232,7 +232,7 @@ export const trDeNotes: CourseNotes = {
         heading: 'lesen, schreiben, lernen: karıştırma',
         body: [
           "Türkçede okumak tek kelimedir; Almancada lesen okumak, lernen öğrenmektir — telaffuzu benzer ama anlamı farklı: Ich lerne Deutsch (Almanca öğreniyorum), Ich lese ein Buch (kitap okuyorum).",
-          'schreiben yazmak demektir. Üç fiil de düzenli çekimlenir: ich lese, du liest (du biçiminde lesen → liest olur), ich schreibe, ich lerne.',
+          'schreiben yazmak demektir. Üç fiilin ich biçimi düzenlidir: ich lese, ich schreibe, ich lerne; ama du biçiminde lesen → liest olur.',
         ],
         examples: [
           { target: 'Ich lerne Deutsch.', tr: 'Almanca öğreniyorum.' },
@@ -285,7 +285,7 @@ export const trDeNotes: CourseNotes = {
       {
         heading: 'Saat: Uhr mu Stunde mi?',
         body: [
-          "Türkçede saat hem kadranı hem süreyi gösterir; Almancada ikiye ayrılır: die Uhr kaç demek (saat kaç?), die Stunde ise süre birimi (bir saat boyunca). 'Saat kaç?' = Wie spät ist es?; 'Saat üç' = Es ist drei Uhr.",
+          "Türkçede saat hem kadranı hem süreyi gösterir; Almancada ikiye ayrılır: die Uhr saat/kadran demektir ('Saat kaç?' = Wie spät ist es?); die Stunde ise süre birimidir (bir saat boyunca). 'Saat kaç?' = Wie spät ist es?; 'Saat üç' = Es ist drei Uhr.",
           'Bir toplantının süresi için Stunde kullanılır: Die Besprechung dauert eine Stunde. Saati sorarken Wie spät, süreyi sorarken Wie lange dersin.',
         ],
         examples: [
@@ -328,7 +328,7 @@ export const trDeNotes: CourseNotes = {
         heading: 'mögen, sehen ve hobi fiilleri',
         body: [
           'mögen hoşlanmak demektir: Ich mag Musik (Müzik severim / müziği severim). Cümlenin öznesi ich ise fiil ikinci sırada olur; Türkçedeki gibi nesneyi özneden hemen sonra koyman gerekmez, Ich mag Musik yeterlidir.',
-          "Film izlemek için sehen fiili kullanılır: Mein Freund sieht gern Filme (Arkadaşım film izlemeyi sever). reisen seyahat etmek, schwimmen yüzmek, laufen koşmak — bu fiiller düzenlidir: ich reise, ich schwimme, ich laufe.",
+          "Film izlemek için sehen fiili kullanılır: Mein Freund sieht gern Filme (Arkadaşım film izlemeyi sever). reisen seyahat etmek, schwimmen yüzmek, laufen koşmak — bu fiillerin ich biçimi fiil köküyle aynı kalır: ich reise, ich schwimme, ich laufe.",
         ],
         examples: [
           { target: 'Ich mag Musik.', tr: 'Müziği severim.' },
