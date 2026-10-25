@@ -3,7 +3,7 @@ import type { Database } from '../local/database';
 import { bumpAttempts, deleteOutbox, getMeta, listOutbox, setMeta, type OutboxRow, type OutboxTable } from '../local/outbox';
 import { createProgressRepo, type LessonProgress } from '../local/repos/progressRepo';
 import { createSrsRepo } from '../local/repos/srsRepo';
-import { createStatsRepo } from '../local/repos/statsRepo';
+import { createStatsRepo, LOCAL_USER_ID } from '../local/repos/statsRepo';
 
 /** Narrow remote surface so sync can be tested without a network. */
 export interface RemoteApi {
@@ -33,12 +33,25 @@ const defaultSleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms))
  * On success rows are deleted; on transient failure attempts are bumped and
  * retried with backoff (100ms·2^n, max 3 tries per call). Stops immediately
  * on auth errors so the caller can prompt for sign-in.
+ *
+ * Only rows of the signed-in user are pushed: firestore.rules deny any row whose
+ * user_id is not the caller's uid, and a batch is all-or-nothing, so one foreign row
+ * would fail every sync. Guest ("local") rows are dropped — adoptGuestProgress has
+ * already re-queued that state under the account. Rows of another account stay
+ * queued until that account signs in again.
  */
 export async function pushOutbox(opts: SyncOptions): Promise<{ pushed: number; failed: number }> {
   const { db, remote, sleep = defaultSleep } = opts;
   let pushed = 0;
   let failed = 0;
-  const rows = await listOutbox(db, 500);
+  const rows: OutboxRow[] = [];
+  const guestIds: number[] = [];
+  for (const r of await listOutbox(db, 500)) {
+    const owner = (JSON.parse(r.payload) as { user_id?: unknown }).user_id;
+    if (owner === opts.userId) rows.push(r);
+    else if (owner === LOCAL_USER_ID) guestIds.push(r.id);
+  }
+  await deleteOutbox(db, guestIds);
   const groups = new Map<string, OutboxRow[]>();
   for (const r of rows) {
     const k = `${r.tbl}:${r.op}`;

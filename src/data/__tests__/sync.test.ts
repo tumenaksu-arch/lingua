@@ -1,5 +1,5 @@
 import { FakeDb } from './fakeDb';
-import { createStatsRepo, DEFAULT_STATS } from '../local/repos/statsRepo';
+import { createStatsRepo, DEFAULT_STATS, LOCAL_USER_ID } from '../local/repos/statsRepo';
 import { createSrsRepo } from '../local/repos/srsRepo';
 import { createProgressRepo } from '../local/repos/progressRepo';
 import { listOutbox, getMeta } from '../local/outbox';
@@ -191,5 +191,57 @@ describe('syncNow', () => {
     const r = await syncNow({ db, remote, userId: U, now: () => T0 + 20_000, sleep: noSleep });
     expect(r.failed).toBe(1);
     expect(await getMeta(db, 'last_sync_at')).toBe(iso(T0 + 10_000)); // cursor unchanged
+  });
+});
+
+describe('guest (local) rows and the signed-in account', () => {
+  /** Mirrors firestore.rules: a write is denied unless every row's user_id is the signed-in uid. */
+  function rulesRemote(uid: string) {
+    const pushed: Record<string, unknown>[] = [];
+    const remote: RemoteApi & { pushed: typeof pushed } = {
+      pushed,
+      async upsert(_table, rows) {
+        if (rows.some((r) => r.user_id !== uid)) throw new AuthRequiredError('Missing or insufficient permissions.');
+        pushed.push(...rows);
+      },
+      async pull() {
+        return [];
+      },
+    };
+    return remote;
+  }
+
+  test('guest play before sign-in does not break the first sync of the new account', async () => {
+    const db = new FakeDb();
+    // Guest plays one lesson on this device (writes go through the normal repos).
+    await createStatsRepo(db, LOCAL_USER_ID).save({ ...DEFAULT_STATS, xp: 10 }, T0);
+    await createProgressRepo(db, LOCAL_USER_ID).completeLesson('l1', T0);
+    // Signs in: adoptGuestProgress copies the guest state into the account via the same repos.
+    await createStatsRepo(db, U).save({ ...DEFAULT_STATS, xp: 10 }, T0 + 1000);
+    await createProgressRepo(db, U).adopt({ lessonId: 'l1', crowns: 1, completedAt: T0 }, T0 + 1000);
+
+    const remote = rulesRemote(U);
+    const res = await syncNow({ db, remote, userId: U, now: () => T0 + 2000, sleep: noSleep });
+
+    expect(res.failed).toBe(0);
+    expect(remote.pushed.length).toBeGreaterThan(0);
+    expect(remote.pushed.every((r) => r.user_id === U)).toBe(true);
+    expect(await getMeta(db, 'last_sync_at')).toBe(iso(T0 + 2000));
+    // Nothing is left that would make the next sync fail again.
+    expect((await listOutbox(db)).filter((r) => JSON.parse(r.payload).user_id === LOCAL_USER_ID)).toHaveLength(0);
+  });
+
+  test("rows of another signed-in account stay queued for that account and are not pushed", async () => {
+    const db = new FakeDb();
+    await createStatsRepo(db, 'user-2').save({ ...DEFAULT_STATS, xp: 5 }, T0);
+    await createStatsRepo(db, U).save({ ...DEFAULT_STATS, xp: 7 }, T0 + 1000);
+
+    const remote = rulesRemote(U);
+    const res = await pushOutbox({ db, remote, userId: U, sleep: noSleep });
+
+    expect(res).toEqual({ pushed: 1, failed: 0 });
+    expect(remote.pushed).toEqual([expect.objectContaining({ user_id: U, xp: 7 })]);
+    const left = (await listOutbox(db)).map((r) => JSON.parse(r.payload).user_id);
+    expect(left).toEqual(['user-2']);
   });
 });
