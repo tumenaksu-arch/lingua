@@ -10,7 +10,7 @@ import { Platform } from 'react-native';
  *
  * Plugin surfaces below are the subsets Lingua uses, checked against the shell's installed
  * definitions: @capacitor-community/text-to-speech 6.1, @capacitor-community/speech-recognition
- * 7.0, @capacitor/local-notifications 7.0.
+ * 7.0, @capacitor/local-notifications 7.0, @capacitor/app 7.0.
  */
 
 export interface ListenerHandle {
@@ -44,10 +44,15 @@ export interface ShellLocalNotifications {
   cancel(options: { notifications: { id: number }[] }): Promise<void>;
 }
 
+export interface ShellApp {
+  getInfo(): Promise<{ name: string; id: string; build: string; version: string }>;
+}
+
 interface ShellPlugins {
   TextToSpeech: ShellTextToSpeech;
   SpeechRecognition: ShellSpeechRecognition;
   LocalNotifications: ShellLocalNotifications;
+  App: ShellApp;
 }
 
 interface CapacitorGlobal {

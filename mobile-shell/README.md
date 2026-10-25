@@ -33,3 +33,7 @@ Publish it as a GitHub release with **two** assets — the versioned file and a 
 cp dist/Love-Vox-0.1.1.apk dist/Love-Vox.apk
 gh release create mobile-v0.1.1 dist/Love-Vox-0.1.1.apk dist/Love-Vox-0.1.1.apk.sha256 dist/Love-Vox.apk
 ```
+
+Finally bump `"version"` in `public/android.json` (app repo root) to the new version and deploy
+the web build — installed shells then show the "new Android version" banner
+(`ShellUpdateBanner` in src/platform/autoUpdate.ts) on the next app open.
