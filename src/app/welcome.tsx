@@ -31,8 +31,8 @@ import {
   type ColorTokens,
 } from '@/ui';
 
-const LANG_NAME: Record<string, string> = { en: 'İngilizce', de: 'Almanca', es: 'İspanyolca', fr: 'Fransızca', tr: 'Türkçe' };
-const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', tr: '🇹🇷' };
+const LANG_NAME: Record<string, string> = { en: 'İngilizce', de: 'Almanca', es: 'İspanyolca', fr: 'Fransızca', it: 'İtalyanca', tr: 'Türkçe' };
+const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', it: '🇮🇹', tr: '🇹🇷' };
 /** Two columns (pitch | sign-in card) and the top menu from this width — same split as EduPilot. */
 const WIDE = 900;
 
@@ -65,6 +65,12 @@ const landingColors: ColorTokens = {
   textOnColor: ep.onAccent,
   buttonPrimary: ep.accent,
 };
+
+/** "İngilizce, Almanca, İspanyolca, Fransızca ya da İtalyanca" — follows the bundled course list. */
+const langList = (() => {
+  const names = courses.map((c) => LANG_NAME[c.toLang] ?? c.toLang);
+  return names.length > 1 ? `${names.slice(0, -1).join(', ')} ya da ${names[names.length - 1]}` : names.join('');
+})();
 
 const totals = courses.reduce(
   (t, c) => {
@@ -225,7 +231,7 @@ export default function WelcomeScreen() {
             </View>
           </Section>
 
-          <Section id="kurslar" eyebrow="Kurslar" title="Türkçe'den dört dil." colors={colors} fonts={{ display, body: bodyFont, mono: monoFont }} onLayout={mark('kurslar')}>
+          <Section id="kurslar" eyebrow="Kurslar" title={`Türkçe'den ${courses.length} dil.`} colors={colors} fonts={{ display, body: bodyFont, mono: monoFont }} onLayout={mark('kurslar')}>
             <View style={[styles.grid, wide && styles.gridWide]}>
               {courses.map((c, i) => {
                 const lessons = c.units.reduce((n, u) => n + u.lessons.length, 0);
@@ -249,7 +255,7 @@ export default function WelcomeScreen() {
 
           <Section id="nasil" eyebrow="Nasıl çalışır" title="Dört adımda başla." colors={colors} fonts={{ display, body: bodyFont, mono: monoFont }} onLayout={mark('nasil')}>
             <View style={[styles.grid, wide && styles.gridWide]}>
-              <NumberedCard no="01" title="Dilini seç" text="İngilizce, Almanca, İspanyolca ya da Fransızca; istediğin zaman değiştir." colors={colors} fonts={{ display, body: bodyFont, mono: monoFont }} wide={wide} />
+              <NumberedCard no="01" title="Dilini seç" text={`${langList}; istediğin zaman değiştir.`} colors={colors} fonts={{ display, body: bodyFont, mono: monoFont }} wide={wide} />
               <NumberedCard no="02" title="Günlük hedef" text="Günde 1 ile 5 ders arası bir hedef belirle; seri her gün büyüsün." colors={colors} fonts={{ display, body: bodyFont, mono: monoFont }} wide={wide} />
               <NumberedCard no="03" title="Kısa dersler" text="Çeviri, dinleme, konuşma, eşleştirme: her ders birkaç dakika." colors={colors} fonts={{ display, body: bodyFont, mono: monoFont }} wide={wide} />
               <NumberedCard no="04" title="Tekrar et" text="Kelimeler unutmaya başladığın anda tekrar destesine düşer." colors={colors} fonts={{ display, body: bodyFont, mono: monoFont }} wide={wide} />

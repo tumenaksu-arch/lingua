@@ -106,16 +106,21 @@ test('tr-en lessons each use all six exercise types', () => {
   for (const u of trEn.units) expect(u.lessons).toHaveLength(4);
 });
 
-test('tr-de and tr-es have 4 units × 3 lessons; tr-fr has 3 × 3', () => {
-  for (const id of ['tr-de', 'tr-es']) {
+test('tr-de, tr-es, tr-fr and tr-it have 8 units × 4 lessons; course order', () => {
+  for (const id of ['tr-de', 'tr-es', 'tr-fr', 'tr-it']) {
     const c = getCourse(id)!;
-    expect(c.units).toHaveLength(4);
-    for (const u of c.units) expect(u.lessons).toHaveLength(3);
+    expect({ id, units: c.units.length }).toEqual({ id, units: 8 });
+    for (const u of c.units) expect({ unit: u.id, lessons: u.lessons.length }).toEqual({ unit: u.id, lessons: 4 });
   }
-  const fr = getCourse('tr-fr')!;
-  expect(fr.units).toHaveLength(3);
-  for (const u of fr.units) expect(u.lessons).toHaveLength(3);
   expect(courses.map((c) => c.id)).toEqual(['tr-en', 'tr-de', 'tr-es', 'tr-fr', 'tr-it']);
+});
+
+test('tr-it lessons each use all six exercise types', () => {
+  for (const u of getCourse('tr-it')!.units)
+    for (const l of u.lessons) {
+      const types = new Set(l.exercises.map((e) => e.type));
+      for (const t of ALL_TYPES) expect({ lesson: l.id, has: t, ok: types.has(t) }).toEqual({ lesson: l.id, has: t, ok: true });
+    }
 });
 
 /** The text a learner sees/hears for an exercise; match_pairs has no single prompt. */
