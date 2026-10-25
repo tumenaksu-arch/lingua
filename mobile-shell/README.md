@@ -1,4 +1,6 @@
-# Lingua mobile shell (Android)
+# Love-Vox mobile shell (Android)
+
+(Display name Love-Vox; the repo, package id `com.tumenaksu.lingua` and the `/lingua/` path keep the original name.)
 
 A Capacitor 7 "web shell", same pattern as the EduPilot app: the APK contains no app code,
 it opens **https://ankaxai.ai/lingua/** in a WebView. Every web deploy reaches the phone on
@@ -15,7 +17,7 @@ the next launch; a new APK is needed only when this folder changes (plugins, ico
 
 ```bash
 cd mobile-shell && npm ci
-npm run release -- 0.1.1      # → dist/Lingua-0.1.1.apk (+ .sha256), versionCode +1
+npm run release -- 0.1.1      # → dist/Love-Vox-0.1.1.apk (+ .sha256), versionCode +1
 ```
 
 Needs Android SDK build-tools 35.0.0 (`ANDROID_HOME`, default `~/android-sdk`), a JDK
@@ -24,10 +26,10 @@ Needs Android SDK build-tools 35.0.0 (`ANDROID_HOME`, default `~/android-sdk`), 
 next to it). **Back up the keystore**: an APK signed with another key cannot update the installed app.
 
 Publish it as a GitHub release with **two** assets — the versioned file and a copy named
-`Lingua.apk`, which the welcome page's "APK indir" button downloads via
-`releases/latest/download/Lingua.apk` (src/platform/pwa.ts):
+`Love-Vox.apk`, which the welcome page's "APK indir" button downloads via
+`releases/latest/download/Love-Vox.apk` (src/platform/pwa.ts):
 
 ```bash
-cp dist/Lingua-0.1.1.apk dist/Lingua.apk
-gh release create mobile-v0.1.1 dist/Lingua-0.1.1.apk dist/Lingua-0.1.1.apk.sha256 dist/Lingua.apk
+cp dist/Love-Vox-0.1.1.apk dist/Love-Vox.apk
+gh release create mobile-v0.1.1 dist/Love-Vox-0.1.1.apk dist/Love-Vox-0.1.1.apk.sha256 dist/Love-Vox.apk
 ```

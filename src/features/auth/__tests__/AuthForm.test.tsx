@@ -89,7 +89,7 @@ describe('WelcomeScreen', () => {
     expect(screen.getByRole('button', { name: 'Giriş yap' })).toBeTruthy();
     expect(screen.getAllByText('İngilizce', { exact: false }).length).toBeGreaterThan(0);
     // EduPilot-style sections, with the downloadable platforms outside the Android shell.
-    for (const label of ['Android uygulamasını indir', "Lingua'yı cihaza yükle (PWA)", 'Kurulum yardımını göster']) {
+    for (const label of ['Android uygulamasını indir', "Love-Vox'u cihaza yükle (PWA)", 'Kurulum yardımını göster']) {
       expect(screen.getByRole('button', { name: label })).toBeTruthy();
     }
     await press('Hesapsız dene →');

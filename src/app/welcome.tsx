@@ -88,7 +88,7 @@ export default function WelcomeScreen() {
           <View style={styles.header}>
             <View style={styles.brand} accessibilityRole="header">
               <Image source={require('../../assets/icon.png')} style={styles.logo} accessibilityIgnoresInvertColors />
-              <Text style={[styles.brandName, { color: colors.text }]}>Lingua</Text>
+              <Text style={[styles.brandName, { color: colors.text }]}>Love-Vox</Text>
             </View>
             {wide && (
               <View style={styles.nav}>
@@ -137,7 +137,7 @@ export default function WelcomeScreen() {
                   </View>
                 ))}
               </View>
-              <Text style={[styles.tagline, { color: colors.primaryText }]}>Lingua — her gün biraz daha.</Text>
+              <Text style={[styles.tagline, { color: colors.primaryText }]}>Love-Vox — her gün biraz daha.</Text>
               <Text style={mono}>Çevrimdışı çalışır · İlerlemen hesabında saklanır · Reklamsız</Text>
             </View>
 
@@ -157,7 +157,7 @@ export default function WelcomeScreen() {
 
           <Section id="yaklasim" eyebrow="Yaklaşım" title="Her gün birkaç dakika, kalıcı bir dil." colors={colors} onLayout={mark('yaklasim')}>
             <Body color={colors.textMuted} style={styles.lead}>
-              Lingua, dil öğrenmeyi küçük ve düzenli adımlara böler. Her ders birkaç dakika sürer; öğrendiğin kelimeler aralıklı
+              Love-Vox, dil öğrenmeyi küçük ve düzenli adımlara böler. Her ders birkaç dakika sürer; öğrendiğin kelimeler aralıklı
               tekrarla, unutmaya başladığın anda yeniden karşına çıkar. Seri, günlük hedef ve rozetler alışkanlığı canlı tutar.
             </Body>
             <View style={[styles.grid, wide && styles.gridWide]}>
@@ -199,7 +199,7 @@ export default function WelcomeScreen() {
           </Section>
 
           <View style={[styles.footer, { borderColor: colors.border }]}>
-            <Text style={mono}>Lingua · Bir ANKAXAI çözümü</Text>
+            <Text style={mono}>Love-Vox · Bir ANKAXAI çözümü</Text>
             {!inApp && (
               <Pressable onPress={() => void Linking.openURL('https://ankaxai.ai/')} accessibilityRole="link">
                 <Text style={[styles.mono, { color: colors.secondaryText }]}>ankaxai.ai ↗</Text>
@@ -313,7 +313,7 @@ function Platforms({
   };
 
   return (
-    <Section id="platformlar" eyebrow="Platformlar" title="Nerede istersen, Lingua orada." colors={colors} onLayout={onLayout}>
+    <Section id="platformlar" eyebrow="Platformlar" title="Nerede istersen, Love-Vox orada." colors={colors} onLayout={onLayout}>
       <View style={[styles.grid, wide && styles.gridWide]}>
         <NumberedCard
           no="001"
@@ -343,7 +343,7 @@ function Platforms({
           colors={colors}
           wide={wide}
           onPress={pwa.state === 'installed' ? undefined : () => void onPwa()}
-          action="Lingua'yı cihaza yükle (PWA)"
+          action="Love-Vox'u cihaza yükle (PWA)"
         />
         <NumberedCard
           no="004"
@@ -360,7 +360,7 @@ function Platforms({
         <View style={[styles.help, { borderColor: colors.border, backgroundColor: colors.surface }]} accessibilityLiveRegion="polite">
           {help === 'all' && (
             <HelpBlock title="Android (APK)" colors={colors}>
-              {'1. "APK indir"e dokun, Lingua.apk iner.\n2. İnen dosyayı aç; telefon "bilinmeyen kaynak" izni isterse tarayıcına izin ver.\n3. Yükle\'ye dokun. Uygulama güncellemeleri kendiliğinden gelir.'}
+              {'1. "APK indir"e dokun, Love-Vox.apk iner.\n2. İnen dosyayı aç; telefon "bilinmeyen kaynak" izni isterse tarayıcına izin ver.\n3. Yükle\'ye dokun. Uygulama güncellemeleri kendiliğinden gelir.'}
             </HelpBlock>
           )}
           <HelpBlock title="iPhone / iPad (Safari)" colors={colors}>

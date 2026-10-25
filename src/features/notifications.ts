@@ -79,7 +79,7 @@ export async function scheduleDailyReminder(hour: number, minute = 0): Promise<b
         notifications: [
           {
             id: SHELL_REMINDER_ID,
-            title: 'Lingua ⏰',
+            title: 'Love-Vox ⏰',
             body: 'Bugünkü dersini yapıp serini koru!',
             schedule: { on: { hour, minute }, repeats: true, allowWhileIdle: true },
           },
@@ -103,7 +103,7 @@ export async function scheduleDailyReminder(hour: number, minute = 0): Promise<b
     await n.scheduleNotificationAsync({
       identifier: REMINDER_ID,
       content: {
-        title: 'Lingua ⏰',
+        title: 'Love-Vox ⏰',
         body: 'Bugünkü dersini yapıp serini koru!',
       },
       trigger: {

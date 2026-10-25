@@ -137,7 +137,7 @@ export default function ProfileScreen() {
         return;
       }
       if (!(await requestPermission())) {
-        showAlert('Bildirim izni yok', 'Hatırlatma için ayarlardan Lingua bildirimlerine izin ver.');
+        showAlert('Bildirim izni yok', 'Hatırlatma için ayarlardan Love-Vox bildirimlerine izin ver.');
         return;
       }
       if (await scheduleDailyReminder(hour, 0)) await setReminderHour(hour);

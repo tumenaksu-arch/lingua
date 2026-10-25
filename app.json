@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Lingua",
+    "name": "Love-Vox",
     "slug": "lingotr",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -37,8 +37,8 @@
       [
         "expo-speech-recognition",
         {
-          "microphonePermission": "Lingua konuşma alıştırmaları için mikrofonu kullanır.",
-          "speechRecognitionPermission": "Lingua telaffuzunuzu değerlendirmek için konuşma tanımayı kullanır."
+          "microphonePermission": "Love-Vox konuşma alıştırmaları için mikrofonu kullanır.",
+          "speechRecognitionPermission": "Love-Vox telaffuzunuzu değerlendirmek için konuşma tanımayı kullanır."
         }
       ],
       [

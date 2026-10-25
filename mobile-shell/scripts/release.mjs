@@ -6,7 +6,7 @@
  *
  * Steps (same chain as the EduPilot shell, ankaokul scripts/release-mobile.mjs):
  * versionName = <version>, versionCode + 1 → cap sync → gradle assembleRelease →
- * zipalign → apksigner → dist/Lingua-<version>.apk (+ .sha256).
+ * zipalign → apksigner → dist/Love-Vox-<version>.apk (+ .sha256).
  *
  * Environment:
  *   ANDROID_HOME   Android SDK (default ~/android-sdk), needs build-tools 35.0.0
@@ -72,8 +72,8 @@ try {
   const unsigned = join(root, 'android', 'app', 'build', 'outputs', 'apk', 'release', 'app-release-unsigned.apk');
   const dist = join(root, 'dist');
   mkdirSync(dist, { recursive: true });
-  const aligned = join(dist, `Lingua-${version}-aligned.apk`);
-  const out = join(dist, `Lingua-${version}.apk`);
+  const aligned = join(dist, `Love-Vox-${version}-aligned.apk`);
+  const out = join(dist, `Love-Vox-${version}.apk`);
   run(join(buildTools, 'zipalign'), ['-f', '4', unsigned, aligned]);
   run(
     join(buildTools, 'apksigner'),
@@ -83,7 +83,7 @@ try {
   );
   run(join(buildTools, 'apksigner'), ['verify', out]);
   const sha = createHash('sha256').update(readFileSync(out)).digest('hex');
-  writeFileSync(`${out}.sha256`, `${sha}  Lingua-${version}.apk\n`);
+  writeFileSync(`${out}.sha256`, `${sha}  Love-Vox-${version}.apk\n`);
   console.log(`✅ ${out}\n   versionName ${version} · versionCode ${code + 1} · sha256 ${sha}`);
 } catch (e) {
   writeFileSync(gradlePath, originalGradle);

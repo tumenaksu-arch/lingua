@@ -3,8 +3,8 @@ import { Platform } from 'react-native';
 
 import { isNativeShell } from './nativeShell';
 
-/** Signed Android web-shell APK (mobile-shell/), published as the `Lingua.apk` asset of the latest GitHub release. */
-export const ANDROID_APK_URL = 'https://github.com/tumenaksu-arch/lingua/releases/latest/download/Lingua.apk';
+/** Signed Android web-shell APK (mobile-shell/), published as the `Love-Vox.apk` asset of the latest GitHub release. */
+export const ANDROID_APK_URL = 'https://github.com/tumenaksu-arch/lingua/releases/latest/download/Love-Vox.apk';
 export const WEB_APP_URL = 'https://ankaxai.ai/lingua/';
 
 /**
