@@ -4,6 +4,7 @@ import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 
 import { useAppStore } from '@/features/store';
+import { ShellUpdateBanner, useAutoUpdate } from '@/platform/autoUpdate';
 import { useSettingsStore, useTheme, useThemeStore } from '@/ui';
 
 export default function RootLayout() {
@@ -15,6 +16,7 @@ export default function RootLayout() {
   const hydrateSettings = useSettingsStore((s) => s.hydrate);
   const { colors, isDark } = useTheme();
   const [error, setError] = useState<string | null>(null);
+  useAutoUpdate();
 
   useEffect(() => {
     void hydrateTheme();
@@ -56,6 +58,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={navTheme}>
       <StatusBar style={isDark ? 'light' : 'dark'} />
+      <ShellUpdateBanner />
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
         <Stack.Protected guard={!welcomed}>
           <Stack.Screen name="welcome" />
