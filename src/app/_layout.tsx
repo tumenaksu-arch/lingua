@@ -17,6 +17,7 @@ export default function RootLayout() {
   const ready = useAppStore((s) => s.ready);
   const onboarded = useAppStore((s) => s.onboarded);
   const welcomed = useAppStore((s) => s.welcomed);
+  const legacyAccount = useAppStore((s) => s.legacyAccount);
   const boot = useAppStore((s) => s.boot);
   const hydrateTheme = useThemeStore((s) => s.hydrate);
   const hydrateSettings = useSettingsStore((s) => s.hydrate);
@@ -76,6 +77,9 @@ export default function RootLayout() {
       <StatusBar style={isDark ? 'light' : 'dark'} />
       <ShellUpdateBanner />
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
+        <Stack.Protected guard={legacyAccount !== null}>
+          <Stack.Screen name="migrate" />
+        </Stack.Protected>
         <Stack.Protected guard={!welcomed}>
           <Stack.Screen name="welcome" />
         </Stack.Protected>
