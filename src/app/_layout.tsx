@@ -85,6 +85,7 @@ export default function RootLayout() {
         <Stack.Protected guard={welcomed && onboarded}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="lesson/[id]" options={{ gestureEnabled: false }} />
+          <Stack.Screen name="skip/[unitId]" options={{ gestureEnabled: false }} />
           <Stack.Screen name="notes/[unitId]" options={{ presentation: 'modal' }} />
           <Stack.Screen name="story/[unitId]" options={{ presentation: 'modal' }} />
           <Stack.Screen name="auth" options={{ presentation: 'modal' }} />

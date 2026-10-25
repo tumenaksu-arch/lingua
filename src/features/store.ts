@@ -46,6 +46,7 @@ import {
   questsForDate,
   type QuestStatus,
 } from '@/features/quests';
+import { SKIP_TEST_XP, skipPassed } from '@/features/skipTest';
 
 const COURSE_KEY = 'selected_course';
 const ONBOARDED_KEY = 'onboarded';
@@ -65,6 +66,9 @@ export const STORY_REPEAT_XP = 5;
 export function storyXp(correct: number): number {
   return STORY_BASE_XP + STORY_PER_CORRECT_XP * correct;
 }
+
+/** Unit ids with a skip-test finish in flight — a double finish pays out once. */
+const finishingSkip: Set<string> = new Set();
 
 interface Repos {
   stats: ReturnType<typeof createStatsRepo>;
@@ -137,6 +141,16 @@ export interface AppState {
   refreshQuests: () => Promise<void>;
   /** Claims a completed quest's +10 XP reward; a second claim returns 0 and changes nothing. */
   claimQuest: (questId: string) => Promise<{ xpEarned: number }>;
+  /** Number of previous skip-test attempts for the unit (count of `unit_skip_attempt` events). */
+  skipAttempts: (unitId: string) => Promise<number>;
+  /**
+   * Called by the skip-test screen when an attempt ends (finished or quit).
+   * Always logs `unit_skip_attempt`. On pass (>= 80%) completes the unit's
+   * not-yet-completed lessons, awards SKIP_TEST_XP through the same stats
+   * pipeline as lessons and logs `unit_skipped`; on fail progress is unchanged.
+   * Idempotent: a unit that was already skipped never pays out twice.
+   */
+  finishSkipTest: (unitId: string, correct: number, total: number) => Promise<{ passed: boolean; xpEarned: number }>;
 }
 
 function reposFor(db: Database, userId: string): Repos {
@@ -488,9 +502,9 @@ export const useAppStore = create<AppState>((set, get) => ({
     todayStart.setHours(0, 0, 0, 0);
     const from = todayStart.getTime() - 6 * dayMs;
     const rows = await db.getAll<{ payload: string; created_at: number }>(
-      // Lessons, stories and quest rewards all log their XP under the `xp` payload field.
-      "SELECT payload, created_at FROM events WHERE user_id = ? AND type IN (?, ?, ?) AND created_at > ?",
-      [userId, 'lesson_completed', 'story_completed', 'quest_claimed', from - 1],
+      // Lessons, stories, skip tests and quest rewards all log their XP under the `xp` payload field.
+      "SELECT payload, created_at FROM events WHERE user_id = ? AND type IN (?, ?, ?, ?) AND created_at > ?",
+      [userId, 'lesson_completed', 'story_completed', 'quest_claimed', 'unit_skipped', from - 1],
     );
     const buckets = [0, 0, 0, 0, 0, 0, 0];
     for (const r of rows) {
@@ -525,6 +539,102 @@ export const useAppStore = create<AppState>((set, get) => ({
       }
     });
     set({ quests: questProgress(questsForDate(today, stats.dailyGoalXp), events), questDate: today });
+  },
+
+  async skipAttempts(unitId) {
+    const { db, userId } = get();
+    if (!db) return 0;
+    const rows = await db.getAll<{ payload: string }>(
+      "SELECT payload FROM events WHERE user_id = ? AND type = ?",
+      [userId, 'unit_skip_attempt'],
+    );
+    let n = 0;
+    for (const r of rows) {
+      try {
+        if ((JSON.parse(r.payload) as { unitId?: string }).unitId === unitId) n++;
+      } catch {
+        /* skip malformed payload */
+      }
+    }
+    return n;
+  },
+
+  async finishSkipTest(unitId, correct, total) {
+    const r = requireRepos();
+    const { db } = get();
+    const now = Date.now();
+    const passed = skipPassed(correct, total);
+    // Every finished (or quit) attempt logs with a unique id; the count of
+    // these events drives the next attempt's shuffle seed.
+    await r.progress.logEvent(
+      `${unitId}:skip:${now}:${Math.random().toString(36).slice(2, 8)}`,
+      'unit_skip_attempt',
+      { unitId, correct, total, passed },
+      now,
+    );
+    if (!passed) {
+      await get().refreshQuests();
+      void get().sync();
+      return { passed: false, xpEarned: 0 };
+    }
+    // Idempotency: a second finish of the same unit (double tap, retry after a
+    // crash) must not re-complete lessons or re-award XP. Guarded in memory
+    // synchronously and on disk via the fixed `unit_skipped` event id.
+    if (finishingSkip.has(unitId)) return { passed: true, xpEarned: 0 };
+    finishingSkip.add(unitId);
+    try {
+      const skippedEvents = db
+        ? await db.getAll<{ payload: string }>(
+            "SELECT payload FROM events WHERE user_id = ? AND type = ?",
+            [get().userId, 'unit_skipped'],
+          )
+        : [];
+      const alreadySkipped = skippedEvents.some((e) => {
+        try {
+          return (JSON.parse(e.payload) as { unitId?: string }).unitId === unitId;
+        } catch {
+          return false;
+        }
+      });
+      if (alreadySkipped) return { passed: true, xpEarned: 0 };
+
+      const unit = get().course.units.find((u) => u.id === unitId);
+      const completedNow: string[] = [];
+      const updates: Record<string, LessonProgress> = {};
+      for (const lesson of unit?.lessons ?? []) {
+        if (get().progress[lesson.id]?.completedAt) continue;
+        const lp = await r.progress.completeLesson(lesson.id, now);
+        updates[lp.lessonId] = lp;
+        completedNow.push(lesson.id);
+      }
+
+      // Same stats pipeline as lessons/stories: total + today XP, streak activity.
+      const localDate = localDateString(new Date());
+      const prev = get().stats;
+      const newDay = prev.lastActiveDate !== localDate;
+      const xpBefore = newDay ? 0 : prev.xpToday;
+      const xpToday = xpBefore + SKIP_TEST_XP;
+      let next: UserStats = { ...prev, xp: prev.xp + SKIP_TEST_XP, xpToday };
+      next = applyActivity(next, localDate);
+      await r.stats.save(next, now);
+      // Fixed id: INSERT OR IGNORE makes a re-push idempotent, the pre-check above
+      // keeps stats and the event log consistent even across processes.
+      await r.progress.logEvent(`${unitId}:skipped`, 'unit_skipped', { unitId, lessons: completedNow, xp: SKIP_TEST_XP }, now);
+
+      set((s) => ({ stats: next, progress: { ...s.progress, ...updates } }));
+      await get().refreshQuests();
+      if (db) {
+        if (xpToday >= next.dailyGoalXp && xpBefore < next.dailyGoalXp) {
+          const goal = advanceGoalStreak(await getGoalStreak(db), localDate);
+          await setMeta(db, GOAL_STREAK_KEY, JSON.stringify(goal));
+        }
+        await unlockAchievements(db, get, set);
+      }
+      void get().sync();
+      return { passed: true, xpEarned: SKIP_TEST_XP };
+    } finally {
+      finishingSkip.delete(unitId);
+    }
   },
 
   async claimQuest(questId) {

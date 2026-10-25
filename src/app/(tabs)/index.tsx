@@ -9,7 +9,7 @@ import type { QuestStatus } from '@/features/quests';
 import { localDateString, regenerate } from '@/domain';
 import { getUnitNote } from '@/content/notes';
 import { getUnitStory } from '@/content/stories';
-import { Body, Button, Caption, Heading, Hearts, PathNode, ProgressBar, Screen, StreakFlame, XpBadge, spacing, upperTr, useTheme, type PathNodeState } from '@/ui';
+import { Body, Button, Caption, Heading, Hearts, PathNode, ProgressBar, Screen, StreakFlame, XpBadge, showAlert, spacing, upperTr, useTheme, type PathNodeState } from '@/ui';
 
 const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', it: '🇮🇹', tr: '🇹🇷' };
 const LANG_NAME: Record<string, string> = { en: 'İngilizce', de: 'Almanca', es: 'İspanyolca', fr: 'Fransızca', it: 'İtalyanca', tr: 'Türkçe' };
@@ -79,16 +79,40 @@ export default function LearnScreen() {
                   <Heading>{unit.title}</Heading>
                   <Body color={colors.textMuted}>{unit.description}</Body>
                 </View>
-                {getUnitNote(unit.id) ? (
-                  <Pressable
-                    accessibilityRole="button"
-                    accessibilityLabel={`${unit.title} notları`}
-                    onPress={() => router.push({ pathname: '/notes/[unitId]', params: { unitId: unit.id } })}
-                    style={({ pressed }) => [styles.notesChip, { borderColor: colors.primary, opacity: pressed ? 0.8 : 1 }]}
-                  >
-                    <Body color={colors.primaryText}>Notlar</Body>
-                  </Pressable>
-                ) : null}
+                <View style={styles.chipRow}>
+                  {getUnitNote(unit.id) ? (
+                    <Pressable
+                      accessibilityRole="button"
+                      accessibilityLabel={`${unit.title} notları`}
+                      onPress={() => router.push({ pathname: '/notes/[unitId]', params: { unitId: unit.id } })}
+                      style={({ pressed }) => [styles.notesChip, { borderColor: colors.primary, opacity: pressed ? 0.8 : 1 }]}
+                    >
+                      <Body color={colors.primaryText}>Notlar</Body>
+                    </Pressable>
+                  ) : null}
+                  {!unitDone ? (
+                    <Pressable
+                      accessibilityRole="button"
+                      accessibilityLabel={`${unit.title} ünitesini atla`}
+                      onPress={() =>
+                        showAlert(
+                          'Ünite atlama sınavı',
+                          '12 soruluk sınav. %80 ve üstü alırsan ünitenin dersleri tamamlanmış sayılır.',
+                          [
+                            { text: 'Vazgeç', style: 'cancel' },
+                            {
+                              text: 'Sınava başla',
+                              onPress: () => router.push({ pathname: '/skip/[unitId]', params: { unitId: unit.id } }),
+                            },
+                          ],
+                        )
+                      }
+                      style={({ pressed }) => [styles.notesChip, { borderColor: colors.primary, opacity: pressed ? 0.8 : 1 }]}
+                    >
+                      <Body color={colors.primaryText}>Atla</Body>
+                    </Pressable>
+                  ) : null}
+                </View>
               </View>
               <View style={styles.lessons}>
                 <View style={[styles.track, { backgroundColor: colors.border }]} pointerEvents="none" />
@@ -232,6 +256,7 @@ const styles = StyleSheet.create({
   unit: { paddingBottom: spacing.lg },
   unitHeader: { margin: spacing.lg, marginBottom: spacing.sm, padding: spacing.lg, borderRadius: 10, borderWidth: 1, gap: spacing.sm },
   notesChip: { alignSelf: 'flex-start', borderWidth: 1, borderRadius: 8, paddingHorizontal: spacing.md, paddingVertical: spacing.xs },
+  chipRow: { flexDirection: 'row', gap: spacing.sm },
   lessons: { marginHorizontal: spacing.lg, marginBottom: spacing.md },
   track: { position: 'absolute', left: NODE_SIZE / 2, top: 30, bottom: 30, width: 1 },
   lesson: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, minHeight: 56 },
