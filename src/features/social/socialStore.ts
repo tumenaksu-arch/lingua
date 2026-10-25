@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 
+import { isAnonymousSession } from '@/data/remote/classes';
 import {
   addFriend,
   entriesFor,
@@ -61,6 +62,12 @@ export const useSocialStore = create<SocialState>((set, get) => ({
     const { user } = appState();
     if (!user) {
       set({ profile: null, top: [], friends: [], error: null });
+      return;
+    }
+    // Anonymous class accounts are rejected by RLS on profiles/leaderboard —
+    // never touch the server for them (their league is the class league).
+    if (await isAnonymousSession()) {
+      set({ profile: null, top: [], friends: [], loading: false, error: null });
       return;
     }
     set({ loading: true, error: null });
@@ -129,9 +136,11 @@ export const useSocialStore = create<SocialState>((set, get) => ({
   async publishMyXp() {
     const { user, userId, db } = appState();
     const { profile } = get();
-    // Only signed-in users with a nickname publish; guests and the local
-    // account never touch the leaderboard.
+    // Only signed-in users with a nickname publish; guests, the local account
+    // and anonymous class accounts never touch the leaderboard (RLS rejects
+    // anonymous writes — and reads — by design).
     if (!user || !profile) return;
+    if (await isAnonymousSession()) return;
     const xp = await weeklyXpTotal(db, userId, Date.now());
     await upsertWeeklyEntry(user.uid, profile.nickname, xp, isoWeekId(new Date()));
   },

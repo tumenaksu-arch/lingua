@@ -3,6 +3,8 @@ import { Pressable, ScrollView, Share, StyleSheet, Text, TextInput, View } from 
 import { router } from 'expo-router';
 
 import { useAppStore } from '@/features/store';
+import { isAnonymousSession } from '@/data/remote/classes';
+import { useClassStore } from '@/features/classes/classStore';
 import { useSocialStore, type FriendWithXp } from '@/features/social/socialStore';
 import { NICKNAME_PATTERN } from '@/data/remote/social';
 import {
@@ -260,10 +262,26 @@ export default function LeagueScreen() {
   const error = useSocialStore((s) => s.error);
   const load = useSocialStore((s) => s.load);
   const [tab, setTab] = useState<Tab>('week');
+  const [anonymous, setAnonymous] = useState(false);
+  const myClasses = useClassStore((s) => s.myClasses);
 
   useEffect(() => {
     void load();
   }, [load, user]);
+
+  // Anonymous class accounts are invisible to the global league (RLS rejects
+  // them anyway) — point them at their class league instead.
+  useEffect(() => {
+    let alive = true;
+    if (user) {
+      void isAnonymousSession().then((v) => {
+        if (alive) setAnonymous(v);
+      });
+    }
+    return () => {
+      alive = false;
+    };
+  }, [user]);
 
   return (
     <Screen padding={0} edges={['top']}>
@@ -282,6 +300,16 @@ export default function LeagueScreen() {
               seçtiğin takma ad görünür; e-posta adresin hiçbir yerde görünmez.
             </Body>
             <Button title="Giriş yap" onPress={() => router.push('/auth')} />
+          </View>
+        ) : user && anonymous ? (
+          <View style={styles.section}>
+            <Body color={colors.textMuted}>Genel lig için e-postalı hesap gerekir. Sınıf ligin sınıf ekranında.</Body>
+            {myClasses[0] && (
+              <Button
+                title="Sınıfına git"
+                onPress={() => router.push({ pathname: '/sinif/[classId]', params: { classId: myClasses[0]!.classId } })}
+              />
+            )}
           </View>
         ) : !profile ? (
           <NicknameForm />

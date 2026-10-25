@@ -12,6 +12,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { router } from 'expo-router';
 import { SpaceGrotesk_400Regular, useFonts } from '@expo-google-fonts/space-grotesk';
 import { Inter_300Light, Inter_400Regular } from '@expo-google-fonts/inter';
 import { SpaceMono_400Regular } from '@expo-google-fonts/space-mono';
@@ -222,6 +223,16 @@ export default function WelcomeScreen() {
                 <Body color={colors.textMuted} style={{ fontFamily: bodyFont }}>
                   Hesapsız dene →
                 </Body>
+              </Pressable>
+              <Pressable
+                onPress={() => router.push('/sinif-katil')}
+                accessibilityRole="button"
+                accessibilityLabel="Sınıf koduyla katıl"
+                style={[styles.joinPill, { borderColor: ep.inputBorder }]}
+              >
+                <Text style={[styles.joinPillText, { color: ep.accent, fontFamily: monoFont }]}>
+                  {upperTr('Sınıf koduyla katıl')}
+                </Text>
               </Pressable>
             </View>
           </View>
@@ -510,6 +521,16 @@ const styles = StyleSheet.create({
   cardTitle: { fontSize: 25, letterSpacing: -0.25, fontFamily: 'SpaceGrotesk_400Regular' },
   cardLead: { marginBottom: spacing.sm },
   guest: { alignSelf: 'center', paddingVertical: spacing.md, minHeight: 44, justifyContent: 'center' },
+  joinPill: {
+    alignSelf: 'center',
+    borderWidth: 1,
+    borderRadius: 100,
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.sm,
+    minHeight: 44,
+    justifyContent: 'center',
+  },
+  joinPillText: { fontSize: 11, letterSpacing: 1.5 },
   section: { borderTopWidth: 1, paddingTop: spacing.xxl, gap: spacing.lg },
   sectionTitle: { fontSize: 28, lineHeight: 36, letterSpacing: -0.5, fontFamily: 'SpaceGrotesk_400Regular' },
   grid: { gap: spacing.md },

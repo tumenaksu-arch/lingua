@@ -1,9 +1,13 @@
 import * as Haptics from 'expo-haptics';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 
+import { getCourse } from '@/content';
 import { activeLessonId, useAppStore } from '@/features/store';
+import { assignmentStatus } from '@/features/classes/assignmentStatus';
+import { useClassStore } from '@/features/classes/classStore';
+import { dueLabel, pickHomeClass, relativeTime } from '@/features/classes/classView';
 import { useNow } from '@/features/useNow';
 import type { QuestStatus } from '@/features/quests';
 import { localDateString, regenerate } from '@/domain';
@@ -56,6 +60,7 @@ export default function LearnScreen() {
       </View>
 
       <ScrollView contentContainerStyle={styles.path}>
+        <ClassCard />
         <DailyQuestsCard />
         {active === null && (
           <View style={[styles.doneBanner, { backgroundColor: colors.surface, borderColor: colors.border }]} accessibilityRole="summary">
@@ -192,6 +197,71 @@ export default function LearnScreen() {
   );
 }
 
+/** Compact class card (madde 5): active assignments + the latest announcement, above the quests card. */
+function ClassCard() {
+  const course = useAppStore((s) => s.course);
+  const progress = useAppStore((s) => s.progress);
+  const myClasses = useClassStore((s) => s.myClasses);
+  const assignments = useClassStore((s) => s.assignments);
+  const announcements = useClassStore((s) => s.announcements);
+  const load = useClassStore((s) => s.load);
+  const { colors } = useTheme();
+  const now = useNow();
+
+  // Refresh on every focus so a deadline flip or a new announcement shows up.
+  useFocusEffect(
+    useCallback(() => {
+      void load();
+    }, [load]),
+  );
+
+  const cls = pickHomeClass(myClasses, course.id);
+  if (!cls) return null;
+  const clsCourse = getCourse(cls.courseId);
+  const completedIds = Object.keys(progress).filter((id) => progress[id]?.completedAt);
+  const today = new Date();
+  const open = (assignments[cls.classId] ?? [])
+    .map((a) => ({ a, st: assignmentStatus(clsCourse, a, completedIds, today) }))
+    .filter((r) => r.st.status !== 'bitti');
+  const latest = (announcements[cls.classId] ?? [])[0];
+  return (
+    <View style={[styles.classCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+      <Caption color={colors.primaryText}>{upperTr(`Sınıf · ${cls.ad}`)}</Caption>
+      {open.length === 0 ? (
+        <Caption color={colors.textMuted}>Ödev yok. Böyle devam et!</Caption>
+      ) : (
+        open.map(({ a, st }) => {
+          const unit = clsCourse?.units.find((u) => u.id === a.unitId);
+          const overdue = st.status === 'gecikti';
+          return (
+            <View
+              key={a.id}
+              style={styles.classRow}
+              accessibilityLabel={`Ödev: ${unit?.title ?? a.unitId}, ${overdue ? 'gecikti' : dueLabel(a.sonTarih, today)}`}
+            >
+              <Body style={styles.classTitle} numberOfLines={1}>
+                Ödev: {unit?.title ?? a.unitId}
+              </Body>
+              <Caption color={overdue ? colors.dangerText : colors.textMuted}>
+                {overdue ? 'gecikti' : dueLabel(a.sonTarih, today)}
+              </Caption>
+            </View>
+          );
+        })
+      )}
+      {latest && (
+        <View style={styles.announcement}>
+          <Caption color={colors.textMuted} numberOfLines={2}>
+            📢 {latest.metin}
+          </Caption>
+          <Caption color={colors.textMuted}>{relativeTime(latest.createdAt, now)}</Caption>
+        </View>
+      )}
+      <Button title="Sınıfa git" variant="outline" onPress={() => router.push({ pathname: '/sinif/[classId]', params: { classId: cls.classId } })} />
+    </View>
+  );
+}
+
 /** Compact daily-quests card shown above the learning path on the home tab. */
 function DailyQuestsCard() {
   const quests = useAppStore((s) => s.quests);
@@ -247,6 +317,10 @@ const styles = StyleSheet.create({
   flag: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   path: { paddingBottom: spacing.xxxl },
   questCard: { margin: spacing.lg, marginBottom: 0, padding: spacing.lg, borderRadius: 10, borderWidth: 1, gap: spacing.md },
+  classCard: { margin: spacing.lg, marginBottom: 0, padding: spacing.lg, borderRadius: 10, borderWidth: 1, gap: spacing.sm },
+  classRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.sm },
+  classTitle: { flexShrink: 1 },
+  announcement: { gap: 2 },
   questRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   questMain: { flex: 1, gap: spacing.xs },
   questTitleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.sm },

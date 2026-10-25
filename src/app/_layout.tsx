@@ -77,6 +77,8 @@ export default function RootLayout() {
       <StatusBar style={isDark ? 'light' : 'dark'} />
       <ShellUpdateBanner />
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
+        {/* Class join is reachable from the welcome screen too (no account needed). */}
+        <Stack.Screen name="sinif-katil" options={{ presentation: 'modal' }} />
         <Stack.Protected guard={legacyAccount !== null}>
           <Stack.Screen name="migrate" />
         </Stack.Protected>
@@ -96,6 +98,7 @@ export default function RootLayout() {
           <Stack.Screen name="courses" options={{ presentation: 'modal' }} />
           <Stack.Screen name="ogretmen" />
           <Stack.Screen name="ogretmen/[classId]" />
+          <Stack.Screen name="sinif/[classId]" />
         </Stack.Protected>
       </Stack>
     </ThemeProvider>
