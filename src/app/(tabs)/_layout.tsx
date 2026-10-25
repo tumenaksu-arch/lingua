@@ -21,7 +21,10 @@ export default function TabsLayout() {
         headerShown: false,
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textMuted,
-        tabBarLabelStyle: { fontFamily: fonts.mono, fontSize: 10, letterSpacing: 1.5 },
+        // 10px mono label is small text (WCAG AA needs ≥4.5:1): use primaryText, not primary
+        // (light primary #b8714a on #f6f4f0 is only 3.48:1). The icon keeps the primary tint
+        // via tabBarActiveTintColor.
+        tabBarLabelStyle: { fontFamily: fonts.mono, fontSize: 10, letterSpacing: 1.5, color: colors.primaryText },
         // No fixed height: the tab bar adds the bottom safe-area inset (Android nav buttons /
         // gesture bar) to its default height only when `height` is not overridden.
         tabBarStyle: { borderTopColor: colors.border, borderTopWidth: 1, backgroundColor: colors.background, paddingTop: 6 },

@@ -92,9 +92,11 @@ export default function LearnScreen() {
                       <View style={styles.nodeCol} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
                         <PathNode state={state} crowns={crowns} label={String(li + 1)} style={styles.node} />
                       </View>
-                      <View style={styles.lessonText}>
-                        <Body>Ders {li + 1}</Body>
-                        <Caption color={chipColor}>{STATE_CHIP[state]}</Caption>
+                      {/* Decorative texts: the row Pressable above is the single
+                          accessibility element announcing the full label. */}
+                      <View style={styles.lessonText} accessible={false}>
+                        <Body accessible={false}>Ders {li + 1}</Body>
+                        <Caption accessible={false} color={chipColor}>{STATE_CHIP[state]}</Caption>
                       </View>
                     </Pressable>
                   );
