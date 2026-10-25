@@ -3,7 +3,7 @@ import { StyleSheet, TextInput, View } from 'react-native';
 
 import { isAnswerCorrect, type ListenTypeExercise } from '@/domain';
 import { speak } from '@/speech';
-import { Heading, fontSize, radii, spacing, useTheme } from '@/ui';
+import { Heading, fontSize, radii, spacing, useSettingsStore, useTheme } from '@/ui';
 
 import { CheckBar } from '../CheckBar';
 import { SpeakerButton } from './Prompt';
@@ -13,6 +13,7 @@ export function ListenType({ exercise, onAnswer, disabled }: ExerciseProps<Liste
   const [text, setText] = useState('');
   const [checked, setChecked] = useState<boolean | null>(null);
   const { colors } = useTheme();
+  const slowRate = useSettingsStore((s) => s.slowRate);
   const locked = disabled || checked !== null;
   const borderColor = checked === true ? colors.primary : checked === false ? colors.danger : colors.border;
 
@@ -25,7 +26,7 @@ export function ListenType({ exercise, onAnswer, disabled }: ExerciseProps<Liste
       <Heading style={styles.title} accessibilityRole="header">Duyduğunu yaz</Heading>
       <View style={styles.speakers}>
         <SpeakerButton text={exercise.audioText} lang={exercise.audioLang} size={96} />
-        <SpeakerButton text={exercise.audioText} lang={exercise.audioLang} rate={0.6} size={56} />
+        <SpeakerButton text={exercise.audioText} lang={exercise.audioLang} rate={slowRate} size={56} />
       </View>
       <TextInput
         accessibilityLabel="Cevabın, duyduğun cümleyi yaz"

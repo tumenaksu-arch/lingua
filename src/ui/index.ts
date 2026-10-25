@@ -3,7 +3,7 @@ export { useTheme } from './useTheme';
 export type { ActiveTheme, ColorScheme } from './useTheme';
 export { useThemeStore, setThemePreference } from './themeStore';
 export type { ThemePreference } from './themeStore';
-export { useSettingsStore } from './settingsStore';
+export { useSettingsStore, SLOW_RATES } from './settingsStore';
 export { useReduceMotion } from './useReduceMotion';
 export { Button } from './Button';
 export type { ButtonProps, ButtonVariant } from './Button';
