@@ -31,7 +31,7 @@ export const trFrNotes: CourseNotes = {
       {
         heading: "Kelimelerin önündeki küçük parçacıklar: le, la, l', un, une",
         body: [
-          'Türkçede artikel yoktur; Fransızca\'da her neredeyse her ismin önünde le (eril) veya la (dişil) vardır. Ünlüyle başlayan kelimelerde ikisi de kısalır: l\'homme, l\'enfant.',
+          'Türkçede artikel yoktur; Fransızca\'da neredeyse her ismin önünde le (eril) veya la (dişil) vardır. Ünlüyle başlayan kelimelerde ikisi de kısalır: l\'homme, l\'enfant.',
           "'Un' eril 'bir', 'une' dişil 'bir' demektir. Cinsiyet genelde kelimenin sonundan anlaşılmaz, bu yüzden artikeliyle birlikte ezberlemek en iyisidir.",
         ],
         examples: [
@@ -243,7 +243,7 @@ export const trFrNotes: CourseNotes = {
       {
         heading: "Hava için 'il' kullanılır",
         body: [
-          "Fransızca hava durumu 'il' (o) zamiriyle anlatılır: 'Il fait soleil' (güneşli), 'Il fait froid' (soğuk), 'Il fait chaud' (sıcak). Türkçe 'hava güneşli' derken 'hava' kelimesini kullanırken Fransızca 'il fait + sıfat' kalıbı yeterlidir.",
+          "Fransızca hava durumu 'il' (o) zamiriyle anlatılır: 'Il fait soleil' (güneşli), 'Il fait froid' (soğuk), 'Il fait chaud' (sıcak). Türkçe 'hava güneşli' derken 'hava' kelimesi kullanılır; Fransızca'da 'il fait + sıfat' kalıbı yeterlidir.",
           "'Il pleut' = yağmur yağıyor; tek başına bir fiildir, 'il fait pleut' denmez.",
         ],
         examples: [
