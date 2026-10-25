@@ -6,8 +6,8 @@ import { courses } from '@/content';
 import { useAppStore } from '@/features/store';
 import { Body, Button, Caption, ChoiceCard, ProgressBar, Screen, Title, spacing, useTheme } from '@/ui';
 
-const LANG_NAME: Record<string, string> = { en: 'İngilizce', de: 'Almanca', es: 'İspanyolca', fr: 'Fransızca', tr: 'Türkçe' };
-const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', tr: '🇹🇷' };
+const LANG_NAME: Record<string, string> = { en: 'İngilizce', de: 'Almanca', es: 'İspanyolca', fr: 'Fransızca', it: 'İtalyanca', tr: 'Türkçe' };
+const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', it: '🇮🇹', tr: '🇹🇷' };
 /** Duolingo-style daily goal tiers. */
 const GOALS: { xp: number; label: string; hint: string }[] = [
   { xp: 10, label: 'Rahat', hint: '1 ders / gün' },

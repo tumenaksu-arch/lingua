@@ -1,6 +1,6 @@
 /** Shared domain types. Pure TypeScript — no React/Expo imports allowed here. */
 
-export type LangCode = 'tr' | 'en' | 'de' | 'es' | 'fr';
+export type LangCode = 'tr' | 'en' | 'de' | 'es' | 'fr' | 'it';
 
 export interface Course {
   id: string;
