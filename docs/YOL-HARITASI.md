@@ -32,9 +32,11 @@ Değişmez kurallar: yayınlanmış içerik yalnız BÜYÜR (`src/content/__test
 - Her ünitenin başında "Bu üniteyi atla" → ünitenin kelime/kalıplarından 12 soruluk sınav; %80+ ise ünitenin dersleri tamamlandı sayılır (ayrı olay kaydıyla).
 - Kabul: sınav rastgele ama tekrarlanabilir; başarısızlıkta ilerleme değişmez.
 
-## 5. Öğretmen / sınıf (EduPilot bağlantısı)
-- Ayrı tasarım aşaması (spec + kullanıcı onayı) gerekir: EduPilot öğretmeni sınıf kodu üretir; öğrenci Love-Vox'ta kodu girer; ilerleme özeti öğretmene EduPilot panelinde görünür. Veri yolu (Love-Vox API servisi ↔ EduPilot) ve KVKK (veli onayı, reşit olmayanlar) netleşmeden kod yok.
-- EduPilot deposuna dokunan kısımlar o deponun kurallarıyla (feat dalı, kapılar, deploy.sh).
+## 5. Öğretmen / sınıf ✅ (2026-10-26, canlı)
+- Tasarım: `docs/tasarim/madde5-ogretmen-sinif.md` (kullanıcı onaylı). Panel Love-Vox içinde (`/ogretmen`), EduPilot panelinde "Love-Vox Sınıflarım" kısayol kartı.
+- Öğrenci sınıf koduyla takma adla, e-postasız (anonim hesap) katılır; öğretmen özet görür: ilerleme, ödevler, tek yönlü duyurular, zorlanılanlar, sınıf ligi.
+- Şema/RLS: `supabase/migrations/0002_siniflar.sql`, `0003_sinif_duyurulari.sql`; testler `supabase/tests/classes.test.mjs`.
+- Sonraya bırakılan: EduPilot Sınıf Defteri bağlantısı (ödev aktarma; öğrenciler takma adlı olduğundan sınıf düzeyinde), sınıfı olmayan eski anonim hesapların temizliği.
 
 ## 6. Yapay zekâ ile konuşma pratiği (Claude API)
 - Küçük sunucu servisi `lovevox-api` (ayrı konteyner, `ankaxai.ai/lovevox-api/`): Supabase JWT'sini doğrular, kullanıcı başına günlük sınır, Claude API'yi çağırır; anahtar yalnız sunucuda (kullanıcı kendisi yerleştirir).

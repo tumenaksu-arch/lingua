@@ -28,7 +28,7 @@ nginx yönlendirmeleri (sunucuda):
 
 ## Şema ve RLS
 
-- Şema: `supabase/migrations/0001_lovevox.sql`. Tablo adları yerel outbox adlarıyla birebir aynıdır (senkron 1:1 eşlenir).
+- Şema: `supabase/migrations/0001_lovevox.sql` (öğrenme verisi + lig/arkadaş), `0002_siniflar.sql` (öğretmen/sınıf/ödev, anonim öğrenci kısıtları), `0003_sinif_duyurulari.sql` (tek yönlü duyuru). Canlıya uygulanmadan önce `pg_dump` yedeği alınır (`/home/voidaadmin/ankaokul-backups/lovevox/elle-*.dump`). Tablo adları yerel outbox adlarıyla birebir aynıdır (senkron 1:1 eşlenir).
 - Tablolar: `user_stats`, `user_progress`, `srs_cards`, `events` (yalnız sahibi okur/yazar), `profiles` (takma ad + davet kodu, sahibi), `friends` (tek yönlü liste, sahibi yönetir), `leaderboard` (giriş yapan herkes okur, yalnız sahibi kendi satırını yazar). E-posta hiçbir herkese açık tabloda tutulmaz (KVKK).
 - RLS varsayılanı red; her satır `auth.uid()`'ye aittir. `events.created_at` ve `profiles.invite_code` trigger ile değiştirilemez. Davet kodu çözümü yalnızca `resolve_invite()` fonksiyonuyla yapılır (tam tablo listeleme yok), arkadaş listesi `my_friends()` ile.
 
