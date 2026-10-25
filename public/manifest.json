@@ -3,16 +3,16 @@
   "short_name": "Love-Vox",
   "description": "Kısa dersler, aralıklı tekrar ve günlük seriyle İngilizce, Almanca, İspanyolca ve Fransızca.",
   "lang": "tr",
-  "id": "/lingua/",
-  "start_url": "/lingua/",
-  "scope": "/lingua/",
+  "id": "/lovevox/",
+  "start_url": "/lovevox/",
+  "scope": "/lovevox/",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#58CC02",
   "background_color": "#FFFFFF",
   "icons": [
-    { "src": "/lingua/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/lingua/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "/lingua/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "/lovevox/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/lovevox/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/lovevox/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

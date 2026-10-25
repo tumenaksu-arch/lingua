@@ -23,9 +23,9 @@
         flex: 1;
       }
     </style>
-    <!-- PWA (served under /lingua/, see scripts/export-web.js). -->
-    <link rel="manifest" href="/lingua/manifest.json" />
-    <link rel="apple-touch-icon" href="/lingua/icons/apple-touch-icon.png" />
+    <!-- PWA (served under /lovevox/, see scripts/export-web.js). -->
+    <link rel="manifest" href="/lovevox/manifest.json" />
+    <link rel="apple-touch-icon" href="/lovevox/icons/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Love-Vox" />
     <script>
@@ -38,7 +38,7 @@
       });
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
-          navigator.serviceWorker.register('/lingua/sw.js', { scope: '/lingua/' }).catch(function () {});
+          navigator.serviceWorker.register('/lovevox/sw.js', { scope: '/lovevox/' }).catch(function () {});
         });
       }
     </script>

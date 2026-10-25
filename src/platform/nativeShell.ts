@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 
 /**
  * Bridge to the Android "web shell" (mobile-shell/, Capacitor 7) that loads
- * https://ankaxai.ai/lingua/ in a WebView. Android WebView has no speechSynthesis and no
+ * https://ankaxai.ai/lovevox/ in a WebView. Android WebView has no speechSynthesis and no
  * Notification API, so inside the shell the web build calls the shell's native plugins
  * through `window.Capacitor.Plugins` — no Capacitor package is bundled into the app.
  * Outside the shell (browser, Expo/EAS builds) every getter returns null and the app keeps

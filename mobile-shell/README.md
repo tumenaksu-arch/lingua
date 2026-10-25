@@ -1,9 +1,9 @@
 # Love-Vox mobile shell (Android)
 
-(Display name Love-Vox; the repo, package id `com.tumenaksu.lingua` and the `/lingua/` path keep the original name.)
+(Display name Love-Vox; the repo, package id `com.tumenaksu.lingua` keep the original name; the web app moved from /lingua/ to /lovevox/, the server redirects the old path.)
 
 A Capacitor 7 "web shell", same pattern as the EduPilot app: the APK contains no app code,
-it opens **https://ankaxai.ai/lingua/** in a WebView. Every web deploy reaches the phone on
+it opens **https://ankaxai.ai/lovevox/** in a WebView. Every web deploy reaches the phone on
 the next launch; a new APK is needed only when this folder changes (plugins, icons, Android code).
 
 - `capacitor.config.json` — `server.url`, package `com.tumenaksu.lingua`; `www/index.html` is the offline page.

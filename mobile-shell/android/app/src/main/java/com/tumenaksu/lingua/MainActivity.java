@@ -14,7 +14,7 @@ import androidx.core.view.WindowInsetsControllerCompat;
 import com.getcapacitor.BridgeActivity;
 
 /**
- * Lingua web shell: loads https://ankaxai.ai/lingua/ (capacitor.config.json server.url).
+ * Love-Vox web shell: loads https://ankaxai.ai/lovevox/ (capacitor.config.json server.url).
  * Edge-to-edge/keyboard handling follows the EduPilot shell (ankaokul apps/mobile MainActivity).
  */
 public class MainActivity extends BridgeActivity {

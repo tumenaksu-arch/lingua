@@ -1,16 +1,16 @@
 /*
- * Lingua service worker (scope /lingua/). Makes the web app installable (PWA) and lets it
+ * Love-Vox service worker (scope /lovevox/). Makes the web app installable (PWA) and lets it
  * start offline; the app itself keeps its data in the browser (SQLite/OPFS).
  * - Page loads: network first, so a deploy is picked up on the next visit; the last page is
  *   the offline fallback (every route serves the same index.html).
  * - /_expo/ and /assets/ files are content-hashed, so cache first is safe.
  */
-const CACHE = 'lingua-v1';
-const SHELL = '/lingua/';
+const CACHE = 'lovevox-v1';
+const SHELL = '/lovevox/';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
-  event.waitUntil(caches.open(CACHE).then((c) => c.addAll([SHELL, '/lingua/manifest.json'])));
+  event.waitUntil(caches.open(CACHE).then((c) => c.addAll([SHELL, '/lovevox/manifest.json'])));
 });
 
 self.addEventListener('activate', (event) => {
@@ -26,7 +26,7 @@ self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
-  if (url.origin !== self.location.origin || !url.pathname.startsWith('/lingua/')) return;
+  if (url.origin !== self.location.origin || !url.pathname.startsWith('/lovevox/')) return;
 
   if (req.mode === 'navigate') {
     event.respondWith(
@@ -43,7 +43,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (/^\/lingua\/(_expo|assets)\//.test(url.pathname)) {
+  if (/^\/lovevox\/(_expo|assets)\//.test(url.pathname)) {
     event.respondWith(
       caches.match(req).then(
         (hit) =>

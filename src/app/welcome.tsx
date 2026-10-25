@@ -319,7 +319,7 @@ function Platforms({
           no="001"
           title="Web"
           text="Tarayıcıdan gir, kurulum gerekmez. Bilgisayar, tablet ve telefonda çalışır."
-          tag="ankaxai.ai/lingua"
+          tag="ankaxai.ai/lovevox"
           colors={colors}
           wide={wide}
           onPress={onWeb}

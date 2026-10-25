@@ -3,7 +3,7 @@
   "appName": "Love-Vox",
   "webDir": "www",
   "server": {
-    "url": "https://ankaxai.ai/lingua/",
+    "url": "https://ankaxai.ai/lovevox/",
     "allowNavigation": ["ankaxai.ai"],
     "androidScheme": "https",
     "errorPath": "index.html"
