@@ -14,7 +14,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#58CC02",
+        "backgroundColor": "#0e1220",
         "foregroundImage": "./assets/adaptive-icon-foreground.png",
         "backgroundImage": "./assets/adaptive-icon-background.png",
         "monochromeImage": "./assets/adaptive-icon-monochrome.png"
@@ -27,7 +27,7 @@
     "web": {
       "favicon": "./assets/favicon.png",
       "lang": "tr",
-      "themeColor": "#58CC02",
+      "themeColor": "#0e1220",
       "description": "Türkçe'den İngilizce, Almanca, İspanyolca ve Fransızca öğren: kısa dersler, aralıklı tekrar, günlük seri."
     },
     "scheme": "lingua",
@@ -44,19 +44,19 @@
       [
         "expo-notifications",
         {
-          "color": "#58CC02"
+          "color": "#d18b63"
         }
       ],
       [
         "expo-splash-screen",
         {
           "image": "./assets/splash-icon.png",
-          "backgroundColor": "#58CC02",
+          "backgroundColor": "#0e1220",
           "imageWidth": 200,
           "resizeMode": "contain",
           "dark": {
             "image": "./assets/splash-icon.png",
-            "backgroundColor": "#131F24"
+            "backgroundColor": "#0e1220"
           }
         }
       ]
