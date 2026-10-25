@@ -14,6 +14,8 @@ export type FeedbackSheetProps = {
   result?: 'correct' | 'wrong' | null;
   /** Shown under the headline; for wrong answers pass the correct solution. */
   detail?: string;
+  /** "Neden?" explanation for wrong answers (specific text or the generic per-type hint). */
+  explanation?: string;
   /** Override headline (defaults "Nicely done!" / "Correct solution:"). */
   title?: string;
   continueLabel?: string;
@@ -28,6 +30,7 @@ export type FeedbackSheetProps = {
 export function FeedbackSheet({
   result,
   detail,
+  explanation,
   title,
   continueLabel = 'Continue',
   onContinue,
@@ -66,6 +69,12 @@ export function FeedbackSheet({
         <View style={styles.textCol}>
           <Text style={[styles.title, { color: ink }]}>{headline}</Text>
           {detail ? <Text style={[styles.detail, { color: ink }]}>{detail}</Text> : null}
+          {explanation ? (
+            <View accessibilityLiveRegion="polite" style={styles.why}>
+              <Text style={[styles.whyLabel, { color: ink }]}>NEDEN?</Text>
+              <Text style={[styles.whyBody, { color: ink }]}>{explanation}</Text>
+            </View>
+          ) : null}
         </View>
       </View>
       <Button title={continueLabel} variant={correct ? 'primary' : 'danger'} onPress={onContinue} silent />
@@ -91,4 +100,7 @@ const styles = StyleSheet.create({
   textCol: { flex: 1, gap: spacing.xs },
   title: { fontSize: 24, fontFamily: fonts.display },
   detail: { fontSize: 16, lineHeight: 22, fontFamily: fonts.body },
+  why: { marginTop: spacing.xs, gap: spacing.xs },
+  whyLabel: { fontSize: 12, letterSpacing: 1.5, fontFamily: fonts.mono },
+  whyBody: { fontSize: 16, lineHeight: 22, fontFamily: fonts.body },
 });

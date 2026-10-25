@@ -2,6 +2,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import { getExplanation, genericHint } from '@/content/explanations';
 import {
   answer,
   canStartLesson,
@@ -181,6 +182,9 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
         result={feedback ? (feedback.ok ? 'correct' : 'wrong') : null}
         title={feedback?.ok ? 'Harika!' : 'Doğru cevap:'}
         detail={feedback?.detail}
+        explanation={
+          feedback?.ok || !exercise ? undefined : (getExplanation(exercise.id) ?? genericHint(exercise.type))
+        }
         continueLabel="Devam"
         onContinue={onContinue}
       />
