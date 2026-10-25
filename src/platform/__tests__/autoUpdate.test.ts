@@ -13,6 +13,9 @@ const usePathnameMock = usePathname as jest.Mock;
 const originalOS = Platform.OS;
 const setOS = (os: string) => Object.defineProperty(Platform, 'OS', { get: () => os, configurable: true });
 
+/** Mocked clock so tests can advance past the 60s check throttle deterministically. */
+let now = 1_000_000_000;
+
 const g = globalThis as unknown as Record<string, unknown>;
 
 const RUNNING_SRC = '/lovevox/_expo/static/js/web/entry-aaaaaa.js';
@@ -52,6 +55,7 @@ function stubWebPage(runningHash = 'aaaaaa') {
 }
 
 afterEach(() => {
+  jest.restoreAllMocks();
   delete g.document;
   delete g.location;
   delete g.fetch;
@@ -60,6 +64,11 @@ afterEach(() => {
   setOS(originalOS);
   usePathnameMock.mockReturnValue('/lovevox');
   jest.clearAllMocks();
+  now = 1_000_000_000;
+});
+
+beforeEach(() => {
+  jest.spyOn(Date, 'now').mockImplementation(() => now);
 });
 
 describe('entryHashFromHtml', () => {
@@ -131,11 +140,14 @@ describe('useAutoUpdate on the web', () => {
     await flushAsync();
     expect(reload).not.toHaveBeenCalled();
 
-    // Still in the lesson on a foreground event: still no reload.
+    // Still in the lesson on a foreground event past the throttle: the check runs,
+    // but the reload is deferred.
+    now += 60_001;
     await act(async () => {
       listeners.focus?.();
     });
     await flushAsync();
+    expect(fetchMock).toHaveBeenCalledTimes(2); // the throttle let the check through
     expect(reload).not.toHaveBeenCalled();
 
     // Leaving the lesson applies the pending reload.
@@ -161,6 +173,46 @@ describe('useAutoUpdate on the web', () => {
     });
     await flushAsync();
     expect(fetchMock).toHaveBeenCalledTimes(1);
+
+    // Past the 60s throttle, a foreground event triggers a fresh check.
+    now += 60_001;
+    await act(async () => {
+      listeners.focus?.();
+    });
+    await flushAsync();
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  test('applies a pending reload when a slow fetch resolves after leaving the lesson', async () => {
+    setOS('web');
+    const { reload, fetchMock } = stubWebPage();
+    usePathnameMock.mockReturnValue('/lovevox/lesson/ders-1');
+    // Fetch that only resolves once we drive it manually.
+    let resolveFetch: ((res: { text: () => Promise<string> }) => void) | undefined;
+    fetchMock.mockImplementation(
+      () => new Promise((resolve) => {
+        resolveFetch = resolve;
+      }),
+    );
+
+    const { rerender } = await renderHook(() => useAutoUpdate());
+    await flushAsync();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+
+    // The user leaves the lesson before the slow fetch resolves.
+    usePathnameMock.mockReturnValue('/lovevox/(tabs)/home');
+    await act(async () => {
+      await rerender(undefined);
+    });
+    expect(reload).not.toHaveBeenCalled();
+
+    // The in-flight check resolves after the navigation: it must reload right away
+    // (not wait for the next foreground event) because it reads the live pathname.
+    await act(async () => {
+      resolveFetch?.({ text: () => Promise.resolve(htmlWithEntry('bbbbbb')) });
+    });
+    await flushAsync();
+    expect(reload).toHaveBeenCalledTimes(1);
   });
 });
 

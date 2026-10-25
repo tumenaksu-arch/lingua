@@ -55,11 +55,15 @@ const CHECK_THROTTLE_MS = 60_000;
  */
 export function useAutoUpdate() {
   const pathname = usePathname();
+  // Read through a ref so a check that started while the user was inside a lesson but resolves
+  // after they have left it still sees the current pathname and reloads immediately.
+  const pathnameRef = useRef(pathname);
   const lastCheck = useRef(0);
   const pendingHash = useRef<string | null>(null);
   const reloadedFor = useRef<string | null>(null);
 
   useEffect(() => {
+    pathnameRef.current = pathname;
     if (Platform.OS !== 'web') return;
     const doc = webDoc();
     if (!doc) return;
@@ -86,7 +90,7 @@ export function useAutoUpdate() {
     const maybeReload = () => {
       const latest = pendingHash.current;
       if (!latest) return;
-      if (pathname.includes('/lesson/')) return; // never interrupt a lesson
+      if (pathnameRef.current.includes('/lesson/')) return; // never interrupt a lesson
       pendingHash.current = null;
       reloadedFor.current = latest;
       webLoc()?.reload();
