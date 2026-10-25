@@ -55,7 +55,7 @@ export const trDeExplanations: CourseExplanations = {
   'tr-de.u2.l4.e2': "Doğru cevap 'das Salz'. Salz tuzdur ve nötr olduğu için das alır; Zucker der, Salat der alır — karıştırma.",
   'tr-de.u2.l4.e4': "Doğru cevap 'Ich esse Hähnchen und Reis'. 've' und'dur; und ile bağlanan iki yiyeceği aynı fiille kur.",
   'tr-de.u2.l4.e5': "Doğru cevap 'Ist Zucker im Tee?'. Soruda fiil başa gelir: Ist…? '…-de/-da' için im kullanılır (im Tee).",
-  'tr-de.u2.l4.e7': "Boşluğa 'Fisch' gelir: 'Ich esse keinen Fisch.' (Balık yemem). keinen eril/çoğul nesnelerle kullanılır.",
+  'tr-de.u2.l4.e7': "Boşluğa 'Fisch' gelir: 'Ich esse keinen Fisch.' (Balık yemem). keinen belirtme durumundaki eril nesnelerle kullanılır.",
   'tr-de.u2.l4.e9': "Doğru cevap 'şeker'. der Zucker şekerdir; Salz tuz, Salat salata demektir.",
 
   // Ünite 3 — Aile
@@ -114,7 +114,7 @@ export const trDeExplanations: CourseExplanations = {
   // Ünite 5 — Alışveriş
   'tr-de.u5.l1.e1': "Doğru cevap 'teuer'. pahalı = teuer; billig ucuz, Preis fiyat demektir.",
   'tr-de.u5.l1.e2': "Doğru cevap 'das Geld'. Geld paradır ve nötr olduğu için das alır; Laden dükkân, Preis fiyat demektir.",
-  'tr-de.u5.l1.e4': "Doğru cevap 'Wie viel kostet das?'. ne kadar = wie viel; tek nesne için fiil tekil: kostet. Fiil cümle sonunda değil, özneden sonra.",
+  'tr-de.u5.l1.e4': "Doğru cevap 'Wie viel kostet das?'. ne kadar = wie viel; tek nesne için fiil tekil: kostet. Fiil cümle sonunda değil, ikinci sırada gelir.",
   'tr-de.u5.l1.e5': "Doğru cevap 'Das ist sehr teuer'. 'Bu çok pahalı' — das ist + sehr + sıfat; çok için sehr kullanılır.",
   'tr-de.u5.l1.e7': "Boşluğa 'Preis' gelir: 'Der Preis ist zehn Euro.' (Fiyat on Euro). Euro ile fiyat söylenir, Geld/Laden değil.",
   'tr-de.u5.l1.e9': "Doğru cevap 'ucuz'. billig ucuzdur; teuer pahalı, Preis fiyat demektir.",
@@ -134,7 +134,7 @@ export const trDeExplanations: CourseExplanations = {
   'tr-de.u5.l3.e9': "Boşluğa 'Hemd' gelir: 'Das Hemd ist rot.' (Gömlek kırmızı). mögen ve kaufen fiildir, özne olamaz.",
 
   'tr-de.u5.l4.e1': "Doğru cevap 'der Laden'. Laden dükkândır ve eril olduğu için der alır; Geld das, Preis der alır.",
-  'tr-de.u5.l4.e3': "Doğru cevap 'Ich habe kein Geld'. 'param yok' = kein Geld; Geld nötr olduğu için kein (kein'e gerek yok).",
+  'tr-de.u5.l4.e3': "Doğru cevap 'Ich habe kein Geld'. 'param yok' = kein Geld; Geld nötr olduğu için kein yeterli, -en eki gerekmez.",
   'tr-de.u5.l4.e4': "Doğru cevap 'Wie viel kosten die Schuhe?'. Schuhe çoğul olduğu için fiil kosten olur; tek şey olsaydı kostet derdin.",
   'tr-de.u5.l4.e6': "Boşluğa 'kaufen' gelir: 'Ich will ein Kleid kaufen.' (Bir elbise almak istiyorum). will + fiil kökü kalıbı.",
   'tr-de.u5.l4.e8': "Doğru cevap 'ne kadar'. wie viel ne kadar demektir; nerede wo, ne zaman wann demektir.",
@@ -144,7 +144,7 @@ export const trDeExplanations: CourseExplanations = {
   'tr-de.u6.l1.e1': "Doğru cevap 'der Arzt'. Arzt doktordur ve eril olduğu için der alır; Ingenieur der, Lehrer der alır ama doktor Arzt'tır.",
   'tr-de.u6.l1.e2': "Doğru cevap 'die Schule'. Schule okuldur ve dişil olduğu için die alır; Büro das, Laden der alır.",
   'tr-de.u6.l1.e4': "Doğru cevap 'Ich arbeite in einem Büro'. 'bir ofiste' = in einem Büro (in + ein → einem); arbeite ikinci sırada gelir.",
-  'tr-de.u6.l1.e5': "Doğru cevap 'Mein Vater ist Ingenieur'. Almancada mesleklerden önce ein konmaz: ist Ingenieur, ist ein Ingenieur de kabul edilir ama 'ist Arzt' daha doğal.",
+  'tr-de.u6.l1.e5': "Doğru cevap 'Mein Vater ist Ingenieur'. Almancada mesleklerden önce ein genelde konmaz: ist Ingenieur; 'ist ein Ingenieur' da mümkündür ama bu cevap daha doğal.",
   'tr-de.u6.l1.e7': "Boşluğa 'beschäftigt' gelir: 'Er ist heute sehr beschäftigt.' (O bugün çok meşgul). Büro/arbeiten buraya uymaz.",
   'tr-de.u6.l1.e9': "Doğru cevap 'meşgul'. beschäftigt meşguldür; boş karşılığı frei, yorgun karşılığı müde demektir.",
 
@@ -181,7 +181,7 @@ export const trDeExplanations: CourseExplanations = {
   'tr-de.u7.l2.e3': "Doğru cevap 'Morgen ist Montag'. 'Yarın pazartesi' — zaman öbeği başta, fiil ikinci sırada: ist; morgen küçük harfle başlar.",
   'tr-de.u7.l2.e4': "Doğru cevap 'Ich bin jetzt beschäftigt'. meşgul bir sıfat: ich bin + beschäftigt; jetzt 'şimdi' demektir.",
   'tr-de.u7.l2.e6': "Boşluğa 'Woche' gelir: 'Ich arbeite fünf Tage pro Woche.' (Haftada beş gün çalışıyorum). pro Woche kalıbını ezberle.",
-  'tr-de.u7.l2.e8': "Doğru cevap 'hafta'. die Woche haftadır; der Gün değil, ay der Mond karşılığıdır — Woche hafta demektir.",
+  'tr-de.u7.l2.e8': "Doğru cevap 'hafta'. die Woche haftadır; gün der Tag, ay der Monat karşılığıdır.",
   'tr-de.u7.l2.e9': "Boşluğa 'Heute' gelir: 'Heute ist Montag.' (Bugün pazartesi). Jetzt (şimdi) ve Woche buraya uymaz.",
 
   'tr-de.u7.l3.e1': "Doğru cevap 'Wie spät ist es'. saat kaç = Wie spät ist es?; Wie weit ne kadar uzak, Wie alt kaç yaş demektir.",
