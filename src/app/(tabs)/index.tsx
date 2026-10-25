@@ -6,6 +6,7 @@ import { activeLessonId, useAppStore } from '@/features/store';
 import { useNow } from '@/features/useNow';
 import { localDateString, regenerate } from '@/domain';
 import { getUnitNote } from '@/content/notes';
+import { getUnitStory } from '@/content/stories';
 import { Body, Button, Caption, Heading, Hearts, PathNode, Screen, StreakFlame, XpBadge, spacing, upperTr, useTheme, type PathNodeState } from '@/ui';
 
 const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', it: '🇮🇹', tr: '🇹🇷' };
@@ -53,6 +54,7 @@ export default function LearnScreen() {
         )}
         {course.units.map((unit, ui) => {
           const unitDone = unit.lessons.every((l) => progress[l.id]?.completedAt);
+          const story = getUnitStory(unit.id);
           return (
             <View key={unit.id} style={styles.unit}>
               <View style={[styles.unitHeader, { backgroundColor: colors.surface, borderColor: unitDone ? colors.warning : colors.border }]}>
@@ -113,6 +115,38 @@ export default function LearnScreen() {
                     </Pressable>
                   );
                 })}
+                {story ? (() => {
+                  const storyId = `${unit.id}.story`;
+                  const sp = progress[storyId];
+                  const state: PathNodeState = sp?.completedAt ? 'completed' : unitDone ? 'active' : 'locked';
+                  const label = `${unit.title} hikâyesi, ${STATE_TR[state]}`;
+                  const chipColor = state === 'completed' ? colors.successText : state === 'active' ? colors.primaryText : colors.textMuted;
+                  return (
+                    <Pressable
+                      key={storyId}
+                      accessibilityRole="button"
+                      accessibilityLabel={label}
+                      accessibilityState={{ disabled: state === 'locked' }}
+                      disabled={state === 'locked'}
+                      onPress={() => {
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => {});
+                        router.push({ pathname: '/story/[unitId]', params: { unitId: unit.id } });
+                      }}
+                      style={({ pressed }) => [styles.lesson, pressed && state !== 'locked' && styles.pressed]}
+                    >
+                      {/* Visual node only: the row above is the single accessibility element. */}
+                      <View style={styles.nodeCol} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+                        <PathNode state={state} label="📖" style={styles.node} />
+                      </View>
+                      {/* Decorative texts: the row Pressable above is the single
+                          accessibility element announcing the full label. */}
+                      <View style={styles.lessonText} accessible={false}>
+                        <Body accessible={false}>Hikâye: {story.title}</Body>
+                        <Caption accessible={false} color={chipColor}>{STATE_CHIP[state]}</Caption>
+                      </View>
+                    </Pressable>
+                  );
+                })() : null}
               </View>
             </View>
           );
