@@ -8,8 +8,9 @@ the next launch; a new APK is needed only when this folder changes (plugins, ico
 
 - `capacitor.config.json` — `server.url`, package `com.tumenaksu.lingua`; `www/index.html` is the offline page.
 - Native plugins the web build uses inside the shell (`src/platform/nativeShell.ts`):
-  TextToSpeech, SpeechRecognition, LocalNotifications. Android WebView has no `speechSynthesis`
-  or `Notification`, so without them listening exercises would be silent.
+  TextToSpeech, SpeechRecognition, LocalNotifications, SystemBars. Android WebView has no `speechSynthesis`
+  or `Notification`, so without them listening exercises would be silent; SystemBars tints the strip
+  behind the status/navigation bars so it follows the page colour.
 - `android/app/src/main/java/com/tumenaksu/lingua/MainActivity.java` — edge-to-edge + keyboard margins.
 - Icons/splash: `npm run icons` (from `assets/`, generated from the app's own icons).
 

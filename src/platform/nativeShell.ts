@@ -48,11 +48,17 @@ export interface ShellApp {
   getInfo(): Promise<{ name: string; id: string; build: string; version: string }>;
 }
 
+/** Sets the strip behind the status/navigation bars (window decor background) + icon style. */
+export interface ShellSystemBars {
+  set(options: { color: string; darkIcons: boolean }): Promise<void>;
+}
+
 interface ShellPlugins {
   TextToSpeech: ShellTextToSpeech;
   SpeechRecognition: ShellSpeechRecognition;
   LocalNotifications: ShellLocalNotifications;
   App: ShellApp;
+  SystemBars: ShellSystemBars;
 }
 
 interface CapacitorGlobal {
