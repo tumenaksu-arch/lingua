@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Switch, View } from 'react-native';
+import { ScrollView, StyleSheet, Switch, View } from 'react-native';
 import { router, useFocusEffect } from 'expo-router';
 
 import { ACHIEVEMENTS, FREEZE_EVERY_DAYS, MAX_HEARTS, MAX_STREAK_FREEZES, getAchievement, msUntilNextHeart, regenerate } from '@/domain';
@@ -17,6 +17,7 @@ import {
   Title,
   radii,
   setThemePreference,
+  showAlert,
   spacing,
   useSettingsStore,
   useTheme,
@@ -124,7 +125,7 @@ export default function ProfileScreen() {
   useEffect(() => {
     if (newAchievements.length === 0) return;
     const lines = newAchievements.map((id) => getAchievement(id)).filter(Boolean).map((a) => `${a!.emoji} ${a!.title} — ${a!.description}`);
-    Alert.alert(newAchievements.length === 1 ? 'Yeni rozet!' : 'Yeni rozetler!', lines.join('\n'), [{ text: 'Süper', onPress: ackAchievements }]);
+    showAlert(newAchievements.length === 1 ? 'Yeni rozet!' : 'Yeni rozetler!', lines.join('\n'), [{ text: 'Süper', onPress: ackAchievements }]);
   }, [newAchievements, ackAchievements]);
 
   const changeReminder = async (hour: number | null) => {
@@ -136,11 +137,11 @@ export default function ProfileScreen() {
         return;
       }
       if (!(await requestPermission())) {
-        Alert.alert('Bildirim izni yok', 'Hatırlatma için ayarlardan Lingua bildirimlerine izin ver.');
+        showAlert('Bildirim izni yok', 'Hatırlatma için ayarlardan Lingua bildirimlerine izin ver.');
         return;
       }
       if (await scheduleDailyReminder(hour, 0)) await setReminderHour(hour);
-      else Alert.alert('Hatırlatma kurulamadı', 'Bu cihazda zamanlanmış bildirim desteklenmiyor olabilir.');
+      else showAlert('Hatırlatma kurulamadı', 'Bu cihazda zamanlanmış bildirim desteklenmiyor olabilir.');
     } finally {
       setReminderBusy(false);
     }
@@ -246,7 +247,7 @@ export default function ProfileScreen() {
             <Button
               title="Çıkış yap"
               variant="danger"
-              onPress={() => Alert.alert('Çıkış', 'Hesaptan çıkılsın mı?', [{ text: 'Vazgeç' }, { text: 'Çık', style: 'destructive', onPress: () => void signOut() }])}
+              onPress={() => showAlert('Çıkış', 'Hesaptan çıkılsın mı?', [{ text: 'Vazgeç' }, { text: 'Çık', style: 'destructive', onPress: () => void signOut() }])}
             />
           </>
         ) : (

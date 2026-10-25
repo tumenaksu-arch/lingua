@@ -1,6 +1,6 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 import {
   answer,
@@ -21,7 +21,7 @@ import { ExerciseView } from '@/features/lesson/ExerciseView';
 import { playComplete, playCorrect, playWrong } from '@/features/sound';
 import { exerciseVocabMap, formatDuration } from '@/features/lesson/helpers';
 import { useAppStore } from '@/features/store';
-import { Body, Button, Caption, FeedbackSheet, Heading, Hearts, ProgressBar, Screen, Title, spacing, useTheme } from '@/ui';
+import { Body, Button, Caption, FeedbackSheet, Heading, Hearts, ProgressBar, Screen, Title, showAlert, spacing, useTheme } from '@/ui';
 
 type Params = { id: string; mode?: 'practice' };
 
@@ -110,7 +110,7 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
   }, [state, exercise, feedback, lesson, finished, startedAt, persist]);
 
   const confirmQuit = () => {
-    Alert.alert('Dersi bırak?', 'İlerlemen kaydedilmeyecek.', [
+    showAlert('Dersi bırak?', 'İlerlemen kaydedilmeyecek.', [
       { text: 'Devam et', style: 'cancel' },
       { text: 'Bırak', style: 'destructive', onPress: () => router.back() },
     ]);

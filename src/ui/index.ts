@@ -8,6 +8,7 @@ export { useReduceMotion } from './useReduceMotion';
 export { Button } from './Button';
 export type { ButtonProps, ButtonVariant } from './Button';
 export { upperTr } from './upperTr';
+export { showAlert } from './alert';
 export { ProgressBar } from './ProgressBar';
 export type { ProgressBarProps } from './ProgressBar';
 export { Hearts, StreakFlame, XpBadge } from './StatChips';
