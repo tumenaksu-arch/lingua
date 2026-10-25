@@ -112,7 +112,7 @@ export const trItExplanations: CourseExplanations = {
   'tr-it.u3.l1.e5':
     "Soru kelimesi cümle başında kalır: Dov'è il treno? Türkçedeki 'nerede' eki gibi sona gitmez; 'è' ile birleşir.",
   'tr-it.u3.l1.e7':
-    "'Un biglietto per il treno' = 'tren için bir bilet'. Tren yolculuğunda gerekli olan nesne biglietto (bilet)tir.",
+    "'Un biglietto per il treno' = 'tren için bir bilet'. Tren yolculuğunda gerekli olan nesne biglietto'dur (bilet).",
   'tr-it.u3.l1.e9':
     "'Dove' = nerede; İtalyanca sorular cümle başında soru kelimesiyle kurulur. 'Cosa' ne, 'chi' kim demektir.",
   'tr-it.u3.l2.e1':
@@ -128,11 +128,11 @@ export const trItExplanations: CourseExplanations = {
   'tr-it.u3.l2.e9':
     "'Via' dişil olduğu için 'la via'. Yön belirtirken edat 'a' kullanılır: a destra = sağda.",
   'tr-it.u3.l3.e1':
-    "'Passaporto' pasaport demektir; Türkçeye çok benzese de yazımı farklıdır (çift 's' yoktur).",
+    "'Passaporto' pasaport demektir; Türkçeye çok benzese de yazımı farklıdır: İtalyancada çift 's' vardır (passaporto).",
   'tr-it.u3.l3.e3':
     "Yabancıdan yardım isterken 'scusi' (affedersiniz) ile başlanır; soru aynı cümlede devam eder: Scusi, dov'è il taxi?",
   'tr-it.u3.l3.e4':
-    "'Mi può aiutare?' = 'bana yardım edebilir misiniz?'. 'Può' edebilir anlamı verir; 'mi' edatı özne önüne gelir.",
+    "'Mi può aiutare?' = 'bana yardım edebilir misiniz?'. 'Può' 'edebilir' anlamı verir; 'mi' nesne zamiri fiilden önce gelir.",
   'tr-it.u3.l3.e6':
     "'Ecco' = 'işte'; sınırda gösterilen belge 'passaporto'dur. 'Aiuto' yardım, bir belge değildir.",
   'tr-it.u3.l3.e8':
@@ -220,13 +220,13 @@ export const trItExplanations: CourseExplanations = {
   'tr-it.u5.l2.e4':
     "'Scarpe' her zaman çoğuldur; o yüzden 'le scarpe sono' ve sıfat çoğul 'grandi'. 'Troppo' = çok/fazla.",
   'tr-it.u5.l2.e6':
-    "'Questa' (bu) dişil gösterir ve sıfatta uyum ister: piccola (küçük). Cümlenin anlamı: bu gömlek çok küçük.",
+    "'Questa' (bu) dişil olduğunu gösterir ve sıfatta cinsiyet uyumu ister: piccola (küçük). Cümlenin anlamı: bu gömlek çok küçük.",
   'tr-it.u5.l2.e8':
     "'Vestito' elbise demektir; 'camicia' gömlek, 'scarpe' ayakkabıdır. Giyim eşyası soruluyor: doğru cevap elbise.",
   'tr-it.u5.l3.e1':
     "'Rosso' kırmızı, 'blu' mavi demektir. Renk sıfatları cinsiyete göre değişir: rosso/rossa; sorulan kırmızı.",
   'tr-it.u5.l3.e3':
-    "'Mi piace' = hoşuma gidiyor/beğeniyorum; edat 'mi' öne gelir. Renk sıfatı isimden sonra gelir: il vestito blu.",
+    "'Mi piace' = hoşuma gidiyor/beğeniyorum; nesne zamiri 'mi' öne gelir. Renk sıfatı isimden sonra gelir: il vestito blu.",
   'tr-it.u5.l3.e4':
     "'Camicia' dişil olduğu için hem artikel 'la' hem sıfat 'rossa' dişil olur: la camicia rossa. 'Cara' = pahalı (dişil).",
   'tr-it.u5.l3.e6':
@@ -236,7 +236,7 @@ export const trItExplanations: CourseExplanations = {
   'tr-it.u5.l3.e9':
     "'Mi piace questo vestito' = bu elbise hoşuma gidiyor. 'Piace' tek nesneyle, 'piacciono' çoğul nesneyle kullanılır.",
   'tr-it.u5.l4.e1':
-    "'Negozio' dükkân/magaza demektir; 'soldi' para, 'prezzo' fiyattır. Alışveriş yapılan yer negozio'dur.",
+    "'Negozio' dükkân/mağaza demektir; 'soldi' para, 'prezzo' fiyattır. Alışveriş yapılan yer negozio'dur.",
   'tr-it.u5.l4.e3':
     "Olumsuzluk 'non' yardımcı fiilden önce gelir: non ho = ...m yok. 'Soldi' her zaman çoğuldur: Non ho soldi.",
   'tr-it.u5.l4.e4':
@@ -290,7 +290,7 @@ export const trItExplanations: CourseExplanations = {
   'tr-it.u6.l4.e6':
     "'Scrive' (yazar) üçüncü tekil kişidir; tahtaya yazan kişi öğretmendir: l'insegnante. 'Impara' fiildir, özne olamaz.",
   'tr-it.u6.l4.e8':
-    "'Imparare' öğrenmek demektir; 'lavorare' çalışmak, 'leggere' okumaktır. Okulda yeni şeyler imparare edilir.",
+    "'Imparare' öğrenmek demektir; 'lavorare' çalışmak, 'leggere' okumaktır. Okulda yeni şeyler 'imparare' fiiliyle öğrenilir.",
 
   // Unit 7 — Hava ve Zaman
   'tr-it.u7.l1.e1':
@@ -302,21 +302,21 @@ export const trItExplanations: CourseExplanations = {
   'tr-it.u7.l1.e5':
     "Sıcak/soğuk için 'fare' fiili kullanılır: fa freddo = hava soğuk (kelimesi kelimesine 'soğuk yapar').",
   'tr-it.u7.l1.e7':
-    "'Il tempo' = hava; 'il tempo è caldo' = hava sıcak. 'Piovoso' ve 'freddo' sıfattır, artikelden sonra 'il' gelmez.",
+    "'Il tempo' = hava; 'il tempo è caldo' = hava sıcak. 'Piovoso' ve 'freddo' sıfattır ve tek başlarına 'è' ile kullanılır; ayrı bir artikel almazlar.",
   'tr-it.u7.l1.e9':
     "'Piovoso' yağmurlu demektir; 'piovere' (yağmak) fiilinden gelir. 'Soleggiato' güneşli, 'freddo' soğuktur.",
   'tr-it.u7.l2.e1':
     "'Domani' yarın, 'oggi' bugün, 'adesso' şimdi demektir. Ayrılırken 'A domani!' (yarın görüşürüz) denir.",
   'tr-it.u7.l2.e3':
-    "Gün adlarından önce artikel kullanılır: Domani è lunedì (yarın pazartesi). Zaman bilgisi cümle başına gelir.",
+    "Zaman bilgisi cümle başına gelir: Domani è lunedì (yarın pazartesi). Gün adı burada artikelsiz kullanılır; artikel yalnızca tekrarlanan günler için eklenir (il lunedì = her pazartesi).",
   'tr-it.u7.l2.e4':
     "'Adesso' = şimdi; 'sono impegnato' = meşgulüm. Konuşan kadınsa 'impegnata' denir; burada eril biçim doğru.",
   'tr-it.u7.l2.e6':
     "'A settimana' kalıbı = haftada; 'cinque giorni a settimana' = haftada beş gün. 'Domani' yarın, 'adesso' şimdi.",
   'tr-it.u7.l2.e8':
-    "'Settimana' hafta demektir; 'fine settimana' = hafta sonu. 'Gün' giorno, 'ay' mese/ayedir.",
+    "'Settimana' hafta demektir; 'fine settimana' = hafta sonu. 'Gün' = giorno, 'ay' = mese.",
   'tr-it.u7.l2.e9':
-    "'Oggi è lunedì' = bugün pazartesi. Gün adları İtalyancada küçük harfle yazılır ve önlerinde artikel olur.",
+    "'Oggi è lunedì' = bugün pazartesi. Gün adları İtalyancada küçük harfle yazılır; artikel yalnızca her ... anlamında kullanılır (il lunedì = her pazartesi).",
   'tr-it.u7.l3.e1':
     "'Che ore sono?' = saat kaç? Kelimesi kelimesine 'kaç saat?' demektir; cevap hep çoğul olur: sono le tre.",
   'tr-it.u7.l3.e3':
@@ -346,7 +346,7 @@ export const trItExplanations: CourseExplanations = {
   'tr-it.u8.l1.e4':
     "'Giocare' = oynamak; sporlardan önce 'a' edatı gelir: gioco a calcio. Enstrüman 'suonare' fiiliyle söylenir.",
   'tr-it.u8.l1.e5':
-    "'Mi piace' = hoşuma gider/severim; edat 'mi' öne gelir. 'La musica' genel nesne olduğu için artikellidir.",
+    "'Mi piace' = hoşuma gider/severim; nesne zamiri 'mi' öne gelir. 'La musica' genel nesne olduğu için artikellidir.",
   'tr-it.u8.l1.e7':
     "'Stasera' = bu akşam; 'guardiamo un film' = bir film izliyoruz. İzlenen şey film, dinlenen şey musica.",
   'tr-it.u8.l1.e9':
@@ -378,7 +378,7 @@ export const trItExplanations: CourseExplanations = {
   'tr-it.u8.l4.e3':
     "Enstrüman çalmak 'suonare' fiilidir ve alet belirlidir: suono la chitarra. Spor 'giocare a' ile kurulurdu.",
   'tr-it.u8.l4.e4':
-    "'Ama' = sever; 'guardare i film' = film izlemek. 'Amico' aile üyesi değildir: il mio amico.",
+    "'Ama' fiili 'sever' demektir; 'guardare i film' = film izlemek. 'Amico' aile üyesi değildir: il mio amico.",
   'tr-it.u8.l4.e6':
     "Gitar çalmak 'suonare' fiilidir: io suono la chitarra. 'Guardo' izler, 'piace' ise hoşuna gider kalıbıdır.",
   'tr-it.u8.l4.e8':
