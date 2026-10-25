@@ -7,6 +7,7 @@ export const LOCALE_BY_LANG: Record<LangCode, string> = {
   de: 'de-DE',
   es: 'es-ES',
   fr: 'fr-FR',
+  it: 'it-IT',
 };
 
 export function toLocale(lang: LangCode): string {

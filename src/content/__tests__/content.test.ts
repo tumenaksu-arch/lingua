@@ -115,7 +115,7 @@ test('tr-de and tr-es have 4 units × 3 lessons; tr-fr has 3 × 3', () => {
   const fr = getCourse('tr-fr')!;
   expect(fr.units).toHaveLength(3);
   for (const u of fr.units) expect(u.lessons).toHaveLength(3);
-  expect(courses.map((c) => c.id)).toEqual(['tr-en', 'tr-de', 'tr-es', 'tr-fr']);
+  expect(courses.map((c) => c.id)).toEqual(['tr-en', 'tr-de', 'tr-es', 'tr-fr', 'tr-it']);
 });
 
 /** The text a learner sees/hears for an exercise; match_pairs has no single prompt. */

@@ -6,8 +6,8 @@ import { useNow } from '@/features/useNow';
 import { canStartLesson, localDateString, regenerate } from '@/domain';
 import { Body, Button, Caption, Heading, Hearts, PathNode, Screen, StreakFlame, XpBadge, radii, spacing, useTheme } from '@/ui';
 
-const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', tr: '🇹🇷' };
-const LANG_NAME: Record<string, string> = { en: 'İngilizce', de: 'Almanca', es: 'İspanyolca', fr: 'Fransızca', tr: 'Türkçe' };
+const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', it: '🇮🇹', tr: '🇹🇷' };
+const LANG_NAME: Record<string, string> = { en: 'İngilizce', de: 'Almanca', es: 'İspanyolca', fr: 'Fransızca', it: 'İtalyanca', tr: 'Türkçe' };
 /** Duolingo-style snake offsets for successive nodes in a unit. */
 const SNAKE = [0, 44, 70, 44, 0, -44, -70, -44];
 
