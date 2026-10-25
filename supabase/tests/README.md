@@ -1,9 +1,11 @@
 # RLS integration tests
 
 Integration tests for the row-level security policies in
-[`supabase/migrations/0001_lovevox.sql`](../migrations/0001_lovevox.sql),
-run with the Node built-in test runner against the **local prototype only**
-(see `scratchpad/supa/PROTO.md` — never run these against production).
+[`supabase/migrations/0001_lovevox.sql`](../migrations/0001_lovevox.sql) and
+[`supabase/migrations/0002_siniflar.sql`](../migrations/0002_siniflar.sql)
+(teacher / class, madde 5), run with the Node built-in test runner against
+the **local prototype only** (see `scratchpad/supa/PROTO.md` — never run
+these against production).
 
 ## Run
 
@@ -15,8 +17,9 @@ SUPA_URL=http://127.0.0.1:35143 SUPA_ANON=<anon key from PROTO.md> \
 
 ## What is covered
 
-Each run signs up three fresh users (unique `@example.test` e-mails, password
-signup, auto-confirmed by the prototype) and asserts:
+**`rls.test.mjs`** — the 0001 schema. Each run signs up three fresh users
+(unique `@example.test` e-mails, password signup, auto-confirmed by the
+prototype) and asserts:
 
 - **Cross-user isolation (learning tables):** A cannot read, insert or update
   B's rows in `user_stats`, `user_progress`, `srs_cards`, `events`; the anon
@@ -37,9 +40,43 @@ signup, auto-confirmed by the prototype) and asserts:
   `xp` bounds and `week_id` format enforced, every signed-in user reads the
   week, anon cannot, and deletes are no-ops.
 
-RLS-denied updates/deletes answer with `204` and **zero affected rows**
-(PostgREST applies the policy as a filter), so those assertions verify that
-the target row is unchanged rather than expecting an error.
+**`classes.test.mjs`** — the 0002 teacher/class schema. Each run creates two
+teachers (T1/T2, e-mail users) and two students (S1/S2, GoTrue **anonymous**
+sign-in, the madde-5 student flow). The tests are ordered and tell one story
+(open class → join → learn → leave → archive):
+
+- **Teacher onboarding:** T1 becomes a teacher; an anonymous user cannot
+  (`teachers` insert denied). A class without `veli_bilgilendirildi=true` is
+  rejected; an anonymous user can never open a class.
+- **Cross-teacher isolation:** T2 (also a teacher) cannot read T1's
+  class/members/assignments rows and gets `42501 not_teacher` from
+  `class_progress`/`class_struggles` and `42501 not_member` from
+  `class_league`.
+- **Joining:** S1 joins with the code + nickname (lowercase code works);
+  an unknown code returns zero rows; after 10 wrong codes even the right
+  code raises `too_many_attempts`; a taken nickname → `23505`, a bad
+  nickname → `23514`.
+- **Student access:** S1 cannot read the `classes` table nor call
+  `class_progress`, but CAN call `class_league` (nicknames + weekly XP,
+  `is_me` true only on the own row) and `my_classes()`; direct inserts into
+  `class_members` are denied (join only via `join_class`).
+- **Assignments:** the teacher creates/manages (duplicate unit → `23505`),
+  members read but cannot create.
+- **Immutability:** `teacher_id`/`course_id` updates are reverted by the
+  trigger; archiving deletes all memberships, kills the join code
+  (zero rows) and cannot be undone (`archived_at` stays set).
+- **Summaries:** `class_progress` returns S1's weekly XP (sum of
+  `payload.xp`) and completed lessons; `class_struggles` aggregates
+  correct/total and `mistakes_by_type` across both members.
+- **Anonymous lockout (0001 tables):** S1 cannot write `leaderboard`,
+  `profiles` or `friends` and reads an empty leaderboard while an e-mail
+  user's row is visible to e-mail users.
+
+RLS-denied updates/deletes answer `204` and **zero affected rows**, and
+RLS-denied selects of a signed-in user answer `200` with **zero rows**
+(PostgREST applies the policy as a filter) — those assertions verify that
+the target row is unchanged / invisible rather than expecting an error. Only
+the anon role (no grant at all) gets an error response.
 
 The tests need `@supabase/supabase-js` (resolved from the repo's
 `node_modules`; on Node < 22 the `ws` package is picked up as the Realtime
