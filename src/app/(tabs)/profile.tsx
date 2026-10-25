@@ -320,6 +320,21 @@ export default function ProfileScreen() {
         <Body>{course.title}</Body>
         <Button title="Kurs değiştir" variant="outline" onPress={() => router.push('/courses')} />
 
+        {cloud && user?.email && (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Öğretmen paneli"
+            onPress={() => router.push('/ogretmen')}
+            style={[styles.teacherRow, { borderColor: colors.border, backgroundColor: colors.surface }]}
+          >
+            <View style={styles.teacherText}>
+              <Body>Öğretmen paneli</Body>
+              <Caption color={colors.textMuted}>Sınıf aç, ödev ver, duyuru yap, ilerlemeyi izle.</Caption>
+            </View>
+            <Caption color={colors.textMuted}>›</Caption>
+          </Pressable>
+        )}
+
         <Heading>Hesap</Heading>
         {!cloud ? (
           <Caption color={colors.textMuted}>Bulut senkronu kapalı: .env dosyasında EXPO_PUBLIC_SUPABASE_URL ve EXPO_PUBLIC_SUPABASE_ANON_KEY değerlerini tanımlayın (docs/SETUP.md).</Caption>
@@ -362,6 +377,8 @@ const styles = StyleSheet.create({
   weekTrack: { width: '100%', flex: 1, borderRadius: radii.sm, justifyContent: 'flex-end', overflow: 'hidden' },
   weekFill: { width: '100%', borderRadius: radii.sm },
   badges: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
+  teacherRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, borderWidth: 1, borderRadius: 10, padding: spacing.md, minHeight: 56 },
+  teacherText: { flex: 1, gap: 2 },
   badge: {
     width: '30%',
     flexGrow: 1,
