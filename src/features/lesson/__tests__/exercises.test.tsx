@@ -1,8 +1,11 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
-import type { FillBlankExercise, MatchPairsExercise, SelectTranslationExercise, TranslateBuildExercise } from '@/domain';
+import { speak } from '@/speech';
+import type { FillBlankExercise, MatchPairsExercise, ListenTypeExercise, SelectTranslationExercise, TranslateBuildExercise } from '@/domain';
+import { useSettingsStore } from '@/ui';
 
 import { FillBlank } from '../exercises/FillBlank';
+import { ListenType } from '../exercises/ListenType';
 import { MatchPairs } from '../exercises/MatchPairs';
 import { SelectTranslation } from '../exercises/SelectTranslation';
 import { TranslateBuild } from '../exercises/TranslateBuild';
@@ -14,6 +17,33 @@ jest.mock('@/speech', () => ({
 }));
 
 const common = { disabled: false, targetLang: 'en' as const };
+
+beforeEach(() => {
+  jest.mocked(speak).mockClear();
+  useSettingsStore.setState({ soundEnabled: true, slowRate: 0.6, hydrated: false });
+});
+
+describe('ListenType', () => {
+  const exercise: ListenTypeExercise = {
+    id: 'lt1',
+    type: 'listen_type',
+    promptLang: 'tr',
+    audioText: 'Hello, how are you today?',
+    audioLang: 'en',
+    answers: ['Hello, how are you today?'],
+  };
+
+  it('speaks the slow turtle button at the stored slowRate', async () => {
+    useSettingsStore.setState({ slowRate: 0.4 });
+    await render(<ListenType exercise={exercise} onAnswer={jest.fn()} {...common} />);
+    jest.mocked(speak).mockClear();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Yavaş dinle' }));
+
+    expect(speak).toHaveBeenCalledTimes(1);
+    expect(speak).toHaveBeenCalledWith(exercise.audioText, 'en', { rate: 0.4 });
+  });
+});
 const press = (name: string | RegExp, role: 'button' | 'radio' = 'radio') => fireEvent.press(screen.getByRole(role, { name }));
 
 describe('SelectTranslation', () => {

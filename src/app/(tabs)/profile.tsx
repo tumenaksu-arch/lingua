@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Switch, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { router, useFocusEffect } from 'expo-router';
 
 import { ACHIEVEMENTS, FREEZE_EVERY_DAYS, MAX_HEARTS, MAX_STREAK_FREEZES, getAchievement, msUntilNextHeart, regenerate } from '@/domain';
 import { isFirebaseConfigured } from '@/data';
+import { speak } from '@/speech';
 import { cancelReminder, isSupported as remindersSupported, requestPermission, scheduleDailyReminder } from '@/features/notifications';
 import { useAppStore } from '@/features/store';
 import { useNow } from '@/features/useNow';
@@ -16,6 +17,7 @@ import {
   Screen,
   Title,
   radii,
+  SLOW_RATES,
   setThemePreference,
   showAlert,
   spacing,
@@ -26,6 +28,14 @@ import {
 } from '@/ui';
 
 const GOALS = [10, 20, 30, 50];
+
+const SLOW_SAMPLES: Record<string, string> = {
+  en: 'Hello, how are you today?',
+  de: 'Hallo, wie geht es dir heute?',
+  es: 'Hola, ¿cómo estás hoy?',
+  fr: "Bonjour, comment ça va aujourd'hui ?",
+  it: 'Ciao, come stai oggi?',
+};
 const REMINDER_HOURS = [8, 12, 18, 20];
 const DAY_LABELS = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
 const THEMES: { value: ThemePreference; label: string }[] = [
@@ -92,6 +102,10 @@ export default function ProfileScreen() {
   const themePreference = useThemeStore((s) => s.preference);
   const soundEnabled = useSettingsStore((s) => s.soundEnabled);
   const setSoundEnabled = useSettingsStore((s) => s.setSoundEnabled);
+  const slowRate = useSettingsStore((s) => s.slowRate);
+  const setSlowRate = useSettingsStore((s) => s.setSlowRate);
+  const relaxedHearts = useSettingsStore((s) => s.relaxedHearts);
+  const setRelaxedHearts = useSettingsStore((s) => s.setRelaxedHearts);
   const rawStats = useAppStore((s) => s.stats);
   const user = useAppStore((s) => s.user);
   const course = useAppStore((s) => s.course);
@@ -210,6 +224,18 @@ export default function ProfileScreen() {
           </>
         )}
 
+        <Heading>Öğrenme</Heading>
+        <View style={styles.row}>
+          <Body>Rahat mod (kalp sınırı yok)</Body>
+          <Switch
+            value={relaxedHearts}
+            onValueChange={(on) => void setRelaxedHearts(on)}
+            accessibilityLabel="Rahat mod"
+            trackColor={{ true: colors.primary, false: colors.border }}
+          />
+        </View>
+        <Caption color={colors.textMuted}>Açıkken yanlış cevaplarda kalp gitmez; tüm dersleri sırayla, beklemeden geçebilirsin.</Caption>
+
         <Heading>Görünüm ve ses</Heading>
         <View style={styles.goals}>
           {THEMES.map((t) => (
@@ -232,6 +258,44 @@ export default function ProfileScreen() {
             trackColor={{ true: colors.primary, false: colors.border }}
           />
         </View>
+        <View style={styles.row}>
+          <Body>Yavaş seslendirme hızı</Body>
+          <Caption color={colors.textMuted}>%{Math.round(slowRate * 100)}</Caption>
+        </View>
+        <View style={styles.rateChips}>
+          {SLOW_RATES.map((r) => {
+            const selected = r === slowRate;
+            return (
+              <Pressable
+                key={r}
+                accessibilityRole="button"
+                accessibilityLabel={`Yavaş hız yüzde ${Math.round(r * 100)}`}
+                accessibilityState={{ selected }}
+                onPress={() => void setSlowRate(r)}
+                style={[
+                  styles.rateChip,
+                  {
+                    backgroundColor: selected ? colors.primary : 'transparent',
+                    borderColor: colors.primary,
+                  },
+                ]}
+              >
+                <Text style={[styles.rateChipText, { color: selected ? colors.textOnColor : colors.primaryText }]} maxFontSizeMultiplier={1.6}>
+                  {`%${Math.round(r * 100)}`}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+        <Button
+          title="Dene 🐢"
+          variant="outline"
+          accessibilityLabel="Yavaş hızı dene"
+          onPress={() => {
+            const sample = SLOW_SAMPLES[course.toLang];
+            if (sample) void speak(sample, course.toLang, { rate: slowRate });
+          }}
+        />
 
         <Heading>Kurs</Heading>
         <Body>{course.title}</Body>
@@ -264,6 +328,18 @@ const styles = StyleSheet.create({
   stat: { flex: 1, borderWidth: 2, borderRadius: radii.lg, padding: spacing.md, alignItems: 'center' },
   goals: { flexDirection: 'row', gap: spacing.sm },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', minHeight: 44 },
+  // Compact selectable chips: six of these in one row overflowed on narrow phones.
+  rateChips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
+  rateChip: {
+    minHeight: 44,
+    minWidth: 64,
+    paddingHorizontal: spacing.md,
+    borderRadius: 999,
+    borderWidth: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  rateChipText: { fontSize: 16, fontWeight: 'bold' },
   week: { flexDirection: 'row', gap: spacing.xs, height: 120, alignItems: 'flex-end' },
   weekCol: { flex: 1, alignItems: 'center', gap: 2, height: '100%', justifyContent: 'flex-end' },
   weekTrack: { width: '100%', flex: 1, borderRadius: radii.sm, justifyContent: 'flex-end', overflow: 'hidden' },
