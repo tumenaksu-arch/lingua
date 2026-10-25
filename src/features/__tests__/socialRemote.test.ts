@@ -89,6 +89,23 @@ describe('unconfigured Supabase', () => {
   });
 });
 
+describe('guest without a session', () => {
+  beforeEach(() => {
+    jest.mocked(getSupabase).mockReturnValue({
+      ...client,
+      auth: { getSession: jest.fn(async () => ({ data: { session: null }, error: null })) },
+    } as never);
+  });
+
+  it('writes return null / false instead of throwing on the RLS denial', async () => {
+    await expect(saveProfile('u1', 'YıldızKedi')).resolves.toBeNull();
+    await expect(addFriend('u1', 'u2')).resolves.toBe(false);
+    await expect(upsertWeeklyEntry('u1', 'YıldızKedi', 30, '2026-W43')).resolves.toBe(false);
+    await expect(removeFriend('u1', 'u2')).resolves.toBe(false);
+    expect(client.from).not.toHaveBeenCalled();
+  });
+});
+
 describe('getProfile', () => {
   it('reads the profiles row for the uid', async () => {
     tableResults.set('profiles', {
@@ -153,6 +170,40 @@ describe('saveProfile', () => {
 
     await expect(saveProfile('u1', 'YıldızKedi')).rejects.toThrow('Davet kodu üretilemedi');
     expect(builder.calls.insert).toHaveLength(5);
+  });
+
+  it('a PK unique violation (concurrent first save) falls through to the update path', async () => {
+    // Double-submit race: both inserts hit profiles_pkey; the loser's 23505 is
+    // NOT an invite-code collision — the profile now exists, so merge-write it.
+    let profilesCalls = 0;
+    client.from.mockImplementation((table: string) => {
+      if (table === 'leaderboard') return makeBuilder({ data: null, error: null });
+      const n = ++profilesCalls;
+      if (n === 1) return makeBuilder({ data: null, error: null }); // pre-insert getProfile: no row
+      if (n === 2) {
+        return makeBuilder({
+          data: null,
+          error: { code: '23505', status: 409, message: 'duplicate key value violates unique constraint "profiles_pkey"' },
+        });
+      }
+      if (n === 3) {
+        return makeBuilder({
+          data: { user_id: 'u1', nickname: 'EskiAd', invite_code: 'ABC234', updated_at: 'old' },
+          error: null,
+        });
+      }
+      return makeBuilder({ data: null, error: null }); // update + leaderboard refresh
+    });
+
+    const profile = await saveProfile('u1', 'Yeni_Ad');
+
+    expect(profile).toEqual({
+      user_id: 'u1',
+      nickname: 'Yeni_Ad',
+      invite_code: 'ABC234',
+      updated_at: expect.any(String),
+    });
+    expect(profilesCalls).toBe(4); // read + failed insert + raced read + update
   });
 
   it('later saves update only nickname + updated_at and refresh the week row', async () => {
@@ -249,6 +300,18 @@ describe('invite + friends', () => {
   it('resolveInvite returns null for an unknown code', async () => {
     rpcResults.set('resolve_invite', { data: [], error: null });
     await expect(resolveInvite('ZZZ999')).resolves.toBeNull();
+  });
+
+  it('resolveInvite rethrows network failures as a Turkish Error (not null)', async () => {
+    client.rpc.mockImplementationOnce(async () => {
+      throw new Error('Network request failed');
+    });
+    await expect(resolveInvite('ABC234')).rejects.toThrow('Bağlantı yok');
+  });
+
+  it('resolveInvite rethrows auth/RLS failures as a Turkish Error (not null)', async () => {
+    rpcResults.set('resolve_invite', { data: null, error: { code: '42501', status: 403, message: 'row-level security' } });
+    await expect(resolveInvite('ABC234')).rejects.toThrow('Oturumun geçersiz');
   });
 
   it('addFriend treats a duplicate row (23505) as success', async () => {

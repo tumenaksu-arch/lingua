@@ -5,7 +5,7 @@ import { DEFAULT_STATS, listOutbox } from '..';
 import { createProgressRepo } from '../local/repos/progressRepo';
 import { createSrsRepo } from '../local/repos/srsRepo';
 import { createStatsRepo } from '../local/repos/statsRepo';
-import { clearLegacyAccount, detectLegacyAccount } from '../remote/legacy';
+import { clearLegacyAccount, detectLegacyAccount, detectLegacyAccounts } from '../remote/legacy';
 import { migrateLegacyRows } from '../sync/legacyMigration';
 
 const LEGACY = 'firebase-uid-1';
@@ -47,6 +47,18 @@ describe('detectLegacyAccount / clearLegacyAccount', () => {
     await clearLegacyAccount();
     expect(await AsyncStorage.getAllKeys()).toEqual([]);
     expect(await detectLegacyAccount()).toBeNull();
+  });
+
+  it('detectLegacyAccounts returns every parsable entry across API keys', async () => {
+    // A device can hold firebase:authUser:* entries under several API keys;
+    // their local rows are keyed by DIFFERENT legacy uids and all must migrate.
+    await AsyncStorage.setItem('firebase:authUser:keyA', JSON.stringify({ uid: LEGACY, email: 'a@x.y' }));
+    await AsyncStorage.setItem('firebase:authUser:keyB', JSON.stringify({ uid: 'firebase-uid-2', email: 'b@x.y' }));
+    await AsyncStorage.setItem('firebase:authUser:keyC', 'not-json');
+    expect(await detectLegacyAccounts()).toEqual([
+      { uid: LEGACY, email: 'a@x.y' },
+      { uid: 'firebase-uid-2', email: 'b@x.y' },
+    ]);
   });
 });
 

@@ -26,6 +26,7 @@ import {
   createStatsRepo,
   currentUser,
   detectLegacyAccount,
+  detectLegacyAccounts,
   getDb,
   getMeta,
   isSupabaseConfigured,
@@ -150,6 +151,12 @@ export interface AppState {
   resetPassword: (email: string) => Promise<void>;
   /** Legacy Firebase account: done with (or skipped) the migration screen. */
   finishLegacyMigration: () => Promise<void>;
+  /**
+   * "Şimdilik geç" on the migration screen: lets the user into the app now while
+   * KEEPING the legacy AsyncStorage keys, so the migration screen comes back on
+   * the next boot and the legacy rows are not orphaned.
+   */
+  skipLegacyMigration: () => Promise<void>;
   /** "Hesapsız dene": leaves the welcome screen without an account. */
   continueAsGuest: () => Promise<void>;
   sync: () => Promise<void>;
@@ -218,29 +225,42 @@ async function markWelcomed(value: boolean): Promise<void> {
 }
 
 /**
- * After the first successful Supabase sign-in: if this device still holds a legacy
- * Firebase account (AsyncStorage `firebase:authUser:*`), pull the account's server
- * data first and move the local rows from the old Firebase uid to the new Supabase
- * uid (see migrateLegacyRows), then delete the legacy session key(s). Idempotent —
- * with no legacy rows left it does nothing.
+ * After the first successful Supabase sign-in: pull the account's server data
+ * first, then — if this device still holds a legacy Firebase account
+ * (AsyncStorage `firebase:authUser:*`) — move the local rows from the old
+ * Firebase uid to the new Supabase uid (see migrateLegacyRows) and delete the
+ * legacy session key(s). Idempotent — with no legacy rows left the merge does
+ * nothing.
+ *
+ * The pre-pull is unconditional (not only when a legacy account exists): it
+ * must run BEFORE adoptGuestProgress, which stamps the adopted guest rows with
+ * `now`. Without the pre-pull those pending pks make pullChanges skip the
+ * server's rows and the next sync pushes guest data over the account's server
+ * data; with it, adoption no-ops on an account that has rows and correctly
+ * abandons the guest data (spec: pull first, keep the higher xp/crowns).
+ *
+ * `legacyAccount` state intentionally stays set: the migration screen keeps
+ * showing the "Yeni şifreni belirle" step until the form's onDone
+ * (finishLegacyMigration) dismisses it.
  */
 async function migrateLegacyIfNeeded(db: Database, uid: string): Promise<void> {
-  const legacy = await detectLegacyAccount();
-  if (!legacy) return;
-  if (legacy.uid !== uid) {
-    const remote = supabaseRemote();
-    if (remote) {
-      try {
-        await pullChanges({ db, remote, userId: uid }, new Date(0).toISOString());
-      } catch {
-        // Offline or transient failure: merge with the local rows only; the next
-        // sync reconciles with the server through the normal conflict rules.
-      }
+  const remote = supabaseRemote();
+  if (remote) {
+    try {
+      await pullChanges({ db, remote, userId: uid }, new Date(0).toISOString());
+    } catch {
+      // Offline or transient failure: merge with the local rows only; the next
+      // sync reconciles with the server through the normal conflict rules.
     }
-    await migrateLegacyRows(db, legacy.uid, uid);
   }
-  await clearLegacyAccount();
-  useAppStore.setState({ legacyAccount: null });
+  const legacyAccounts = await detectLegacyAccounts();
+  // Migrate every distinct legacy uid (a device can hold firebase:authUser:*
+  // entries under several API keys): clearing the keys would otherwise
+  // strand the other uids' rows forever.
+  for (const legacy of legacyAccounts) {
+    if (legacy.uid !== uid) await migrateLegacyRows(db, legacy.uid, uid);
+  }
+  if (legacyAccounts.length) await clearLegacyAccount();
 }
 
 function requireRepos(): Repos {
@@ -411,8 +431,11 @@ export const useAppStore = create<AppState>((set, get) => ({
         }
         const next = reposFor(db, uid);
         if (u) {
-          await adoptGuestProgress(db, next, Date.now());
+          // Order matters: the server pull + legacy merge must run BEFORE the
+          // guest adoption (see migrateLegacyIfNeeded). Adoption stamps rows
+          // with `now`, which would shadow the server's rows in pullChanges.
           await migrateLegacyIfNeeded(db, uid);
+          await adoptGuestProgress(db, next, Date.now());
         }
         repos = next;
         const st = regenerate(await repos.stats.get(), Date.now());
@@ -774,6 +797,13 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   async finishLegacyMigration() {
     await clearLegacyAccount();
+    set({ legacyAccount: null });
+    await markWelcomed(true);
+  },
+
+  async skipLegacyMigration() {
+    // Keys stay in AsyncStorage: boot re-detects the legacy account and shows
+    // this screen again on the next launch.
     set({ legacyAccount: null });
     await markWelcomed(true);
   },

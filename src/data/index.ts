@@ -14,7 +14,7 @@ export {
   supabaseRemote,
   toServerRow,
 } from './remote/supabaseRemote';
-export { LEGACY_AUTH_KEY_PREFIX, clearLegacyAccount, detectLegacyAccount, type LegacyAccount } from './remote/legacy';
+export { LEGACY_AUTH_KEY_PREFIX, clearLegacyAccount, detectLegacyAccount, detectLegacyAccounts, type LegacyAccount } from './remote/legacy';
 export * from './remote/auth';
 export * from './sync/syncService';
 export { migrateLegacyRows } from './sync/legacyMigration';

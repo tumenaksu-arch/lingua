@@ -124,6 +124,19 @@ describe('onAuthChanged', () => {
     expect(cb).toHaveBeenCalledTimes(1);
   });
 
+  it('emits the initial user only once when INITIAL_SESSION wins the race', async () => {
+    const cb = jest.fn();
+    const client = fakeClient({ user: USER });
+    getSupabaseMock.mockReturnValue(client);
+    onAuthChanged(cb);
+    const { auth } = client as never as { auth: { onAuthStateChange: jest.Mock } };
+    const stateCb = auth.onAuthStateChange.mock.calls[0]![0] as (e: string, s: unknown) => void;
+    stateCb('INITIAL_SESSION', { user: USER }); // fires before getSession() resolves
+    await Promise.resolve();
+    await Promise.resolve();
+    expect(cb).toHaveBeenCalledTimes(1);
+  });
+
   it('is a no-op when Supabase is not configured', () => {
     getSupabaseMock.mockReturnValue(null);
     const cb = jest.fn();
@@ -167,6 +180,16 @@ describe('authErrorMessage (GoTrue → Turkish)', () => {
   it('network failure', () => {
     expect(authErrorMessage(Object.assign(new Error('Failed to fetch'), { name: 'FetchError' }))).toBe(
       'Ağ hatası. Bağlantını kontrol et.',
+    );
+  });
+  it('validation_failed with a password message maps to the password hint, not the e-mail one', () => {
+    expect(authErrorMessage(err('validation_failed', 'password must be at least 6 characters', 422))).toBe(
+      'Şifre en az 6 karakter olmalı.',
+    );
+  });
+  it('non-length password errors fall through to the raw message', () => {
+    expect(authErrorMessage(err(undefined, 'New password should be different from the old password.'))).toBe(
+      'New password should be different from the old password.',
     );
   });
   it('invalid e-mail', () => {

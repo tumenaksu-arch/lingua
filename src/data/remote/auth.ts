@@ -29,7 +29,9 @@ const MESSAGES: Record<string, string> = {
   weak_password: 'Şifre en az 6 karakter olmalı.',
   otp_expired: 'Kod hatalı ya da süresi dolmuş.',
   over_request_rate_limit: 'Çok fazla deneme. Biraz sonra tekrar dene.',
-  validation_failed: 'E-posta adresi geçersiz.',
+  // NOTE: no `validation_failed` entry — GoTrue uses that code for both
+  // "email must be a valid email" and "password must be at least 6 characters",
+  // so it is matched by the targeted text checks below instead of a fixed text.
 };
 
 export function authErrorMessage(e: unknown): string {
@@ -52,7 +54,15 @@ export function authErrorMessage(e: unknown): string {
   ) {
     return 'Kod hatalı ya da süresi dolmuş.';
   }
-  if (text.includes('at least 6 characters') || text.includes('password')) {
+  // Only WEAK/SHORT password messages map to the length hint — other
+  // password-related failures ("new password should be different", a strength
+  // policy, …) must fall through to the raw message instead of a misleading hint.
+  if (
+    code === 'weak_password' ||
+    text.includes('at least 6 characters') ||
+    text.includes('too weak') ||
+    text.includes('too short')
+  ) {
     return 'Şifre en az 6 karakter olmalı.';
   }
   if (/already (?:been )?registered/.test(text)) {
@@ -141,6 +151,8 @@ export function onAuthChanged(cb: (user: AuthUser | null) => void): () => void {
   if (!sb) return () => {};
   let initialDone = false;
   void sb.auth.getSession().then(({ data }) => {
+    // INITIAL_SESSION may have emitted first; never invoke cb twice for it.
+    if (initialDone) return;
     initialDone = true;
     cb(toUser(data.session?.user ?? null));
   });
@@ -149,9 +161,13 @@ export function onAuthChanged(cb: (user: AuthUser | null) => void): () => void {
   } = sb.auth.onAuthStateChange((event, session) => {
     // INITIAL_SESSION duplicates the getSession() call above.
     if (event === 'INITIAL_SESSION') {
-      if (!initialDone) cb(toUser(session?.user ?? null));
+      if (!initialDone) {
+        initialDone = true;
+        cb(toUser(session?.user ?? null));
+      }
       return;
     }
+    initialDone = true; // any emission satisfies the initial callback
     cb(toUser(session?.user ?? null));
   });
   return () => subscription.unsubscribe();

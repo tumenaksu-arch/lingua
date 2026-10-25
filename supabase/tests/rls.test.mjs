@@ -284,7 +284,7 @@ test('friends: A cannot add a row into C\'s list', { skip }, async () => {
 test('friends: A cannot read C\'s friend rows', { skip }, async () => {
   const { data, error } = await A().from('friends').select('*');
   assert.ifError(error);
-  assert.ok(data.every((r) => r.user_id === users.A.uid));
+  assert.ok((data ?? []).every((r) => r.user_id === users.A.uid));
 });
 
 test('my_friends: A sees B with nickname; C sees nobody', { skip }, async () => {
@@ -309,6 +309,16 @@ test('friends: A removes B from the own list', { skip }, async () => {
   assert.equal(data.length, 0);
 });
 
+test('friends: A cannot delete a row from C\'s list', { skip }, async () => {
+  assert.ifError((await C().from('friends').insert({ user_id: users.C.uid, friend_id: users.B.uid })).error);
+  // No USING match → PostgREST answers 204 with zero affected rows: assert the effect.
+  await A().from('friends').delete().eq('user_id', users.C.uid).eq('friend_id', users.B.uid);
+  const { data, error } = await C().from('friends').select('friend_id').eq('user_id', users.C.uid);
+  assert.ifError(error);
+  assert.equal(data.length, 1, 'A\'s delete must not remove C\'s friend row');
+  assert.equal(data[0].friend_id, users.B.uid);
+});
+
 // ---------------------------------------------------------------------------
 // Leaderboard
 // ---------------------------------------------------------------------------
@@ -325,6 +335,20 @@ test('leaderboard: A cannot write a row with B\'s user_id', { skip }, async () =
     week_id: WEEK, user_id: users.B.uid, nickname: 'Bobby', xp: 10, updated_at: NOW,
   });
   assert.ok(error, 'insert with user_id = B must violate RLS');
+});
+
+test('leaderboard: A cannot UPDATE B\'s row (with-check gap)', { skip }, async () => {
+  assert.ifError((await B().from('leaderboard').insert({
+    week_id: WEEK, user_id: users.B.uid, nickname: 'Bobby', xp: 10, updated_at: NOW,
+  })).error);
+  // An over-permissive UPDATE policy (missing WITH CHECK, or using(true)) would
+  // let A rewrite B's row undetected by the insert test — assert the effect.
+  await A().from('leaderboard').update({ xp: 12345, updated_at: LATER }).eq('week_id', WEEK).eq('user_id', users.B.uid);
+  const { data, error } = await B().from('leaderboard').select('xp,updated_at').eq('week_id', WEEK).eq('user_id', users.B.uid);
+  assert.ifError(error);
+  assert.equal(data.length, 1);
+  assert.equal(data[0].xp, 10, 'A\'s update must not change B\'s xp');
+  assert.equal(new Date(data[0].updated_at).toISOString(), NOW);
 });
 
 test('leaderboard: xp -1 / 100001 / bad week_id rejected', { skip }, async () => {

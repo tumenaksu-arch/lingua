@@ -98,4 +98,36 @@ describe('EmailCodeForm (kod ile giriş)', () => {
     await press('Kodu gönder');
     expect(await screen.findByText('Çok fazla deneme. Biraz sonra tekrar dene.')).toBeTruthy();
   });
+
+  it('"Kodu tekrar gönder" returns to the send phase so an expired code is not a dead end', async () => {
+    await render(<EmailCodeForm />);
+    await type('E-posta', 'ali@example.com');
+    await press('Kodu gönder');
+    await type('6 haneli kod', '123456');
+
+    await press('Kodu tekrar gönder');
+    // Back in the send phase: the code field is gone, the e-mail stays.
+    expect(screen.queryByLabelText('6 haneli kod')).toBeNull();
+    expect(screen.getByRole('button', { name: 'Kodu gönder' })).toBeEnabled();
+    expect(screen.getByLabelText('E-posta')).toHaveProp('value', 'ali@example.com');
+
+    // Resending works and reaches the verify phase again.
+    await press('Kodu gönder');
+    expect(sendLoginCode).toHaveBeenCalledTimes(2);
+    expect(await screen.findByLabelText('6 haneli kod')).toBeTruthy();
+  });
+
+  it('an expired code shows the error and the resend path recovers from it', async () => {
+    verifyLoginCode.mockRejectedValueOnce({ code: 'otp_expired', message: 'OTP expired' });
+    await render(<EmailCodeForm />);
+    await type('E-posta', 'ali@example.com');
+    await press('Kodu gönder');
+    await type('6 haneli kod', '999999');
+    await press('Doğrula');
+    expect(await screen.findByText('Kod hatalı ya da süresi dolmuş.')).toBeTruthy();
+
+    await press('Kodu tekrar gönder');
+    expect(screen.queryByText('Kod hatalı ya da süresi dolmuş.')).toBeNull(); // error cleared
+    expect(screen.getByRole('button', { name: 'Kodu gönder' })).toBeEnabled();
+  });
 });

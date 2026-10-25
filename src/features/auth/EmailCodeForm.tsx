@@ -96,6 +96,15 @@ export function EmailCodeForm({ initialEmail = '', lockEmail = false, onDone, ap
 
   const skipPassword = () => onDone?.();
 
+  // Back to the send phase: the previous code may have expired or never
+  // arrived, and the user must never get stuck in the verify phase.
+  const resend = () => {
+    setPhase('send');
+    setCode('');
+    setError(null);
+    setInfo(null);
+  };
+
   if (appearance === 'landing') {
     const input = [landingStyles.input, lockEmail && landingStyles.inputLocked];
     const codeOk = /^\d{6}$/.test(code.trim());
@@ -142,15 +151,20 @@ export function EmailCodeForm({ initialEmail = '', lockEmail = false, onDone, ap
           </>
         )}
         {phase === 'verify' && (
-          <Pressable
-            onPress={verify}
-            disabled={!codeOk || busy}
-            accessibilityRole="button"
-            accessibilityLabel={busy ? 'Doğrula (yükleniyor)' : 'Doğrula'}
-            style={[landingStyles.primaryButton, (!codeOk || busy) && { backgroundColor: ep.accentDisabled }]}
-          >
-            <Text style={landingStyles.primaryButtonText}>{busy ? upperTr('Yükleniyor…') : upperTr('Doğrula')}</Text>
-          </Pressable>
+          <>
+            <Pressable
+              onPress={verify}
+              disabled={!codeOk || busy}
+              accessibilityRole="button"
+              accessibilityLabel={busy ? 'Doğrula (yükleniyor)' : 'Doğrula'}
+              style={[landingStyles.primaryButton, (!codeOk || busy) && { backgroundColor: ep.accentDisabled }]}
+            >
+              <Text style={landingStyles.primaryButtonText}>{busy ? upperTr('Yükleniyor…') : upperTr('Doğrula')}</Text>
+            </Pressable>
+            <Pressable onPress={resend} accessibilityRole="button" style={landingStyles.link}>
+              <Text style={landingStyles.linkText}>Kodu tekrar gönder</Text>
+            </Pressable>
+          </>
         )}
         {phase === 'password' && (
           <>
@@ -251,7 +265,12 @@ export function EmailCodeForm({ initialEmail = '', lockEmail = false, onDone, ap
         </>
       )}
       {phase === 'verify' && (
-        <Button title="Doğrula" loading={busy} disabled={!codeOk} onPress={verify} />
+        <>
+          <Button title="Doğrula" loading={busy} disabled={!codeOk} onPress={verify} />
+          <Pressable onPress={resend} accessibilityRole="button" style={styles.link}>
+            <Body color={colors.secondaryText}>Kodu tekrar gönder</Body>
+          </Pressable>
+        </>
       )}
       {phase === 'password' && (
         <>

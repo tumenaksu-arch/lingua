@@ -1,3 +1,5 @@
+import type { SupabaseClient } from '@supabase/supabase-js';
+
 import { isoWeekId } from '@/features/social/week';
 
 import { getSupabase } from './supabase';
@@ -8,7 +10,7 @@ import { getSupabase } from './supabase';
  * weekly leaderboard entries and the friend list. E-mail is never stored in
  * any public table; only the chosen nickname is visible to other players.
  * Every helper degrades gracefully: when Supabase is not configured (or the
- * session is missing, which RLS rejects) the functions return null / [] /
+ * session is missing, which RLS would reject) the functions return null / [] /
  * false, and write failures surface as Turkish Error messages for the screen.
  */
 
@@ -70,6 +72,21 @@ function toTurkishError(e: unknown): Error {
   return e instanceof Error ? e : new Error(String(e));
 }
 
+/**
+ * Spec contract: helpers return null/[]/false for guests too. RLS alone would
+ * turn a missing session into a 401/403 throw, so check the session up front.
+ * When the session state cannot be read (should not happen), let the call
+ * proceed and the error mapping decide.
+ */
+async function hasSession(sb: SupabaseClient): Promise<boolean> {
+  try {
+    const { data } = await sb.auth.getSession();
+    return Boolean(data.session);
+  } catch {
+    return true;
+  }
+}
+
 export async function getProfile(uid: string): Promise<ProfileDoc | null> {
   const sb = getSupabase();
   if (!sb) return null;
@@ -90,23 +107,10 @@ export async function getProfile(uid: string): Promise<ProfileDoc | null> {
  */
 export async function saveProfile(uid: string, nickname: string): Promise<ProfileDoc | null> {
   const sb = getSupabase();
-  if (!sb) return null;
+  if (!sb || !(await hasSession(sb))) return null;
   const now = new Date().toISOString();
   const existing = await getProfile(uid);
-  if (existing) {
-    const { error } = await sb.from('profiles').update({ nickname, updated_at: now }).eq('user_id', uid);
-    if (error) throw toTurkishError(error);
-    // Keep this week's leaderboard row in sync with the new nickname; the row
-    // may not exist yet (updated_at default aside, an update matching no row
-    // is a no-op on PostgREST).
-    const { error: boardError } = await sb
-      .from('leaderboard')
-      .update({ nickname, updated_at: now })
-      .eq('week_id', isoWeekId(new Date()))
-      .eq('user_id', uid);
-    if (boardError) throw toTurkishError(boardError);
-    return { ...existing, nickname, updated_at: now };
-  }
+  if (existing) return updateProfileRow(sb, existing, nickname, now);
   for (let attempt = 0; attempt < 5; attempt++) {
     const profile: ProfileDoc = {
       user_id: uid,
@@ -118,6 +122,12 @@ export async function saveProfile(uid: string, nickname: string): Promise<Profil
       const { error } = await sb.from('profiles').insert(profile);
       if (error) {
         if (error.code === '23505') {
+          // The unique violation is not necessarily the invite code — a
+          // concurrent first save (double submit, two devices racing before
+          // either insert commits) violates profiles_pkey. Re-read the row and
+          // fall through to the update path like the old Firestore merge-write.
+          const raced = await getProfile(uid);
+          if (raced) return updateProfileRow(sb, raced, nickname, now);
           if (attempt < 4) continue;
           throw new Error('Davet kodu üretilemedi. Lütfen tekrar dene.');
         }
@@ -131,10 +141,31 @@ export async function saveProfile(uid: string, nickname: string): Promise<Profil
   throw new Error('Davet kodu üretilemedi. Lütfen tekrar dene.');
 }
 
+/** Updates the nickname on an existing profile + the current week's leaderboard row. */
+async function updateProfileRow(
+  sb: SupabaseClient,
+  existing: ProfileDoc,
+  nickname: string,
+  now: string,
+): Promise<ProfileDoc> {
+  const { error } = await sb.from('profiles').update({ nickname, updated_at: now }).eq('user_id', existing.user_id);
+  if (error) throw toTurkishError(error);
+  // Keep this week's leaderboard row in sync with the new nickname; the row
+  // may not exist yet (updated_at default aside, an update matching no row
+  // is a no-op on PostgREST).
+  const { error: boardError } = await sb
+    .from('leaderboard')
+    .update({ nickname, updated_at: now })
+    .eq('week_id', isoWeekId(new Date()))
+    .eq('user_id', existing.user_id);
+  if (boardError) throw toTurkishError(boardError);
+  return { ...existing, nickname, updated_at: now };
+}
+
 /** Creates or updates the caller's own row for the given ISO week. */
 export async function upsertWeeklyEntry(uid: string, nickname: string, xp: number, weekId: string): Promise<boolean> {
   const sb = getSupabase();
-  if (!sb) return false;
+  if (!sb || !(await hasSession(sb))) return false;
   try {
     const { error } = await sb
       .from('leaderboard')
@@ -194,24 +225,29 @@ export async function entriesFor(weekId: string, uids: string[]): Promise<Leader
   }
 }
 
-/** Resolves an invite code to the owning user; null when unknown or offline. */
+/**
+ * Resolves an invite code to the owning user; null ONLY when the code is
+ * unknown (empty result). Network/auth/server failures throw a Turkish Error
+ * so a transient failure is not misread as an unknown code.
+ */
 export async function resolveInvite(code: string): Promise<InviteDoc | null> {
   const sb = getSupabase();
   if (!sb) return null;
+  let result: { data: unknown; error: unknown };
   try {
-    const { data, error } = await sb.rpc('resolve_invite', { code: code.trim().toUpperCase() });
-    if (error) return null;
-    const row = (data as { user_id: string; nickname: string }[] | null)?.[0];
-    return row ? { uid: row.user_id, nickname: row.nickname } : null;
-  } catch {
-    return null;
+    result = await sb.rpc('resolve_invite', { code: code.trim().toUpperCase() });
+  } catch (e) {
+    throw toTurkishError(e);
   }
+  if (result.error) throw toTurkishError(result.error);
+  const row = (result.data as { user_id: string; nickname: string }[] | null)?.[0];
+  return row ? { uid: row.user_id, nickname: row.nickname } : null;
 }
 
 /** Adds `friendUid` to the caller's own friend list; an existing row is success. */
 export async function addFriend(uid: string, friendUid: string): Promise<boolean> {
   const sb = getSupabase();
-  if (!sb) return false;
+  if (!sb || !(await hasSession(sb))) return false;
   try {
     const { error } = await sb.from('friends').insert({ user_id: uid, friend_id: friendUid });
     if (error) {
@@ -243,7 +279,7 @@ export async function listFriends(): Promise<FriendDoc[]> {
 
 export async function removeFriend(uid: string, friendUid: string): Promise<boolean> {
   const sb = getSupabase();
-  if (!sb) return false;
+  if (!sb || !(await hasSession(sb))) return false;
   try {
     const { error } = await sb.from('friends').delete().eq('user_id', uid).eq('friend_id', friendUid);
     if (error) throw toTurkishError(error);
