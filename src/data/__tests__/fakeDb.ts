@@ -51,11 +51,18 @@ export class FakeDb implements Database {
     }
     if ((m = s.match(/^UPDATE (\w+) SET (.+) WHERE (.+)$/i))) {
       const [, table, setStr, whereStr] = m;
-      const pred = this.where(whereStr, params);
+      const parts = setStr.split(',').map((a) => a.split('=').map((x) => x.trim()) as [string, string]);
+      // `col = ?` assignments consume params left-to-right, before the WHERE params.
+      let i = 0;
+      const assigns: [string, SqlValue][] = [];
+      for (const [col, expr] of parts) {
+        if (expr === '?') assigns.push([col, params[i++] ?? null]);
+      }
+      const pred = this.where(whereStr, params.slice(i));
       for (const r of this.t(table)) {
         if (!pred(r)) continue;
-        for (const a of setStr.split(',')) {
-          const [col, expr] = a.split('=').map((x) => x.trim());
+        for (const [col, v] of assigns) r[col] = v;
+        for (const [col, expr] of parts) {
           if (/\+ 1$/.test(expr)) r[col] = (Number(r[col]) || 0) + 1;
         }
       }

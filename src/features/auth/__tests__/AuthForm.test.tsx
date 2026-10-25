@@ -11,15 +11,15 @@ const type = (label: string, text: string) => fireEvent.changeText(screen.getByL
 
 let signIn: jest.Mock;
 let signUp: jest.Mock;
-let resetPassword: jest.Mock;
+let sendLoginCode: jest.Mock;
 let continueAsGuest: jest.Mock;
 
 beforeEach(() => {
   signIn = jest.fn(() => Promise.resolve());
   signUp = jest.fn(() => Promise.resolve());
-  resetPassword = jest.fn(() => Promise.resolve());
+  sendLoginCode = jest.fn(() => Promise.resolve());
   continueAsGuest = jest.fn(() => Promise.resolve());
-  useAppStore.setState({ signIn, signUp, resetPassword, continueAsGuest });
+  useAppStore.setState({ signIn, signUp, sendLoginCode, continueAsGuest });
 });
 
 describe('AuthForm', () => {
@@ -78,8 +78,8 @@ describe('AuthForm', () => {
     expect(signIn).not.toHaveBeenCalled();
   });
 
-  it('shows the Firebase error in Turkish and does not call onDone', async () => {
-    signIn.mockRejectedValueOnce(Object.assign(new Error('x'), { code: 'auth/invalid-credential' }));
+  it('shows the auth error in Turkish and does not call onDone', async () => {
+    signIn.mockRejectedValueOnce(Object.assign(new Error('x'), { code: 'invalid_credentials' }));
     const onDone = jest.fn();
     await render(<AuthForm onDone={onDone} />);
     await type('E-posta', 'ali@example.com');
@@ -89,16 +89,25 @@ describe('AuthForm', () => {
     expect(onDone).not.toHaveBeenCalled();
   });
 
-  it('password reset asks for the e-mail first, then sends it without claiming the account exists', async () => {
+  it('"Şifremi unuttum" switches to the 6-digit code flow and sends the code', async () => {
     await render(<AuthForm />);
     await press('Şifremi unuttum');
-    expect(resetPassword).not.toHaveBeenCalled();
-    expect(screen.getByText('Önce e-posta adresini yaz.')).toBeTruthy();
+    // The password form is replaced by the code form.
+    expect(screen.queryByLabelText('Şifre, en az 6 karakter')).toBeNull();
+    expect(screen.getByRole('button', { name: 'Kodu gönder' })).toBeTruthy();
 
     await type('E-posta', ' ali@example.com ');
-    await press('Şifremi unuttum');
-    expect(resetPassword).toHaveBeenCalledWith('ali@example.com');
-    expect(screen.getByText(/Bu adres kayıtlıysa şifre sıfırlama bağlantısı gönderildi/)).toBeTruthy();
+    await press('Kodu gönder');
+    expect(sendLoginCode).toHaveBeenCalledWith('ali@example.com');
+    expect(await screen.findByText(/6 haneli kodu e-postana gönderdik/)).toBeTruthy();
+  });
+
+  it('"E-postama kod gönder" enters the same code flow', async () => {
+    await render(<AuthForm />);
+    await press('E-postama kod gönder');
+    await type('E-posta', 'ali@example.com');
+    await press('Kodu gönder');
+    expect(sendLoginCode).toHaveBeenCalledWith('ali@example.com');
   });
 
   it('show/hide toggles password visibility', async () => {

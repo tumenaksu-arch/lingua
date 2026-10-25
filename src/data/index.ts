@@ -5,7 +5,16 @@ export { DEFAULT_STATS, LOCAL_USER_ID, createStatsRepo, statsToServerRow, type S
 export { cardToServerRow, createSrsRepo, type SrsRepo } from './local/repos/srsRepo';
 export { createProgressRepo, progressToServerRow, type LessonProgress, type ProgressRepo } from './local/repos/progressRepo';
 export { createContentRepo, type ContentRepo } from './local/repos/contentRepo';
-export { firebaseConfig, getFirebaseApp, getFirebaseAuth, getFirestoreDb, isFirebaseConfigured } from './remote/firebase';
-export { docIdFor, firestoreRemote } from './remote/firestoreRemote';
+export { getSupabase, isSupabaseConfigured, resetSupabaseForTests, supabaseConfig } from './remote/supabase';
+export {
+  SERVER_COLUMNS,
+  UPSERT_ON_CONFLICT,
+  isAuthFailure,
+  normaliseServerRow,
+  supabaseRemote,
+  toServerRow,
+} from './remote/supabaseRemote';
+export { LEGACY_AUTH_KEY_PREFIX, clearLegacyAccount, detectLegacyAccount, type LegacyAccount } from './remote/legacy';
 export * from './remote/auth';
 export * from './sync/syncService';
+export { migrateLegacyRows } from './sync/legacyMigration';

@@ -20,23 +20,31 @@ import {
 import {
   DEFAULT_STATS,
   LOCAL_USER_ID,
+  clearLegacyAccount,
   createProgressRepo,
   createSrsRepo,
   createStatsRepo,
+  currentUser,
+  detectLegacyAccount,
   getDb,
   getMeta,
-  firestoreRemote,
-  getCurrentUser,
-  isFirebaseConfigured,
-  onAuthStateChange,
-  sendPasswordReset,
+  isSupabaseConfigured,
+  migrateLegacyRows,
+  onAuthChanged,
+  pullChanges,
+  resetPassword,
+  sendLoginCode,
   setMeta,
+  setPassword,
   signIn,
   signOut,
   signUp,
+  supabaseRemote,
   syncNow,
+  verifyLoginCode,
   type AuthUser,
   type Database,
+  type LegacyAccount,
   type LessonProgress,
 } from '@/data';
 import {
@@ -82,9 +90,15 @@ export interface AppState {
   onboarded: boolean;
   /**
    * false while the welcome (sign-in) screen should be shown: signed out and "Hesapsız dene"
-   * not chosen. Always true when Firebase is not configured (accounts are unavailable).
+   * not chosen. Always true when Supabase is not configured (accounts are unavailable).
    */
   welcomed: boolean;
+  /**
+   * A leftover Firebase session was found on this device and no Supabase session exists:
+   * the migration screen walks the user through code login so their old progress (keyed
+   * by the legacy Firebase uid) can be moved to the new account.
+   */
+  legacyAccount: LegacyAccount | null;
   db: Database | null;
   userId: string;
   user: AuthUser | null;
@@ -126,8 +140,16 @@ export interface AppState {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
-  /** Firebase password-reset e-mail for the address typed in the sign-in form. */
+  /** Sends a 6-digit login code to the e-mail (passwordless login / "Şifremi unuttum"). */
+  sendLoginCode: (email: string) => Promise<void>;
+  /** Verifies the 6-digit code; on success the user is signed in. */
+  verifyLoginCode: (email: string, code: string) => Promise<void>;
+  /** Sets a new password for the signed-in user (after a code login). */
+  setPassword: (password: string) => Promise<void>;
+  /** "Şifremi unuttum": sends the 6-digit code; a new password can be set after verifying it. */
   resetPassword: (email: string) => Promise<void>;
+  /** Legacy Firebase account: done with (or skipped) the migration screen. */
+  finishLegacyMigration: () => Promise<void>;
   /** "Hesapsız dene": leaves the welcome screen without an account. */
   continueAsGuest: () => Promise<void>;
   sync: () => Promise<void>;
@@ -192,7 +214,33 @@ async function adoptGuestProgress(db: Database, target: Repos, now: number): Pro
 async function markWelcomed(value: boolean): Promise<void> {
   const { db } = useAppStore.getState();
   if (db) await setMeta(db, WELCOMED_KEY, value ? '1' : '0');
-  useAppStore.setState({ welcomed: value || !isFirebaseConfigured() });
+  useAppStore.setState({ welcomed: value || !isSupabaseConfigured() });
+}
+
+/**
+ * After the first successful Supabase sign-in: if this device still holds a legacy
+ * Firebase account (AsyncStorage `firebase:authUser:*`), pull the account's server
+ * data first and move the local rows from the old Firebase uid to the new Supabase
+ * uid (see migrateLegacyRows), then delete the legacy session key(s). Idempotent —
+ * with no legacy rows left it does nothing.
+ */
+async function migrateLegacyIfNeeded(db: Database, uid: string): Promise<void> {
+  const legacy = await detectLegacyAccount();
+  if (!legacy) return;
+  if (legacy.uid !== uid) {
+    const remote = supabaseRemote();
+    if (remote) {
+      try {
+        await pullChanges({ db, remote, userId: uid }, new Date(0).toISOString());
+      } catch {
+        // Offline or transient failure: merge with the local rows only; the next
+        // sync reconciles with the server through the normal conflict rules.
+      }
+    }
+    await migrateLegacyRows(db, legacy.uid, uid);
+  }
+  await clearLegacyAccount();
+  useAppStore.setState({ legacyAccount: null });
 }
 
 function requireRepos(): Repos {
@@ -303,6 +351,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   ready: false,
   onboarded: false,
   welcomed: false,
+  legacyAccount: null,
   db: null,
   userId: LOCAL_USER_ID,
   user: null,
@@ -322,12 +371,15 @@ export const useAppStore = create<AppState>((set, get) => ({
   async boot() {
     if (get().ready) return;
     const db = await getDb();
-    const user = isFirebaseConfigured() ? await getCurrentUser() : null;
+    const configured = isSupabaseConfigured();
+    const user = configured ? await currentUser() : null;
+    // No Supabase session but a leftover Firebase session → one-time migration screen.
+    const legacyAccount = configured && !user ? await detectLegacyAccount() : null;
     const userId = user?.uid ?? LOCAL_USER_ID;
     repos = reposFor(db, userId);
 
     const onboarded = (await getMeta(db, ONBOARDED_KEY)) === '1';
-    const welcomed = !isFirebaseConfigured() || !!user || (await getMeta(db, WELCOMED_KEY)) === '1';
+    const welcomed = !configured || !!user || (await getMeta(db, WELCOMED_KEY)) === '1';
     const savedCourse = await getMeta(db, COURSE_KEY);
     const course = (savedCourse && getCourse(savedCourse)) || courses[0]!;
     const now = Date.now();
@@ -344,18 +396,24 @@ export const useAppStore = create<AppState>((set, get) => ({
     const reminderRaw = await getMeta(db, REMINDER_KEY);
     const reminderHour = reminderRaw === null || reminderRaw === '' ? null : Number(reminderRaw);
 
-    set({ ready: true, onboarded, welcomed, db, userId, user, course, stats, progress, dueCount, achievements, reminderHour });
+    set({ ready: true, onboarded, welcomed, db, userId, user, legacyAccount, course, stats, progress, dueCount, achievements, reminderHour });
 
-    if (isFirebaseConfigured()) {
+    if (configured) {
+      // A restored session may still have local rows under the legacy Firebase uid
+      // (the app was killed mid-migration): finish the move before the first sync.
+      if (user) await migrateLegacyIfNeeded(db, user.uid);
       authUnsub?.();
-      authUnsub = onAuthStateChange(async (u) => {
+      authUnsub = onAuthChanged(async (u) => {
         const uid = u?.uid ?? LOCAL_USER_ID;
         if (uid === get().userId) {
           set({ user: u });
           return;
         }
         const next = reposFor(db, uid);
-        if (u) await adoptGuestProgress(db, next, Date.now());
+        if (u) {
+          await adoptGuestProgress(db, next, Date.now());
+          await migrateLegacyIfNeeded(db, uid);
+        }
         repos = next;
         const st = regenerate(await repos.stats.get(), Date.now());
         const pl = await repos.progress.all();
@@ -683,7 +741,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   async signIn(email, password) {
-    await signIn(email, password); // onAuthStateChange swaps repos + syncs
+    await signIn(email, password); // onAuthChanged swaps repos + syncs
     await markWelcomed(true);
   },
 
@@ -697,8 +755,27 @@ export const useAppStore = create<AppState>((set, get) => ({
     await markWelcomed(false); // back to the welcome screen, like a fresh start
   },
 
+  async sendLoginCode(email) {
+    await sendLoginCode(email);
+  },
+
+  async verifyLoginCode(email, code) {
+    await verifyLoginCode(email, code); // onAuthChanged swaps repos + migrates legacy data + syncs
+    await markWelcomed(true);
+  },
+
+  async setPassword(password) {
+    await setPassword(password);
+  },
+
   async resetPassword(email) {
-    await sendPasswordReset(email);
+    await resetPassword(email); // sends the 6-digit code
+  },
+
+  async finishLegacyMigration() {
+    await clearLegacyAccount();
+    set({ legacyAccount: null });
+    await markWelcomed(true);
   },
 
   async continueAsGuest() {
@@ -707,7 +784,7 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   async sync() {
     const { db, userId, syncing } = get();
-    const remote = firestoreRemote();
+    const remote = supabaseRemote();
     if (!db || !remote || userId === LOCAL_USER_ID || syncing) return;
     set({ syncing: true, lastSyncError: null });
     try {

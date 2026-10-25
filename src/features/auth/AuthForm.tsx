@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { authErrorMessage } from '@/data';
 import { useAppStore } from '@/features/store';
 import { Body, Button, Caption, radii, spacing, upperTr, useTheme } from '@/ui';
+import { EmailCodeForm } from './EmailCodeForm';
 
 export type AuthMode = 'in' | 'up';
 
@@ -33,17 +34,18 @@ const ep = {
 
 /**
  * E-mail/password form shared by the welcome screen and the auth modal:
- * sign in / sign up toggle, show-password, and Firebase password reset.
+ * sign in / sign up toggle, show-password, and the 6-digit code flow
+ * ("E-postama kod gönder" / "Şifremi unuttum") via EmailCodeForm.
  */
 export function AuthForm({ initialMode = 'in', onDone, appearance = 'app' }: AuthFormProps) {
   const signIn = useAppStore((s) => s.signIn);
   const signUp = useAppStore((s) => s.signUp);
-  const resetPassword = useAppStore((s) => s.resetPassword);
   const { colors } = useTheme();
   const [mode, setMode] = useState<AuthMode>(initialMode);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [codeFlow, setCodeFlow] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
@@ -63,26 +65,15 @@ export function AuthForm({ initialMode = 'in', onDone, appearance = 'app' }: Aut
     }
   };
 
-  const forgot = async () => {
-    setError(null);
-    setInfo(null);
-    if (!email.trim()) {
-      setError('Önce e-posta adresini yaz.');
-      return;
-    }
-    try {
-      await resetPassword(email.trim());
-      setInfo('Bu adres kayıtlıysa şifre sıfırlama bağlantısı gönderildi. Gelen kutunu (ve spam klasörünü) kontrol et.');
-    } catch (e) {
-      setError(authErrorMessage(e));
-    }
-  };
-
   const switchMode = () => {
     setMode(mode === 'in' ? 'up' : 'in');
     setError(null);
     setInfo(null);
   };
+
+  if (codeFlow) {
+    return <EmailCodeForm initialEmail={email} onDone={onDone} appearance={appearance} />;
+  }
 
   if (appearance === 'landing') {
     const canSubmit = Boolean(email) && password.length >= 6;
@@ -149,9 +140,14 @@ export function AuthForm({ initialMode = 'in', onDone, appearance = 'app' }: Aut
           </Text>
         </Pressable>
         {mode === 'in' && (
-          <Pressable onPress={forgot} accessibilityRole="button" style={landingStyles.link}>
-            <Text style={landingStyles.linkText}>Şifremi unuttum</Text>
-          </Pressable>
+          <View style={landingStyles.links}>
+            <Pressable onPress={() => setCodeFlow(true)} accessibilityRole="button" style={landingStyles.link}>
+              <Text style={landingStyles.linkText}>Şifremi unuttum</Text>
+            </Pressable>
+            <Pressable onPress={() => setCodeFlow(true)} accessibilityRole="button" style={landingStyles.link}>
+              <Text style={landingStyles.linkText}>E-postama kod gönder</Text>
+            </Pressable>
+          </View>
         )}
         <View style={landingStyles.divider} />
         <Pressable
@@ -216,9 +212,14 @@ export function AuthForm({ initialMode = 'in', onDone, appearance = 'app' }: Aut
         onPress={submit}
       />
       {mode === 'in' && (
-        <Pressable onPress={forgot} accessibilityRole="button" style={styles.link}>
-          <Body color={colors.secondaryText}>Şifremi unuttum</Body>
-        </Pressable>
+        <View style={styles.links}>
+          <Pressable onPress={() => setCodeFlow(true)} accessibilityRole="button" style={styles.link}>
+            <Body color={colors.secondaryText}>Şifremi unuttum</Body>
+          </Pressable>
+          <Pressable onPress={() => setCodeFlow(true)} accessibilityRole="button" style={styles.link}>
+            <Body color={colors.secondaryText}>E-postama kod gönder</Body>
+          </Pressable>
+        </View>
       )}
       <View style={[styles.divider, { backgroundColor: colors.border }]} />
       <Button
@@ -236,6 +237,7 @@ const styles = StyleSheet.create({
   passwordInput: { paddingRight: 80 },
   eye: { position: 'absolute', right: spacing.md, top: 0, bottom: 0, justifyContent: 'center' },
   link: { alignSelf: 'flex-start', paddingVertical: spacing.xs },
+  links: { flexDirection: 'row', gap: spacing.lg, flexWrap: 'wrap' },
   divider: { height: 1, marginVertical: spacing.sm },
 });
 
@@ -280,6 +282,7 @@ const landingStyles = StyleSheet.create({
     color: ep.onAccent,
   },
   link: { alignSelf: 'flex-start', paddingVertical: spacing.xs },
+  links: { flexDirection: 'row', gap: spacing.lg, flexWrap: 'wrap' },
   linkText: { fontFamily: 'Inter_400Regular', fontSize: 14, color: ep.text },
   divider: { height: 1, backgroundColor: ep.hairline, marginVertical: spacing.sm },
   secondaryButton: {

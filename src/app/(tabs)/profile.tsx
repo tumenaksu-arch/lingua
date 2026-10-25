@@ -4,7 +4,7 @@ import * as Haptics from 'expo-haptics';
 import { router, useFocusEffect } from 'expo-router';
 
 import { ACHIEVEMENTS, FREEZE_EVERY_DAYS, MAX_HEARTS, MAX_STREAK_FREEZES, getAchievement, msUntilNextHeart, regenerate } from '@/domain';
-import { isFirebaseConfigured } from '@/data';
+import { isSupabaseConfigured } from '@/data';
 import { speak } from '@/speech';
 import { cancelReminder, isSupported as remindersSupported, requestPermission, scheduleDailyReminder } from '@/features/notifications';
 import { useAppStore } from '@/features/store';
@@ -204,7 +204,7 @@ export default function ProfileScreen() {
   const now = useNow();
   const stats = regenerate(rawStats, now);
   const nextHeartMin = stats.hearts < MAX_HEARTS ? Math.ceil(msUntilNextHeart(stats, now) / 60000) : 0;
-  const cloud = isFirebaseConfigured();
+  const cloud = isSupabaseConfigured();
 
   return (
     <Screen padding={0} edges={['top']}>
@@ -322,7 +322,7 @@ export default function ProfileScreen() {
 
         <Heading>Hesap</Heading>
         {!cloud ? (
-          <Caption color={colors.textMuted}>Bulut senkronu kapalı: .env dosyasında EXPO_PUBLIC_FIREBASE_* değerlerini tanımlayın (docs/SETUP.md).</Caption>
+          <Caption color={colors.textMuted}>Bulut senkronu kapalı: .env dosyasında EXPO_PUBLIC_SUPABASE_URL ve EXPO_PUBLIC_SUPABASE_ANON_KEY değerlerini tanımlayın (docs/SETUP.md).</Caption>
         ) : user ? (
           <>
             <Button title={syncing ? 'Senkronize ediliyor…' : 'Şimdi senkronize et'} variant="secondary" loading={syncing} onPress={sync} />
