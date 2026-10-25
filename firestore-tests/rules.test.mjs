@@ -60,19 +60,19 @@ test('profile: owner can create and read their own profile', async () => {
   const db = dbFor('alice');
   await db.doc('users/alice/profile/current').set({
     user_id: 'alice',
-    nickname: 'YıldızKedi',
+    nickname: 'Gül Üzüm_ç',
     invite_code: 'ABC234',
     updated_at: ISO,
   });
   const snap = await db.doc('users/alice/profile/current').get();
-  assert.equal(snap.data()?.nickname, 'YıldızKedi');
+  assert.equal(snap.data()?.nickname, 'Gül Üzüm_ç');
 });
 
 test('profile: another user cannot read or write the profile', async () => {
   await denied(() =>
     dbFor('bob').doc('users/alice/profile/current').set({
       user_id: 'alice',
-      nickname: 'YıldızKedi',
+      nickname: 'Gül Üzüm_ç',
       invite_code: 'ABC234',
       updated_at: ISO,
     }),
@@ -92,7 +92,7 @@ test('profile: e-mail field and bad nickname are rejected', async () => {
   await denied(() =>
     alice.doc('users/alice/profile/current').set({
       user_id: 'alice',
-      nickname: 'YıldızKedi',
+      nickname: 'Gül Üzüm_ç',
       invite_code: 'ABC234',
       email: 'alice@example.com',
       updated_at: ISO,
@@ -112,7 +112,7 @@ test('profile: create under a doc id other than current is denied', async () => 
   await denied(() =>
     dbFor('alice').doc('users/alice/profile/other').set({
       user_id: 'alice',
-      nickname: 'YıldızKedi',
+      nickname: 'Gül Üzüm_ç',
       invite_code: 'ABC234',
       updated_at: ISO,
     }),
@@ -122,7 +122,7 @@ test('profile: create under a doc id other than current is denied', async () => 
 test('profile: unauthenticated read is denied', async () => {
   await dbFor('alice').doc('users/alice/profile/current').set({
     user_id: 'alice',
-    nickname: 'YıldızKedi',
+    nickname: 'Gül Üzüm_ç',
     invite_code: 'ABC234',
     updated_at: ISO,
   });
@@ -133,7 +133,7 @@ test('profile: invite_code is immutable once created', async () => {
   const alice = dbFor('alice');
   await alice.doc('users/alice/profile/current').set({
     user_id: 'alice',
-    nickname: 'YıldızKedi',
+    nickname: 'Gül Üzüm_ç',
     invite_code: 'ABC234',
     updated_at: ISO,
   });
@@ -152,7 +152,7 @@ test('profile: invite_code is immutable once created', async () => {
 // ---------------------------------------------------------------------------
 
 test('invite: signed-in user can get, foreign uid create is denied, list denied', async () => {
-  await dbFor('alice').doc('invites/ABC234').set({ uid: 'alice', nickname: 'YıldızKedi', created_at: ISO });
+  await dbFor('alice').doc('invites/ABC234').set({ uid: 'alice', nickname: 'Gül Üzüm_ç', created_at: ISO });
   const snap = await dbFor('bob').doc('invites/ABC234').get();
   assert.equal(snap.data()?.uid, 'alice');
   // create claiming a foreign uid
@@ -162,15 +162,15 @@ test('invite: signed-in user can get, foreign uid create is denied, list denied'
 });
 
 test('invite: unauthenticated get denied; bad code shape denied', async () => {
-  await dbFor('alice').doc('invites/ABC234').set({ uid: 'alice', nickname: 'YıldızKedi', created_at: ISO });
+  await dbFor('alice').doc('invites/ABC234').set({ uid: 'alice', nickname: 'Gül Üzüm_ç', created_at: ISO });
   await denied(() => dbFor(null).doc('invites/ABC234').get());
   await denied(() =>
-    dbFor('alice').doc('invites/toolong!!').set({ uid: 'alice', nickname: 'YıldızKedi', created_at: ISO }),
+    dbFor('alice').doc('invites/toolong!!').set({ uid: 'alice', nickname: 'Gül Üzüm_ç', created_at: ISO }),
   );
 });
 
 test('invite: a non-owner cannot delete or take over an invite', async () => {
-  await dbFor('alice').doc('invites/ABC234').set({ uid: 'alice', nickname: 'YıldızKedi', created_at: ISO });
+  await dbFor('alice').doc('invites/ABC234').set({ uid: 'alice', nickname: 'Gül Üzüm_ç', created_at: ISO });
   await denied(() => dbFor('bob').doc('invites/ABC234').delete());
   await denied(() => dbFor('bob').doc('invites/ABC234').update({ uid: 'bob' }));
   const snap = await dbFor('alice').doc('invites/ABC234').get();
@@ -181,7 +181,7 @@ test('invite: a non-owner cannot delete or take over an invite', async () => {
 // leaderboard/{weekId}/entries/{uid}
 // ---------------------------------------------------------------------------
 
-const validEntry = { nickname: 'YıldızKedi', xp: 120, updated_at: ISO };
+const validEntry = { nickname: 'Gül Üzüm_ç', xp: 120, updated_at: ISO };
 
 test('leaderboard: owner write ok, other uid write denied, reads work', async () => {
   await dbFor('alice').doc('leaderboard/2026-W43/entries/alice').set(validEntry);

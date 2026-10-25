@@ -29,7 +29,7 @@ jest.mock('@/data/remote/social', () => ({
   topEntries: jest.fn(async () => []),
   upsertWeeklyEntry: jest.fn(async () => true),
   INVITE_ALPHABET: 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789',
-  NICKNAME_PATTERN: /^[A-Za-z0-9ÇĞİÖŞÜçğıöşu_. -]+$/,
+  NICKNAME_PATTERN: /^[A-Za-z0-9ÇĞİÖŞÜçğıöşü_. -]+$/,
 }));
 
 const mocked = {

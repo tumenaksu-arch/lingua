@@ -41,7 +41,7 @@ rules_version = '2';
 //
 // Collection: users/{uid}/profile        Document ID: "current"
 //   - user_id: string (required, immutable, == uid)
-//   - nickname: string (required, 3..20 chars, ^[A-Za-z0-9ÇĞİÖŞÜçğıöşu_. -]+$)
+//   - nickname: string (required, 3..20 chars, ^[A-Za-z0-9ÇĞİÖŞÜçğıöşü_. -]+$)
 //   - invite_code: string (required, 6 chars from A-Z minus I/O + digits 2-9, immutable after create)
 //   - updated_at: string (required, ISO date)
 //   Owner read/write only.
@@ -171,7 +171,7 @@ service cloud.firestore {
     // ===============================================================
     function isValidNickname(v) {
       return v is string && v.size() >= 3 && v.size() <= 20
-        && v.matches('^[A-Za-z0-9ÇĞİÖŞÜçğıöşu_. -]+$');
+        && v.matches('^[A-Za-z0-9ÇĞİÖŞÜçğıöşü_. -]+$');
     }
 
     function isValidInviteCode(v) {
