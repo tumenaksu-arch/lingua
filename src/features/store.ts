@@ -28,6 +28,7 @@ import {
   getCurrentUser,
   isFirebaseConfigured,
   onAuthStateChange,
+  sendPasswordReset,
   setMeta,
   signIn,
   signOut,
@@ -40,6 +41,7 @@ import {
 
 const COURSE_KEY = 'selected_course';
 const ONBOARDED_KEY = 'onboarded';
+const WELCOMED_KEY = 'welcomed';
 const ACHIEVEMENTS_KEY = 'achievements';
 const REVIEWED_COUNT_KEY = 'srs_reviewed_count';
 const REVIEW_SESSIONS_KEY = 'srs_review_sessions';
@@ -56,6 +58,11 @@ export interface AppState {
   ready: boolean;
   /** false until the first-launch course/goal picker has been completed */
   onboarded: boolean;
+  /**
+   * false while the welcome (sign-in) screen should be shown: signed out and "Hesapsız dene"
+   * not chosen. Always true when Firebase is not configured (accounts are unavailable).
+   */
+  welcomed: boolean;
   db: Database | null;
   userId: string;
   user: AuthUser | null;
@@ -85,6 +92,10 @@ export interface AppState {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  /** Firebase password-reset e-mail for the address typed in the sign-in form. */
+  resetPassword: (email: string) => Promise<void>;
+  /** "Hesapsız dene": leaves the welcome screen without an account. */
+  continueAsGuest: () => Promise<void>;
   sync: () => Promise<void>;
   /** Marks the start of a review session (achievement counter). */
   startReviewSession: () => Promise<void>;
@@ -124,6 +135,12 @@ async function adoptGuestProgress(db: Database, target: Repos, now: number): Pro
   for (const p of guestProgress) await target.progress.adopt(p, now);
   const cards = await guest.srs.all();
   if (cards.length) await target.srs.saveMany(cards, now);
+}
+
+async function markWelcomed(value: boolean): Promise<void> {
+  const { db } = useAppStore.getState();
+  if (db) await setMeta(db, WELCOMED_KEY, value ? '1' : '0');
+  useAppStore.setState({ welcomed: value || !isFirebaseConfigured() });
 }
 
 function requireRepos(): Repos {
@@ -190,6 +207,7 @@ async function unlockAchievements(
 export const useAppStore = create<AppState>((set, get) => ({
   ready: false,
   onboarded: false,
+  welcomed: false,
   db: null,
   userId: LOCAL_USER_ID,
   user: null,
@@ -211,6 +229,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     repos = reposFor(db, userId);
 
     const onboarded = (await getMeta(db, ONBOARDED_KEY)) === '1';
+    const welcomed = !isFirebaseConfigured() || !!user || (await getMeta(db, WELCOMED_KEY)) === '1';
     const savedCourse = await getMeta(db, COURSE_KEY);
     const course = (savedCourse && getCourse(savedCourse)) || courses[0]!;
     const now = Date.now();
@@ -227,7 +246,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     const reminderRaw = await getMeta(db, REMINDER_KEY);
     const reminderHour = reminderRaw === null || reminderRaw === '' ? null : Number(reminderRaw);
 
-    set({ ready: true, onboarded, db, userId, user, course, stats, progress, dueCount, achievements, reminderHour });
+    set({ ready: true, onboarded, welcomed, db, userId, user, course, stats, progress, dueCount, achievements, reminderHour });
 
     if (isFirebaseConfigured()) {
       authUnsub?.();
@@ -372,14 +391,25 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   async signIn(email, password) {
     await signIn(email, password); // onAuthStateChange swaps repos + syncs
+    await markWelcomed(true);
   },
 
   async signUp(email, password) {
     await signUp(email, password);
+    await markWelcomed(true);
   },
 
   async signOut() {
     await signOut();
+    await markWelcomed(false); // back to the welcome screen, like a fresh start
+  },
+
+  async resetPassword(email) {
+    await sendPasswordReset(email);
+  },
+
+  async continueAsGuest() {
+    await markWelcomed(true);
   },
 
   async sync() {

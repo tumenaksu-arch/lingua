@@ -41,7 +41,7 @@ beforeEach(async () => {
   delete process.env.EXPO_PUBLIC_FIREBASE_APP_ID;
   db = new FakeDb();
   setDbForTesting(db);
-  useAppStore.setState({ ready: false, onboarded: false, db: null, progress: {}, dueCount: 0, achievements: [], newAchievements: [], reminderHour: null });
+  useAppStore.setState({ ready: false, onboarded: false, welcomed: false, db: null, progress: {}, dueCount: 0, achievements: [], newAchievements: [], reminderHour: null });
   await useAppStore.getState().boot();
 });
 
@@ -192,5 +192,16 @@ describe('achievements, counters and weekly summary', () => {
     useAppStore.setState({ ready: false, reminderHour: 5 });
     await useAppStore.getState().boot();
     expect(useAppStore.getState().reminderHour).toBeNull();
+  });
+});
+
+describe('welcome screen state', () => {
+  test('without Firebase (accounts unavailable) the welcome screen is skipped', () => {
+    expect(useAppStore.getState().welcomed).toBe(true);
+  });
+
+  test('continuing as a guest keeps the welcome screen dismissed', async () => {
+    await useAppStore.getState().continueAsGuest();
+    expect(useAppStore.getState().welcomed).toBe(true);
   });
 });

@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut as fbSignOut,
   updateProfile,
@@ -33,6 +34,7 @@ const MESSAGES: Record<string, string> = {
   'auth/too-many-requests': 'Çok fazla deneme. Biraz sonra tekrar dene.',
   'auth/network-request-failed': 'Ağ hatası. Bağlantını kontrol et.',
   'auth/operation-not-allowed': 'E-posta/şifre girişi bu projede etkin değil.',
+  'auth/missing-email': 'Önce e-posta adresini yaz.',
 };
 
 export function authErrorMessage(e: unknown): string {
@@ -59,6 +61,14 @@ export async function signUp(email: string, password: string, displayName?: stri
 export async function signIn(email: string, password: string): Promise<AuthUser> {
   const cred = await signInWithEmailAndPassword(auth(), email, password);
   return toUser(cred.user)!;
+}
+
+/**
+ * Sends Firebase's password-reset e-mail. With e-mail enumeration protection the call also
+ * succeeds for unknown addresses, so the UI must not claim the account exists.
+ */
+export async function sendPasswordReset(email: string): Promise<void> {
+  await sendPasswordResetEmail(auth(), email);
 }
 
 export async function signOut(): Promise<void> {
