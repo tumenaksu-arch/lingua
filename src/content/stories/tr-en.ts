@@ -20,7 +20,7 @@ export const trEnStories: CourseStories = {
       { speaker: 'Tom', text: 'Yes, I am a student. Are you a student too?', tr: 'Evet, ben bir öğrenciyim. Sen de öğrenci misin?' },
       { speaker: 'Ayşe', text: 'Yes! I am your classmate. Welcome!', tr: 'Evet! Senin sınıf arkadaşınım. Hoş geldin!' },
       { speaker: 'Tom', text: 'Oh, great! Goodbye, see you tomorrow, Ayşe.', tr: 'Ah, harika! Hoşça kal, yarın görüşürüz, Ayşe.' },
-      { speaker: 'Ayşe', text: 'Goodbye, Tom. Good night!', tr: 'Hoşça kal, Tom. İyi geceler!' },
+      { speaker: 'Ayşe', text: 'Goodbye, Tom. See you!', tr: 'Hoşça kal, Tom. Görüşürüz!' },
     ],
     questions: [
       {
@@ -62,7 +62,7 @@ export const trEnStories: CourseStories = {
       { speaker: 'Merve', text: 'I drink tea, and I like cheese. No coffee for me, please.', tr: 'Ben çay içerim ve peyniri severim. Kahve istemiyorum, lütfen.' },
       { speaker: 'Waiter', text: 'Sugar in the tea?', tr: 'Çaya şeker?' },
       { speaker: 'Can', text: 'Sugar for Merve, please. For me, no sugar, but some salt on the egg!', tr: 'Merve için şeker, lütfen. Benim için şeker yok ama yumurtanın üstüne biraz tuz!' },
-      { speaker: 'Waiter', text: 'A little mistake: I brought coffee. Sorry! Tea is coming.', tr: 'Küçük bir hata oldu: kahve getirdim. Özür dilerim! Çay geliyor.' },
+      { speaker: 'Waiter', text: 'A small mistake: I brought coffee. Sorry! Tea is coming.', tr: 'Küçük bir hata oldu: kahve getirdim. Özür dilerim! Çay geliyor.' },
       { speaker: 'Merve', text: 'No problem. This bread is delicious!', tr: 'Sorun değil. Bu ekmek çok lezzetli!' },
       { speaker: 'Can', text: 'Can we have the bill, please?', tr: 'Hesabı alabilir miyiz, lütfen?' },
     ],
@@ -102,7 +102,7 @@ export const trEnStories: CourseStories = {
       { speaker: 'Anna', text: 'Where is the train station? My train is at three.', tr: 'Tren istasyonu nerede? Trenim saat üçte.' },
       { speaker: 'Emre', text: 'The station is near. It is not far from here.', tr: 'İstasyon yakında. Buradan uzak değil.' },
       { speaker: 'Anna', text: 'Is it on the left or on the right?', tr: 'Solda mı yoksa sağda mı?' },
-      { speaker: 'Emre', text: 'Go straight, then turn left at the hotel. The station is on the right.', tr: 'Düz gidin, sonra otelin orada sola dönün. İstasyon sağda.' },
+      { speaker: 'Emre', text: 'Go straight, then turn left at the hotel. The station is on the right.', tr: 'Düz gidin, sonra otelde sola dönün. İstasyon sağda.' },
       { speaker: 'Anna', text: 'Thank you! Is there a bus to the airport too?', tr: 'Teşekkür ederim! Havalimanına giden bir otobüs de var mı?' },
       { speaker: 'Emre', text: 'Yes, the bus stop is near the station. Look at the map here.', tr: 'Evet, otobüs durağı istasyonun yakınında. İşte şu haritaya bakın.' },
       { speaker: 'Anna', text: 'Oh, I see it! My bag is heavy, so the bus is a good idea.', tr: 'Ah, gördüm! Çantam ağır, o yüzden otobüs iyi bir fikir.' },
@@ -188,8 +188,8 @@ export const trEnStories: CourseStories = {
       { speaker: 'Selin', text: 'Too expensive... And that red shirt?', tr: 'Çok pahalı... Peki şu kırmızı gömlek?' },
       { speaker: 'Anne', text: 'The red shirt is small and cheap. How much are these shoes?', tr: 'Kırmızı gömlek küçük ve ucuz. Peki bu ayakkabılar ne kadar?' },
       { speaker: 'Selin', text: 'The shoes are too big for me. I want the shirt, please.', tr: 'Ayakkabılar bana çok büyük. Gömleği istiyorum, lütfen.' },
-      { speaker: 'Anne', text: 'OK, we buy the shirt. The dress stays in the shop!', tr: 'Tamam, gömleği alıyoruz. Elbise dükkânda kalıyor!' },
-      { speaker: 'Selin', text: 'Thank you! Next month I save my money for the blue dress.', tr: 'Teşekkür ederim! Gelecek ay paramı mavi elbise için biriktiririm.' },
+      { speaker: 'Anne', text: 'OK, we\'ll take the shirt. The dress stays in the shop!', tr: 'Tamam, gömleği alıyoruz. Elbise dükkânda kalıyor!' },
+      { speaker: 'Selin', text: 'Thank you! Next month I will save my money for the blue dress.', tr: 'Teşekkür ederim! Gelecek ay paramı mavi elbise için biriktireceğim.' },
     ],
     questions: [
       {
@@ -225,13 +225,13 @@ export const trEnStories: CourseStories = {
       { speaker: 'Deniz', text: 'So, this is your new office? It is big!', tr: 'Demek burası senin yeni ofisin? Büyükmüş!' },
       { speaker: 'Elif', text: 'Yes, I work here now. I am an engineer.', tr: 'Evet, artık burada çalışıyorum. Ben bir mühendisim.' },
       { speaker: 'Deniz', text: 'Great! Is your team busy today?', tr: 'Harika! Ekibin bugün meşgul mü?' },
-      { speaker: 'Elif', text: 'Very busy. We have a meeting at two, and I write reports on my computer.', tr: 'Çok meşgul. Saat iki de bir toplantımız var, bilgisayarımda rapor yazıyorum.' },
+      { speaker: 'Elif', text: 'Very busy. We have a meeting at two, and I write reports on my computer.', tr: 'Çok meşgulüz. Saat ikide toplantımız var, bilgisayarımda rapor yazıyorum.' },
       { speaker: 'Deniz', text: 'I am still a student. I learn English at school.', tr: 'Ben hâlâ öğrenciyim. Okulda İngilizce öğreniyorum.' },
       { speaker: 'Elif', text: 'Good for you! Do you read English books?', tr: 'Aferin sana! İngilizce kitap okuyor musun?' },
       { speaker: 'Deniz', text: 'Yes, I read a book every night. But I write with a blue pen in class.', tr: 'Evet, her akşam bir kitap okurum. Ama sınıfta mavi bir kalemle yazarım.' },
       { speaker: 'Elif', text: 'Ha ha! Our teacher at school was very strict.', tr: 'Haha! Okuldaki öğretmenimiz çok disiplinlidi.' },
       { speaker: 'Deniz', text: 'I want to be an engineer too, like you.', tr: 'Ben de senin gibi mühendis olmak istiyorum.' },
-      { speaker: 'Elif', text: 'Then study hard! Work in an office is fun.', tr: 'O zaman çok çalış! Ofiste çalışmak eğlenceli.' },
+      { speaker: 'Elif', text: 'Then study hard! Working in an office is fun.', tr: 'O zaman çok çalış! Ofiste çalışmak eğlenceli.' },
     ],
     questions: [
       {
@@ -242,7 +242,7 @@ export const trEnStories: CourseStories = {
       },
       {
         prompt: 'Elif’in ekibi bugün neden meşgul?',
-        options: ['Saat iki de toplantıları var', 'Ofis çok küçük', 'Bilgisayarı bozuk'],
+        options: ['Saat ikide toplantıları var', 'Ofis çok küçük', 'Bilgisayarı bozuk'],
         correctIndex: 0,
         explanation: 'Elif “We have a meeting at two” diyor; toplantıdan dolayı meşguller.',
       },
@@ -270,10 +270,10 @@ export const trEnStories: CourseStories = {
       { speaker: 'Leyla', text: 'Great idea! Tomorrow is Monday, so today we rest.', tr: 'Harika fikir! Yarın pazartesi, o yüzden bugün dinleniyoruz.' },
       { speaker: 'Baran', text: 'Look at the sky... Oh no, it is rainy now!', tr: 'Şu gökyüzüne bak... Aman ya, şimdi yağmur yağıyor!' },
       { speaker: 'Leyla', text: 'Really? It was sunny an hour ago!', tr: 'Gerçekten mi? Bir saat önce güneşliydi!' },
-      { speaker: 'Baran', text: 'The weather changes fast in autumn. It is cold too.', tr: 'Hava sonbaharda çabuk değişir. Hava soğuk da.' },
+      { speaker: 'Baran', text: 'The weather changes fast in autumn. It is cold too.', tr: 'Hava sonbaharda çabuk değişir. Hava da soğuk.' },
       { speaker: 'Leyla', text: 'So, no park. Hot tea and a movie at home?', tr: 'O zaman park yok. Evde sıcak çay ve film mi?' },
       { speaker: 'Baran', text: 'Perfect. What time does the movie start?', tr: 'Mükemmel. Film saat kaçta başlıyor?' },
-      { speaker: 'Leyla', text: 'At three o’clock. We have three hours!', tr: 'Saat üçte. Üç saatimiz var!' },
+      { speaker: 'Leyla', text: 'At three o’clock. We have five hours!', tr: 'Saat üçte. Beş saatimiz var!' },
     ],
     questions: [
       {
@@ -312,7 +312,7 @@ export const trEnStories: CourseStories = {
       { speaker: 'Kaan', text: 'Really? Can you play a song for me?', tr: 'Gerçekten mi? Bana bir şarkı çalar mısın?' },
       { speaker: 'Ebru', text: 'Sure! I like to play slow songs. And on Sunday I run in the park.', tr: 'Elbette! Yavaş şarkılar çalmayı severim. Pazar günü de parkta koşarım.' },
       { speaker: 'Kaan', text: 'I do not like running. But I like to swim in the sea in summer.', tr: 'Koşmayı sevmem. Ama yazın denizde yüzmeyi severim.' },
-      { speaker: 'Ebru', text: 'Me too! Hey, maybe we cook dinner together on Sunday evening?', tr: 'Ben de! Hey, belki pazar akşamı birlikte akşam yemeği pişiririz?' },
+      { speaker: 'Ebru', text: 'Me too! Hey, maybe we can cook dinner together on Sunday evening?', tr: 'Ben de! Hey, belki pazar akşamı birlikte akşam yemeği pişirebiliriz?' },
       { speaker: 'Kaan', text: 'Good idea! I take photos of the food for my album.', tr: 'İyi fikir! Albümüm için yemeğin fotoğrafını çekerim.' },
       { speaker: 'Ebru', text: 'Deal! First your football, then my guitar, then dinner.', tr: 'Anlaştık! Önce senin futbolun, sonra benim gitarım, sonra akşam yemeği.' },
     ],
@@ -355,7 +355,7 @@ export const trEnStories: CourseStories = {
       { speaker: 'Aslı', text: 'I ate rice and chicken at my grandmother’s house.', tr: 'Büyükannemin evinde pilav ve tavuk yedim.' },
       { speaker: 'Mert', text: 'Did you go out on Sunday too?', tr: 'Pazar günü de dışarı çıktın mı?' },
       { speaker: 'Aslı', text: 'Yes! I went to the park and played football with my cousins. We had a lot of fun.', tr: 'Evet! Parka gittim ve kuzenlerimle futbol oynadım. Çok eğlendik.' },
-      { speaker: 'Mert', text: 'Wow, you had a busy weekend. I only met my friends two days ago for coffee.', tr: 'Vay, yoğun bir hafta sonun olmuş. Ben sadece iki gün önce arkadaşlarımla kahve içtim.' },
+      { speaker: 'Mert', text: 'Wow, you had a busy weekend. I only met my friends on Friday for coffee.', tr: 'Vay, yoğun bir hafta sonun olmuş. Ben sadece cuma günü arkadaşlarımla kahve içtim.' },
       { speaker: 'Aslı', text: 'Ha ha! Next weekend, let’s do something together.', tr: 'Haha! Gelecek hafta sonu birlikte bir şey yapalım.' },
     ],
     questions: [
@@ -392,12 +392,12 @@ export const trEnStories: CourseStories = {
       { speaker: 'Yusuf', text: 'Hi Lara! I have some good news. My birthday is next week.', tr: 'Selam Lara! Güzel bir haberim var. Doğum günüm gelecek hafta.' },
       { speaker: 'Lara', text: 'Oh, happy birthday in advance! Are you going to have a party?', tr: 'Önden doğum günün kutlu olsun! Parti yapacak mısın?' },
       { speaker: 'Yusuf', text: 'Yes! Would you like to come to my birthday party on Saturday?', tr: 'Evet! Cumartesi günü doğum günü partime gelmek ister misin?' },
-      { speaker: 'Lara', text: 'I would love to! What time is it?', tr: 'Çok isterim! Saat kaçta?' },
+      { speaker: 'Lara', text: 'I would love to! What time does it start?', tr: 'Çok isterim! Saat kaçta başlıyor?' },
       { speaker: 'Yusuf', text: 'It starts at seven o’clock. My cousin is going to play the guitar.', tr: 'Saat yedide başlıyor. Kuzenim gitar çalacak.' },
       { speaker: 'Lara', text: 'Great! Maybe I will bring a cake.', tr: 'Harika! Belki ben de pasta getiririm.' },
       { speaker: 'Yusuf', text: 'Sure, but no presents, please. Your presence is enough!', tr: 'Olur ama hediye yok, lütfen. Gelmen yeterli!' },
       { speaker: 'Lara', text: 'Deal. Are you going to invite our teacher too?', tr: 'Anlaştık. Öğretmenimizi de davet edecek misin?' },
-      { speaker: 'Yusuf', text: 'Ha ha, maybe. It will rain on Saturday, but we stay inside, so no problem.', tr: 'Haha, belki. Cumartesi yağmur yağacak ama içeride kalacağız, sorun değil.' },
+      { speaker: 'Yusuf', text: 'Ha ha, maybe. It will rain on Saturday, but we will stay inside, so no problem.', tr: 'Haha, belki. Cumartesi yağmur yağacak ama içeride kalacağız, sorun değil.' },
       { speaker: 'Lara', text: 'Perfect, I can’t wait! See you on Saturday.', tr: 'Mükemmel, sabırsızlanıyorum! Cumartesi görüşürüz.' },
     ],
     questions: [
