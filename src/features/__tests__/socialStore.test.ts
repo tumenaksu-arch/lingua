@@ -81,6 +81,23 @@ describe('publishMyXp', () => {
   });
 });
 
+describe('load', () => {
+  const profile = { user_id: 'u1', nickname: 'YıldızKedi', invite_code: 'ABC234', updated_at: '2026-10-25T00:00:00.000Z' };
+
+  it('still populates the top list and friends when the leaderboard write fails', async () => {
+    useAppStore.setState({ user: SIGNED_IN, userId: 'u1' });
+    mocked.getProfile.mockResolvedValueOnce(profile);
+    mocked.upsertWeeklyEntry.mockRejectedValueOnce(new Error('offline'));
+    mocked.topEntries.mockResolvedValueOnce([
+      { uid: 'u1', nickname: 'YıldızKedi', xp: 30, updated_at: '2026-10-25T00:00:00.000Z' },
+    ]);
+    await useSocialStore.getState().load();
+    expect(mocked.topEntries).toHaveBeenCalled();
+    expect(useSocialStore.getState().top).toHaveLength(1);
+    expect(useSocialStore.getState().error).toBeNull();
+  });
+});
+
 describe('addFriendByCode error paths', () => {
   const profile = { user_id: 'u1', nickname: 'YıldızKedi', invite_code: 'ABC234', updated_at: '2026-10-25T00:00:00.000Z' };
 

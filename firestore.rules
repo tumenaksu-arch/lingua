@@ -42,7 +42,7 @@ rules_version = '2';
 // Collection: users/{uid}/profile        Document ID: "current"
 //   - user_id: string (required, immutable, == uid)
 //   - nickname: string (required, 3..20 chars, ^[A-Za-z0-9ÇĞİÖŞÜçğıöşu_. -]+$)
-//   - invite_code: string (required, 6 chars from A-Z minus I/O + digits 2-9)
+//   - invite_code: string (required, 6 chars from A-Z minus I/O + digits 2-9, immutable after create)
 //   - updated_at: string (required, ISO date)
 //   Owner read/write only.
 //
@@ -259,7 +259,11 @@ service cloud.firestore {
       // Roadmap item 3b: nickname + invite code. Owner only; no e-mail stored.
       match /profile/{docId} {
         allow read: if isOwner(userId);
-        allow create, update: if isOwner(userId) && docId == 'current' && isValidProfile(userId);
+        allow create: if isOwner(userId) && docId == 'current' && isValidProfile(userId);
+        // The invite code is assigned on first save and can never be changed
+        // afterwards (otherwise a user could claim someone else's code).
+        allow update: if isOwner(userId) && docId == 'current' && isValidProfile(userId)
+                      && data().invite_code == resource.data.invite_code;
         allow delete: if false;
       }
 

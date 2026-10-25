@@ -141,6 +141,11 @@ function InviteCodeCard({ code }: { code: string }) {
         setCopied(true);
         return;
       }
+    } catch {
+      // The clipboard API can exist yet reject (e.g. Android WebView without
+      // permission) — fall through to the native share sheet instead.
+    }
+    try {
       await Share.share({ message: `Love-Vox davet kodum: ${code}` });
     } catch {
       setCopied(false);
@@ -162,6 +167,7 @@ function FriendsTab() {
   const { colors } = useTheme();
   const userId = useAppStore((s) => s.userId);
   const profile = useSocialStore((s) => s.profile);
+  const top = useSocialStore((s) => s.top);
   const friends = useSocialStore((s) => s.friends);
   const addFriendByCode = useSocialStore((s) => s.addFriendByCode);
   const removeFriend = useSocialStore((s) => s.removeFriend);
@@ -172,9 +178,12 @@ function FriendsTab() {
 
   if (!profile) return null;
 
+  // The player's own weekly XP comes from the loaded top list (load() publishes
+  // it before reading), so the own row shows real XP and ranks fairly.
+  const ownXp = top.find((e) => e.uid === userId)?.xp ?? 0;
   const rows: { uid: string; nickname: string; xp: number; isMe: boolean; friend?: FriendWithXp }[] = [
     ...friends.map((f) => ({ uid: f.friend_uid, nickname: f.nickname, xp: f.xp, isMe: false, friend: f })),
-    { uid: userId, nickname: profile.nickname, xp: 0, isMe: true },
+    { uid: userId, nickname: profile.nickname, xp: ownXp, isMe: true },
   ].sort((a, b) => b.xp - a.xp);
 
   const submit = async () => {

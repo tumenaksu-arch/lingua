@@ -72,7 +72,13 @@ export const useSocialStore = create<SocialState>((set, get) => ({
         return;
       }
       const weekId = isoWeekId(new Date());
-      await get().publishMyXp();
+      // Publishing is best-effort: if the leaderboard write fails (offline,
+      // rules reject), the reads below must still populate the screen.
+      try {
+        await get().publishMyXp();
+      } catch {
+        /* keep loading */
+      }
       const [top, friendDocs] = await Promise.all([topEntries(weekId), listFriends(user.uid)]);
       const friendEntries = await entriesFor(
         weekId,

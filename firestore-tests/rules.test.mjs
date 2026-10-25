@@ -108,6 +108,45 @@ test('profile: e-mail field and bad nickname are rejected', async () => {
   );
 });
 
+test('profile: create under a doc id other than current is denied', async () => {
+  await denied(() =>
+    dbFor('alice').doc('users/alice/profile/other').set({
+      user_id: 'alice',
+      nickname: 'YıldızKedi',
+      invite_code: 'ABC234',
+      updated_at: ISO,
+    }),
+  );
+});
+
+test('profile: unauthenticated read is denied', async () => {
+  await dbFor('alice').doc('users/alice/profile/current').set({
+    user_id: 'alice',
+    nickname: 'YıldızKedi',
+    invite_code: 'ABC234',
+    updated_at: ISO,
+  });
+  await denied(() => dbFor(null).doc('users/alice/profile/current').get());
+});
+
+test('profile: invite_code is immutable once created', async () => {
+  const alice = dbFor('alice');
+  await alice.doc('users/alice/profile/current').set({
+    user_id: 'alice',
+    nickname: 'YıldızKedi',
+    invite_code: 'ABC234',
+    updated_at: ISO,
+  });
+  // A valid update (nickname change) is fine…
+  await alice.doc('users/alice/profile/current').update({ nickname: 'KediYıldız', updated_at: ISO });
+  // …but swapping in someone else's invite code is not.
+  await denied(() =>
+    alice.doc('users/alice/profile/current').update({ invite_code: 'DEF567', updated_at: ISO }),
+  );
+  const snap = await alice.doc('users/alice/profile/current').get();
+  assert.equal(snap.data()?.invite_code, 'ABC234');
+});
+
 // ---------------------------------------------------------------------------
 // invites/{code}
 // ---------------------------------------------------------------------------
@@ -128,6 +167,14 @@ test('invite: unauthenticated get denied; bad code shape denied', async () => {
   await denied(() =>
     dbFor('alice').doc('invites/toolong!!').set({ uid: 'alice', nickname: 'YıldızKedi', created_at: ISO }),
   );
+});
+
+test('invite: a non-owner cannot delete or take over an invite', async () => {
+  await dbFor('alice').doc('invites/ABC234').set({ uid: 'alice', nickname: 'YıldızKedi', created_at: ISO });
+  await denied(() => dbFor('bob').doc('invites/ABC234').delete());
+  await denied(() => dbFor('bob').doc('invites/ABC234').update({ uid: 'bob' }));
+  const snap = await dbFor('alice').doc('invites/ABC234').get();
+  assert.equal(snap.data()?.uid, 'alice');
 });
 
 // ---------------------------------------------------------------------------
@@ -158,6 +205,28 @@ test('leaderboard: bad data denied (nickname, extra field, xp bounds, weekId)', 
   await denied(() => dbFor(null).doc(base).get());
 });
 
+test('leaderboard: update adding an extra field is denied', async () => {
+  const alice = dbFor('alice');
+  const ref = alice.doc('leaderboard/2026-W43/entries/alice');
+  await ref.set(validEntry);
+  // A normal update is fine…
+  await ref.update({ xp: 200, updated_at: ISO });
+  // …but sneaking an extra field (e.g. e-mail) into an update is not.
+  await denied(() => ref.update({ email: 'alice@example.com' }));
+  const snap = await dbFor('bob').doc('leaderboard/2026-W43/entries/alice').get();
+  assert.equal(snap.data()?.xp, 200);
+  assert.equal(snap.data()?.email, undefined);
+});
+
+test('leaderboard: delete is never allowed, not even for the owner', async () => {
+  const alice = dbFor('alice');
+  const ref = alice.doc('leaderboard/2026-W43/entries/alice');
+  await ref.set(validEntry);
+  await denied(() => ref.delete());
+  const snap = await dbFor('bob').doc('leaderboard/2026-W43/entries/alice').get();
+  assert.equal(snap.data()?.xp, 120);
+});
+
 // ---------------------------------------------------------------------------
 // users/{uid}/friends/{friendUid}
 // ---------------------------------------------------------------------------
@@ -167,6 +236,7 @@ test('friends: owner manages list; others cannot read; self-add and id mismatch 
   const mine = await dbFor('alice').doc('users/alice/friends/bob').get();
   assert.equal(mine.data()?.nickname, 'Bob');
   await denied(() => dbFor('carol').doc('users/alice/friends/bob').get());
+  await denied(() => dbFor(null).doc('users/alice/friends/bob').get());
   await denied(() =>
     dbFor('alice').doc('users/alice/friends/alice').set({ friend_uid: 'alice', nickname: 'Alice', added_at: ISO }),
   );

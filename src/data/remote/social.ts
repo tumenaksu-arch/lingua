@@ -93,10 +93,18 @@ async function createInvite(db: Firestore, uid: string, nickname: string): Promi
 export async function saveProfile(uid: string, nickname: string): Promise<ProfileDoc | null> {
   const db = getFirestoreDb();
   if (!db) return null;
-  let inviteCode = (await getProfile(uid))?.invite_code;
-  if (!inviteCode) inviteCode = await createInvite(db, uid, nickname);
+  const existingCode = (await getProfile(uid))?.invite_code;
+  // Track a freshly created invite so a failed profile write can roll it back:
+  // invites can never be listed, so an orphaned doc could never be cleaned up.
+  const newCode = existingCode ? null : await createInvite(db, uid, nickname);
+  const inviteCode = existingCode ?? newCode!;
   const profile: ProfileDoc = { user_id: uid, nickname, invite_code: inviteCode, updated_at: new Date().toISOString() };
-  await setDoc(doc(db, 'users', uid, 'profile', 'current'), profile, { merge: true });
+  try {
+    await setDoc(doc(db, 'users', uid, 'profile', 'current'), profile, { merge: true });
+  } catch (e) {
+    if (newCode) await deleteDoc(doc(db, 'invites', newCode)).catch(() => {});
+    throw e;
+  }
   return profile;
 }
 

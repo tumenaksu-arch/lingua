@@ -65,7 +65,16 @@ describe('weeklyXpTotal', () => {
       { user_id: 'u1', type: 'quest_claimed', payload: '{oops', created_at: now },
     ]);
     await expect(weeklyXpTotal(db, 'u1', now)).resolves.toBe(32);
-    expect(db.getAll).toHaveBeenCalledWith(expect.stringContaining('quest_claimed'), ['u1', monday - 1]);
+    // Assert the SQL itself (table, week-start filter, event-type filter), not
+    // just the params — a wrong table/column or a type-mismatched comparison
+    // in the real query must fail this test even though the JS mock emulates
+    // the WHERE clause.
+    expect(db.getAll).toHaveBeenCalledTimes(1);
+    const [sql, params] = (db.getAll as unknown as jest.Mock).mock.calls[0] as [string, unknown[]];
+    expect(sql).toContain('FROM events');
+    expect(sql).toContain('created_at >');
+    expect(sql).toContain('type IN');
+    expect(params).toEqual(['u1', monday - 1]);
   });
 
   it('returns 0 without a database', async () => {
