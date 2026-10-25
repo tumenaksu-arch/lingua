@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import * as Haptics from 'expo-haptics';
 import { router, useFocusEffect } from 'expo-router';
 
 import { ACHIEVEMENTS, FREEZE_EVERY_DAYS, MAX_HEARTS, MAX_STREAK_FREEZES, getAchievement, msUntilNextHeart, regenerate } from '@/domain';
@@ -106,12 +107,15 @@ function Chip({
   onPress,
   disabled,
   accessibilityLabel,
+  haptic = false,
 }: {
   label: string;
   selected: boolean;
   onPress: () => void;
   disabled?: boolean;
   accessibilityLabel?: string;
+  /** Fire the same light haptic tick as ui Button on press (parity for chips that replaced Buttons). */
+  haptic?: boolean;
 }) {
   const { colors } = useTheme();
   return (
@@ -120,7 +124,10 @@ function Chip({
       accessibilityLabel={accessibilityLabel ?? label}
       accessibilityState={{ selected, disabled: !!disabled }}
       disabled={disabled}
-      onPress={onPress}
+      onPress={() => {
+        if (haptic) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
+        onPress();
+      }}
       style={[styles.chip, { backgroundColor: selected ? colors.primary : 'transparent', borderColor: selected ? colors.primary : colors.borderStrong }]}
     >
       <Text style={[styles.chipText, { color: selected ? colors.textOnBrand : colors.text }]} maxFontSizeMultiplier={1.6}>
@@ -219,7 +226,7 @@ export default function ProfileScreen() {
         <Caption color={colors.textMuted}>{stats.xpToday} / {stats.dailyGoalXp} XP bugün</Caption>
         <View style={styles.chips}>
           {GOALS.map((g) => (
-            <Chip key={g} label={`${g} XP`} selected={g === stats.dailyGoalXp} onPress={() => setDailyGoal(g)} />
+            <Chip key={g} label={`${g} XP`} selected={g === stats.dailyGoalXp} haptic onPress={() => setDailyGoal(g)} />
           ))}
         </View>
 
@@ -272,7 +279,7 @@ export default function ProfileScreen() {
         <Heading>Görünüm ve ses</Heading>
         <View style={styles.chips}>
           {THEMES.map((t) => (
-            <Chip key={t.value} label={t.label} selected={t.value === themePreference} onPress={() => void setThemePreference(t.value)} />
+            <Chip key={t.value} label={t.label} selected={t.value === themePreference} haptic onPress={() => void setThemePreference(t.value)} />
           ))}
         </View>
         <View style={styles.row}>
