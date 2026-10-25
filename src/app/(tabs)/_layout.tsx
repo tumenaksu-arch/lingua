@@ -46,6 +46,10 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="league"
+        options={{ title: 'Lig', tabBarIcon: ({ color }) => <TabIcon glyph="🏆" color={color} /> }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{ title: 'Profil', tabBarIcon: ({ color }) => <TabIcon glyph="👤" color={color} /> }}
       />

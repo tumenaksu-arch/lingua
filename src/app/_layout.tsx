@@ -8,6 +8,7 @@ import { SpaceMono_400Regular } from '@expo-google-fonts/space-mono';
 import { useFonts } from 'expo-font';
 
 import { useAppStore } from '@/features/store';
+import { startSocialSync } from '@/features/social/socialStore';
 import { ShellUpdateBanner, useAutoUpdate } from '@/platform/autoUpdate';
 import { useSystemBars } from '@/platform/systemBars';
 import { useSettingsStore, useTheme, useThemeStore } from '@/ui';
@@ -36,6 +37,7 @@ export default function RootLayout() {
     void hydrateTheme();
     void hydrateSettings();
     boot().catch((e: unknown) => setError(e instanceof Error ? e.message : String(e)));
+    startSocialSync(); // publish weekly XP to the leaderboard, debounced
   }, [boot, hydrateTheme, hydrateSettings]);
 
   // Navigation containers (headers, card backgrounds, tab bars) follow the active palette.
