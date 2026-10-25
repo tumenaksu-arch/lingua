@@ -14,7 +14,7 @@ export const trDeStories: CourseStories = {
     lines: [
       { speaker: 'Ayşe', text: 'Hallo! Ich bin Ayşe.', tr: 'Merhaba! Ben Ayşe\'yim.' },
       { speaker: 'Tom', text: 'Hallo, Ayşe. Ich bin Tom. Bist du die neue Lehrerin?', tr: 'Merhaba, Ayşe. Ben Tom. Sen yeni öğretmen misin?' },
-      { speaker: 'Ayşe', text: 'Nein, ich bin ein Schüler!', tr: 'Hayır, ben bir öğrenciyim!' },
+      { speaker: 'Ayşe', text: 'Nein, ich bin eine Schülerin!', tr: 'Hayır, ben bir öğrenciyim!' },
       { speaker: 'Tom', text: 'Oh! Wie geht\'s dir?', tr: 'Ah! Nasılsın?' },
       { speaker: 'Ayşe', text: 'Gut, danke. Und dir?', tr: 'İyiyim, teşekkürler. Sen nasılsın?' },
       { speaker: 'Tom', text: 'Auch gut. Ich habe zwei Brüder.', tr: 'Ben de iyiyim. İki erkek kardeşim var.' },
@@ -62,7 +62,7 @@ export const trDeStories: CourseStories = {
       { speaker: 'Can', text: 'Ich esse Hähnchen und Reis.', tr: 'Tavuk ve pilav yerim.' },
       { speaker: 'Maria', text: 'Ich esse keinen Fisch, aber der Salat ist frisch.', tr: 'Balık yemem ama salata taze.' },
       { speaker: 'Can', text: 'Ich trinke Tee. Ist Zucker im Tee?', tr: 'Çay içerim. Çayda şeker var mı?' },
-      { speaker: 'Maria', text: 'Ja, und das Salz ist auf dem Tisch.', tr: 'Evet, tuz da masada.' },
+      { speaker: 'Maria', text: 'Ja, der Zucker ist auf dem Tisch.', tr: 'Evet, şeker masada.' },
       { speaker: 'Can', text: 'Der Käse ist lecker. Isst du Käse?', tr: 'Peynir lezzetli. Peynir yer misin?' },
       { speaker: 'Maria', text: 'Ja, ich esse Käse. Und du, isst du ein Ei?', tr: 'Evet, peynir yerim. Sen bir yumurta mı yiyorsun?' },
       { speaker: 'Can', text: 'Nein, ich trinke Milch.', tr: 'Hayır, süt içerim.' },
@@ -127,7 +127,7 @@ export const trDeStories: CourseStories = {
         explanation: 'Elif, "mein Bruder hat ein Kind." diyor; yani çocuk erkek kardeşinin.',
       },
       {
-        prompt: 'Uzun boylu adam kim çıkıyor?',
+        prompt: 'Uzun boylu adam kim?',
         options: ['Ben\'in arkadaşı', 'Elif\'in kocası', 'Elif\'in erkek kardeşi'],
         correctIndex: 2,
         explanation: 'Elif, "Das ist mein Bruder." diyor; yani adam onun erkek kardeşi.',
