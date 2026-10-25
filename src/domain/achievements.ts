@@ -23,6 +23,8 @@ export interface AchievementContext {
   lastLessonPerfect: boolean;
   /** consecutive days on which the daily goal was reached (incl. today if reached) */
   goalDays: number;
+  /** quests claimed today (daily quests, roadmap 3a) */
+  questsClaimedToday?: number;
 }
 
 export const ACHIEVEMENTS: readonly Achievement[] = [
@@ -38,6 +40,7 @@ export const ACHIEVEMENTS: readonly Achievement[] = [
   { id: 'unit_complete', title: 'Bölüm bitti', description: 'Bir bölümü tamamla', emoji: '📗' },
   { id: 'course_complete', title: 'Mezun', description: 'Bir kursu tamamla', emoji: '🎓' },
   { id: 'goal_7', title: 'Disiplin', description: '7 gün üst üste günlük hedefe ulaş', emoji: '🎯' },
+  { id: 'quests_day', title: 'Görev tamamlayıcı', description: 'Bir günde 3 günlük görevin ödülünü al', emoji: '📜' },
 ];
 
 const BY_ID = new Map(ACHIEVEMENTS.map((a) => [a.id, a]));
@@ -75,6 +78,7 @@ export function satisfied(ctx: AchievementContext): string[] {
     unit_complete: anyUnitComplete(ctx.course, ctx.progress),
     course_complete: courseComplete(ctx.course, ctx.progress),
     goal_7: ctx.goalDays >= 7,
+    quests_day: (ctx.questsClaimedToday ?? 0) >= 3,
   };
   return ACHIEVEMENTS.filter((a) => checks[a.id]).map((a) => a.id);
 }

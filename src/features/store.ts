@@ -39,6 +39,12 @@ import {
   type Database,
   type LessonProgress,
 } from '@/data';
+import {
+  QUEST_REWARD_XP,
+  questProgress,
+  questsForDate,
+  type QuestStatus,
+} from '@/features/quests';
 
 const COURSE_KEY = 'selected_course';
 const ONBOARDED_KEY = 'onboarded';
@@ -89,6 +95,8 @@ export interface AppState {
   newAchievements: string[];
   /** hour of the daily reminder, null when off */
   reminderHour: number | null;
+  /** today's daily quests with live progress (empty until the first refresh) */
+  quests: QuestStatus[];
 
   boot: () => Promise<void>;
   selectCourse: (courseId: string) => Promise<void>;
@@ -120,6 +128,10 @@ export interface AppState {
   setReminderHour: (hour: number | null) => Promise<void>;
   /** XP earned per day for the last 7 days, oldest first (index 6 = today). */
   weeklyXp: () => Promise<number[]>;
+  /** Recomputes today's quest statuses from the events table. */
+  refreshQuests: () => Promise<void>;
+  /** Claims a completed quest's +10 XP reward; a second claim returns 0 and changes nothing. */
+  claimQuest: (questId: string) => Promise<{ xpEarned: number }>;
 }
 
 function reposFor(db: Database, userId: string): Repos {
@@ -211,6 +223,7 @@ async function unlockAchievements(
       reviewSessions: await getNumberMeta(db, REVIEW_SESSIONS_KEY),
       lastLessonPerfect: extra.lastLessonPerfect ?? false,
       goalDays: (await getGoalStreak(db)).count,
+      questsClaimedToday: get().quests.filter((q) => q.claimed).length,
     },
     achievements,
   );
@@ -237,6 +250,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   achievements: [],
   newAchievements: [],
   reminderHour: null,
+  quests: [],
 
   async boot() {
     if (get().ready) return;
@@ -280,10 +294,12 @@ export const useAppStore = create<AppState>((set, get) => ({
         const pl = await repos.progress.all();
         set({ user: u, userId: uid, stats: st, progress: Object.fromEntries(pl.map((p) => [p.lessonId, p])) });
         set({ dueCount: await repos.srs.countDue(Date.now(), `${get().course.id}.`) });
+        await get().refreshQuests();
         if (u) void get().sync();
       });
       if (user) void get().sync();
     }
+    await get().refreshQuests();
   },
 
   async selectCourse(courseId) {
@@ -293,6 +309,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     if (db) await setMeta(db, COURSE_KEY, courseId);
     set({ course });
     if (repos) set({ dueCount: await repos.srs.countDue(Date.now(), `${course.id}.`) });
+    await get().refreshQuests();
   },
 
   async completeOnboarding(courseId, dailyGoalXp) {
@@ -313,6 +330,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       xp: outcome.xpEarned,
       correct: result.correct,
       total: result.total,
+      perfect: result.mistakes.length === 0,
       durationMs: result.durationMs,
     }, now);
 
@@ -328,6 +346,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       progress: { ...s.progress, [lp.lessonId]: lp },
     }));
     set({ dueCount: await r.srs.countDue(now, `${get().course.id}.`) });
+    await get().refreshQuests();
 
     const { db } = get();
     if (db) {
@@ -360,6 +379,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     await r.progress.logEvent(`${storyId}:${now}:${Math.random().toString(36).slice(2, 8)}`, 'story_completed', { xp: xpEarned, correct, total }, now);
 
     set((s) => ({ stats: next, progress: { ...s.progress, [lp.lessonId]: lp } }));
+    await get().refreshQuests();
 
     const { db } = get();
     if (db) {
@@ -419,9 +439,9 @@ export const useAppStore = create<AppState>((set, get) => ({
     todayStart.setHours(0, 0, 0, 0);
     const from = todayStart.getTime() - 6 * dayMs;
     const rows = await db.getAll<{ payload: string; created_at: number }>(
-      // Lessons and stories both log their XP under the `xp` payload field.
-      "SELECT payload, created_at FROM events WHERE user_id = ? AND type IN (?, ?) AND created_at > ?",
-      [userId, 'lesson_completed', 'story_completed', from - 1],
+      // Lessons, stories and quest rewards all log their XP under the `xp` payload field.
+      "SELECT payload, created_at FROM events WHERE user_id = ? AND type IN (?, ?, ?) AND created_at > ?",
+      [userId, 'lesson_completed', 'story_completed', 'quest_claimed', from - 1],
     );
     const buckets = [0, 0, 0, 0, 0, 0, 0];
     for (const r of rows) {
@@ -433,6 +453,60 @@ export const useAppStore = create<AppState>((set, get) => ({
       }
     }
     return buckets;
+  },
+
+  async refreshQuests() {
+    const { db, userId, stats } = get();
+    if (!db) {
+      set({ quests: [] });
+      return;
+    }
+    const today = localDateString(new Date());
+    const dayStart = new Date();
+    dayStart.setHours(0, 0, 0, 0);
+    const from = dayStart.getTime();
+    const rows = await db.getAll<{ type: string; payload: string }>(
+      "SELECT type, payload FROM events WHERE user_id = ? AND type IN (?, ?, ?) AND created_at > ? AND created_at < ?",
+      [userId, 'lesson_completed', 'story_completed', 'quest_claimed', from - 1, from + 86_400_000],
+    );
+    const events = rows.map((r) => {
+      try {
+        return { type: r.type, payload: JSON.parse(r.payload) as Record<string, unknown> };
+      } catch {
+        return { type: r.type, payload: {} };
+      }
+    });
+    set({ quests: questProgress(questsForDate(today, stats.dailyGoalXp), events) });
+  },
+
+  async claimQuest(questId) {
+    const r = requireRepos();
+    const quest = get().quests.find((q) => q.id === questId);
+    const { db } = get();
+    // Guard in memory: only a completed, unclaimed quest pays out. The event
+    // id `quest:<date>:<questId>` (INSERT OR IGNORE) makes a double claim
+    // impossible on disk as well.
+    if (!db || !quest || !quest.done || quest.claimed) return { xpEarned: 0 };
+    const now = Date.now();
+    const date = localDateString(new Date());
+    const xpEarned = QUEST_REWARD_XP;
+    // Same stats pipeline as lessons/stories: total + today XP, streak activity.
+    const prev = get().stats;
+    const newDay = prev.lastActiveDate !== date;
+    const xpBefore = newDay ? 0 : prev.xpToday;
+    const xpToday = xpBefore + xpEarned;
+    let next: UserStats = { ...prev, xp: prev.xp + xpEarned, xpToday };
+    next = applyActivity(next, date);
+    await r.stats.save(next, now);
+    await r.progress.logEvent(`quest:${date}:${questId}`, 'quest_claimed', { xp: xpEarned, questId, date }, now);
+    set({ stats: next });
+    if (xpToday >= next.dailyGoalXp && xpBefore < next.dailyGoalXp) {
+      await setMeta(db, GOAL_STREAK_KEY, JSON.stringify(advanceGoalStreak(await getGoalStreak(db), date)));
+    }
+    await get().refreshQuests();
+    await unlockAchievements(db, get, set);
+    void get().sync();
+    return { xpEarned };
   },
 
   async setDailyGoal(xp) {
