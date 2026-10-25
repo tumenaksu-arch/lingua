@@ -4,8 +4,10 @@ import { AccessibilityInfo, StyleSheet, Text, View } from 'react-native';
 import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { Body, Caption } from './Typography';
 import { Button } from './Button';
 import { fonts, radii, spacing } from './theme';
+import { upperTr } from './upperTr';
 import { useReduceMotion } from './useReduceMotion';
 import { useTheme } from './useTheme';
 
@@ -71,8 +73,8 @@ export function FeedbackSheet({
           {detail ? <Text style={[styles.detail, { color: ink }]}>{detail}</Text> : null}
           {explanation ? (
             <View accessibilityLiveRegion="polite" style={styles.why}>
-              <Text style={[styles.whyLabel, { color: ink }]}>NEDEN?</Text>
-              <Text style={[styles.whyBody, { color: ink }]}>{explanation}</Text>
+              <Caption color={ink}>{upperTr('Neden?')}</Caption>
+              <Body color={ink}>{explanation}</Body>
             </View>
           ) : null}
         </View>
@@ -101,6 +103,4 @@ const styles = StyleSheet.create({
   title: { fontSize: 24, fontFamily: fonts.display },
   detail: { fontSize: 16, lineHeight: 22, fontFamily: fonts.body },
   why: { marginTop: spacing.xs, gap: spacing.xs },
-  whyLabel: { fontSize: 12, letterSpacing: 1.5, fontFamily: fonts.mono },
-  whyBody: { fontSize: 16, lineHeight: 22, fontFamily: fonts.body },
 });

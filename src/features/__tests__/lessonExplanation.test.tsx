@@ -100,5 +100,7 @@ it('shows no explanation after a correct answer', async () => {
   await fireEvent.press(right!);
   await fireEvent.press(screen.getByRole('button', { name: 'Kontrol et' }));
 
+  // positive check: the correct-answer feedback is visible, only the explanation is absent
+  expect(screen.getByText('Harika!')).toBeTruthy();
   expect(screen.queryByText('NEDEN?')).toBeNull();
 });

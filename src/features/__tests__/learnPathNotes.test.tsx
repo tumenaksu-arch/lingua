@@ -59,6 +59,8 @@ it('renders no notes chip for a unit without a note', async () => {
   );
 
   expect(screen.queryByRole('button', { name: 'Notsuz bölüm notları' })).toBeNull();
+  // positive check: only the replaced unit lost its chip — 11 of 12 units still have one
+  expect(screen.queryAllByRole('button', { name: /notları$/ })).toHaveLength(11);
   // the real units still show their chips
   expect(screen.getByRole('button', { name: 'Yemek notları' })).toBeTruthy();
 });
