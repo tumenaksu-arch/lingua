@@ -34,6 +34,8 @@ export interface ClassState {
   announcements: Record<string, AnnouncementDoc[]>;
   /** Class-internal weekly league per class (classId → rows, best XP first). */
   league: Record<string, LeagueRow[]>;
+  /** Short confirmation shown on the home class card after a successful join. */
+  joinNote: string | null;
   loading: boolean;
   error: string | null;
 
@@ -61,6 +63,7 @@ export const useClassStore = create<ClassState>((set, get) => ({
   assignments: {},
   announcements: {},
   league: {},
+  joinNote: null,
   loading: false,
   error: null,
 
@@ -106,6 +109,9 @@ export const useClassStore = create<ClassState>((set, get) => ({
     if (!app.onboarded) await app.completeOnboarding(joined.courseId, 20);
     else await app.selectCourse(joined.courseId);
     await get().load();
+    // The join screen replaces the stack with the home tab on success; the
+    // card shows this confirmation there ("Sınıfa katıldın: <ad>").
+    set({ joinNote: `Sınıfa katıldın: ${joined.ad}` });
     return {
       classId: joined.classId,
       ad: joined.ad,
@@ -129,6 +135,7 @@ export const useClassStore = create<ClassState>((set, get) => ({
         assignments,
         announcements,
         league,
+        joinNote: null,
       };
     });
   },

@@ -40,9 +40,20 @@ const SUPA_ANON = process.env.SUPA_ANON;
 const skip = SUPA_URL && SUPA_ANON ? false : 'SUPA_URL / SUPA_ANON not set — see PROTO.md';
 
 const PASSWORD = 'TestPass!12345';
+const DAY_MS = 86_400_000;
 const NOW = new Date().toISOString();
-const WEEK_AGO = new Date(Date.now() - 7 * 86_400_000).toISOString();
-const WEEK_START = new Date(Date.now() - new Date().getDay() * 86_400_000).toISOString();
+const WEEK_AGO = new Date(Date.now() - 7 * DAY_MS).toISOString();
+// Monday 00:00 LOCAL — exactly like the client's weekStartMs
+// (src/features/social/week.ts): p_week_start must match or weekly_xp is off.
+// (The previous Sunday-anchored getDay() version never exercised the week
+// boundary: an event from last week was inside the computed "week" on most
+// weekdays, and the weekly_xp assertion could not fail.)
+const WEEK_START_MS = (() => {
+  const now = new Date();
+  const localMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return localMidnight.getTime() - ((localMidnight.getDay() + 6) % 7) * DAY_MS;
+})();
+const WEEK_START = new Date(WEEK_START_MS).toISOString();
 
 // Join codes are globally unique in the (persistent) prototype database, so
 // every run draws fresh 6-char codes from the schema's alphabet.
@@ -162,20 +173,12 @@ test('classes: veli_bilgilendirildi=false is rejected; T1 opens a class', { skip
 // Cross-teacher isolation
 // ---------------------------------------------------------------------------
 
-test('T2 (a teacher too) cannot read T1\'s class, members or assignments', { skip }, async () => {
+test('T2 (a teacher too) cannot read T1\'s class row', { skip }, async () => {
   assert.ifError((await T2().from('teachers').insert({ user_id: users.T2.uid })).error);
 
   const cls = await T2().from('classes').select('*').eq('id', classId);
   assert.ifError(cls.error);
   assert.equal(cls.data.length, 0, 'T2 must not see T1\'s class row');
-
-  const members = await T2().from('class_members').select('*').eq('class_id', classId);
-  assert.ifError(members.error);
-  assert.equal(members.data.length, 0);
-
-  const asg = await T2().from('assignments').select('*').eq('class_id', classId);
-  assert.ifError(asg.error);
-  assert.equal(asg.data.length, 0);
 });
 
 test('T2 cannot call class_progress / class_struggles / class_league for T1\'s class', { skip }, async () => {
@@ -301,6 +304,20 @@ test('assignments: T1 creates and manages; duplicate unit rejected; members read
   );
 });
 
+test('T2 still cannot read T1\'s members or assignments (now that rows exist)', { skip }, async () => {
+  // Runs AFTER students joined and the assignment was created, so the tables
+  // hold real rows: an RLS regression opening member/assignment rows to any
+  // authenticated user would return data here and fail the suite. (Asserting
+  // on empty tables is vacuous — 0 rows passes even with `using (true)`.)
+  const members = await T2().from('class_members').select('*').eq('class_id', classId);
+  assert.ifError(members.error);
+  assert.equal(members.data.length, 0, 'T2 must not see T1\'s member rows');
+
+  const asg = await T2().from('assignments').select('*').eq('class_id', classId);
+  assert.ifError(asg.error);
+  assert.equal(asg.data.length, 0, 'T2 must not see T1\'s assignment rows');
+});
+
 // ---------------------------------------------------------------------------
 // Immutability of teacher_id / course_id
 // ---------------------------------------------------------------------------
@@ -327,6 +344,19 @@ test('class_progress: S1\'s weekly XP and completed lessons are visible to T1', 
     payload: { lessonId: 'tr-en.u1.l1', correct: 8, total: 10, xp: 30, mistakes_by_type: { select_translation: 2 } },
     created_at: NOW,
     updated_at: NOW,
+  }, { onConflict: 'user_id,id' })).error);
+  // A second event from BEFORE WEEK_START (and older than the class_struggles
+  // p_since window below, so it must not leak into that assertion either):
+  // weekly_xp must exclude it — this is what actually exercises the week
+  // boundary.
+  const lastWeek = new Date(WEEK_START_MS - 8 * DAY_MS).toISOString();
+  assert.ifError((await S1().from('events').upsert({
+    user_id: users.S1.uid,
+    id: 'cls-evt-xp-old',
+    type: 'lesson_completed',
+    payload: { lessonId: 'tr-en.u1.l1', correct: 8, total: 10, xp: 999, mistakes_by_type: {} },
+    created_at: lastWeek,
+    updated_at: lastWeek,
   }, { onConflict: 'user_id,id' })).error);
   assert.ifError((await S1().from('user_progress').upsert({
     user_id: users.S1.uid,

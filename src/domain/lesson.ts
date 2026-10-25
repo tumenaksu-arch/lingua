@@ -9,6 +9,12 @@ export interface LessonState {
   completed: string[];
   /** ids answered wrong at least once */
   mistakes: string[];
+  /**
+   * Wrong ANSWERS per exercise id in this attempt — retries count, so an id
+   * answered wrong 3× before finally right is 3 (k27: mistakes_by_type is the
+   * number of wrong answers per exercise type, not distinct exercises).
+   */
+  wrongCounts: Record<string, number>;
   hearts: number;
   /** total answers given (incl. retries) */
   answered: number;
@@ -30,6 +36,7 @@ export function createLesson(
     queue: exercises.map((e) => e.id),
     completed: [],
     mistakes: [],
+    wrongCounts: {},
     hearts,
     answered: 0,
     correctAnswers: 0,
@@ -62,6 +69,7 @@ export function answer(state: LessonState, exerciseId: string, isCorrect: boolea
     ...state,
     queue: [...rest, exerciseId], // Duolingo: wrong answers come back at the end
     mistakes: state.mistakes.includes(exerciseId) ? state.mistakes : [...state.mistakes, exerciseId],
+    wrongCounts: { ...state.wrongCounts, [exerciseId]: (state.wrongCounts[exerciseId] ?? 0) + 1 },
     hearts,
     answered: state.answered + 1,
     failed: hearts === 0,
@@ -81,6 +89,10 @@ export function progress(state: LessonState): number {
 /**
  * `exerciseVocabMap`: exerciseId → vocab ids exercised. A vocab counts as correct
  * only if none of its exercises were answered wrong.
+ *
+ * mistakesByType counts WRONG ANSWERS per exercise type (wrongCounts — retries
+ * included), per the k27 spec for the teacher's "Zorlanılanlar": a student who
+ * fails the same listen_type exercise 3× before answering right reports 3.
  */
 export function toResult(
   state: LessonState,
@@ -89,9 +101,9 @@ export function toResult(
 ): LessonResult {
   const total = Object.keys(state.exercises).length;
   const mistakesByType: Record<string, number> = {};
-  for (const id of state.mistakes) {
+  for (const [id, count] of Object.entries(state.wrongCounts)) {
     const t = state.exercises[id]?.type;
-    if (t) mistakesByType[t] = (mistakesByType[t] ?? 0) + 1;
+    if (t) mistakesByType[t] = (mistakesByType[t] ?? 0) + count;
   }
   const vocabOutcomes: Record<string, boolean> = {};
   for (const [exId, vocabIds] of Object.entries(exerciseVocabMap)) {

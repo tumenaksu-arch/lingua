@@ -37,8 +37,23 @@ export default function JoinClassScreen() {
     setBusy(true);
     setError(null);
     try {
-      await join(code, takmaAd);
-      router.back();
+      const joined = await join(code, takmaAd);
+      // join resolves null when Supabase is not configured — the student must
+      // NOT walk away believing they joined.
+      if (!joined) {
+        setError('Sınıf şu an kullanılamıyor. Lütfen biraz sonra tekrar dene.');
+        return;
+      }
+      // Deterministic landing: the store switches course + completes
+      // onboarding here, the root guards re-render, and a plain router.back()
+      // can leave this modal open. Replace the whole stack with the home tab
+      // (dismissAll first in case the modal was pushed on a stack).
+      try {
+        router.dismissAll();
+      } catch {
+        /* nothing to dismiss */
+      }
+      router.replace('/(tabs)');
     } catch (e) {
       setError(authErrorMessage(e));
     } finally {

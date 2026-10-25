@@ -111,7 +111,7 @@ it('league screen: anonymous member sees the explanation and a shortcut to the c
       <LeagueScreen />
     </SafeAreaProvider>,
   );
-  expect(screen.getByText('Genel lig için e-postalı hesap gerekir. Sınıf ligin sınıf ekranında.')).toBeTruthy();
+  expect(await screen.findByText('Genel lig için e-postalı hesap gerekir. Sınıf ligin sınıf ekranında.')).toBeTruthy();
   await fireEvent.press(screen.getByRole('button', { name: 'Sınıfına git' }));
   expect(mockRouterPush).toHaveBeenCalledWith({ pathname: '/sinif/[classId]', params: { classId: 'c1' } });
   await waitFor(() => expect(mocked.getProfile).not.toHaveBeenCalled());
@@ -126,6 +126,28 @@ it('league screen: anonymous non-member sees the explanation without the class b
       <LeagueScreen />
     </SafeAreaProvider>,
   );
-  expect(screen.getByText('Genel lig için e-postalı hesap gerekir. Sınıf ligin sınıf ekranında.')).toBeTruthy();
+  expect(await screen.findByText('Genel lig için e-postalı hesap gerekir. Sınıf ligin sınıf ekranında.')).toBeTruthy();
   expect(screen.queryByRole('button', { name: 'Sınıfına git' })).toBeNull();
+});
+
+it('league screen: no global-league nickname form flashes while the anonymous check is pending', async () => {
+  useAppStore.setState({ user: ANON_USER, userId: 'anon-1' });
+  // The check stays pending until the test resolves it.
+  let resolveCheck: (v: boolean) => void = () => {};
+  mocked.isAnonymousSession.mockImplementation(() => new Promise<boolean>((res) => {
+    resolveCheck = res;
+  }));
+  await render(
+    <SafeAreaProvider initialMetrics={METRICS}>
+      <LeagueScreen />
+    </SafeAreaProvider>,
+  );
+  // Anonymous user + unresolved check: the NicknameForm (which RLS would
+  // reject on submit) must NOT flash.
+  expect(screen.queryByLabelText('Takma ad')).toBeNull();
+  expect(screen.queryByText(/Genel lig için e-postalı hesap gerekir/)).toBeNull();
+
+  resolveCheck(true);
+  expect(await screen.findByText('Genel lig için e-postalı hesap gerekir. Sınıf ligin sınıf ekranında.')).toBeTruthy();
+  expect(screen.queryByLabelText('Takma ad')).toBeNull();
 });

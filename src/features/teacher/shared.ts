@@ -18,6 +18,15 @@ function localDateIso(date: Date): string {
 /**
  * "bugün" / "dün" / "N gün önce" / "—" for a 'YYYY-MM-DD' last-active date,
  * compared against local midnight of `today`.
+ *
+ * Timezone convention (documented choice): `last_active_date` is the STUDENT's
+ * device-local calendar date, and this compares it to the TEACHER's local
+ * midnight — both sides are treated as plain calendar dates. Near midnight a
+ * student a few timezones behind/ahead can show "dün" although they were
+ * active minutes ago. That skew is accepted: the deployment is single-country
+ * (Türkiye), and the alternative (storing/transferring a tz offset per member)
+ * is not worth the privacy surface. If multi-tz deployment ever happens,
+ * derive the label from an absolute timestamp instead.
  */
 export function lastActiveLabel(lastActiveDate: string | null, today: Date): string {
   if (!lastActiveDate) return '—';

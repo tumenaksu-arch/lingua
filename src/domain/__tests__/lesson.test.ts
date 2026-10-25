@@ -27,6 +27,21 @@ describe('lesson state machine', () => {
     expect(r.vocabOutcomes).toEqual({ v1: false, v2: true });
   });
 
+  test('mistakesByType counts every wrong ANSWER — retries included (k27)', () => {
+    // e1 fails 3× before finally being answered right: the payload must
+    // report 3, not 1 (the teacher's "Zorlanılanlar" under-reports students
+    // who need many retries when only distinct exercises are counted).
+    let s = createLesson('l1', exercises, Infinity);
+    const attempts: Record<string, boolean[]> = { e1: [false, false, false, true] };
+    while (!isFinished(s)) {
+      const id = s.queue[0]!;
+      s = answer(s, id, attempts[id]?.shift() ?? true);
+    }
+    expect(s.mistakes).toEqual(['e1']); // distinct ids, unchanged semantics
+    const r = toResult(s, 5000);
+    expect(r.mistakesByType).toEqual({ select_translation: 3 });
+  });
+
   test('answering out of order is ignored', () => {
     const s = createLesson('l1', exercises, 5);
     expect(answer(s, 'e2', true)).toBe(s);

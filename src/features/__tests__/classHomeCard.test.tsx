@@ -85,6 +85,7 @@ beforeEach(() => {
     league: {},
     loading: false,
     error: null,
+    joinNote: null,
     load: jest.fn(async () => {}) as unknown as () => Promise<void>,
   });
 });
@@ -122,7 +123,22 @@ it('"Sınıfa git" navigates to the class screen', async () => {
 });
 
 it('renders no card for non-members', async () => {
-  useClassStore.setState({ myClasses: [] });
+  useClassStore.setState({ myClasses: [], error: null });
   await renderHome();
   expect(screen.queryByText(upperTr(`Sınıf · ${CLASS.ad}`))).toBeNull();
+  // Positive invariant: the rest of the home screen still renders, so this
+  // test fails if the whole screen (not just the card) stops working.
+  expect(screen.getByLabelText(/Kurs: .*\. Kurs değiştir/)).toBeTruthy();
+});
+
+it('shows the store error on the card instead of a fake empty state', async () => {
+  useClassStore.setState({ myClasses: [], error: 'Oturumun geçersiz. Lütfen tekrar giriş yap.' });
+  await renderHome();
+  expect(screen.getByText('Oturumun geçersiz. Lütfen tekrar giriş yap.')).toBeTruthy();
+});
+
+it('shows the join confirmation note on the card', async () => {
+  useClassStore.setState({ joinNote: 'Sınıfa katıldın: 9-A İngilizce' });
+  await renderHome();
+  expect(screen.getByText('Sınıfa katıldın: 9-A İngilizce')).toBeTruthy();
 });

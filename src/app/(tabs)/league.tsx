@@ -262,7 +262,14 @@ export default function LeagueScreen() {
   const error = useSocialStore((s) => s.error);
   const load = useSocialStore((s) => s.load);
   const [tab, setTab] = useState<Tab>('week');
-  const [anonymous, setAnonymous] = useState(false);
+  // Anonymous detection is async; until it resolves an anonymous user would
+  // match the `!profile` branch below and get a flash of the global-league
+  // NicknameForm (whose save RLS would reject). Gate rendering on the check.
+  const [anon, setAnon] = useState<{ uid: string | null; checked: boolean; value: boolean }>({
+    uid: null,
+    checked: false,
+    value: false,
+  });
   const myClasses = useClassStore((s) => s.myClasses);
 
   useEffect(() => {
@@ -273,15 +280,25 @@ export default function LeagueScreen() {
   // them anyway) — point them at their class league instead.
   useEffect(() => {
     let alive = true;
-    if (user) {
+    const uid = user?.uid ?? null;
+    if (!uid) {
+      // No session: the anonymous check is moot, resolve immediately.
+      Promise.resolve().then(() => {
+        if (alive) setAnon({ uid: null, checked: true, value: false });
+      });
+    } else {
       void isAnonymousSession().then((v) => {
-        if (alive) setAnonymous(v);
+        if (alive) setAnon({ uid, checked: true, value: v });
       });
     }
     return () => {
       alive = false;
     };
   }, [user]);
+
+  // The check is stale the moment the signed-in user changes.
+  const anonymousResolved = anon.checked && anon.uid === (user?.uid ?? null);
+  const anonymous = anonymousResolved && anon.value;
 
   return (
     <Screen padding={0} edges={['top']}>
@@ -301,7 +318,9 @@ export default function LeagueScreen() {
             </Body>
             <Button title="Giriş yap" onPress={() => router.push('/auth')} />
           </View>
-        ) : user && anonymous ? (
+        ) : !anonymousResolved ? (
+          <Caption color={colors.textMuted}>Yükleniyor…</Caption>
+        ) : anonymous ? (
           <View style={styles.section}>
             <Body color={colors.textMuted}>Genel lig için e-postalı hesap gerekir. Sınıf ligin sınıf ekranında.</Body>
             {myClasses[0] && (

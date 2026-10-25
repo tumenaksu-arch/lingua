@@ -36,7 +36,13 @@ export function AnnouncementsTab({
     setBusy(true);
     setError(null);
     try {
-      await postAnnouncement(classId, metin);
+      const posted = await postAnnouncement(classId, metin);
+      // postAnnouncement resolves null when there is no session (RLS would
+      // reject) — that is NOT a sent announcement: keep the draft and say so.
+      if (!posted) {
+        setError('Oturumun geçersiz. Lütfen tekrar giriş yap.');
+        return;
+      }
       setMetin('');
       onChanged();
     } catch (e) {
@@ -58,6 +64,10 @@ export function AnnouncementsTab({
             try {
               await deleteAnnouncement(announcement.id);
               onChanged();
+            } catch (e) {
+              // A failed delete must not vanish silently: the announcement
+              // stays on screen with the Turkish reason (network / RLS).
+              setError(e instanceof Error ? e.message : String(e));
             } finally {
               setDeleting(null);
             }

@@ -141,6 +141,20 @@ describe('lesson_completed event payload (teacher "Zorlanılanlar")', () => {
     expect(payload.mistakes_by_type).toEqual({});
     expect(payload.perfect).toBe(true);
   });
+
+  test('retries count: an exercise answered wrong twice reports 2, not 1 (k27)', async () => {
+    // e3 (listen_type) fails twice before finally being answered right.
+    let s = createLesson(firstLesson.id, exercises, Infinity);
+    const attempts: Record<string, boolean[]> = { e3: [false, false, true] };
+    while (!isFinished(s)) {
+      const id = s.queue[0]!;
+      s = answer(s, id, attempts[id]?.shift() ?? true);
+    }
+    await useAppStore.getState().finishLesson(toResult(s, 60_000));
+
+    const payload = eventPayload();
+    expect(payload.mistakes_by_type).toEqual({ listen_type: 2 });
+  });
 });
 
 test('reviewCard reschedules a due card: correct → 6 days, wrong → 1 day', async () => {

@@ -271,6 +271,19 @@ describe('createClass', () => {
     );
     expect(builders.get('classes')!.calls.insert).toHaveLength(1);
   });
+
+  it('maps a real RLS denial to the session message — PostgREST errors carry no HTTP status', async () => {
+    // Real supabase-js PostgREST errors have code/details/hint only; the
+    // 401/403 branch keys on `status`, so this must match 42501 / the message.
+    tableResults.set('classes', {
+      data: null,
+      error: { code: '42501', details: null, hint: null, message: 'new row violates row-level security policy' },
+    });
+
+    await expect(createClass({ ad: '9-A', courseId: 'tr-en', veliBilgilendirildi: true })).rejects.toThrow(
+      'Oturumun geçersiz',
+    );
+  });
 });
 
 describe('class management', () => {
@@ -324,13 +337,23 @@ describe('class management', () => {
     const classes = builders.get('classes')!;
     expect(classes.calls.update![0][0]).toMatchObject({ archived_at: expect.any(String) });
 
+    // A real PostgREST delete answers with the SELECTed rows of what was
+    // deleted; a returned row proves the membership actually went away.
+    tableResults.set('class_members', { data: [{ user_id: 'u2' }], error: null });
     await expect(removeMember('c1', 'u2')).resolves.toBe(true);
     const members = builders.get('class_members')!;
     expect(members.calls.delete).toEqual([[]]);
+    expect(members.calls.select).toEqual([['user_id']]);
     expect(members.calls.eq).toEqual([
       ['class_id', 'c1'],
       ['user_id', 'u2'],
     ]);
+  });
+
+  it('removeMember resolves false when the delete matched no permitted row', async () => {
+    // RLS silent no-op: 200 with zero rows (non-member / already removed).
+    tableResults.set('class_members', { data: [], error: null });
+    await expect(removeMember('c1', 'u2')).resolves.toBe(false);
   });
 
   it('maps network failures to a Turkish message', async () => {
@@ -534,6 +557,16 @@ describe('student helpers', () => {
     await expect(myClasses()).resolves.toEqual([
       { classId: 'c1', ad: '9-A', courseId: 'tr-en', takmaAd: 'Kedi', joinedAt: 't' },
     ]);
+  });
+
+  it('myClasses THROWS on a rejected read instead of faking an empty membership list', async () => {
+    // A silent [] would tell the student "you are not in any class" — the
+    // classStore surfaces this as its Turkish `error` instead.
+    rpcResults.set('my_classes', {
+      data: null,
+      error: { code: '42501', details: null, hint: null, message: 'row-level security policy' },
+    });
+    await expect(myClasses()).rejects.toThrow('Oturumun geçersiz');
   });
 
   it("leaveClass deletes the caller's own membership only", async () => {

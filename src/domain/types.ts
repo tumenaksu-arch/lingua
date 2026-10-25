@@ -121,8 +121,8 @@ export interface LessonResult {
   lessonId: string;
   correct: number;
   total: number;
-  mistakes: string[]; // exercise ids
-  /** wrong answers per exercise type (Exercise['type'] → count); {} when perfect */
+  mistakes: string[]; // exercise ids answered wrong at least once
+  /** wrong ANSWERS per exercise type (Exercise['type'] → count); retries count; {} when perfect */
   mistakesByType: Record<string, number>;
   durationMs: number;
   /** vocab ids answered correctly / incorrectly, for SRS */

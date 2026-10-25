@@ -26,6 +26,7 @@ export default function ClassScreen() {
   const announcements = useClassStore((s) => s.announcements);
   const league = useClassStore((s) => s.league);
   const loading = useClassStore((s) => s.loading);
+  const classError = useClassStore((s) => s.error);
   const load = useClassStore((s) => s.load);
 
   useFocusEffect(
@@ -39,7 +40,11 @@ export default function ClassScreen() {
     return (
       <Screen>
         <View style={styles.empty}>
-          <Body color={colors.textMuted}>Bu sınıfta değilsin ya da sınıf arşivlendi.</Body>
+          {classError ? (
+            <Caption color={colors.dangerText}>{classError}</Caption>
+          ) : (
+            <Body color={colors.textMuted}>Bu sınıfta değilsin ya da sınıf arşivlendi.</Body>
+          )}
           <Button title="Geri dön" variant="outline" onPress={() => router.back()} />
         </View>
       </Screen>
@@ -69,6 +74,8 @@ export default function ClassScreen() {
             <Body color={colors.textMuted}>✕</Body>
           </Pressable>
         </View>
+
+        {classError && <Caption color={colors.dangerText}>{classError}</Caption>}
 
         <Heading>Duyurular</Heading>
         {anns.length === 0 ? (

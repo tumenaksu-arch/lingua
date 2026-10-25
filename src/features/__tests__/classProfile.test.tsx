@@ -5,7 +5,7 @@
  * "E-posta ekle" flow entry, and a sign-out warning that the account is lost.
  */
 import { Alert } from 'react-native';
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { DEFAULT_STATS, LOCAL_USER_ID } from '@/data';
@@ -115,6 +115,22 @@ it('"Sınıftan ayrıl" confirms (explaining the teacher loses sight of you) and
   expect(mocked.leaveClass).toHaveBeenCalledWith('c1');
 });
 
+it('a failed leave alerts "Ayrılamadın" and keeps the class row', async () => {
+  mocked.leaveClass.mockRejectedValueOnce(new Error('Bağlantı yok. İnternetini kontrol edip tekrar dene.'));
+  await renderProfile();
+  await fireEvent.press(screen.getByRole('button', { name: 'Sınıftan ayrıl ve sınıf verimi sil' }));
+  const [, , buttons] = alertSpy.mock.calls[0]!;
+  (buttons as { style?: string; onPress?: () => void }[]).find((b) => b.style === 'destructive')?.onPress?.();
+
+  await waitFor(() => expect(alertSpy.mock.calls.length).toBeGreaterThanOrEqual(2));
+  const [title, message] = alertSpy.mock.calls[1]!;
+  expect(title).toBe('Ayrılamadın');
+  expect(String(message)).toMatch(/Bağlantı yok/);
+  // The membership stays until the server call actually succeeds.
+  expect(useClassStore.getState().myClasses).toHaveLength(1);
+  expect(screen.getByText('9-A İngilizce')).toBeTruthy();
+});
+
 it('non-members get the "Sınıfa katıl" button instead', async () => {
   useClassStore.setState({ myClasses: [] });
   await renderProfile();
@@ -150,9 +166,13 @@ describe('anonymous account', () => {
 
   it('guests (no user) see neither the anonymous note nor the class leave row', async () => {
     useAppStore.setState({ user: null, userId: LOCAL_USER_ID });
-    useClassStore.setState({ myClasses: [] });
+    useClassStore.setState({ myClasses: [], error: null });
     await renderProfile();
     expect(screen.queryByText('Hesabın bu cihaza bağlı. Kalıcı yapmak için e-posta ekle.')).toBeNull();
     expect(screen.queryByRole('button', { name: 'Sınıftan ayrıl ve sınıf verimi sil' })).toBeNull();
+    // Positive invariant: the class section itself still renders, so this
+    // negative assertion cannot pass because the whole feature was deleted.
+    expect(screen.getByText('Sınıfım')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Sınıfa katıl' })).toBeTruthy();
   });
 });

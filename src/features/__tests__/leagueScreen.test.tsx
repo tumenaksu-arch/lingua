@@ -72,7 +72,8 @@ it('signed-in without a nickname shows the form with Turkish validation', async 
   useAppStore.setState({ user: SIGNED_IN, userId: 'u1' });
   await renderLeague();
 
-  expect(screen.getByText(/E-posta adresin hiçbir yerde görünmez/)).toBeTruthy();
+  // The anonymous-session check gates the first render, so wait for the form.
+  expect(await screen.findByText(/E-posta adresin hiçbir yerde görünmez/)).toBeTruthy();
 
   await fireEvent.changeText(screen.getByLabelText('Takma ad'), 'ab');
   await fireEvent.press(screen.getByRole('button', { name: 'Kaydet' }));

@@ -4,7 +4,7 @@ import * as Haptics from 'expo-haptics';
 import { router, useFocusEffect } from 'expo-router';
 
 import { ACHIEVEMENTS, FREEZE_EVERY_DAYS, MAX_HEARTS, MAX_STREAK_FREEZES, getAchievement, msUntilNextHeart, regenerate } from '@/domain';
-import { isSupabaseConfigured } from '@/data';
+import { authErrorMessage, isSupabaseConfigured } from '@/data';
 import { isAnonymousSession } from '@/data/remote/classes';
 import { AddEmailForm, AnonymousAccountNote } from '@/features/classes/AddEmailForm';
 import { useClassStore } from '@/features/classes/classStore';
@@ -385,7 +385,17 @@ export default function ProfileScreen() {
                     'Ayrılınca öğretmen seni ve öğrenme özetini (XP, biten dersler, seri) artık görmez; sınıf verin silinir.',
                     [
                       { text: 'Vazgeç', style: 'cancel' },
-                      { text: 'Ayrıl', style: 'destructive', onPress: () => void leaveClass(c.classId) },
+                      {
+                        text: 'Ayrıl',
+                        style: 'destructive',
+                        onPress: () => {
+                          void leaveClass(c.classId).catch((e: unknown) => {
+                            // A failed leave must be visible (airplane mode,
+                            // RLS): the row stays until the server call works.
+                            showAlert('Ayrılamadın', authErrorMessage(e));
+                          });
+                        },
+                      },
                     ],
                   )
                 }

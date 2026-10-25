@@ -15,6 +15,7 @@ import {
   listAssignments,
   listMyClasses,
   postAnnouncement,
+  removeMember,
 } from '@/data/remote/classes';
 import { useAppStore } from '@/features/store';
 import { ClassDetail } from '@/features/teacher/classDetail';
@@ -27,6 +28,7 @@ const METRICS = { frame: { x: 0, y: 0, width: 360, height: 800 }, insets: { top:
 
 const mockRouterPush = jest.fn();
 const mockRouterBack = jest.fn();
+const mockFocusHandlers: (() => void | (() => void))[] = [];
 
 jest.mock('expo-router', () => ({
   router: {
@@ -35,11 +37,24 @@ jest.mock('expo-router', () => ({
     replace: jest.fn(),
   },
   useFocusEffect: (cb: () => void | (() => void)) => {
+    mockFocusHandlers.push(cb);
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { useEffect } = require('react') as typeof import('react');
-    useEffect(() => cb(), [cb]);
+    useEffect(() => {
+      const cleanup = cb();
+      return () => {
+        const i = mockFocusHandlers.indexOf(cb);
+        if (i >= 0) mockFocusHandlers.splice(i, 1);
+        if (typeof cleanup === 'function') cleanup();
+      };
+    }, [cb]);
   },
 }));
+
+/** Simulates the screen regaining focus (React Navigation useFocusEffect). */
+function refocus() {
+  for (const cb of [...mockFocusHandlers]) cb();
+}
 
 // The panel talks to Supabase ONLY through this module — every test below
 // fails if the corresponding feature stops using it.
@@ -95,6 +110,7 @@ const mocked = {
   listAnnouncements: jest.mocked(listAnnouncements),
   postAnnouncement: jest.mocked(postAnnouncement),
   deleteAnnouncement: jest.mocked(deleteAnnouncement),
+  removeMember: jest.mocked(removeMember),
   classStruggles: jest.mocked(classStruggles),
   classLeague: jest.mocked(classLeague),
 };
@@ -191,6 +207,20 @@ describe('class creation', () => {
     await waitFor(() =>
       expect(mocked.createClass).toHaveBeenCalledWith({ ad: '9-A İngilizce', courseId: 'tr-en', veliBilgilendirildi: true }),
     );
+  });
+
+  it('refetches the class list when the panel regains focus (an archived class drops off)', async () => {
+    await renderWithArea(<TeacherHome />);
+    await screen.findByRole('button', { name: 'Sınıf aç' });
+    expect(screen.getByText('Sınıflarım (1)')).toBeTruthy();
+
+    // Back from the class detail after archiving: the list refetches and the
+    // ghost class is gone (previously the stale row stayed and led to a dead end).
+    mocked.listMyClasses.mockResolvedValue([]);
+    const callsBefore = mocked.listMyClasses.mock.calls.length;
+    refocus();
+    await waitFor(() => expect(mocked.listMyClasses.mock.calls.length).toBeGreaterThan(callsBefore));
+    expect(await screen.findByText(/Henüz sınıfın yok/)).toBeTruthy();
   });
 });
 
@@ -294,6 +324,62 @@ describe('class detail', () => {
     alertSpy.mockRestore();
   });
 
+  it('a null post (no session) keeps the draft and shows the session error — no fake success', async () => {
+    mocked.postAnnouncement.mockResolvedValue(null);
+    await renderWithArea(<ClassDetail classId="c1" />);
+
+    await fireEvent.press(await screen.findByRole('tab', { name: 'DUYURULAR' }));
+    await fireEvent.changeText(screen.getByLabelText('Duyuru metni'), 'Yarın sınav yok');
+    await fireEvent.press(screen.getByRole('button', { name: 'Duyuruyu gönder' }));
+
+    expect(await screen.findByText('Oturumun geçersiz. Lütfen tekrar giriş yap.')).toBeTruthy();
+    // The draft is NOT cleared: the announcement never left the client.
+    expect(screen.getByLabelText('Duyuru metni')).toHaveProp('value', 'Yarın sınav yok');
+    expect(screen.getByText('15/500')).toBeTruthy();
+  });
+
+  it('a failed delete shows the Turkish error and keeps the announcement on screen', async () => {
+    mocked.listAnnouncements.mockResolvedValue([
+      { id: 'a1', classId: 'c1', metin: 'Cuma günü sınav var.', createdAt: new Date().toISOString() },
+    ]);
+    mocked.deleteAnnouncement.mockRejectedValue(new Error('Bağlantı yok. İnternetini kontrol edip tekrar dene.'));
+    const alertSpy = jest
+      .spyOn(Alert, 'alert')
+      .mockImplementation((_title?: string, _message?: string, buttons?: Parameters<typeof Alert.alert>[2]) => {
+        buttons?.find((b) => b.style === 'destructive')?.onPress?.();
+      });
+    await renderWithArea(<ClassDetail classId="c1" />);
+
+    await fireEvent.press(await screen.findByRole('tab', { name: 'DUYURULAR' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Duyuruyu sil' }));
+    expect(await screen.findByText('Bağlantı yok. İnternetini kontrol edip tekrar dene.')).toBeTruthy();
+    expect(screen.getByText('Cuma günü sınav var.')).toBeTruthy();
+    alertSpy.mockRestore();
+  });
+
+  it('removing a student the delete did not touch says so instead of faking success', async () => {
+    mocked.classProgress.mockResolvedValue(MEMBERS);
+    // RLS silent no-op: 200 with zero deleted rows.
+    mocked.removeMember.mockResolvedValue(false);
+    const alertSpy = jest
+      .spyOn(Alert, 'alert')
+      .mockImplementation((_title?: string, _message?: string, buttons?: Parameters<typeof Alert.alert>[2]) => {
+        const destructive = buttons?.find((b) => b.style === 'destructive');
+        if (destructive) destructive.onPress?.(); // confirm the removal
+      });
+    await renderWithArea(<ClassDetail classId="c1" />);
+
+    await fireEvent.press(await screen.findByRole('tab', { name: 'ÖĞRENCİLER' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Torpil adlı öğrenciyi çıkar' }));
+    await waitFor(() => expect(mocked.removeMember).toHaveBeenCalledWith('c1', 'u1'));
+    // Second alert: the failure notice (the first was the removal confirm).
+    await waitFor(() => expect(alertSpy.mock.calls.length).toBeGreaterThanOrEqual(2));
+    const [title, message] = alertSpy.mock.calls[1]!;
+    expect(title).toBe('Öğrenci çıkarılamadı');
+    expect(String(message)).toMatch(/bulunamadı ya da zaten çıkarılmış/);
+    alertSpy.mockRestore();
+  });
+
   it('struggles list units by ascending accuracy and types by most mistakes', async () => {
     mocked.classStruggles.mockResolvedValue([
       { lessonId: 'u2.l1', attempts: 10, correct: 9, total: 10, mistakesByType: { speak: 2 } },
@@ -301,7 +387,7 @@ describe('class detail', () => {
     ]);
     await renderWithArea(<ClassDetail classId="c1" />);
 
-    await fireEvent.press(await screen.findByRole('tab', { name: 'ZORLANILANLAR' }));
+    await fireEvent.press(await screen.findByRole('tab', { name: 'ZORLANAN' }));
     const unitLabels = screen.getAllByText(/Ünite \d+: /).map((el) => String(el.props.children));
     expect(unitLabels[0]).toContain('Temeller'); // 10% before 90%
     expect(unitLabels[1]).toContain('Alışveriş');
@@ -312,7 +398,7 @@ describe('class detail', () => {
 
   it('struggles empty state shows when there is no 30-day data', async () => {
     await renderWithArea(<ClassDetail classId="c1" />);
-    await fireEvent.press(await screen.findByRole('tab', { name: 'ZORLANILANLAR' }));
+    await fireEvent.press(await screen.findByRole('tab', { name: 'ZORLANAN' }));
     expect(await screen.findByText(/Son 30 günde yeterli veri yok/)).toBeTruthy();
   });
 

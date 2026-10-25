@@ -16,9 +16,16 @@ import JoinClassScreen from '@/app/sinif-katil';
 const METRICS = { frame: { x: 0, y: 0, width: 390, height: 844 }, insets: { top: 0, left: 0, right: 0, bottom: 0 } };
 
 const mockRouterBack = jest.fn();
+const mockRouterReplace = jest.fn();
+const mockRouterDismissAll = jest.fn();
 
 jest.mock('expo-router', () => ({
-  router: { push: jest.fn(), back: (...args: unknown[]) => mockRouterBack(...args) },
+  router: {
+    push: jest.fn(),
+    back: (...args: unknown[]) => mockRouterBack(...args),
+    replace: (...args: unknown[]) => mockRouterReplace(...args),
+    dismissAll: (...args: unknown[]) => mockRouterDismissAll(...args),
+  },
 }));
 
 jest.mock('@/data/remote/classes', () => ({
@@ -41,7 +48,7 @@ const CLASS_JOINED = { classId: 'c1', ad: '9-A İngilizce', courseId: 'tr-en' as
 
 beforeEach(() => {
   jest.clearAllMocks();
-  useClassStore.setState({ myClasses: [], assignments: {}, announcements: {}, league: {}, loading: false, error: null });
+  useClassStore.setState({ myClasses: [], assignments: {}, announcements: {}, league: {}, loading: false, error: null, joinNote: null });
 });
 
 async function renderJoin() {
@@ -80,15 +87,31 @@ it('validates both fields inline and never calls join', async () => {
   expect(mocked.joinAsStudent).not.toHaveBeenCalled();
 });
 
-it('joins with the normalized code and goes back on success', async () => {
+it('joins with the normalized code and lands on the home tab on success', async () => {
   const join = jest.fn(async () => CLASS_JOINED);
   useClassStore.setState({ join });
   await renderJoin();
   await fireEvent.changeText(screen.getByLabelText('Sınıf kodu'), 'abc234');
   await fireEvent.changeText(screen.getByLabelText('Takma ad'), 'YıldızKedi');
   await fireEvent.press(screen.getByRole('button', { name: 'Sınıfa katıl' }));
-  await waitFor(() => expect(mockRouterBack).toHaveBeenCalled());
+  await waitFor(() => expect(mockRouterReplace).toHaveBeenCalledWith('/(tabs)'));
+  expect(mockRouterDismissAll).toHaveBeenCalled();
+  // The modal must not linger (previously router.back() could leave it open).
+  expect(mockRouterBack).not.toHaveBeenCalled();
   expect(join).toHaveBeenCalledWith('ABC234', 'YıldızKedi');
+});
+
+it('a null join (Supabase not configured) shows an inline error and stays on the form', async () => {
+  const join = jest.fn(async () => null);
+  useClassStore.setState({ join });
+  await renderJoin();
+  await fireEvent.changeText(screen.getByLabelText('Sınıf kodu'), 'ABC234');
+  await fireEvent.changeText(screen.getByLabelText('Takma ad'), 'YıldızKedi');
+  await fireEvent.press(screen.getByRole('button', { name: 'Sınıfa katıl' }));
+
+  expect(await screen.findByRole('alert')).toHaveTextContent(/Sınıf şu an kullanılamıyor/);
+  expect(mockRouterReplace).not.toHaveBeenCalled();
+  expect(mockRouterBack).not.toHaveBeenCalled();
 });
 
 it('shows the join RPC error inline instead of navigating', async () => {
@@ -129,6 +152,9 @@ describe('classStore.join (anonymous join path)', () => {
     expect(app.selectCourse).not.toHaveBeenCalled();
     expect(joined).toMatchObject({ classId: 'c1', ad: '9-A İngilizce', takmaAd: 'YıldızKedi' });
     expect(mocked.myClasses).toHaveBeenCalled(); // store refreshed after the join
+    // The home class card shows this confirmation after the join screen
+    // replaces the stack with the home tab.
+    expect(useClassStore.getState().joinNote).toBe('Sınıfa katıldın: 9-A İngilizce');
   });
 
   it('already-onboarded member just switches course', async () => {

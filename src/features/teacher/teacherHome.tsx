@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 
 import { courses, getCourse } from '@/content';
 import {
@@ -75,7 +75,6 @@ export function TeacherHome() {
       if (!alive) return;
       if (teacher) {
         setGate('ready');
-        void load();
       } else {
         setGate('kvkk');
       }
@@ -83,7 +82,16 @@ export function TeacherHome() {
     return () => {
       alive = false;
     };
-  }, [load]);
+  }, []);
+
+  // Refetch whenever the panel regains focus: archiving a class from its
+  // detail screen pops back here, and without a refetch the just-archived
+  // class would linger as a ghost row that leads to a dead end.
+  useFocusEffect(
+    useCallback(() => {
+      if (gate === 'ready') void load();
+    }, [gate, load]),
+  );
 
   const acceptKvkk = async () => {
     setKvkkBusy(true);

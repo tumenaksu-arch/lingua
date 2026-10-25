@@ -38,7 +38,7 @@ import {
 } from '@/ui';
 
 const DAY_MS = 86_400_000;
-const TABS = ['ÖĞRENCİLER', 'ÖDEVLER', 'DUYURULAR', 'ZORLANILANLAR', 'LİG'] as const;
+const TABS = ['ÖĞRENCİLER', 'ÖDEVLER', 'DUYURULAR', 'ZORLANAN', 'LİG'] as const;
 type Tab = (typeof TABS)[number];
 
 /** Class detail (route /ogretmen/[classId]): header with the join code plus the five tabs. */
@@ -238,7 +238,7 @@ export function ClassDetail({ classId }: { classId: string }) {
         {tab === 'ÖĞRENCİLER' && <StudentsTab classId={cls.id} members={members} course={course} classCode={cls.joinCode} onChanged={() => void load()} />}
         {tab === 'ÖDEVLER' && <AssignmentsTab classId={cls.id} course={course} assignments={assignments} members={members} onChanged={() => void load()} />}
         {tab === 'DUYURULAR' && <AnnouncementsTab classId={cls.id} announcements={announcements} onChanged={() => void load()} />}
-        {tab === 'ZORLANILANLAR' && <StrugglesTab rows={struggles} course={course} />}
+        {tab === 'ZORLANAN' && <StrugglesTab rows={struggles} course={course} />}
         {tab === 'LİG' && <LeagueTab rows={league} />}
       </ScrollView>
     </Screen>

@@ -93,13 +93,27 @@ function isNetworkError(e: unknown): boolean {
   return /failed to fetch|networkerror|network request failed|timeout/i.test(e.message);
 }
 
-/** Maps PostgREST/fetch failures to a Turkish message the screens can show. */
+/**
+ * Maps PostgREST/fetch failures to a Turkish message the screens can show.
+ * Note: real supabase-js PostgREST errors carry code/details/hint but NO HTTP
+ * `status`, so an RLS denial is recognized by its PG code (42501) or the
+ * 'row-level security / permission denied' message — not by `status`.
+ */
 function toTurkishError(e: unknown): Error {
   if (e instanceof Error && isNetworkError(e)) {
     return new Error('Bağlantı yok. İnternetini kontrol edip tekrar dene.');
   }
   const status = typeof e === 'object' && e && 'status' in e ? Number((e as { status: unknown }).status) : 0;
-  if (status === 401 || status === 403) return new Error('Oturumun geçersiz. Lütfen tekrar giriş yap.');
+  const code = typeof e === 'object' && e && 'code' in e ? String((e as { code: unknown }).code) : '';
+  const message = typeof e === 'object' && e && 'message' in e ? String((e as { message: unknown }).message) : '';
+  if (
+    status === 401 ||
+    status === 403 ||
+    code === '42501' ||
+    /row-level security|permission denied/i.test(message)
+  ) {
+    return new Error('Oturumun geçersiz. Lütfen tekrar giriş yap.');
+  }
   return e instanceof Error ? e : new Error(String(e));
 }
 
@@ -336,14 +350,25 @@ export async function archiveClass(classId: string): Promise<boolean> {
   }
 }
 
-/** Removes a member (student) from a class the caller owns. */
+/**
+ * Removes a member (student) from a class the caller owns. A PostgREST DELETE
+ * that passes the USING check but matches no permitted row answers 200 with an
+ * empty body, so the delete SELECTs the removed id: no returned row means
+ * nothing was deleted (non-member / already removed) and the caller gets
+ * `false` instead of a fake success.
+ */
 export async function removeMember(classId: string, userId: string): Promise<boolean> {
   const sb = getSupabase();
   if (!sb || !(await hasSession(sb))) return false;
   try {
-    const { error } = await sb.from('class_members').delete().eq('class_id', classId).eq('user_id', userId);
+    const { data, error } = await sb
+      .from('class_members')
+      .delete()
+      .eq('class_id', classId)
+      .eq('user_id', userId)
+      .select('user_id');
     if (error) throw toTurkishError(error);
-    return true;
+    return (data?.length ?? 0) > 0;
   } catch (e) {
     throw toTurkishError(e);
   }
@@ -620,13 +645,19 @@ export async function joinAsStudent(code: string, takmaAd: string): Promise<Join
   return { classId: row.class_id, ad: row.ad, courseId: row.course_id as CourseId };
 }
 
-/** The caller's classes as a student (archived classes are excluded server-side). */
+/**
+ * The caller's classes as a student (archived classes are excluded server-side).
+ * Unlike the other readers this one THROWS on a rejected read (RLS/session
+ * expiry/network): a silent [] would masquerade as "not in any class" and the
+ * student would conclude they were removed. classStore.load catches it into
+ * the Turkish `error` the class card renders.
+ */
 export async function myClasses(): Promise<MyClassDoc[]> {
   const sb = getSupabase();
   if (!sb) return [];
   try {
     const { data, error } = await sb.rpc('my_classes');
-    if (error) return [];
+    if (error) throw toTurkishError(error);
     return (
       (data as { class_id: string; ad: string; course_id: string; takma_ad: string; joined_at: string }[] | null) ?? []
     ).map((row) => ({
@@ -636,8 +667,8 @@ export async function myClasses(): Promise<MyClassDoc[]> {
       takmaAd: row.takma_ad,
       joinedAt: row.joined_at,
     }));
-  } catch {
-    return [];
+  } catch (e) {
+    throw toTurkishError(e);
   }
 }
 

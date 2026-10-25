@@ -39,10 +39,17 @@ export function StudentsTab({
           void (async () => {
             setBusy(member.userId);
             try {
-              await removeMember(classId, member.userId);
+              const removed = await removeMember(classId, member.userId);
+              // A delete that matched no permitted row answers 200 with zero
+              // rows: report it instead of letting the teacher believe the
+              // student was removed.
+              if (!removed) {
+                showAlert('Öğrenci çıkarılamadı', 'Öğrenci bu sınıfta bulunamadı ya da zaten çıkarılmış.');
+              }
               onChanged();
             } catch {
-              // RLS/network failure: keep the row; the teacher can retry.
+              // RLS/network failure: keep the row and say why.
+              showAlert('Öğrenci çıkarılamadı', 'Bağlantı yok ya da oturumun geçersiz. Lütfen tekrar dene.');
             } finally {
               setBusy(null);
             }

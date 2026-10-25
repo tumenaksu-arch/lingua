@@ -205,6 +205,8 @@ function ClassCard() {
   const assignments = useClassStore((s) => s.assignments);
   const announcements = useClassStore((s) => s.announcements);
   const load = useClassStore((s) => s.load);
+  const classError = useClassStore((s) => s.error);
+  const joinNote = useClassStore((s) => s.joinNote);
   const { colors } = useTheme();
   const now = useNow();
 
@@ -216,6 +218,15 @@ function ClassCard() {
   );
 
   const cls = pickHomeClass(myClasses, course.id);
+  // A rejected memberships read (RLS/session/network) must be visible — never
+  // silently indistinguishable from "not in any class".
+  if (!cls && classError) {
+    return (
+      <View style={[styles.classCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+        <Caption color={colors.dangerText}>{classError}</Caption>
+      </View>
+    );
+  }
   if (!cls) return null;
   const clsCourse = getCourse(cls.courseId);
   const completedIds = Object.keys(progress).filter((id) => progress[id]?.completedAt);
@@ -226,6 +237,8 @@ function ClassCard() {
   const latest = (announcements[cls.classId] ?? [])[0];
   return (
     <View style={[styles.classCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+      {classError && <Caption color={colors.dangerText}>{classError}</Caption>}
+      {joinNote && <Caption color={colors.successText}>{joinNote}</Caption>}
       <Caption color={colors.primaryText}>{upperTr(`Sınıf · ${cls.ad}`)}</Caption>
       {open.length === 0 ? (
         <Caption color={colors.textMuted}>Ödev yok. Böyle devam et!</Caption>

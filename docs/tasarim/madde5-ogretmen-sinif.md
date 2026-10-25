@@ -12,7 +12,7 @@ Kararlar (kullanıcı, 2026-10-26):
 2. "Sınıf aç" der ve sınıf adını (ör. "9-A İngilizce") ile kursu seçer.
 3. "Velileri bilgilendirdim; öğrenciler yalnız takma adla katılır" kutusunu işaretlemek zorunludur.
 4. Sistem 6 haneli bir sınıf kodu üretir. Kod büyük gösterilir; kopyalanabilir ve paylaşılabilir.
-5. Sınıf ekranında beş sekme vardır: **Öğrenciler**, **Ödevler**, **Duyurular**, **Zorlanılanlar**, **Lig**. Duyuru en çok 500 karakterdir, düzenlenmez (silinip yeniden yazılır), öğrenciler yanıt veremez.
+5. Sınıf ekranında beş sekme vardır: **Öğrenciler**, **Ödevler**, **Duyurular**, **Zorlanan**, **Lig** (sekme etiketi 360–390 px genişlikte sığsın diye "Zorlanılanlar" yerine kısaltılmıştır). Duyuru en çok 500 karakterdir, düzenlenmez (silinip yeniden yazılır), öğrenciler yanıt veremez.
 6. Öğretmen öğrenciyi sınıftan çıkarabilir, sınıfı arşivleyebilir (arşivlemek üyelikleri siler) ve kodu yenileyebilir.
 
 **Öğrenci**

@@ -6,7 +6,7 @@ import { summarizeStruggles } from '@/features/classes/struggles';
 import { Caption, Heading, fonts, radii, spacing, useTheme } from '@/ui';
 
 /**
- * ZORLANILANLAR tab: class_struggles (last 30 days) summarized per unit
+ * ZORLANAN tab (etiket dar ekranlarda sığsın diye kısaltıldı): class_struggles (last 30 days) summarized per unit
  * (accuracy ascending — worst first) and per exercise type (most mistakes
  * first). Summaries only; the teacher never sees individual answers.
  */
