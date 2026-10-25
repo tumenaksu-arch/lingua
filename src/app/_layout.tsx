@@ -94,6 +94,8 @@ export default function RootLayout() {
           <Stack.Screen name="story/[unitId]" options={{ presentation: 'modal' }} />
           <Stack.Screen name="auth" options={{ presentation: 'modal' }} />
           <Stack.Screen name="courses" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="ogretmen" />
+          <Stack.Screen name="ogretmen/[classId]" />
         </Stack.Protected>
       </Stack>
     </ThemeProvider>

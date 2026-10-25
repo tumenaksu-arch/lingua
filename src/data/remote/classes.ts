@@ -80,6 +80,13 @@ export interface LeagueRow {
   isMe: boolean;
 }
 
+export interface AnnouncementDoc {
+  id: string;
+  classId: string;
+  metin: string;
+  createdAt: string;
+}
+
 // PostgREST error shapes: network failures throw, API failures come back in `error`.
 function isNetworkError(e: unknown): boolean {
   if (!(e instanceof Error)) return false;
@@ -406,6 +413,75 @@ export async function deleteAssignment(assignmentId: string): Promise<boolean> {
   if (!sb || !(await hasSession(sb))) return false;
   try {
     const { error } = await sb.from('assignments').delete().eq('id', assignmentId);
+    if (error) throw toTurkishError(error);
+    return true;
+  } catch (e) {
+    throw toTurkishError(e);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Announcements (teacher writes/deletes, members read; 0003 — no editing:
+// a correction is delete + new)
+// ---------------------------------------------------------------------------
+
+function toAnnouncementDoc(row: Record<string, unknown>): AnnouncementDoc {
+  return {
+    id: String(row.id),
+    classId: String(row.class_id),
+    metin: String(row.metin ?? ''),
+    createdAt: String(row.created_at ?? ''),
+  };
+}
+
+/** The announcements of a class (member or owner), newest first, capped at `limit`. */
+export async function listAnnouncements(classId: string, limit = 50): Promise<AnnouncementDoc[]> {
+  const sb = getSupabase();
+  if (!sb) return [];
+  try {
+    const { data, error } = await sb
+      .from('class_announcements')
+      .select('*')
+      .eq('class_id', classId)
+      .order('created_at', { ascending: false })
+      .limit(limit);
+    if (error) return [];
+    return ((data ?? []) as Record<string, unknown>[]).map(toAnnouncementDoc);
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Posts a one-way class announcement (1–500 chars after trimming). An empty or
+ * over-long text never leaves the client; both are Turkish errors, matching
+ * the schema's btrim length check.
+ */
+export async function postAnnouncement(classId: string, metin: string): Promise<AnnouncementDoc | null> {
+  const sb = getSupabase();
+  if (!sb || !(await hasSession(sb))) return null;
+  const text = metin.trim();
+  if (text.length < 1) throw new Error('Duyuru boş olamaz.');
+  if (text.length > 500) throw new Error('Duyuru en çok 500 karakter olabilir.');
+  try {
+    const { data, error } = await sb
+      .from('class_announcements')
+      .insert({ class_id: classId, metin: text })
+      .select('*')
+      .single();
+    if (error) throw toTurkishError(error);
+    return toAnnouncementDoc(data as Record<string, unknown>);
+  } catch (e) {
+    throw toTurkishError(e);
+  }
+}
+
+/** Deletes an announcement of a class the caller owns. */
+export async function deleteAnnouncement(id: string): Promise<boolean> {
+  const sb = getSupabase();
+  if (!sb || !(await hasSession(sb))) return false;
+  try {
+    const { error } = await sb.from('class_announcements').delete().eq('id', id);
     if (error) throw toTurkishError(error);
     return true;
   } catch (e) {
