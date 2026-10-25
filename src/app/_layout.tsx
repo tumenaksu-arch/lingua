@@ -77,8 +77,6 @@ export default function RootLayout() {
       <StatusBar style={isDark ? 'light' : 'dark'} />
       <ShellUpdateBanner />
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
-        {/* Class join is reachable from the welcome screen too (no account needed). */}
-        <Stack.Screen name="sinif-katil" options={{ presentation: 'modal' }} />
         <Stack.Protected guard={legacyAccount !== null}>
           <Stack.Screen name="migrate" />
         </Stack.Protected>
@@ -100,6 +98,9 @@ export default function RootLayout() {
           <Stack.Screen name="ogretmen/[classId]" />
           <Stack.Screen name="sinif/[classId]" />
         </Stack.Protected>
+        {/* Class join is reachable from the welcome screen too (no account needed). Must stay AFTER the
+            guarded groups: the first registered screen becomes the initial route (it opened on launch). */}
+        <Stack.Screen name="sinif-katil" options={{ presentation: 'modal' }} />
       </Stack>
     </ThemeProvider>
   );
