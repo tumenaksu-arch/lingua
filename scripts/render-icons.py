@@ -1,74 +1,107 @@
 #!/usr/bin/env python3
-"""Renders Lingua's app icons from a programmatic design (PIL only, no external assets).
+"""Renders Love-Vox's app icons from a programmatic design (PIL only, no external assets).
 
-Design: rounded speech bubble in white on brand green (#58CC02) with a bold stylised "L"
-cut out in green, plus a small tail at the bottom-left. Outputs (all PNG):
-  assets/icon.png                     1024x1024, opaque green background (iOS/App Store)
-  assets/adaptive-icon-foreground.png 1024x1024, transparent, mark inside Android safe zone
-  assets/adaptive-icon-background.png 1024x1024, solid green
+Design (EduPilot palette): a minimal "voice wave" of 5 vertical rounded bars of
+different heights (an audio level meter, middle bar highest) in copper #d18b63,
+plus a small light #e8eaf2 dot suggesting speech, centred on navy #0e1220.
+No speech bubble, no letter, no green. Outputs (all PNG):
+  assets/icon.png                     1024x1024, opaque navy (iOS/App Store)
+  assets/adaptive-icon-foreground.png 1024x1024, transparent, mark in Android safe zone
+  assets/adaptive-icon-background.png 1024x1024, solid navy
   assets/adaptive-icon-monochrome.png 1024x1024, white mark on transparent (themed icons)
-  assets/splash-icon.png              1024x1024, transparent, white mark (used on green splash)
-  assets/favicon.png                  48x48
+  assets/splash-icon.png              1024x1024, transparent, copper mark
+  assets/favicon.png                  48x48, opaque navy
+  public/icons/icon-192.png           192x192, opaque navy
+  public/icons/icon-512.png           512x512, opaque navy
+  public/icons/maskable-512.png       512x512, opaque navy, mark within central 80%
+  public/icons/apple-touch-icon.png   180x180, opaque navy
+  mobile-shell/assets/icon-only.png        1024x1024, opaque navy
+  mobile-shell/assets/icon-foreground.png  transparent foreground (copper mark)
+  mobile-shell/assets/icon-background.png  solid navy
+  mobile-shell/assets/splash.png           2732x2732, navy, copper mark ~600px
+  mobile-shell/assets/splash-dark.png      2732x2732, navy, copper mark ~600px
 Run: python3 scripts/render-icons.py
 """
+import os
+
 from PIL import Image, ImageDraw
 
-GREEN = (0x58, 0xCC, 0x02, 255)
-GREEN_DARK = (0x46, 0xA3, 0x02, 255)
+NAVY = (0x0E, 0x12, 0x20, 255)
+COPPER = (0xD1, 0x8B, 0x63, 255)
+LIGHT = (0xE8, 0xEA, 0xF2, 255)
 WHITE = (255, 255, 255, 255)
 CLEAR = (0, 0, 0, 0)
-S = 1024
-SS = 4  # supersampling for smooth edges
+SS = 2  # supersampling for smooth edges
+
+# relative bar heights (middle highest), as fractions of the mark height
+HEIGHTS = (0.42, 0.68, 1.0, 0.68, 0.42)
 
 
-def mark(size, color, scale=1.0):
-    """White (or `color`) speech bubble with an L cut out, centred, on a transparent canvas."""
+def mark(size, color, scale=1.0, dot_color=None):
+    """Voice wave (5 rounded bars) in `color`, centred, on a transparent canvas.
+
+    The wave spans ~0.62*size horizontally and ~0.60*size vertically (times
+    `scale`); `scale` < 1 keeps it inside the Android adaptive safe zone.
+    A small light dot at the top-right suggests speech.
+    """
     w = size * SS
     img = Image.new("RGBA", (w, w), CLEAR)
     d = ImageDraw.Draw(img)
     c = w / 2
-    bw = w * 0.62 * scale  # bubble width
-    bh = w * 0.50 * scale
-    r = bh * 0.28
-    x0, y0 = c - bw / 2, c - bh / 2 - w * 0.03 * scale
-    x1, y1 = c + bw / 2, c + bh / 2 - w * 0.03 * scale
-    d.rounded_rectangle([x0, y0, x1, y1], radius=r, fill=color)
-    # tail (bottom-left)
-    tail = [
-        (x0 + bw * 0.18, y1 - r * 0.2),
-        (x0 + bw * 0.12, y1 + bh * 0.22),
-        (x0 + bw * 0.40, y1 - r * 0.05),
-    ]
-    d.polygon(tail, fill=color)
-    # stylised L cut out of the bubble
-    sw = bw * 0.11  # stroke width
-    lx = c - bw * 0.14
-    ly0 = y0 + bh * 0.22
-    ly1 = y1 - bh * 0.24
-    d.rounded_rectangle([lx, ly0, lx + sw, ly1], radius=sw * 0.3, fill=CLEAR)
-    d.rounded_rectangle([lx, ly1 - sw, lx + bw * 0.34, ly1], radius=sw * 0.3, fill=CLEAR)
+    wave_w = w * 0.62 * scale
+    wave_h = w * 0.60 * scale
+    n = len(HEIGHTS)
+    gap = wave_w * 0.16
+    bw = (wave_w - gap * (n - 1)) / n
+    x = c - wave_w / 2
+    for h in HEIGHTS:
+        bh = wave_h * h
+        d.rounded_rectangle(
+            [x, c - bh / 2, x + bw, c + bh / 2], radius=bw / 2, fill=color
+        )
+        x += bw + gap
+    if dot_color is not None:
+        r = bw * 0.42
+        dx = c + wave_w / 2 + gap * 0.7
+        dy = c - wave_h / 2 - gap * 0.4
+        d.ellipse([dx - r, dy - r, dx + r, dy + r], fill=dot_color)
     return img.resize((size, size), Image.LANCZOS)
 
 
-def on_background(fg, bg_color, size):
+def on_background(fg, size, bg_color=NAVY):
     bg = Image.new("RGBA", (size, size), bg_color)
-    # subtle darker ring at the bottom for a Duolingo-like "3D" feel
-    d = ImageDraw.Draw(bg)
-    d.rectangle([0, int(size * 0.92), size, size], fill=GREEN_DARK)
     bg.alpha_composite(fg)
     return bg
 
 
 def main():
-    fg_full = mark(S, WHITE, 1.0)
-    on_background(fg_full, GREEN, S).convert("RGB").save("assets/icon.png")
-    # Android adaptive: keep the mark inside the inner 66% safe zone
-    mark(S, WHITE, 0.78).save("assets/adaptive-icon-foreground.png")
-    Image.new("RGBA", (S, S), GREEN).convert("RGB").save("assets/adaptive-icon-background.png")
-    mark(S, WHITE, 0.78).save("assets/adaptive-icon-monochrome.png")
-    mark(S, WHITE, 1.0).save("assets/splash-icon.png")
-    on_background(mark(S, WHITE, 1.0), GREEN, S).resize((48, 48), Image.LANCZOS).convert("RGB").save("assets/favicon.png")
-    print("icons written to assets/")
+    # --- root assets/ ---
+    on_background(mark(1024, COPPER, 1.0, LIGHT), 1024).convert("RGB").save("assets/icon.png")
+    # Android adaptive: keep the whole mark (incl. dot) inside the inner 66% safe zone
+    mark(1024, COPPER, 0.80, LIGHT).save("assets/adaptive-icon-foreground.png")
+    Image.new("RGBA", (1024, 1024), NAVY).convert("RGB").save("assets/adaptive-icon-background.png")
+    mark(1024, WHITE, 0.80).save("assets/adaptive-icon-monochrome.png")
+    mark(1024, COPPER, 1.0, LIGHT).save("assets/splash-icon.png")
+    on_background(mark(48, COPPER, 1.0, LIGHT), 48).convert("RGB").save("assets/favicon.png")
+
+    # --- web/PWA icons ---
+    os.makedirs("public/icons", exist_ok=True)
+    on_background(mark(192, COPPER, 1.0, LIGHT), 192).convert("RGB").save("public/icons/icon-192.png")
+    on_background(mark(512, COPPER, 1.0, LIGHT), 512).convert("RGB").save("public/icons/icon-512.png")
+    # maskable: mark within the central 80%
+    on_background(mark(512, COPPER, 1.15, LIGHT), 512).convert("RGB").save("public/icons/maskable-512.png")
+    on_background(mark(180, COPPER, 1.0, LIGHT), 180).convert("RGB").save("public/icons/apple-touch-icon.png")
+
+    # --- Android shell sources ---
+    os.makedirs("mobile-shell/assets", exist_ok=True)
+    on_background(mark(1024, COPPER, 1.0, LIGHT), 1024).convert("RGB").save("mobile-shell/assets/icon-only.png")
+    mark(1024, COPPER, 0.80, LIGHT).save("mobile-shell/assets/icon-foreground.png")
+    Image.new("RGBA", (1024, 1024), NAVY).convert("RGB").save("mobile-shell/assets/icon-background.png")
+    for name in ("splash.png", "splash-dark.png"):
+        on_background(mark(2732, COPPER, 600 / (2732 * 0.62), LIGHT), 2732).convert("RGB").save(
+            os.path.join("mobile-shell/assets", name)
+        )
+    print("icons written to assets/, public/icons/ and mobile-shell/assets/")
 
 
 if __name__ == "__main__":
