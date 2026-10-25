@@ -79,7 +79,7 @@ export const useSocialStore = create<SocialState>((set, get) => ({
       } catch {
         /* keep loading */
       }
-      const [top, friendDocs] = await Promise.all([topEntries(weekId), listFriends(user.uid)]);
+      const [top, friendDocs] = await Promise.all([topEntries(weekId), listFriends()]);
       const friendEntries = await entriesFor(
         weekId,
         friendDocs.map((f) => f.friend_uid),
@@ -98,7 +98,7 @@ export const useSocialStore = create<SocialState>((set, get) => ({
     const { user } = appState();
     if (!user) throw new Error('Önce giriş yapmalısın.');
     const profile = await saveProfile(user.uid, nickname.trim());
-    if (!profile) throw new Error('Bağlantı yok: Firebase yapılandırılmamış.');
+    if (!profile) throw new Error('Bağlantı yok: Supabase yapılandırılmamış.');
     set({ profile });
     await get().load();
   },
@@ -115,7 +115,7 @@ export const useSocialStore = create<SocialState>((set, get) => ({
     if (get().friends.some((f) => f.friend_uid === invite.uid)) {
       throw new Error('Bu kullanıcı zaten arkadaşın.');
     }
-    await addFriend(user.uid, invite.uid, invite.nickname);
+    await addFriend(user.uid, invite.uid);
     await get().load();
   },
 

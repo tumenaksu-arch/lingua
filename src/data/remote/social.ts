@@ -1,24 +1,15 @@
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDoc,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  setDoc,
-  type Firestore,
-} from 'firebase/firestore';
+import { isoWeekId } from '@/features/social/week';
 
-import { getFirestoreDb } from './firebase';
+import { getSupabase } from './supabase';
 
 /**
- * Social data (roadmap item 3b): nickname profile, invite codes, weekly
- * leaderboard entries and the friend list. See the data-model block in
- * firestore.rules for the exact shapes and access rules.
- * Every helper degrades gracefully: when Firebase is not configured the
- * Firestore handle is null and the functions return null / [] / false.
+ * Social data on self-hosted Supabase (PostgREST + RLS, see
+ * supabase/migrations/0001_lovevox.sql): nickname profile, invite codes,
+ * weekly leaderboard entries and the friend list. E-mail is never stored in
+ * any public table; only the chosen nickname is visible to other players.
+ * Every helper degrades gracefully: when Supabase is not configured (or the
+ * session is missing, which RLS rejects) the functions return null / [] /
+ * false, and write failures surface as Turkish Error messages for the screen.
  */
 
 export interface ProfileDoc {
@@ -31,7 +22,6 @@ export interface ProfileDoc {
 export interface InviteDoc {
   uid: string;
   nickname: string;
-  created_at: string;
 }
 
 export interface LeaderboardEntry {
@@ -64,111 +54,201 @@ export function randomInviteCode(): string {
   return code;
 }
 
+/** PostgREST error shapes: network failures throw, API failures come back in `error`. */
+function isNetworkError(e: unknown): boolean {
+  if (!(e instanceof Error)) return false;
+  return /failed to fetch|networkerror|network request failed|timeout/i.test(e.message);
+}
+
+/** Maps PostgREST/fetch failures to a Turkish message the screens can show. */
+function toTurkishError(e: unknown): Error {
+  if (e instanceof Error && isNetworkError(e)) {
+    return new Error('Bağlantı yok. İnternetini kontrol edip tekrar dene.');
+  }
+  const status = typeof e === 'object' && e && 'status' in e ? Number((e as { status: unknown }).status) : 0;
+  if (status === 401 || status === 403) return new Error('Oturumun geçersiz. Lütfen tekrar giriş yap.');
+  return e instanceof Error ? e : new Error(String(e));
+}
+
 export async function getProfile(uid: string): Promise<ProfileDoc | null> {
-  const db = getFirestoreDb();
-  if (!db) return null;
-  const snap = await getDoc(doc(db, 'users', uid, 'profile', 'current'));
-  return snap.exists() ? (snap.data() as ProfileDoc) : null;
+  const sb = getSupabase();
+  if (!sb) return null;
+  try {
+    const { data, error } = await sb.from('profiles').select('*').eq('user_id', uid).maybeSingle();
+    if (error) return null;
+    return (data as ProfileDoc | null) ?? null;
+  } catch {
+    return null;
+  }
 }
 
 /**
- * Creates the invite code on first save. Create fails (permission-denied) when
- * the code already belongs to someone else, so we retry with a fresh code,
- * at most 5 attempts.
+ * First save inserts the profile together with a random invite code, retrying
+ * with a fresh code on a unique violation (23505) at most 5 times. Later saves
+ * update only the nickname — the invite code is immutable (a trigger guards it
+ * too) — and refresh the nickname on the current week's leaderboard row.
  */
-async function createInvite(db: Firestore, uid: string, nickname: string): Promise<string> {
+export async function saveProfile(uid: string, nickname: string): Promise<ProfileDoc | null> {
+  const sb = getSupabase();
+  if (!sb) return null;
+  const now = new Date().toISOString();
+  const existing = await getProfile(uid);
+  if (existing) {
+    const { error } = await sb.from('profiles').update({ nickname, updated_at: now }).eq('user_id', uid);
+    if (error) throw toTurkishError(error);
+    // Keep this week's leaderboard row in sync with the new nickname; the row
+    // may not exist yet (updated_at default aside, an update matching no row
+    // is a no-op on PostgREST).
+    const { error: boardError } = await sb
+      .from('leaderboard')
+      .update({ nickname, updated_at: now })
+      .eq('week_id', isoWeekId(new Date()))
+      .eq('user_id', uid);
+    if (boardError) throw toTurkishError(boardError);
+    return { ...existing, nickname, updated_at: now };
+  }
   for (let attempt = 0; attempt < 5; attempt++) {
-    const code = randomInviteCode();
+    const profile: ProfileDoc = {
+      user_id: uid,
+      nickname,
+      invite_code: randomInviteCode(),
+      updated_at: now,
+    };
     try {
-      await setDoc(doc(db, 'invites', code), { uid, nickname, created_at: new Date().toISOString() });
-      return code;
+      const { error } = await sb.from('profiles').insert(profile);
+      if (error) {
+        if (error.code === '23505') {
+          if (attempt < 4) continue;
+          throw new Error('Davet kodu üretilemedi. Lütfen tekrar dene.');
+        }
+        throw toTurkishError(error);
+      }
+      return profile;
     } catch (e) {
-      const errCode = typeof e === 'object' && e && 'code' in e ? String((e as { code: unknown }).code) : '';
-      if (errCode !== 'permission-denied' || attempt === 4) throw e;
+      throw toTurkishError(e);
     }
   }
   throw new Error('Davet kodu üretilemedi. Lütfen tekrar dene.');
 }
 
-export async function saveProfile(uid: string, nickname: string): Promise<ProfileDoc | null> {
-  const db = getFirestoreDb();
-  if (!db) return null;
-  const existingCode = (await getProfile(uid))?.invite_code;
-  // Track a freshly created invite so a failed profile write can roll it back:
-  // invites can never be listed, so an orphaned doc could never be cleaned up.
-  const newCode = existingCode ? null : await createInvite(db, uid, nickname);
-  const inviteCode = existingCode ?? newCode!;
-  const profile: ProfileDoc = { user_id: uid, nickname, invite_code: inviteCode, updated_at: new Date().toISOString() };
-  try {
-    await setDoc(doc(db, 'users', uid, 'profile', 'current'), profile, { merge: true });
-  } catch (e) {
-    if (newCode) await deleteDoc(doc(db, 'invites', newCode)).catch(() => {});
-    throw e;
-  }
-  return profile;
-}
-
 /** Creates or updates the caller's own row for the given ISO week. */
 export async function upsertWeeklyEntry(uid: string, nickname: string, xp: number, weekId: string): Promise<boolean> {
-  const db = getFirestoreDb();
-  if (!db) return false;
-  await setDoc(
-    doc(db, 'leaderboard', weekId, 'entries', uid),
-    { nickname, xp, updated_at: new Date().toISOString() },
-    { merge: true },
-  );
-  return true;
+  const sb = getSupabase();
+  if (!sb) return false;
+  try {
+    const { error } = await sb
+      .from('leaderboard')
+      .upsert(
+        { week_id: weekId, user_id: uid, nickname, xp, updated_at: new Date().toISOString() },
+        { onConflict: 'week_id,user_id' },
+      );
+    if (error) throw toTurkishError(error);
+    return true;
+  } catch (e) {
+    throw toTurkishError(e);
+  }
+}
+
+function toEntry(row: Record<string, unknown>): LeaderboardEntry {
+  return {
+    uid: String(row.user_id),
+    nickname: String(row.nickname),
+    xp: Number(row.xp),
+    updated_at: String(row.updated_at ?? ''),
+  };
 }
 
 /** Top `max` entries of the week, best XP first. */
 export async function topEntries(weekId: string, max = 50): Promise<LeaderboardEntry[]> {
-  const db = getFirestoreDb();
-  if (!db) return [];
-  const snap = await getDocs(query(collection(db, 'leaderboard', weekId, 'entries'), orderBy('xp', 'desc'), limit(max)));
-  return snap.docs.map((d) => ({ uid: d.id, ...(d.data() as Omit<LeaderboardEntry, 'uid'>) }));
+  const sb = getSupabase();
+  if (!sb) return [];
+  try {
+    const { data, error } = await sb
+      .from('leaderboard')
+      .select('user_id,nickname,xp,updated_at')
+      .eq('week_id', weekId)
+      .order('xp', { ascending: false })
+      .limit(max);
+    if (error) return [];
+    return (data ?? []).map((row) => toEntry(row as Record<string, unknown>));
+  } catch {
+    return [];
+  }
 }
 
-/** Individual gets for a set of uids (friend rows); silently skips missing docs. */
+/** The week's rows for a set of uids (friend rows); silently skips missing ones. */
 export async function entriesFor(weekId: string, uids: string[]): Promise<LeaderboardEntry[]> {
-  const db = getFirestoreDb();
-  if (!db || uids.length === 0) return [];
-  const snaps = await Promise.all(uids.map((uid) => getDoc(doc(db, 'leaderboard', weekId, 'entries', uid))));
-  const out: LeaderboardEntry[] = [];
-  for (const s of snaps) {
-    if (s.exists()) out.push({ uid: s.id, ...(s.data() as Omit<LeaderboardEntry, 'uid'>) });
+  const sb = getSupabase();
+  if (!sb || uids.length === 0) return [];
+  try {
+    const { data, error } = await sb
+      .from('leaderboard')
+      .select('user_id,nickname,xp,updated_at')
+      .eq('week_id', weekId)
+      .in('user_id', uids)
+      .order('xp', { ascending: false });
+    if (error) return [];
+    return (data ?? []).map((row) => toEntry(row as Record<string, unknown>));
+  } catch {
+    return [];
   }
-  return out;
 }
 
 /** Resolves an invite code to the owning user; null when unknown or offline. */
 export async function resolveInvite(code: string): Promise<InviteDoc | null> {
-  const db = getFirestoreDb();
-  if (!db) return null;
-  const snap = await getDoc(doc(db, 'invites', code.trim().toUpperCase()));
-  return snap.exists() ? (snap.data() as InviteDoc) : null;
+  const sb = getSupabase();
+  if (!sb) return null;
+  try {
+    const { data, error } = await sb.rpc('resolve_invite', { code: code.trim().toUpperCase() });
+    if (error) return null;
+    const row = (data as { user_id: string; nickname: string }[] | null)?.[0];
+    return row ? { uid: row.user_id, nickname: row.nickname } : null;
+  } catch {
+    return null;
+  }
 }
 
-export async function addFriend(uid: string, friendUid: string, nickname: string): Promise<boolean> {
-  const db = getFirestoreDb();
-  if (!db) return false;
-  await setDoc(doc(db, 'users', uid, 'friends', friendUid), {
-    friend_uid: friendUid,
-    nickname,
-    added_at: new Date().toISOString(),
-  });
-  return true;
+/** Adds `friendUid` to the caller's own friend list; an existing row is success. */
+export async function addFriend(uid: string, friendUid: string): Promise<boolean> {
+  const sb = getSupabase();
+  if (!sb) return false;
+  try {
+    const { error } = await sb.from('friends').insert({ user_id: uid, friend_id: friendUid });
+    if (error) {
+      if (error.code === '23505') return true; // duplicate row: already friends
+      throw toTurkishError(error);
+    }
+    return true;
+  } catch (e) {
+    throw toTurkishError(e);
+  }
 }
 
-export async function listFriends(uid: string): Promise<FriendDoc[]> {
-  const db = getFirestoreDb();
-  if (!db) return [];
-  const snap = await getDocs(collection(db, 'users', uid, 'friends'));
-  return snap.docs.map((d) => d.data() as FriendDoc);
+/** The caller's friends with their current nicknames (via the my_friends RPC). */
+export async function listFriends(): Promise<FriendDoc[]> {
+  const sb = getSupabase();
+  if (!sb) return [];
+  try {
+    const { data, error } = await sb.rpc('my_friends');
+    if (error) return [];
+    return (data as { friend_id: string; nickname: string; added_at: string }[] | null)?.map((row) => ({
+      friend_uid: row.friend_id,
+      nickname: row.nickname,
+      added_at: row.added_at,
+    })) ?? [];
+  } catch {
+    return [];
+  }
 }
 
 export async function removeFriend(uid: string, friendUid: string): Promise<boolean> {
-  const db = getFirestoreDb();
-  if (!db) return false;
-  await deleteDoc(doc(db, 'users', uid, 'friends', friendUid));
-  return true;
+  const sb = getSupabase();
+  if (!sb) return false;
+  try {
+    const { error } = await sb.from('friends').delete().eq('user_id', uid).eq('friend_id', friendUid);
+    if (error) throw toTurkishError(error);
+    return true;
+  } catch (e) {
+    throw toTurkishError(e);
+  }
 }

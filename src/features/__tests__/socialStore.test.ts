@@ -118,7 +118,7 @@ describe('addFriendByCode error paths', () => {
   });
 
   it('rejects duplicates', async () => {
-    mocked.resolveInvite.mockResolvedValueOnce({ uid: 'u2', nickname: 'Bob', created_at: '2026-10-25T00:00:00.000Z' });
+    mocked.resolveInvite.mockResolvedValueOnce({ uid: 'u2', nickname: 'Bob' });
     useSocialStore.setState({
       friends: [{ friend_uid: 'u2', nickname: 'Bob', added_at: '2026-10-20T00:00:00.000Z', xp: 0 }],
     });
@@ -127,10 +127,10 @@ describe('addFriendByCode error paths', () => {
   });
 
   it('adds a new friend and reloads', async () => {
-    mocked.resolveInvite.mockResolvedValueOnce({ uid: 'u3', nickname: 'Carol', created_at: '2026-10-25T00:00:00.000Z' });
+    mocked.resolveInvite.mockResolvedValueOnce({ uid: 'u3', nickname: 'Carol' });
     mocked.getProfile.mockResolvedValueOnce(profile);
     await useSocialStore.getState().addFriendByCode('GHI789');
-    expect(mocked.addFriend).toHaveBeenCalledWith('u1', 'u3', 'Carol');
+    expect(mocked.addFriend).toHaveBeenCalledWith('u1', 'u3');
     expect(mocked.listFriends).toHaveBeenCalled();
   });
 });
