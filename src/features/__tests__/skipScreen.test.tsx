@@ -3,12 +3,14 @@
  * the shared exercise components, never touches hearts, reports 10/12 as a
  * pass and 9/12 as a fail, and offers "Tekrar dene" after a fail.
  */
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { fireEvent, render, screen, act } from '@testing-library/react-native';
+import { router } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { DEFAULT_STATS } from '@/data';
 import type { Course, Exercise } from '@/domain';
 import { useAppStore } from '@/features/store';
+import { showAlert } from '@/ui/alert';
 
 import SkipScreen from '@/app/skip/[unitId]';
 
@@ -18,6 +20,11 @@ jest.mock('expo-router', () => ({
   router: { push: jest.fn(), replace: jest.fn(), back: jest.fn() },
   useLocalSearchParams: jest.fn(() => ({ unitId: 'u2' })),
 }));
+
+jest.mock('@/ui/alert', () => ({ showAlert: jest.fn() }));
+
+const mockBack = router.back as jest.Mock;
+const mockShowAlert = showAlert as jest.Mock;
 
 const ex = (id: string): Exercise => ({
   id,
@@ -57,12 +64,17 @@ let saveStats: jest.Mock;
 
 beforeEach(() => {
   jest.useRealTimers();
-  // Mirrors the store contract: >= 80% passes and pays 20 XP.
-  finishSkipTest = jest.fn((_unitId: string, correct: number, total: number) =>
-    Promise.resolve({ passed: correct / total >= 0.8, xpEarned: correct / total >= 0.8 ? 20 : 0 }),
+  // Mirrors the store contract: >= 80% passes and pays 20 XP; a quit always fails.
+  finishSkipTest = jest.fn((_unitId: string, correct: number, total: number, opts?: { quit?: boolean }) =>
+    Promise.resolve({
+      passed: opts?.quit === true ? false : correct / total >= 0.8,
+      xpEarned: opts?.quit === true || correct / total < 0.8 ? 0 : 20,
+    }),
   );
   skipAttempts = jest.fn(() => Promise.resolve(0));
   saveStats = jest.fn(() => Promise.resolve());
+  mockBack.mockClear();
+  mockShowAlert.mockClear();
   useAppStore.setState({
     course,
     progress: {},
@@ -105,6 +117,29 @@ test('passes with 10/12, never consumes hearts, shows the skip reward', async ()
   expect(screen.getByLabelText('XP: +20')).toBeTruthy();
   expect(screen.getByLabelText('Doğruluk: %83')).toBeTruthy();
   // no hearts were consumed: the exam never writes stats
+  expect(saveStats).not.toHaveBeenCalled();
+  expect(useAppStore.getState().stats.hearts).toBe(5);
+});
+
+test('quitting after 10 correct records an explicit quit (never a pass) and leaves', async () => {
+  await renderExam();
+
+  for (let i = 0; i < 10; i++) await answerCurrent('a');
+
+  await fireEvent.press(screen.getByRole('button', { name: 'Sınavı kapat' }));
+  expect(mockShowAlert).toHaveBeenCalledTimes(1);
+  const [title, , buttons] = mockShowAlert.mock.calls[0]!;
+  expect(title).toBe('Sınavı bırak?');
+  const quitBtn = (buttons as { text: string; onPress?: () => void }[]).find((b) => b.text === 'Bırak')!;
+  await act(async () => {
+    quitBtn.onPress!();
+  });
+
+  // 10/12 correct would be a pass on a finished attempt — a quit must not be:
+  // the screen passes the explicit quit flag and never saves a passing result.
+  expect(finishSkipTest).toHaveBeenCalledTimes(1);
+  expect(finishSkipTest).toHaveBeenCalledWith('u2', 10, 12, { quit: true });
+  expect(mockBack).toHaveBeenCalled();
   expect(saveStats).not.toHaveBeenCalled();
   expect(useAppStore.getState().stats.hearts).toBe(5);
 });

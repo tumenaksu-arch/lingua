@@ -146,9 +146,9 @@ function SkipSession({ unit, attempt, onRetry }: { unit: Unit; attempt: number; 
           if (quitHandled.current) return;
           quitHandled.current = true;
           // The aborted attempt counts toward the unit's attempt total (and the
-          // next exam's question seed) but never changes progress: the score so
-          // far can never reach the 80% bar with unanswered questions left.
-          void finishSkipTest(unit.id, state?.correctAnswers ?? 0, total).finally(() => router.back());
+          // next exam's question seed) but never changes progress and can never
+          // pass — a quit always fails, even at 10/12 answered correctly.
+          void finishSkipTest(unit.id, state?.correctAnswers ?? 0, total, { quit: true }).finally(() => router.back());
         },
       },
     ]);

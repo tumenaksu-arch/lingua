@@ -119,6 +119,44 @@ test('skipping a later unit does not complete earlier (locked) units', async () 
   expect(activeLessonId(s.course, s.progress)).toBe(u1.lessons[0]!.id);
 });
 
+test('quit after 10 correct: attempt logged with quit:true, passed=false, progress and XP untouched', async () => {
+  // 10/12 answered correctly would pass a finished attempt — a quit must not.
+  const out = await useAppStore.getState().finishSkipTest(u2.id, 10, 12, { quit: true });
+  expect(out).toEqual({ passed: false, xpEarned: 0 });
+
+  const s = useAppStore.getState();
+  expect(s.stats.xp).toBe(0);
+  expect(s.stats.xpToday).toBe(0);
+  for (const l of u2.lessons) expect(s.progress[l.id]).toBeUndefined();
+
+  const attempts = eventsOfType('unit_skip_attempt');
+  expect(attempts).toHaveLength(1);
+  expect(JSON.parse(String(attempts[0]!.payload))).toEqual({ unitId: u2.id, correct: 10, total: 12, passed: false, quit: true });
+  expect(eventsOfType('unit_skipped')).toHaveLength(0);
+  // the abandoned attempt still counts toward the next exam's shuffle seed
+  expect(await useAppStore.getState().skipAttempts(u2.id)).toBe(1);
+});
+
+test('pass with all unit lessons already completed: attempt logged, no XP, no unit_skipped event', async () => {
+  // Complete u2 by playing through normally: progress is full but there is
+  // no `unit_skipped` event, so the already-skipped guard does not apply.
+  useAppStore.setState({
+    progress: Object.fromEntries(
+      u2.lessons.map((l) => [l.id, { lessonId: l.id, crowns: 1, completedAt: Date.now() }]),
+    ),
+  });
+
+  const out = await useAppStore.getState().finishSkipTest(u2.id, 12, 12);
+  expect(out).toEqual({ passed: true, xpEarned: 0 });
+
+  const s = useAppStore.getState();
+  expect(s.stats.xp).toBe(0);
+  expect(s.stats.xpToday).toBe(0);
+  expect(eventsOfType('unit_skip_attempt')).toHaveLength(1);
+  expect(JSON.parse(String(eventsOfType('unit_skip_attempt')[0]!.payload))).toEqual({ unitId: u2.id, correct: 12, total: 12, passed: true });
+  expect(eventsOfType('unit_skipped')).toHaveLength(0);
+});
+
 test('weeklyXp counts the unit_skipped event in today\'s bucket', async () => {
   await useAppStore.getState().finishSkipTest(u1.id, 12, 12);
   const week = await useAppStore.getState().weeklyXp();

@@ -147,10 +147,14 @@ export interface AppState {
    * Called by the skip-test screen when an attempt ends (finished or quit).
    * Always logs `unit_skip_attempt`. On pass (>= 80%) completes the unit's
    * not-yet-completed lessons, awards SKIP_TEST_XP through the same stats
-   * pipeline as lessons and logs `unit_skipped`; on fail progress is unchanged.
-   * Idempotent: a unit that was already skipped never pays out twice.
+   * pipeline as lessons and logs `unit_skipped`; on fail (or quit) progress is
+   * unchanged. `opts.quit` marks an abandoned attempt: it always fails, even
+   * when the score so far reached the 80% bar. When the unit's lessons are all
+   * completed already (no `unit_skipped` event), a pass logs the attempt but
+   * awards no XP and no `unit_skipped` event. Idempotent: a unit that was
+   * already skipped never pays out twice.
    */
-  finishSkipTest: (unitId: string, correct: number, total: number) => Promise<{ passed: boolean; xpEarned: number }>;
+  finishSkipTest: (unitId: string, correct: number, total: number, opts?: { quit?: boolean }) => Promise<{ passed: boolean; xpEarned: number }>;
 }
 
 function reposFor(db: Database, userId: string): Repos {
@@ -559,17 +563,21 @@ export const useAppStore = create<AppState>((set, get) => ({
     return n;
   },
 
-  async finishSkipTest(unitId, correct, total) {
+  async finishSkipTest(unitId, correct, total, opts) {
     const r = requireRepos();
     const { db } = get();
     const now = Date.now();
-    const passed = skipPassed(correct, total);
+    // A quit always fails: the unanswered questions can never count toward
+    // the 80% bar, no matter how many were correct so far.
+    const passed = opts?.quit === true ? false : skipPassed(correct, total);
     // Every finished (or quit) attempt logs with a unique id; the count of
     // these events drives the next attempt's shuffle seed.
     await r.progress.logEvent(
       `${unitId}:skip:${now}:${Math.random().toString(36).slice(2, 8)}`,
       'unit_skip_attempt',
-      { unitId, correct, total, passed },
+      opts?.quit === true
+        ? { unitId, correct, total, passed, quit: true }
+        : { unitId, correct, total, passed },
       now,
     );
     if (!passed) {
@@ -606,6 +614,16 @@ export const useAppStore = create<AppState>((set, get) => ({
         const lp = await r.progress.completeLesson(lesson.id, now);
         updates[lp.lessonId] = lp;
         completedNow.push(lesson.id);
+      }
+
+      // Every lesson of the unit was already completed (e.g. played through
+      // normally, with no `unit_skipped` event): the attempt counts and
+      // passes, but there is nothing to complete, no XP to award and no
+      // `unit_skipped` event to log.
+      if (completedNow.length === 0) {
+        await get().refreshQuests();
+        void get().sync();
+        return { passed: true, xpEarned: 0 };
       }
 
       // Same stats pipeline as lessons/stories: total + today XP, streak activity.
