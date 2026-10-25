@@ -7,7 +7,7 @@ import type { Course, Exercise } from '@/domain';
 import { useAppStore } from '@/features/store';
 import { useSettingsStore } from '@/ui/settingsStore';
 
-import LessonScreen from '../[id]';
+import LessonScreen from '@/app/lesson/[id]';
 
 const METRICS = { frame: { x: 0, y: 0, width: 390, height: 844 }, insets: { top: 0, left: 0, right: 0, bottom: 0 } };
 

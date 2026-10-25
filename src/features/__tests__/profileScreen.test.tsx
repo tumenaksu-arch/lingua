@@ -5,7 +5,7 @@ import { DEFAULT_STATS } from '@/data';
 import { useAppStore } from '@/features/store';
 import { useSettingsStore } from '@/ui/settingsStore';
 
-import ProfileScreen from '../profile';
+import ProfileScreen from '@/app/(tabs)/profile';
 
 const METRICS = { frame: { x: 0, y: 0, width: 390, height: 844 }, insets: { top: 0, left: 0, right: 0, bottom: 0 } };
 
