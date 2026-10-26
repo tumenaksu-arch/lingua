@@ -97,6 +97,7 @@ export default function RootLayout() {
           <Stack.Screen name="ogretmen" />
           <Stack.Screen name="ogretmen/[classId]" />
           <Stack.Screen name="sinif/[classId]" />
+          <Stack.Screen name="konus/[scenarioId]" />
         </Stack.Protected>
         {/* Class join is reachable from the welcome screen too (no account needed). Must stay AFTER the
             guarded groups: the first registered screen becomes the initial route (it opened on launch). */}
