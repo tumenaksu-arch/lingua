@@ -149,6 +149,8 @@ export default function ProfileScreen() {
   const setSlowRate = useSettingsStore((s) => s.setSlowRate);
   const relaxedHearts = useSettingsStore((s) => s.relaxedHearts);
   const setRelaxedHearts = useSettingsStore((s) => s.setRelaxedHearts);
+  const voice = useSettingsStore((s) => s.voice);
+  const setVoice = useSettingsStore((s) => s.setVoice);
   const rawStats = useAppStore((s) => s.stats);
   const user = useAppStore((s) => s.user);
   const course = useAppStore((s) => s.course);
@@ -344,9 +346,29 @@ export default function ProfileScreen() {
           }}
         />
 
+        <Heading>Ses</Heading>
+        <View style={styles.chips}>
+          <Chip
+            label="Doğal (sunucu)"
+            accessibilityLabel="Doğal sunucu sesi"
+            selected={voice === 'dogal'}
+            haptic
+            onPress={() => void setVoice('dogal')}
+          />
+          <Chip
+            label="Cihaz sesi"
+            accessibilityLabel="Cihaz sesi"
+            selected={voice === 'cihaz'}
+            haptic
+            onPress={() => void setVoice('cihaz')}
+          />
+        </View>
+        <Caption color={colors.textMuted}>Doğal ses internet ister; bağlantı yoksa cihaz sesi kullanılır.</Caption>
+
         <Heading>Kurs</Heading>
         <Body>{course.title}</Body>
         <Button title="Kurs değiştir" variant="outline" onPress={() => router.push('/courses')} />
+        <Button title="Açık kaynak lisansları" variant="outline" onPress={() => router.push('/lisanslar')} />
 
         {cloud && user?.email && (
           <Pressable

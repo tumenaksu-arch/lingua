@@ -11,7 +11,11 @@ interface Settings {
   slowRate: number;
   /** "Rahat mod": no heart limit, lessons never block on hearts. */
   relaxedHearts: boolean;
+  /** 'dogal' (default): natural server voice, falls back to the device engine offline; 'cihaz': device TTS only. */
+  voice: 'dogal' | 'cihaz';
 }
+
+export type VoiceSetting = Settings['voice'];
 
 interface SettingsState extends Settings {
   hydrated: boolean;
@@ -19,9 +23,10 @@ interface SettingsState extends Settings {
   setSoundEnabled: (on: boolean) => Promise<void>;
   setSlowRate: (rate: number) => Promise<void>;
   setRelaxedHearts: (on: boolean) => Promise<void>;
+  setVoice: (voice: VoiceSetting) => Promise<void>;
 }
 
-const DEFAULTS: Settings = { soundEnabled: true, slowRate: 0.6, relaxedHearts: false };
+const DEFAULTS: Settings = { soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'dogal' };
 
 /** Snap an arbitrary rate to the nearest allowed SLOW_RATES value. */
 function snapRate(rate: number): number {
@@ -35,6 +40,11 @@ async function persist(s: Settings) {
   } catch {
     /* best effort */
   }
+}
+
+/** Always persist the FULL settings object (missing fields would erase each other on hydrate). */
+function snapshot(s: SettingsState): Settings {
+  return { soundEnabled: s.soundEnabled, slowRate: s.slowRate, relaxedHearts: s.relaxedHearts, voice: s.voice };
 }
 
 /** Device-level preferences (not synced to the account). */
@@ -53,6 +63,8 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
         slowRate: storedRate ?? DEFAULTS.slowRate,
         // stored data from before Rahat mod: missing ⇒ off
         relaxedHearts: typeof parsed.relaxedHearts === 'boolean' ? parsed.relaxedHearts : DEFAULTS.relaxedHearts,
+        // stored data from before the voice setting: missing ⇒ doğal
+        voice: parsed.voice === 'cihaz' ? 'cihaz' : DEFAULTS.voice,
         hydrated: true,
       });
     } catch {
@@ -61,15 +73,19 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   },
   async setSoundEnabled(soundEnabled) {
     set({ soundEnabled });
-    await persist({ soundEnabled, slowRate: get().slowRate, relaxedHearts: get().relaxedHearts });
+    await persist(snapshot(get()));
   },
   async setSlowRate(rate) {
     const slowRate = snapRate(rate);
     set({ slowRate });
-    await persist({ soundEnabled: get().soundEnabled, slowRate, relaxedHearts: get().relaxedHearts });
+    await persist(snapshot(get()));
   },
   async setRelaxedHearts(relaxedHearts) {
     set({ relaxedHearts });
-    await persist({ soundEnabled: get().soundEnabled, slowRate: get().slowRate, relaxedHearts });
+    await persist(snapshot(get()));
+  },
+  async setVoice(voice) {
+    set({ voice });
+    await persist(snapshot(get()));
   },
 }));
