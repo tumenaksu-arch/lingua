@@ -10,5 +10,11 @@
     "types": [
       "jest"
     ]
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "server",
+    "mobile-shell",
+    "dist-web"
+  ]
 }
