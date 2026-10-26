@@ -559,6 +559,13 @@ describe('student helpers', () => {
     ]);
   });
 
+  it('myClasses skips the RPC for guests (no session → no 401 on every app start)', async () => {
+    auth.getSession.mockResolvedValue({ data: { session: null }, error: null });
+    rpcResults.set('my_classes', { data: null, error: { code: '42501', details: null, hint: null, message: 'x' } });
+    await expect(myClasses()).resolves.toEqual([]);
+    expect(rpcCalls.filter((c) => c.fn === 'my_classes')).toHaveLength(0);
+  });
+
   it('myClasses THROWS on a rejected read instead of faking an empty membership list', async () => {
     // A silent [] would tell the student "you are not in any class" — the
     // classStore surfaces this as its Turkish `error` instead.

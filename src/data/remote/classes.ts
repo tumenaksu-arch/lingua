@@ -655,6 +655,8 @@ export async function joinAsStudent(code: string, takmaAd: string): Promise<Join
 export async function myClasses(): Promise<MyClassDoc[]> {
   const sb = getSupabase();
   if (!sb) return [];
+  // Guests have no session: the RPC is signed-in only and would answer 401 on every app start.
+  if (!(await hasSession(sb))) return [];
   try {
     const { data, error } = await sb.rpc('my_classes');
     if (error) throw toTurkishError(error);
