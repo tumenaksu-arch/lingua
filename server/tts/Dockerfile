@@ -19,6 +19,9 @@ COPY server/tts/ /srv/
 ENV HF_HOME=/models/hf \
     PIPER_VOICE_DIR=/models/piper
 RUN python /srv/scripts/download_models.py
+# Offline self-check: synthesize one sentence per language with HF_HUB_OFFLINE=1;
+# a missing model/voice/lazy asset fails the build here, not at runtime.
+RUN HF_HUB_OFFLINE=1 python /srv/scripts/selfcheck.py
 
 # ---------------------------------------------------------------------------
 
@@ -55,4 +58,6 @@ EXPOSE 8090
 HEALTHCHECK --interval=30s --timeout=5s --start-period=300s --retries=3 \
   CMD python -c "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8090/health',timeout=4)"
 
-CMD ["python", "-m", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8090"]
+# --no-access-log: uvicorn's access log prints the full request line (incl. the
+# ?text= query) — spoken text must never land in stdout logs.
+CMD ["python", "-m", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8090", "--no-access-log"]

@@ -2,12 +2,17 @@
 """isit.py — cache pre-warm for the Love-Vox TTS service.
 
 Reads a JSON list of {lang, text} (e.g. produced by metinler.mjs) and requests
-each entry at speeds 1.0 and 0.75 against the service, so the disk cache is hot
-before users arrive. Idempotent: already-cached entries are cheap hits.
+each entry at the speeds the app actually uses (default 1.0 and 0.8) against
+the service, so the disk cache is hot before users arrive. Idempotent:
+already-cached entries are cheap hits.
+
+Requests from loopback without an X-Lovevox-Client-IP header are exempt from
+the per-IP miss limit, so pre-warm is never throttled. If the server still
+answers 429, the script backs off exponentially instead of hammering.
 
 Usage:
     python scripts/isit.py [--base-url http://127.0.0.1:8090] \
-        [--input metinler.json] [--delay 0.05] [--speeds 1.0 0.75]
+        [--input metinler.json] [--delay 1.0] [--speeds 1.0 0.8]
 """
 
 from __future__ import annotations
@@ -28,20 +33,38 @@ def parse_args(argv=None):
     p.add_argument("--base-url", default="http://127.0.0.1:8090")
     p.add_argument("--input", default=None,
                    help="JSON [{lang, text}] list; default: metinler.json next to this script")
-    p.add_argument("--delay", type=float, default=0.05, help="seconds between requests")
-    p.add_argument("--speeds", type=float, nargs="+", default=[1.0, 0.75])
+    p.add_argument("--delay", type=float, default=1.0,
+                   help="seconds between requests (default 1.0, ~60/min — the per-IP limit)")
+    p.add_argument("--speeds", type=float, nargs="+", default=[1.0, 0.8],
+                   help="speeds the app uses (default: 1.0 and 0.8)")
     p.add_argument("--limit", type=int, default=None, help="only the first N entries")
+    p.add_argument("--max-retries", type=int, default=6,
+                   help="max retries per entry on 429 (exponential backoff)")
     return p.parse_args(argv)
 
 
-def fetch_one(base_url: str, lang: str, text: str, speed: float, timeout: float = 30.0) -> tuple[int, str]:
+def fetch_one(base_url: str, lang: str, text: str, speed: float,
+              timeout: float = 30.0, max_retries: int = 6) -> tuple[int, str]:
+    """Fetch one utterance; on 429 back off exponentially (1s, 2s, 4s, ...)."""
     qs = urllib.parse.urlencode({"lang": lang, "text": text, "speed": speed})
-    req = urllib.request.Request(f"{base_url}/v1/speak?{qs}")
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            return resp.status, resp.headers.get("X-Lovevox-Cache", "?")
-    except urllib.error.HTTPError as exc:
-        return exc.code, "-"
+    url = f"{base_url}/v1/speak?{qs}"
+    backoff = 1.0
+    for attempt in range(max_retries + 1):
+        req = urllib.request.Request(url)
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return resp.status, resp.headers.get("X-Lovevox-Cache", "?")
+        except urllib.error.HTTPError as exc:
+            if exc.code != 429 or attempt >= max_retries:
+                return exc.code, "-"
+            time.sleep(backoff)
+            backoff = min(backoff * 2, 60.0)
+        except (urllib.error.URLError, TimeoutError, OSError):
+            if attempt >= max_retries:
+                return 0, "-"
+            time.sleep(backoff)
+            backoff = min(backoff * 2, 60.0)
+    return 0, "-"  # pragma: no cover - loop always returns
 
 
 def main(argv=None) -> int:
@@ -60,9 +83,12 @@ def main(argv=None) -> int:
     hits = misses = errors = 0
     t0 = time.time()
     print(f"pre-warming {len(items)} texts x {len(args.speeds)} speeds against {args.base_url}")
-    for i, item in enumerate(items):
+    for item in items:
         for speed in args.speeds:
-            status, cache = fetch_one(args.base_url, item["lang"], item["text"], speed)
+            status, cache = fetch_one(
+                args.base_url, item["lang"], item["text"], speed,
+                max_retries=args.max_retries,
+            )
             if status == 200 and cache == "hit":
                 hits += 1
             elif status == 200:

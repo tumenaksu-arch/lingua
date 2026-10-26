@@ -142,7 +142,8 @@ def test_cache_hits_not_rate_limited(make_client):
 
 
 def test_rate_limit_uses_client_ip_header(make_client):
-    client, _ = make_client(rate_misses=2)
+    # The header is honoured only when TTS_TRUST_PROXY=1 (production proxy).
+    client, _ = make_client(rate_misses=2, trust_proxy=True)
     h1 = {"X-Lovevox-Client-IP": "1.2.3.4"}
     h2 = {"X-Lovevox-Client-IP": "5.6.7.8"}
     assert speak(client, text="a1", headers=h1).status_code == 200
