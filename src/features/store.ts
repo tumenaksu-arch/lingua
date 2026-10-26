@@ -76,8 +76,13 @@ export function storyXp(correct: number): number {
   return STORY_BASE_XP + STORY_PER_CORRECT_XP * correct;
 }
 
+/** XP for completing an AI conversation scenario (roadmap item 6). */
+export const CONVERSATION_XP = 10;
+
 /** Unit ids with a skip-test finish in flight — a double finish pays out once. */
 const finishingSkip: Set<string> = new Set();
+/** 'localDay:scenarioId' keys with a conversation finish in flight — a double finish pays out once. */
+const finishingConversation: Set<string> = new Set();
 
 interface Repos {
   stats: ReturnType<typeof createStatsRepo>;
@@ -133,6 +138,13 @@ export interface AppState {
    * not in lessonOrder, so they never gate the learning path).
    */
   finishStory: (storyId: string, correct: number, total: number) => Promise<{ xpEarned: number }>;
+  /**
+   * Called by the AI conversation screen (roadmap item 6) when the server
+   * marks a scenario as done. Awards CONVERSATION_XP through the same stats
+   * pipeline as stories (daily goal/streak/weekly XP) and logs the idempotent
+   * `conversation_completed` event — at most once per scenario per local day.
+   */
+  finishConversation: (scenarioId: string) => Promise<{ xpEarned: number }>;
   /** Called by the lesson screen for each lost heart so the regen clock persists. */
   saveStats: (stats: UserStats) => Promise<void>;
   loadDueCards: (limit?: number) => Promise<SrsCard[]>;
@@ -544,6 +556,52 @@ export const useAppStore = create<AppState>((set, get) => ({
     return { xpEarned };
   },
 
+  async finishConversation(scenarioId) {
+    const r = requireRepos();
+    const { db } = get();
+    const now = Date.now();
+    const date = localDateString(new Date());
+    // At most once per scenario per local day: fixed event id (INSERT OR IGNORE)
+    // plus an in-memory guard and a pre-check so stats can never disagree with
+    // the event log, even on a rapid double call.
+    const key = `${date}:${scenarioId}`;
+    if (finishingConversation.has(key)) return { xpEarned: 0 };
+    finishingConversation.add(key);
+    try {
+      const eventId = `conv:${key}`;
+      if (db) {
+        const existing = await db.getFirst<{ id: string }>(
+          'SELECT id FROM events WHERE user_id = ? AND type = ? AND id = ?',
+          [get().userId, 'conversation_completed', eventId],
+        );
+        if (existing) return { xpEarned: 0 };
+      }
+      // Same stats pipeline as lessons/stories: total + today XP, streak activity.
+      const prev = get().stats;
+      const newDay = prev.lastActiveDate !== date;
+      const xpBefore = newDay ? 0 : prev.xpToday;
+      const xpToday = xpBefore + CONVERSATION_XP;
+      let next: UserStats = { ...prev, xp: prev.xp + CONVERSATION_XP, xpToday };
+      next = applyActivity(next, date);
+      await r.stats.save(next, now);
+      await r.progress.logEvent(eventId, 'conversation_completed', { xp: CONVERSATION_XP, scenarioId, date }, now);
+
+      set({ stats: next });
+      await get().refreshQuests();
+      if (db) {
+        if (xpToday >= next.dailyGoalXp && xpBefore < next.dailyGoalXp) {
+          const goal = advanceGoalStreak(await getGoalStreak(db), date);
+          await setMeta(db, GOAL_STREAK_KEY, JSON.stringify(goal));
+        }
+        await unlockAchievements(db, get, set);
+      }
+      void get().sync();
+      return { xpEarned: CONVERSATION_XP };
+    } finally {
+      finishingConversation.delete(key);
+    }
+  },
+
   async saveStats(stats) {
     await requireRepos().stats.save(stats, Date.now());
     set({ stats });
@@ -590,9 +648,9 @@ export const useAppStore = create<AppState>((set, get) => ({
     todayStart.setHours(0, 0, 0, 0);
     const from = todayStart.getTime() - 6 * dayMs;
     const rows = await db.getAll<{ payload: string; created_at: number }>(
-      // Lessons, stories, skip tests and quest rewards all log their XP under the `xp` payload field.
-      "SELECT payload, created_at FROM events WHERE user_id = ? AND type IN (?, ?, ?, ?) AND created_at > ?",
-      [userId, 'lesson_completed', 'story_completed', 'quest_claimed', 'unit_skipped', from - 1],
+      // Lessons, stories, conversations, skip tests and quest rewards all log their XP under the `xp` payload field.
+      "SELECT payload, created_at FROM events WHERE user_id = ? AND type IN (?, ?, ?, ?, ?) AND created_at > ?",
+      [userId, 'lesson_completed', 'story_completed', 'conversation_completed', 'quest_claimed', 'unit_skipped', from - 1],
     );
     const buckets = [0, 0, 0, 0, 0, 0, 0];
     for (const r of rows) {
@@ -616,8 +674,8 @@ export const useAppStore = create<AppState>((set, get) => ({
     // Upper bound = next LOCAL midnight (setDate handles DST days, unlike +86_400_000).
     const { from, to } = localDayWindow(new Date());
     const rows = await db.getAll<{ type: string; payload: string }>(
-      "SELECT type, payload FROM events WHERE user_id = ? AND type IN (?, ?, ?) AND created_at > ? AND created_at < ?",
-      [userId, 'lesson_completed', 'story_completed', 'quest_claimed', from - 1, to],
+      "SELECT type, payload FROM events WHERE user_id = ? AND type IN (?, ?, ?, ?) AND created_at > ? AND created_at < ?",
+      [userId, 'lesson_completed', 'story_completed', 'conversation_completed', 'quest_claimed', from - 1, to],
     );
     const events = rows.map((r) => {
       try {

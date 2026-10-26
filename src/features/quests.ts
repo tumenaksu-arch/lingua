@@ -117,8 +117,9 @@ function valueFor(questId: string, counts: { xp: number; lessons: number; perfec
 
 /**
  * Computes the status of each quest from TODAY's local events. XP counts
- * `lesson_completed` + `story_completed` payloads only (quest rewards are
- * `quest_claimed` events and never feed quest progress). A lesson counts as
+ * `lesson_completed` + `story_completed` + `conversation_completed` payloads
+ * only (quest rewards are `quest_claimed` events and never feed quest
+ * progress). A lesson counts as
  * perfect when its payload says `perfect: true` (or, for older events, when
  * correct === total with total > 0). Claimed state comes from `quest_claimed`
  * events carrying the quest id.
@@ -135,6 +136,8 @@ export function questProgress(quests: Quest[], todayEvents: QuestEvent[]): Quest
       if (e.payload.perfect === true || (total > 0 && correct === total)) counts.perfect++;
     } else if (e.type === 'story_completed') {
       counts.stories++;
+      counts.xp += Number(e.payload.xp ?? 0) || 0;
+    } else if (e.type === 'conversation_completed') {
       counts.xp += Number(e.payload.xp ?? 0) || 0;
     } else if (e.type === 'quest_claimed' && typeof e.payload.questId === 'string') {
       claimed.add(e.payload.questId);
