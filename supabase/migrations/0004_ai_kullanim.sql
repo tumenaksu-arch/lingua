@@ -19,39 +19,41 @@ create policy own_select on public.ai_usage for select to authenticated using (u
 revoke all on public.ai_usage from anon, authenticated;
 grant select on public.ai_usage to authenticated;
 
--- Atomically reserve one message for p_user today. Returns the number of messages used AFTER the
--- reservation, or -1 when the per-user limit or the global daily cap is reached (nothing reserved).
+-- Atomically reserve one message for p_user today. Returns (used, day): used = messages used AFTER the
+-- reservation, or -1 when the per-user limit or the global daily cap is reached (nothing reserved);
+-- day = the reservation's Europe/Istanbul day — pass it back to ai_usage_record so a call that crosses
+-- midnight records/refunds on the SAME row.
 create function public.ai_usage_take(p_user uuid, p_limit integer, p_global_cap integer)
-returns integer language plpgsql security definer set search_path = public as $$
+returns table (used integer, day date) language plpgsql security definer set search_path = public as $$
 declare
   v_day date := (now() at time zone 'Europe/Istanbul')::date;
   v_used integer;
 begin
-  if p_global_cap > 0 and coalesce((select sum(messages) from public.ai_usage where day = v_day), 0) >= p_global_cap then
-    return -1;
+  if p_global_cap > 0 and coalesce((select sum(u.messages) from public.ai_usage u where u.day = v_day), 0) >= p_global_cap then
+    return query select -1, v_day; return;
   end if;
-  insert into public.ai_usage (user_id, day, messages) values (p_user, v_day, 1)
-    on conflict (user_id, day) do update set messages = public.ai_usage.messages + 1
-    where public.ai_usage.messages < p_limit
-  returning messages into v_used;
-  return coalesce(v_used, -1);
+  insert into public.ai_usage as u (user_id, day, messages) values (p_user, v_day, 1)
+    on conflict on constraint ai_usage_pkey do update set messages = u.messages + 1
+    where u.messages < p_limit
+  returning u.messages into v_used;
+  return query select coalesce(v_used, -1), v_day;
 end $$;
 
--- Record token usage after a Claude response (or give the message back when the call failed).
-create function public.ai_usage_record(p_user uuid, p_input bigint, p_output bigint, p_refund boolean)
+-- Record token usage after a Claude response (or give the message back when the call failed),
+-- on the day returned by ai_usage_take.
+create function public.ai_usage_record(p_user uuid, p_day date, p_input bigint, p_output bigint, p_refund boolean)
 returns void language plpgsql security definer set search_path = public as $$
-declare v_day date := (now() at time zone 'Europe/Istanbul')::date;
 begin
-  update public.ai_usage
-     set input_tokens = input_tokens + greatest(p_input, 0),
-         output_tokens = output_tokens + greatest(p_output, 0),
-         messages = case when p_refund then greatest(messages - 1, 0) else messages end
-   where user_id = p_user and day = v_day;
+  update public.ai_usage u
+     set input_tokens = u.input_tokens + greatest(p_input, 0),
+         output_tokens = u.output_tokens + greatest(p_output, 0),
+         messages = case when p_refund then greatest(u.messages - 1, 0) else u.messages end
+   where u.user_id = p_user and u.day = p_day;
 end $$;
 
-revoke all on function public.ai_usage_take(uuid, integer, integer), public.ai_usage_record(uuid, bigint, bigint, boolean)
+revoke all on function public.ai_usage_take(uuid, integer, integer), public.ai_usage_record(uuid, date, bigint, bigint, boolean)
   from public, anon, authenticated;
-grant execute on function public.ai_usage_take(uuid, integer, integer), public.ai_usage_record(uuid, bigint, bigint, boolean)
+grant execute on function public.ai_usage_take(uuid, integer, integer), public.ai_usage_record(uuid, date, bigint, bigint, boolean)
   to service_role;
 
 commit;
