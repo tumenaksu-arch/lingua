@@ -38,10 +38,11 @@ Değişmez kurallar: yayınlanmış içerik yalnız BÜYÜR (`src/content/__test
 - Şema/RLS: `supabase/migrations/0002_siniflar.sql`, `0003_sinif_duyurulari.sql`; testler `supabase/tests/classes.test.mjs`.
 - Sonraya bırakılan: EduPilot Sınıf Defteri bağlantısı (ödev aktarma; öğrenciler takma adlı olduğundan sınıf düzeyinde), sınıfı olmayan eski anonim hesapların temizliği.
 
-## 6. Yapay zekâ ile konuşma pratiği (Claude API)
-- Küçük sunucu servisi `lovevox-api` (ayrı konteyner, `ankaxai.ai/lovevox-api/`): Supabase JWT'sini doğrular, kullanıcı başına günlük sınır, Claude API'yi çağırır; anahtar yalnız sunucuda (kullanıcı kendisi yerleştirir).
-- Uygulama: ünite konusuna göre rol yapma (kafe, otel, doktor…), yazılı/sesli cevap, sonunda düzeltme ve geri bildirim (Türkçe).
-- Kabul: anahtar istemciye hiç gitmez; sınır aşımı kibar mesaj; maliyet tavanı.
+## 6. Yapay zekâ ile konuşma pratiği ✅ (2026-10-26, canlı — anahtar bekliyor)
+- "Konuş" sekmesi: 8 senaryo × 5 dil (tanışma, kafe, yol sorma, alışveriş, otel, doktor, telefon, serbest sohbet); yanıt hedef dilde + Türkçesi + hata düzeltmesi (Türkçe açıklama); senaryo bitince 10 XP (günde senaryo başına bir kez).
+- Sunucu: `server/ai` (Fastify + resmî `@anthropic-ai/sdk`, `messages.parse` + yapılandırılmış çıktı), konteyner `lovevox_ai`, yol `ankaxai.ai/lovevox-api/ai/`. Supabase JWT ile kimlik; öğrenci başına günde 30 mesaj + genel günlük tavan (göç 0004); konuşma metni saklanmaz/günlüğe yazılmaz.
+- Anahtar: kullanıcı sunucu terminalinde `bash ~/ankaokul-secrets/lovevox-claude-anahtar.sh` (anahtar ekranda görünmez, doğrulanır, model seçilir, servis yeniden başlar). Anahtar yokken uygulama "yakında" gösterir.
+- Bilinçli eksik: sunucu tarafı ret yedeği (fallback) `messages.parse` ile birleştirilemediği için yok; ret = nazik hata.
 
 ## 7. Doğal ses (sunucuda ücretsiz model) + iOS
 - Sunucudaki GPU'da açık kaynak çok dilli TTS ile tüm hedef dil cümleleri bir kez seslendirilir → `lovevox-web/audio/<hash>.mp3`; uygulama dosya varsa onu, yoksa cihaz sesini kullanır; yavaş hız oynatma hızıyla.
