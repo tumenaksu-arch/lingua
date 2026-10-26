@@ -9,7 +9,7 @@ vi.mock("@anthropic-ai/sdk", () => ({
 }));
 
 import { buildApp } from "../src/app.js";
-import { chatBody, jsonResponse, makeConfig, makeToken, parsedReply } from "./helpers.js";
+import { chatBody, makeConfig, makeToken, parsedReply, takeResponse, TAKE_DAY } from "./helpers.js";
 
 function mockFetch(handler: (url: string, init: RequestInit) => Response) {
   vi.stubGlobal("fetch", vi.fn(async (url: any, init: any) => handler(String(url), init)));
@@ -46,7 +46,7 @@ describe("günlük limit ve kullanım sayacı", () => {
   afterEach(() => vi.unstubAllGlobals());
 
   it("ai_usage_take -1 dönerse 429 limit ve Claude ÇAĞRILMAZ", async () => {
-    mockFetch(() => jsonResponse(-1));
+    mockFetch(() => takeResponse(-1));
     const app = buildApp(makeConfig());
     const token = await makeToken({});
     const res = await chat(app, token);
@@ -58,7 +58,7 @@ describe("günlük limit ve kullanım sayacı", () => {
 
   it("başarıda tokenlar refund=false ile kaydedilir, remaining azalır", async () => {
     successParse();
-    mockFetch(() => jsonResponse(7)); // 7. mesaj rezerve edildi
+    mockFetch(() => takeResponse(7)); // 7. mesaj rezerve edildi
     const app = buildApp(makeConfig());
     const token = await makeToken({});
     const res = await chat(app, token);
@@ -67,15 +67,16 @@ describe("günlük limit ve kullanım sayacı", () => {
     const records = rpcCalls().filter((c) => c.url.endsWith("/rpc/ai_usage_record"));
     expect(records).toHaveLength(1);
     expect(records[0].body).toMatchObject({
+      p_day: TAKE_DAY,
       p_input: 42,
       p_output: 17,
       p_refund: false,
     });
   });
 
-  it("Claude hatasında 502 upstream ve iade (refund=true)", async () => {
+  it("Claude hatasında 502 upstream ve iade (refund=true, take'in günü)", async () => {
     mockParse.mockRejectedValue(new Error("API error 500"));
-    mockFetch(() => jsonResponse(1));
+    mockFetch(() => takeResponse(1));
     const app = buildApp(makeConfig());
     const token = await makeToken({});
     const res = await chat(app, token);
@@ -84,6 +85,7 @@ describe("günlük limit ve kullanım sayacı", () => {
     const records = rpcCalls().filter((c) => c.url.endsWith("/rpc/ai_usage_record"));
     expect(records).toHaveLength(1);
     expect(records[0].body.p_refund).toBe(true);
+    expect(records[0].body.p_day).toBe(TAKE_DAY);
   });
 
   it("stop_reason refusal → 502 upstream ve iade", async () => {
@@ -92,7 +94,7 @@ describe("günlük limit ve kullanım sayacı", () => {
       parsed_output: null,
       usage: { input_tokens: 3, output_tokens: 0 },
     });
-    mockFetch(() => jsonResponse(1));
+    mockFetch(() => takeResponse(1));
     const app = buildApp(makeConfig());
     const token = await makeToken({});
     const res = await chat(app, token);
@@ -105,7 +107,7 @@ describe("günlük limit ve kullanım sayacı", () => {
 
   it("take çağrısı limit ve global_cap ile yapılır", async () => {
     successParse();
-    mockFetch(() => jsonResponse(1));
+    mockFetch(() => takeResponse(1));
     const app = buildApp(makeConfig());
     const token = await makeToken({});
     await chat(app, token);

@@ -13,6 +13,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { aiChat, aiScenarios, aiStatus, AiError } from '@/data/remote/ai';
 import type { AiChatResponse } from '@/data/remote/ai';
 import { useAppStore } from '@/features/store';
+import { showAlert } from '@/ui/alert';
 
 import ConversationScreen from '@/app/konus/[scenarioId]';
 
@@ -50,11 +51,16 @@ jest.mock('@/speech', () => ({
   LOCALE_BY_LANG: {},
 }));
 
+jest.mock('@/ui/alert', () => ({ showAlert: jest.fn() }));
+
 const aiStatusMock = aiStatus as jest.Mock;
 const aiScenariosMock = aiScenarios as jest.Mock;
 const aiChatMock = aiChat as jest.Mock;
 const useLocalSearchParamsMock = useLocalSearchParams as jest.Mock;
+const showAlertMock = showAlert as jest.Mock;
 let finishConversation: jest.Mock;
+
+const SIGNED_IN_USER = { uid: 'u1', email: 'ayse@example.test', displayName: 'Ayşe' };
 
 function reply(over: Partial<AiChatResponse> = {}): AiChatResponse {
   return { reply: 'A coffee, great choice!', replyTr: 'Bir kahve, harika seçim!', correction: null, done: false, remaining: 9, ...over };
@@ -98,7 +104,7 @@ beforeEach(() => {
   ]);
   aiChatMock.mockResolvedValue(reply());
   finishConversation = jest.fn(() => Promise.resolve({ xpEarned: 10 }));
-  useAppStore.setState({ finishConversation });
+  useAppStore.setState({ user: SIGNED_IN_USER, finishConversation });
 });
 
 describe('konus chat screen', () => {
@@ -230,5 +236,73 @@ describe('konus chat screen', () => {
     mockStt.transcript = 'a cup of coffee please';
     await renderChat();
     expect(screen.getByLabelText('Mesajın').props.value).toBe('a cup of coffee please');
+  });
+
+  it('accepts a repeated utterance across two recognition sessions', async () => {
+    mockStt.status = 'done';
+    mockStt.transcript = 'a coffee';
+    const view = await render(
+      <SafeAreaProvider initialMetrics={METRICS}>
+        <ConversationScreen />
+      </SafeAreaProvider>,
+    );
+    await screen.findByText(OPENERS);
+    expect(screen.getByLabelText('Mesajın').props.value).toBe('a coffee');
+    expect(mockStt.reset).toHaveBeenCalled();
+    // Yeni oturum: start() transkripti sıfırladı, aynı söz öbeği yeniden tanındı.
+    // Eski davranışta ref metni eşleştirir ve ikinci seferi sessizce düşürürdü.
+    mockStt.status = 'listening';
+    mockStt.transcript = '';
+    await view.rerender(
+      <SafeAreaProvider initialMetrics={METRICS}>
+        <ConversationScreen />
+      </SafeAreaProvider>,
+    );
+    mockStt.status = 'done';
+    mockStt.transcript = 'a coffee';
+    await view.rerender(
+      <SafeAreaProvider initialMetrics={METRICS}>
+        <ConversationScreen />
+      </SafeAreaProvider>,
+    );
+    expect(screen.getByLabelText('Mesajın').props.value).toBe('a coffee a coffee');
+  });
+
+  it('shows the guest CTA without touching the network when signed out', async () => {
+    useAppStore.setState({ user: null });
+    await render(
+      <SafeAreaProvider initialMetrics={METRICS}>
+        <ConversationScreen />
+      </SafeAreaProvider>,
+    );
+    expect(screen.getByRole('button', { name: 'Giriş yap' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Sınıf koduyla katıl' })).toBeTruthy();
+    // Konuk: status/senaryo isteği atılmaz (asılma retry döngüsü yok).
+    expect(aiStatusMock).not.toHaveBeenCalled();
+    expect(aiScenariosMock).not.toHaveBeenCalled();
+  });
+
+  it('shows the coming-soon card when the server flag is off', async () => {
+    aiStatusMock.mockResolvedValue({ enabled: false, limit: 30, remaining: null });
+    await render(
+      <SafeAreaProvider initialMetrics={METRICS}>
+        <ConversationScreen />
+      </SafeAreaProvider>,
+    );
+    expect(await screen.findByText('Konuşma pratiği yakında')).toBeTruthy();
+    // Yapılandırılmamış sunucu hata/retry döngüsüne düşmez.
+    expect(screen.queryByRole('button', { name: 'Tekrar dene' })).toBeNull();
+  });
+
+  it('alerts instead of promising XP when the save is rejected', async () => {
+    finishConversation.mockRejectedValue(new Error('Store not booted'));
+    aiChatMock.mockResolvedValue(reply({ done: true, remaining: 0 }));
+    await renderChat();
+    await sendMessage('that is all, thank you');
+    expect(await screen.findByText('Görev tamam!')).toBeTruthy();
+    // Vaat edilmemiş XP gösterilmez.
+    expect(screen.queryByText(/\+10 XP/)).toBeNull();
+    expect(screen.getByText('Senaryoyu başarıyla tamamladın.')).toBeTruthy();
+    expect(showAlertMock).toHaveBeenCalledWith('Puan kaydedilemedi', expect.any(String));
   });
 });

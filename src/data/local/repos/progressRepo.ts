@@ -91,7 +91,38 @@ export function createProgressRepo(db: Database, userId: string) {
     });
   }
 
-  return { all, get, writeLocal, completeLesson, adopt, logEvent };
+  /**
+   * Idempotent event write: the row is inserted only when absent; resolves to
+   * true when THIS call inserted it. Callers pay out a reward (e.g. XP) only
+   * on true, so a payout can never happen twice for one event id even when a
+   * later write fails — the event row is the durable idempotency marker and
+   * is committed first.
+   */
+  async function logEventOnce(id: string, type: string, payload: Record<string, unknown>, now = Date.now()): Promise<boolean> {
+    let inserted = false;
+    await db.transaction(async () => {
+      const existing = await db.getFirst<{ id: string }>('SELECT id FROM events WHERE user_id = ? AND id = ?', [userId, id]);
+      if (existing) return;
+      await db.run('INSERT INTO events (id, user_id, type, payload, created_at) VALUES (?, ?, ?, ?, ?)', [
+        id,
+        userId,
+        type,
+        JSON.stringify(payload),
+        now,
+      ]);
+      await enqueue(
+        db,
+        'events',
+        'upsert',
+        { id, user_id: userId, type, payload, created_at: new Date(now).toISOString(), updated_at: new Date(now).toISOString() },
+        now,
+      );
+      inserted = true;
+    });
+    return inserted;
+  }
+
+  return { all, get, writeLocal, completeLesson, adopt, logEvent, logEventOnce };
 }
 
 export type ProgressRepo = ReturnType<typeof createProgressRepo>;

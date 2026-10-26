@@ -94,3 +94,23 @@ test('weeklyXp counts conversation XP in today\'s bucket', async () => {
   expect(week).toHaveLength(7);
   expect(week[6]).toBe(10);
 });
+
+test('a stats failure after the event write cannot double-pay on retry', async () => {
+  // stats.save (user_stats write) bozuk: event satırı yazılmış olmasına rağmen XP ödenmez.
+  const run = jest.spyOn(db, 'run');
+  run.mockImplementation(async (sql: string, params?: unknown[]) => {
+    if (sql.includes('user_stats')) throw new Error('disk full');
+    return FakeDb.prototype.run.call(db, sql, params as never);
+  });
+  await expect(useAppStore.getState().finishConversation(SCENARIO)).rejects.toThrow('disk full');
+  run.mockRestore();
+
+  // İdemarkayıcı event satırı kalıcı; XP yine de ödenmedi.
+  expect((db.tables.events ?? []).filter((e) => e.type === 'conversation_completed')).toHaveLength(1);
+  expect(useAppStore.getState().stats.xp).toBe(0);
+  // Tekrar deneme ikinci bir ödeme yapmaz ("günde en fazla bir kez" garantisi).
+  const out = await useAppStore.getState().finishConversation(SCENARIO);
+  expect(out.xpEarned).toBe(0);
+  expect(useAppStore.getState().stats.xp).toBe(0);
+  expect((db.tables.events ?? []).filter((e) => e.type === 'conversation_completed')).toHaveLength(1);
+});

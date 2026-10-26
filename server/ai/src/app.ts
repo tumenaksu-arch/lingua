@@ -5,7 +5,7 @@ import { chatOnce, createClaudeClient, type ClaudeConfig } from "./claude.js";
 import { buildMessages, buildSystemBlocks } from "./prompt.js";
 import { COURSES, getCourse, getScenario } from "./scenarios.js";
 import { ChatBodySchema } from "./schema.js";
-import { usageRecord, usageRemaining, usageTake, type UsageConfig } from "./usage.js";
+import { usageRecord, usageRemaining, usageTake, type UsageConfig, type UsageTakeResult } from "./usage.js";
 
 export interface AppConfig {
   port: number;
@@ -29,9 +29,24 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
     claude: {
       apiKey: env.ANTHROPIC_API_KEY ?? "",
       model: env.AI_MODEL ?? "claude-opus-5-5",
-      effort: (env.AI_EFFORT ?? "low") as ClaudeConfig["effort"],
+      effort: parseEffort(env.AI_EFFORT),
     },
   };
+}
+
+const EFFORTS = ["low", "medium", "high", "xhigh", "max"] as const;
+
+/**
+ * AI_EFFORT beyaz liste ile doğrulanır: yazım hatası bir değer (ör. "LOW")
+ * her Claude çağrısını API 400 ile kalıcı 502'ye çevirir. Geçersizde "low"a
+ * düşülür ve bir uyarı verilir.
+ */
+function parseEffort(raw: string | undefined): ClaudeConfig["effort"] {
+  if (!raw) return "low";
+  const value = raw.toLowerCase();
+  if ((EFFORTS as readonly string[]).includes(value)) return value as ClaudeConfig["effort"];
+  console.warn(`[ai] Geçersiz AI_EFFORT "${raw}", "low" kullanılıyor.`);
+  return "low";
 }
 
 function userHash(userId: string): string {
@@ -88,14 +103,23 @@ export function buildApp(cfg: AppConfig): FastifyInstance {
     const fail = (status: number, error: string, message: string, extra?: object) =>
       reply.status(status).send({ error, message, ...extra });
 
-    // 1) Doğrulama
+    // 1) Kimlik doğrulama — her zaman ilk: doğrulanamayan çağıran gövde/
+    // yapılandırma durumundan bağımsız olarak her zaman 401 alır.
+    const auth = await verifyUserId(req.headers.authorization, cfg.jwtSecret);
+    if (!auth.ok || !auth.userId) {
+      return fail(401, "auth", "Oturum doğrulanamadı, lütfen tekrar giriş yap.");
+    }
+    const userId = auth.userId;
+    logUser = userHash(userId);
+
+    // 2) Doğrulama
     const parsed = ChatBodySchema.safeParse(req.body);
     if (!parsed.success) {
       return fail(400, "bad_request", "Geçersiz istek: courseId, scenarioId, history (≤ 20 öğe, öğe başına ≤ 600 karakter) ve message (1-500 karakter) gerekli.");
     }
     const body = parsed.data;
 
-    // 2) Yapılandırma / senaryo kontrolü
+    // 3) Yapılandırma / senaryo kontrolü (doğrulanmış çağrana 503)
     if (!claudeClient) {
       return fail(503, "not_configured", "Yapay zekâ özelliği şu anda yapılandırılmamış.");
     }
@@ -105,23 +129,15 @@ export function buildApp(cfg: AppConfig): FastifyInstance {
       return fail(400, "bad_request", "Bilinmeyen kurs veya senaryo.");
     }
 
-    // 3) Kimlik doğrulama
-    const auth = await verifyUserId(req.headers.authorization, cfg.jwtSecret);
-    if (!auth.ok || !auth.userId) {
-      return fail(401, "auth", "Oturum doğrulanamadı, lütfen tekrar giriş yap.");
-    }
-    const userId = auth.userId;
-    logUser = userHash(userId);
-
     // 4) Günlük sınır: bir mesaj rezerve et
-    let usedAfterTake: number;
+    let take: UsageTakeResult;
     try {
-      usedAfterTake = await usageTake(cfg.usage, userId);
+      take = await usageTake(cfg.usage, userId);
     } catch (err) {
       req.log.error({ err, user: logUser }, "usage_take_failed");
       return fail(502, "upstream", "Kullanım sayacına ulaşılamadı, lütfen tekrar dene.");
     }
-    if (usedAfterTake < 0) {
+    if (take.used < 0) {
       return fail(429, "limit", "Bugünlük yapay zekâ mesaj limitin doldu, yarın tekrar dene.", {
         remaining: 0,
       });
@@ -133,21 +149,21 @@ export function buildApp(cfg: AppConfig): FastifyInstance {
     try {
       const response = await chatOnce(claudeClient, cfg.claude, system, messages);
       if (response.stop_reason === "refusal") {
-        await usageRecord(cfg.usage, userId, 0, 0, true).catch((err) =>
+        await usageRecord(cfg.usage, userId, take.day, 0, 0, true).catch((err) =>
           req.log.error({ err, user: logUser }, "usage_refund_failed"),
         );
         return fail(502, "upstream", "Bu konuda şu anda yardımcı olamıyorum, konuyu değiştirelim.");
       }
       const output = response.parsed_output;
       if (!output) {
-        await usageRecord(cfg.usage, userId, 0, 0, true).catch((err) =>
+        await usageRecord(cfg.usage, userId, take.day, 0, 0, true).catch((err) =>
           req.log.error({ err, user: logUser }, "usage_refund_failed"),
         );
         return fail(502, "upstream", "Yanıt alınamadı, lütfen tekrar dene.");
       }
       const inputTokens = response.usage?.input_tokens ?? 0;
       const outputTokens = response.usage?.output_tokens ?? 0;
-      await usageRecord(cfg.usage, userId, inputTokens, outputTokens, false).catch((err) =>
+      await usageRecord(cfg.usage, userId, take.day, inputTokens, outputTokens, false).catch((err) =>
         req.log.error({ err, user: logUser }, "usage_record_failed"),
       );
       req.log.info(
@@ -159,10 +175,10 @@ export function buildApp(cfg: AppConfig): FastifyInstance {
         replyTr: output.replyTr,
         correction: output.correction ?? null,
         done: output.done,
-        remaining: Math.max(0, cfg.usage.dailyLimit - usedAfterTake),
+        remaining: Math.max(0, cfg.usage.dailyLimit - take.used),
       };
     } catch (err) {
-      await usageRecord(cfg.usage, userId, 0, 0, true).catch((refundErr) =>
+      await usageRecord(cfg.usage, userId, take.day, 0, 0, true).catch((refundErr) =>
         req.log.error({ err: refundErr, user: logUser }, "usage_refund_failed"),
       );
       req.log.warn({ err, user: logUser, status: 502, latencyMs: Date.now() - startedAt }, "chat_upstream_error");

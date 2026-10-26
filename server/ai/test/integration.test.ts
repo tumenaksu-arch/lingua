@@ -117,5 +117,14 @@ describeIntegration("prototip PostgREST ile ai_usage entegrasyonu", () => {
     expect(row).toBeDefined();
     expect(row!.input_tokens).toBeGreaterThanOrEqual(60); // 30 x 2 input
     expect(row!.output_tokens).toBeGreaterThanOrEqual(60);
+
+    // Sözleşme: status, usageRemaining üzerinden sayısal kalan döner (30/30 → 0).
+    const statusRes = await app.inject({
+      method: "GET",
+      url: "/v1/status",
+      headers: { authorization: `Bearer ${user.accessToken}` },
+    });
+    expect(statusRes.statusCode).toBe(200);
+    expect(statusRes.json().remaining).toBe(0);
   }, 120_000);
 });

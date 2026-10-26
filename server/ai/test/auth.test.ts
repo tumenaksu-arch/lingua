@@ -9,12 +9,12 @@ vi.mock("@anthropic-ai/sdk", () => ({
 }));
 
 import { buildApp } from "../src/app.js";
-import { jsonResponse, chatBody, makeConfig, makeToken } from "./helpers.js";
+import { chatBody, makeConfig, makeToken, takeResponse } from "./helpers.js";
 
 function fetchOk() {
   vi.stubGlobal(
     "fetch",
-    vi.fn(async () => jsonResponse(1)), // ai_usage_take → 1 mesaj rezerve edildi
+    vi.fn(async () => takeResponse(1)), // ai_usage_take → 1. mesaj rezerve edildi
   );
 }
 
@@ -40,6 +40,17 @@ describe("kimlik doğrulama", () => {
     expect(res.statusCode).toBe(401);
     expect(res.json().error).toBe("auth");
     expect(mockParse).not.toHaveBeenCalled();
+  });
+
+  it("kimlik doğrulama gövde doğrulamasından ÖNCE yapılır: geçersiz gövdeli anonim istek 401 döner", async () => {
+    const app = buildApp(makeConfig());
+    const res = await app.inject({
+      method: "POST",
+      url: "/v1/chat",
+      payload: { ...chatBody, message: "" }, // gövde kural ihlali: 400 değil 401 beklenir
+    });
+    expect(res.statusCode).toBe(401);
+    expect(res.json().error).toBe("auth");
   });
 
   it("bozuk token 401 auth döner", async () => {

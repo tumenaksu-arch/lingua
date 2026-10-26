@@ -50,7 +50,7 @@ describe('weeklyXpTotal', () => {
           (r) =>
             r.user_id === userId &&
             r.created_at > from &&
-            ['lesson_completed', 'story_completed', 'quest_claimed'].includes(r.type),
+            ['lesson_completed', 'story_completed', 'conversation_completed', 'quest_claimed'].includes(r.type),
         );
       }) as Database['getAll'],
       transaction: jest.fn(async (task) => task()),
@@ -60,10 +60,11 @@ describe('weeklyXpTotal', () => {
   const monday = new Date(2026, 9, 19).getTime(); // LOCAL Monday 00:00 (week start of 2026-W43)
   const now = new Date(2026, 9, 22, 1, 0, 0).getTime(); // Thursday
 
-  it('sums xp of lesson/story/quest events since the week start only', async () => {
+  it('sums xp of lesson/story/conversation/quest events since the week start only', async () => {
     const db = fakeDb([
       { user_id: 'u1', type: 'lesson_completed', payload: JSON.stringify({ xp: 15 }), created_at: monday + 1000 },
       { user_id: 'u1', type: 'story_completed', payload: JSON.stringify({ xp: 12 }), created_at: now },
+      { user_id: 'u1', type: 'conversation_completed', payload: JSON.stringify({ xp: 10 }), created_at: now },
       { user_id: 'u1', type: 'quest_claimed', payload: JSON.stringify({ xp: 5 }), created_at: monday + 60_000 },
       // before the week: filtered out by the query
       { user_id: 'u1', type: 'lesson_completed', payload: JSON.stringify({ xp: 99 }), created_at: monday - 1 },
@@ -72,7 +73,7 @@ describe('weeklyXpTotal', () => {
       // malformed payload: skipped while summing
       { user_id: 'u1', type: 'quest_claimed', payload: '{oops', created_at: now },
     ]);
-    await expect(weeklyXpTotal(db, 'u1', now)).resolves.toBe(32);
+    await expect(weeklyXpTotal(db, 'u1', now)).resolves.toBe(42);
     // Assert the SQL itself (table, week-start filter, event-type filter), not
     // just the params — a wrong table/column or a type-mismatched comparison
     // in the real query must fail this test even though the JS mock emulates
@@ -82,6 +83,8 @@ describe('weeklyXpTotal', () => {
     expect(sql).toContain('FROM events');
     expect(sql).toContain('created_at >');
     expect(sql).toContain('type IN');
+    // league weekly total must count conversation XP like weeklyXp/quests do
+    expect(sql).toContain("'conversation_completed'");
     expect(params).toEqual(['u1', monday - 1]);
   });
 

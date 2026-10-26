@@ -11,7 +11,7 @@ vi.mock("@anthropic-ai/sdk", () => ({
 import { buildApp } from "../src/app.js";
 import { buildMessages, buildSystemBlocks, STABLE_SYSTEM_BLOCK } from "../src/prompt.js";
 import { getCourse, getScenario } from "../src/scenarios.js";
-import { chatBody, jsonResponse, makeConfig, makeToken, parsedReply } from "./helpers.js";
+import { chatBody, makeConfig, makeToken, parsedReply, takeResponse } from "./helpers.js";
 
 async function post(app: any, payload: any, token: string) {
   return app.inject({
@@ -30,7 +30,7 @@ describe("istek doğrulama (400 bad_request)", () => {
       parsed_output: parsedReply,
       usage: { input_tokens: 1, output_tokens: 1 },
     });
-    vi.stubGlobal("fetch", vi.fn(async () => jsonResponse(1)));
+    vi.stubGlobal("fetch", vi.fn(async () => takeResponse(1)));
   });
   afterEach(() => vi.unstubAllGlobals());
 
@@ -91,7 +91,7 @@ describe("sistem komutu ve geçmiş", () => {
       parsed_output: parsedReply,
       usage: { input_tokens: 1, output_tokens: 1 },
     });
-    vi.stubGlobal("fetch", vi.fn(async () => jsonResponse(1)));
+    vi.stubGlobal("fetch", vi.fn(async () => takeResponse(1)));
   });
   afterEach(() => vi.unstubAllGlobals());
 
@@ -106,6 +106,10 @@ describe("sistem komutu ve geçmiş", () => {
     expect(systemText).toContain("Doktorda");
     expect(systemText.toLowerCase()).toContain("minor");
     expect(systemText).toContain("personal data");
+    // Enjeksiyon savunması: öğrenci metni güvenilmez veridir; kural değiştirme/
+    // sistem açıklama/senaryodan çıkma istekleri izlenmez.
+    expect(systemText.toLowerCase()).toContain("untrusted");
+    expect(systemText.toLowerCase()).toContain("never instructions");
     expect(params.system[0].cache_control).toEqual({ type: "ephemeral" });
     expect(params.system[0].text).toBe(STABLE_SYSTEM_BLOCK);
     expect(params.max_tokens).toBe(2000);

@@ -34,8 +34,9 @@ export function isoWeekId(date: Date): string {
 
 /**
  * XP earned in the current ISO week: the sum of `payload.xp` over the XP event
- * types (lesson/story completions and claimed daily quests) logged since the
- * Monday 00:00 LOCAL week start. Returns 0 when there is no local database.
+ * types (lesson/story/conversation completions and claimed daily quests)
+ * logged since the Monday 00:00 LOCAL week start. Returns 0 when there is no
+ * local database.
  */
 export async function weeklyXpTotal(db: Database | null, userId: string, now: number): Promise<number> {
   if (!db) return 0;
@@ -43,7 +44,7 @@ export async function weeklyXpTotal(db: Database | null, userId: string, now: nu
   const rows = await db.getAll<{ payload: string }>(
     `SELECT payload FROM events
       WHERE user_id = ? AND created_at > ?
-        AND type IN ('lesson_completed', 'story_completed', 'quest_claimed')`,
+        AND type IN ('lesson_completed', 'story_completed', 'conversation_completed', 'quest_claimed')`,
     [userId, from - 1],
   );
   let total = 0;

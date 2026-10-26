@@ -18,7 +18,7 @@ import { historyFor, type ConversationMessage } from '@/features/conversation/hi
 import { SpeakerButton } from '@/features/lesson/exercises/Prompt';
 import { useAppStore } from '@/features/store';
 import { useSpeechRecognition } from '@/speech';
-import { Body, Button, Caption, Heading, Screen, radii, spacing, useTheme } from '@/ui';
+import { Body, Button, Caption, Heading, Screen, radii, showAlert, spacing, useTheme } from '@/ui';
 
 const MAX_MESSAGE = 500;
 const LIMIT_MESSAGE = 'Bugünlük konuşma hakkın doldu. Yarın tekrar gel!';
@@ -29,6 +29,7 @@ type Params = { scenarioId: string };
 type LoadState =
   | { kind: 'loading' }
   | { kind: 'error'; message: string }
+  | { kind: 'disabled' } // server flag off: "yakında" kartı (sekmenin aynası)
   | { kind: 'ready'; scenario: AiScenario; remaining: number | null; limit: number };
 
 /**
@@ -43,6 +44,7 @@ type LoadState =
 export default function ConversationScreen() {
   const { scenarioId } = useLocalSearchParams<Params>();
   const { colors } = useTheme();
+  const user = useAppStore((s) => s.user);
   const course = useAppStore((s) => s.course);
   const finishConversation = useAppStore((s) => s.finishConversation);
   const lang: LangCode = course.toLang;
@@ -57,6 +59,9 @@ export default function ConversationScreen() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [canRetry, setCanRetry] = useState(false);
   const [done, setDone] = useState(false);
+  // XP satırı yalnızca finishConversation ÇÖZÜMLENDİĞİNDE gösterilir: reddedilen
+  // bir kayıt vaat edilmiş XP göstermez.
+  const [xpSaved, setXpSaved] = useState(false);
   const [showTr, setShowTr] = useState<Record<number, boolean>>({});
   // The failed send stays recoverable: retry re-sends the exact same payload
   // without appending the user turn a second time.
@@ -69,16 +74,27 @@ export default function ConversationScreen() {
   useEffect(() => {
     if (stt.status === 'done' && stt.transcript && stt.transcript !== lastTranscriptRef.current) {
       lastTranscriptRef.current = stt.transcript;
-      setInput((v) => (v ? `${v} ${stt.transcript}` : stt.transcript));
+      const text = stt.transcript;
+      setInput((v) => (v ? `${v} ${text}` : text));
+      // Yeni bir tanıma oturumu aynı söz öbeğini kabul edebilsin diye ref'ler
+      // temizlenir (stt.start() transkripti sıfırlar; tekrarlanan ifadeler
+      // dil pratiğinde yaygındır).
+      stt.reset();
+      lastTranscriptRef.current = '';
     }
-  }, [stt.status, stt.transcript]);
+  }, [stt, stt.status, stt.transcript]);
 
   useEffect(() => {
+    if (!user) return; // konuk: ağa çıkılmaz, giriş CTA'sı gösterilir
     let alive = true;
     void (async () => {
       try {
         const [status, scenarios] = await Promise.all([aiStatus(), aiScenarios(course.id)]);
         if (!alive) return;
+        if (!status.enabled) {
+          setState({ kind: 'disabled' });
+          return;
+        }
         const scenario = scenarios.find((s) => s.id === scenarioId);
         if (!scenario) {
           setState({ kind: 'error', message: 'Senaryo bulunamadı. Lütfen listeden yeniden seç.' });
@@ -93,7 +109,7 @@ export default function ConversationScreen() {
     return () => {
       alive = false;
     };
-  }, [course.id, scenarioId, reloadKey]);
+  }, [user, course.id, scenarioId, reloadKey]);
 
   const send = useCallback(
     async (text: string, history: ReturnType<typeof historyFor>) => {
@@ -111,7 +127,13 @@ export default function ConversationScreen() {
         if (res.done && !finishStartedRef.current) {
           finishStartedRef.current = true;
           setDone(true);
-          void finishConversation(scenarioId);
+          try {
+            await finishConversation(scenarioId);
+            setXpSaved(true);
+          } catch {
+            // Kayıt reddedildi: vaat edilmemiş XP gösterilmez, kullanıcı bilgilendirilir.
+            showAlert('Puan kaydedilemedi', 'İlerlemen şu anda kaydedilemedi. Lütfen bağlantını kontrol edip senaryoyu yeniden dene.');
+          }
         }
       } catch (e) {
         if (e instanceof AiError && e.code === 'limit') {
@@ -150,9 +172,30 @@ export default function ConversationScreen() {
   return (
     <Screen padding={0} edges={['top']}>
       <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        {state.kind === 'loading' ? (
+        {!user ? (
+          // Konuk (veya derin bağlantı): sekmeyle aynı giriş CTA'sı — ağ çağrısı
+          // yapılmaz, ulaşılamaz bir yeniden-dene döngüsü gösterilmez.
+          <View style={[styles.center, styles.guestBody]}>
+            <Body color={colors.textMuted} center>
+              Yapay zekâ ile rol yaparak konuşma pratiği yap: kafede sipariş ver, otelde oda ayırt, yol tarifi al.
+              Senaryo sonunda hataların Türkçe açıklamayla düzeltilir.
+            </Body>
+            <Button title="Giriş yap" onPress={() => router.push('/auth')} />
+            <Button title="Sınıf koduyla katıl" variant="outline" onPress={() => router.push('/sinif-katil')} />
+          </View>
+        ) : state.kind === 'loading' ? (
           <View style={styles.center}>
             <ActivityIndicator color={colors.primary} size="large" accessibilityLabel="Yükleniyor" />
+          </View>
+        ) : state.kind === 'disabled' ? (
+          <View style={[styles.center, styles.guestBody]}>
+            <View style={[styles.soonCard, { borderColor: colors.border, backgroundColor: colors.surface }]}>
+              <Body>🗣️</Body>
+              <Heading center>Konuşma pratiği yakında</Heading>
+              <Body color={colors.textMuted} center>
+                Yapay zekâ destekli konuşma alıştırmaları üzerinde çalışıyoruz. Çok yakında burada olacak!
+              </Body>
+            </View>
           </View>
         ) : state.kind === 'error' ? (
           <View style={[styles.center, styles.errorBody]}>
@@ -248,7 +291,7 @@ export default function ConversationScreen() {
                   </Text>
                   <Heading center>Görev tamam!</Heading>
                   <Body color={colors.textMuted} center>
-                    Senaryoyu başarıyla tamamladın. +10 XP kazandın!
+                    {xpSaved ? 'Senaryoyu başarıyla tamamladın. +10 XP kazandın!' : 'Senaryoyu başarıyla tamamladın.'}
                   </Body>
                   <Button title="Yeni senaryo" onPress={() => router.push('/konus')} />
                 </View>
@@ -320,6 +363,8 @@ const styles = StyleSheet.create({
   flex: { flex: 1 },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: spacing.xl, gap: spacing.md },
   errorBody: { justifyContent: 'center' },
+  guestBody: { gap: spacing.md },
+  soonCard: { borderWidth: 1, borderRadius: radii.lg, padding: spacing.xl, gap: spacing.sm, alignItems: 'center' },
   header: {
     flexDirection: 'row',
     alignItems: 'center',

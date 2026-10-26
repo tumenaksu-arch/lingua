@@ -3,13 +3,16 @@ import { z } from "zod/v4";
 // Claude'dan zorunlu kılınan yapılandırılmış yanıt şeması
 // (client.messages.parse + zodOutputFormat ile kullanılır).
 export const ChatReplySchema = z.object({
-  reply: z.string(),
-  replyTr: z.string(),
+  // Uzunluk sınırları: zodOutputFormat yalnızca tipleri zorunlu kılar; başıboş
+  // bir yanıt istemciye aynen iletilip faturalanır. 1-3 kısa cümle kuralıyla
+  // tutarlı zarfsal üst sınırlar.
+  reply: z.string().max(1000),
+  replyTr: z.string().max(1000),
   correction: z
     .object({
       original: z.string(),
       corrected: z.string(),
-      explanationTr: z.string(),
+      explanationTr: z.string().max(300),
     })
     .nullable(),
   done: z.boolean(),

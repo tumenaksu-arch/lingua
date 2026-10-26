@@ -561,20 +561,21 @@ export const useAppStore = create<AppState>((set, get) => ({
     const { db } = get();
     const now = Date.now();
     const date = localDateString(new Date());
-    // At most once per scenario per local day: fixed event id (INSERT OR IGNORE)
-    // plus an in-memory guard and a pre-check so stats can never disagree with
-    // the event log, even on a rapid double call.
+    // At most once per scenario per local day: fixed event id plus an
+    // in-memory guard. The idempotency event is written FIRST (logEventOnce
+    // verifies the insert) and only then the XP is paid — if the stats write
+    // fails afterwards, the durable event row still blocks any retry payout.
     const key = `${date}:${scenarioId}`;
     if (finishingConversation.has(key)) return { xpEarned: 0 };
     finishingConversation.add(key);
     try {
       const eventId = `conv:${key}`;
+      const payload = { xp: CONVERSATION_XP, scenarioId, date };
       if (db) {
-        const existing = await db.getFirst<{ id: string }>(
-          'SELECT id FROM events WHERE user_id = ? AND type = ? AND id = ?',
-          [get().userId, 'conversation_completed', eventId],
-        );
-        if (existing) return { xpEarned: 0 };
+        const inserted = await r.progress.logEventOnce(eventId, 'conversation_completed', payload, now);
+        if (!inserted) return { xpEarned: 0 };
+      } else {
+        await r.progress.logEvent(eventId, 'conversation_completed', payload, now);
       }
       // Same stats pipeline as lessons/stories: total + today XP, streak activity.
       const prev = get().stats;
@@ -584,7 +585,6 @@ export const useAppStore = create<AppState>((set, get) => ({
       let next: UserStats = { ...prev, xp: prev.xp + CONVERSATION_XP, xpToday };
       next = applyActivity(next, date);
       await r.stats.save(next, now);
-      await r.progress.logEvent(eventId, 'conversation_completed', { xp: CONVERSATION_XP, scenarioId, date }, now);
 
       set({ stats: next });
       await get().refreshQuests();

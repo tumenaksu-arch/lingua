@@ -61,3 +61,10 @@ export const parsedReply = {
   correction: null,
   done: false,
 };
+
+/** Yeni sözleşme: ai_usage_take tek satırlık bir dizi döner: [{ used, day }]. */
+export const TAKE_DAY = "2026-10-26";
+
+export function takeResponse(used: number) {
+  return jsonResponse([{ used, day: TAKE_DAY }]);
+}
