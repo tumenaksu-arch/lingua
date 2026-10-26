@@ -87,8 +87,9 @@ export function chunkText(text: string, max = MAX_CHARS): string[] {
       const space = head.lastIndexOf(' ');
       boundary = space > 0 ? space : max;
     }
-    chunks.push(rest.slice(0, boundary + 1).trim());
-    rest = rest.slice(boundary + 1).trim();
+    const cut = Math.min(boundary + 1, max);
+    chunks.push(rest.slice(0, cut).trim());
+    rest = rest.slice(cut).trim();
   }
   if (rest) chunks.push(rest);
   return chunks;
@@ -97,9 +98,17 @@ export function chunkText(text: string, max = MAX_CHARS): string[] {
 let current: HTMLAudioElement | null = null;
 /** Rejects the in-flight playback promise when a newer speak()/stop() drops it. */
 let interrupt: ((err: Error) => void) | null = null;
+/**
+ * Bumped by every stopServerAudio(). speakServer captures it before its chunk
+ * loop so a stop() landing in the microtask gap between two sequential chunks
+ * (after chunk N's 'ended' already cleared `interrupt`) still aborts the loop
+ * instead of starting chunk N+1.
+ */
+let stopGeneration = 0;
 
 /** Pause and drop whatever is playing; the pending speakServer promise rejects with an AbortError. */
 export function stopServerAudio(): void {
+  stopGeneration += 1;
   const drop = interrupt;
   interrupt = null;
   drop?.(abortError());
@@ -165,8 +174,12 @@ function playUrl(url: string): Promise<void> {
     audio.addEventListener('ended', onEnd);
     audio.addEventListener('error', onError);
     audio.src = url;
-    // A rejected play() also surfaces as an 'error' event; nothing extra to do here.
-    audio.play().catch(() => {});
+    // Autoplay-policy rejections (iOS PWA Safari before a gesture, Chrome pre-gesture)
+    // fire NO 'error' event on the element, so a swallowed play() rejection would leave
+    // the promise hanging on loadeddata/ended that never resolve — reject explicitly.
+    audio.play().catch((e: unknown) => {
+      finish(e instanceof Error ? e : new Error('Ses oynatma engellendi.'));
+    });
   });
 }
 
@@ -181,7 +194,11 @@ export async function speakServer(text: string, lang: LangCode, speed: number): 
   if (!base) throw new Error('Doğal ses sunucusu yapılandırılmamış.');
   const s = snapSpeed(speed);
   stopServerAudio(); // drop any previous playback — double taps never overlap
+  const generation = stopGeneration;
   for (const chunk of chunkText(text)) {
+    // A stop() between chunks (interrupt already cleared by the previous 'ended')
+    // must not let the next chunk start.
+    if (generation !== stopGeneration) throw abortError();
     const url = `${base}/tts/v1/speak?lang=${lang}&text=${encodeURIComponent(chunk)}&speed=${s}`;
     await playUrl(url);
   }

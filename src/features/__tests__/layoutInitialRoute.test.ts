@@ -16,5 +16,6 @@ describe('root layout screen order', () => {
   it('registers unguarded modals only after all guarded groups', () => {
     const lastProtected = src.lastIndexOf('</Stack.Protected>');
     expect(src.indexOf('name="sinif-katil"')).toBeGreaterThan(lastProtected);
+    expect(src.indexOf('name="lisanslar"')).toBeGreaterThan(lastProtected);
   });
 });

@@ -49,7 +49,7 @@ function wantsServerVoice(lang: LangCode): boolean {
 export async function speak(text: string, lang: LangCode, opts: SpeakOptions = {}): Promise<void> {
   if (!text.trim()) return;
   const native = shellPlugin('TextToSpeech');
-  if (!native && wantsServerVoice(lang)) {
+  if (wantsServerVoice(lang)) {
     try {
       // Normal playback → 1.0; the slow button passes rate < 1 → map the stored slowRate.
       const speed = (opts.rate ?? 1) < 1 ? serverSpeedFor(useSettingsStore.getState().slowRate) : 1;

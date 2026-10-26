@@ -3,11 +3,15 @@ import { chunkText, resetServerTtsForTests, serverSpeedFor, speakServer, stopSer
 /** Minimal HTMLAudioElement stand-in: records src, lets tests fire playback events. */
 class MockAudio {
   static instances: MockAudio[] = [];
+  /** When true, play() rejects like an autoplay-policy NotAllowedError (no 'error' event fires). */
+  static failPlay = false;
   src = '';
   paused = true;
   play = jest.fn(() => {
     this.paused = false;
-    return Promise.resolve();
+    return MockAudio.failPlay
+      ? Promise.reject(Object.assign(new Error('play() rejected by autoplay policy'), { name: 'NotAllowedError' }))
+      : Promise.resolve();
   });
   pause = jest.fn(() => {
     this.paused = true;
@@ -39,6 +43,7 @@ beforeEach(() => {
   jest.restoreAllMocks();
   jest.useRealTimers();
   MockAudio.instances = [];
+  MockAudio.failPlay = false;
   (globalThis as { Audio?: unknown }).Audio = MockAudio;
   process.env.EXPO_PUBLIC_SUPABASE_URL = BASE;
   resetServerTtsForTests();
@@ -92,6 +97,18 @@ describe('chunkText', () => {
     for (const c of chunks) expect(c.length).toBeLessThanOrEqual(300);
     expect(chunks.every((c) => !c.includes('abcdefg h'))).toBe(true);
   });
+
+  it('never emits a >300-char chunk, even with no spaces in the head (word-boundary fallback clamps)', () => {
+    const text = 'a'.repeat(400); // no spaces: boundary falls back to max
+    const chunks = chunkText(text);
+    expect(chunks.length).toBeGreaterThan(1);
+    for (const c of chunks) {
+      expect(c.length).toBeLessThanOrEqual(300);
+      expect(c.length).toBeGreaterThan(0);
+    }
+    expect(chunks.join('')).toBe(text);
+  });
+
 });
 
 describe('speakServer', () => {
@@ -156,6 +173,27 @@ describe('speakServer', () => {
     const p = speakServer('Hallo', 'de', 1);
     jest.advanceTimersByTime(4001);
     await expect(p).rejects.toThrow('Ses sunucusuna ulaşılamadı.');
+  });
+
+  it('a stop() landing between sequential chunks aborts before chunk N+1 starts', async () => {
+    const sentence = 'Die Katze sitzt auf dem Tisch und trinkt Milch. ';
+    const p = speakServer(sentence.repeat(12), 'de', 1);
+    const first = MockAudio.instances[0]!;
+    first.emit('loadeddata');
+    first.emit('ended');
+    // Same microtask gap: 'ended' already cleared `interrupt`, so only the stop
+    // generation counter can prevent chunk 2 from starting.
+    stopServerAudio();
+    await expect(p).rejects.toMatchObject({ name: 'AbortError' });
+    expect(MockAudio.instances.length).toBe(1);
+  });
+
+  it('rejects when play() is rejected by the autoplay policy (no error event fires)', async () => {
+    MockAudio.failPlay = true;
+    const p = speakServer('Hallo', 'de', 1);
+    const audio = MockAudio.instances[0]!;
+    audio.emit('loadeddata'); // first byte arrives, clearing the 4 s timer — 'ended' never will
+    await expect(p).rejects.toMatchObject({ name: 'NotAllowedError' });
   });
 
   it('rejects immediately when the server URL is not configured', async () => {

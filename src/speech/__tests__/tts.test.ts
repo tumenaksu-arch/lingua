@@ -132,6 +132,54 @@ describe('speak with voice=cihaz', () => {
   });
 });
 
+describe('Android Capacitor WebView shell (voice=dogal)', () => {
+  function mockShell() {
+    const tts = {
+      speak: jest.fn((_opts: { text: string; lang?: string; rate?: number; pitch?: number }) => Promise.resolve()),
+      stop: jest.fn(() => Promise.resolve()),
+    };
+    (globalThis as { Capacitor?: unknown }).Capacitor = {
+      isNativePlatform: () => true,
+      Plugins: { TextToSpeech: tts },
+    };
+    return tts;
+  }
+
+  it('plays via HTMLAudioElement first even though the shell TextToSpeech plugin exists', async () => {
+    const shell = mockShell();
+    const onDone = jest.fn();
+    const p = speak('Hello world', 'en', { onDone });
+    expect(MockAudio.instances.length).toBe(1);
+    expect(MockAudio.instances[0]!.src).toContain('/tts/v1/speak?lang=en');
+    finishCurrentAudio();
+    await p;
+    expect(onDone).toHaveBeenCalledTimes(1);
+    expect(shell.speak).not.toHaveBeenCalled();
+  });
+
+  it('falls back to the shell TextToSpeech plugin when the server audio fails', async () => {
+    const shell = mockShell();
+    const onDone = jest.fn();
+    const p = speak('Hallo', 'de', { rate: 0.5, onDone });
+    expect(MockAudio.instances.length).toBe(1);
+    MockAudio.instances[0]!.emit('error');
+    await p;
+    expect(shell.speak).toHaveBeenCalledWith(expect.objectContaining({ text: 'Hallo', lang: 'de-DE', rate: 0.5 }));
+    expect(Speech.speak).not.toHaveBeenCalled();
+    // the shell plugin resolves synchronously, so speak() fires onDone itself
+    expect(onDone).toHaveBeenCalledTimes(1);
+  });
+
+  it('shell plugin is the fallback for voice=cihaz too', async () => {
+    const shell = mockShell();
+    useSettingsStore.setState({ voice: 'cihaz' });
+    await speak('Hello', 'en');
+    expect(MockAudio.instances.length).toBe(0);
+    expect(shell.speak).toHaveBeenCalledWith(expect.objectContaining({ text: 'Hello', lang: 'en-US' }));
+    expect(Speech.speak).not.toHaveBeenCalled();
+  });
+});
+
 describe('stop', () => {
   it('stops server playback too: pauses the audio and reports the interruption via onError', async () => {
     const onError = jest.fn();
