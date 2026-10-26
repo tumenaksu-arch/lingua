@@ -1,0 +1,11 @@
+# torch is installed SEPARATELY from the PyTorch CPU index:
+#   pip install --index-url https://download.pytorch.org/whl/cpu torch==2.7.1
+numpy>=1.26,<3
+kokoro==0.9.4
+misaki[en]==0.9.4
+piper-tts==1.3.0
+soundfile>=0.13,<0.14
+fastapi>=0.115,<0.124
+uvicorn>=0.30,<0.36
+pytest>=8,<9
+httpx>=0.27,<0.29

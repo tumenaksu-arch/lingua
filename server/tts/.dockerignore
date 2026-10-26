@@ -1,0 +1,8 @@
+# build context is the repo root; ship only what the image needs
+*
+!server/tts/app.py
+!server/tts/engines.py
+!server/tts/cache.py
+!server/tts/limits.py
+!server/tts/requirements.txt
+!server/tts/scripts/
