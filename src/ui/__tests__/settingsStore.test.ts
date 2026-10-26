@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SLOW_RATES, useSettingsStore } from '../settingsStore';
 
 function resetStore() {
-  useSettingsStore.setState({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, hydrated: false });
+  useSettingsStore.setState({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'dogal', hydrated: false });
 }
 
 describe('settingsStore', () => {
@@ -32,7 +32,7 @@ describe('settingsStore', () => {
   it('persists the FULL settings object after setSlowRate', async () => {
     await useSettingsStore.getState().setSlowRate(0.5);
     const stored = JSON.parse((await AsyncStorage.getItem('settings_v1'))!);
-    expect(stored).toEqual({ soundEnabled: true, slowRate: 0.5, relaxedHearts: false });
+    expect(stored).toEqual({ soundEnabled: true, slowRate: 0.5, relaxedHearts: false, voice: 'dogal' });
   });
 
   it('persists relaxedHearts together with soundEnabled and slowRate (no erase regression)', async () => {
@@ -50,7 +50,7 @@ describe('settingsStore', () => {
     // and toggling one setting never erases the others
     await useSettingsStore.getState().setRelaxedHearts(false);
     const stored = JSON.parse((await AsyncStorage.getItem('settings_v1'))!);
-    expect(stored).toEqual({ soundEnabled: false, slowRate: 0.4, relaxedHearts: false });
+    expect(stored).toEqual({ soundEnabled: false, slowRate: 0.4, relaxedHearts: false, voice: 'dogal' });
   });
 
   it('hydrates legacy data without relaxedHearts: relaxedHearts false', async () => {
@@ -83,5 +83,32 @@ describe('settingsStore', () => {
     await AsyncStorage.setItem('settings_v1', JSON.stringify({ soundEnabled: true, slowRate: 9 }));
     await useSettingsStore.getState().hydrate();
     expect(useSettingsStore.getState().slowRate).toBe(0.6);
+  });
+
+  it('defaults voice to dogal', () => {
+    expect(useSettingsStore.getState().voice).toBe('dogal');
+  });
+
+  it('hydrates legacy data without voice: voice dogal', async () => {
+    await AsyncStorage.setItem('settings_v1', JSON.stringify({ soundEnabled: false, slowRate: 0.5, relaxedHearts: true }));
+    await useSettingsStore.getState().hydrate();
+    expect(useSettingsStore.getState().voice).toBe('dogal');
+    expect(useSettingsStore.getState().relaxedHearts).toBe(true);
+  });
+
+  it('hydrates a stored voice=cihaz', async () => {
+    await AsyncStorage.setItem(
+      'settings_v1',
+      JSON.stringify({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'cihaz' }),
+    );
+    await useSettingsStore.getState().hydrate();
+    expect(useSettingsStore.getState().voice).toBe('cihaz');
+  });
+
+  it('persists the FULL settings object after setVoice', async () => {
+    await useSettingsStore.getState().setVoice('cihaz');
+    expect(useSettingsStore.getState().voice).toBe('cihaz');
+    const stored = JSON.parse((await AsyncStorage.getItem('settings_v1'))!);
+    expect(stored).toEqual({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'cihaz' });
   });
 });

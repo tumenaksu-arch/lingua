@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { DEFAULT_STATS } from '@/data';
 import { useAppStore } from '@/features/store';
@@ -20,7 +21,7 @@ jest.mock('expo-router', () => ({
 
 beforeEach(() => {
   useAppStore.setState({ stats: { ...DEFAULT_STATS }, progress: {} });
-  useSettingsStore.setState({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, hydrated: true });
+  useSettingsStore.setState({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'dogal', hydrated: true });
 });
 
 async function renderProfile() {
@@ -53,4 +54,29 @@ it('the "Rahat mod" switch toggles relaxedHearts', async () => {
 
   await fireEvent(toggle, 'valueChange', false);
   expect(useSettingsStore.getState().relaxedHearts).toBe(false);
+});
+
+it('the "Ses" chips toggle voice immediately and persist the full settings object', async () => {
+  await renderProfile();
+
+  expect(screen.getByRole('button', { name: 'Doğal sunucu sesi' }).props.accessibilityState.selected).toBe(true);
+  expect(screen.getByText('Doğal ses internet ister; bağlantı yoksa cihaz sesi kullanılır.')).toBeTruthy();
+
+  await fireEvent.press(screen.getByRole('button', { name: 'Cihaz sesi' }));
+  expect(useSettingsStore.getState().voice).toBe('cihaz');
+  let stored = JSON.parse((await AsyncStorage.getItem('settings_v1'))!);
+  expect(stored).toEqual({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'cihaz' });
+
+  await fireEvent.press(screen.getByRole('button', { name: 'Doğal sunucu sesi' }));
+  expect(useSettingsStore.getState().voice).toBe('dogal');
+  stored = JSON.parse((await AsyncStorage.getItem('settings_v1'))!);
+  expect(stored).toEqual({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'dogal' });
+});
+
+it('links to the open-source licenses screen', async () => {
+  await renderProfile();
+
+  const { router } = jest.requireMock<{ router: { push: jest.Mock } }>('expo-router');
+  await fireEvent.press(screen.getByRole('button', { name: 'Açık kaynak lisansları' }));
+  expect(router.push).toHaveBeenCalledWith('/lisanslar');
 });

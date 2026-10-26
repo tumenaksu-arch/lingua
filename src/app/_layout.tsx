@@ -102,6 +102,7 @@ export default function RootLayout() {
         {/* Class join is reachable from the welcome screen too (no account needed). Must stay AFTER the
             guarded groups: the first registered screen becomes the initial route (it opened on launch). */}
         <Stack.Screen name="sinif-katil" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="lisanslar" options={{ presentation: 'modal' }} />
       </Stack>
     </ThemeProvider>
   );
