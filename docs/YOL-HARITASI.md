@@ -44,10 +44,10 @@ Değişmez kurallar: yayınlanmış içerik yalnız BÜYÜR (`src/content/__test
 - Anahtar: kullanıcı sunucu terminalinde `bash ~/ankaokul-secrets/lovevox-claude-anahtar.sh` (anahtar ekranda görünmez, doğrulanır, model seçilir, servis yeniden başlar). Anahtar yokken uygulama "yakında" gösterir.
 - Bilinçli eksik: sunucu tarafı ret yedeği (fallback) `messages.parse` ile birleştirilemediği için yok; ret = nazik hata.
 
-## 7. Doğal ses (sunucuda ücretsiz model) + iOS
-- Sunucudaki GPU'da açık kaynak çok dilli TTS ile tüm hedef dil cümleleri bir kez seslendirilir → `lovevox-web/audio/<hash>.mp3`; uygulama dosya varsa onu, yoksa cihaz sesini kullanır; yavaş hız oynatma hızıyla.
-- Model seçimi lisans kontrolüyle (ticari kullanıma uygun ses/model).
-- iOS: şimdilik PWA (Safari → Ana Ekrana Ekle); uygulama içi rehber güncel.
-
+## 7. Doğal ses ✅ (2026-10-26, canlı)
+- Sunucuda ücretsiz açık kaynak: Kokoro-82M (Apache-2.0) en/es/fr/it + Piper thorsten (motor GPL-3.0 yalnız sunucuda, ses CC0) de. Kullanıcı örnekleri dinleyip seçti (Chatterbox işlemcide çok yavaş, Piper lessac sesi yalnız-araştırma lisanslı → elendi).
+- Servis `server/tts` (FastAPI), konteyner `lovevox_tts` (YALNIZ işlemci: GPU ankaokul_llm'e ayrılmış; cpus 6), yol `ankaxai.ai/lovevox-api/tts/`, mp3 disk önbelleği (4 GB LRU), kurs metinleri (3.509 cümle × hız 1.0/0.8) önceden ısıtılır: `docker exec lovevox_tts python /srv/scripts/isit.py --base-url http://127.0.0.1:8090 --input /cache/metinler.json`.
+- Uygulama: Profil → Ses "Doğal (sunucu) / Cihaz sesi" (varsayılan doğal); sunucuya ulaşılamazsa cihaz sesine düşer ve 60 sn sunucuyu atlar; Profil → "Açık kaynak lisansları".
+- iOS: şimdilik PWA (karar değişmedi).
 ## Sıra
 0 (sürüyor) → 1 → 2 → 3 → 4 → 5 → 6 → 7 (kullanıcının istediği sıra). 5 sırası gelince önce kısa tasarım + kullanıcı onayı.
