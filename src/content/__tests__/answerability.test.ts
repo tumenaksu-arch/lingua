@@ -1,5 +1,5 @@
 import { courses } from '..';
-import { normalize, isAnswerCorrect, speechMatch, accentHint } from '@/domain/grading';
+import { normalize, isAnswerCorrect, speechMatch, isSpeechCorrect, accentHint } from '@/domain/grading';
 import type { Exercise } from '@/domain/types';
 
 /**
@@ -140,6 +140,55 @@ describe('every exercise in every course is answerable', () => {
       for (const side of ['left', 'right'] as const) {
         const vals = ex.pairs.map((p) => normalize(p[side]));
         if (new Set(vals).size !== vals.length) problems.push(`${ex.id}: duplicate ${side} [${ex.pairs.map((p) => p[side]).join(' | ')}]`);
+      }
+    }
+    expect(problems).toEqual([]);
+  });
+});
+
+/** Independent of grading.ts: how a recogniser / learner writes these numbers as digits. */
+const DIGITS: Record<string, [RegExp, string][]> = {
+  en: [[/\bone\b/gi, '1'], [/\btwo\b/gi, '2'], [/\bthree\b/gi, '3'], [/\bsix\b/gi, '6'], [/\beight\b/gi, '8'], [/\bten\b/gi, '10']],
+  de: [[/\beins\b/gi, '1'], [/\bzwei\b/gi, '2'], [/\bdrei\b/gi, '3'], [/\bzehn\b/gi, '10']],
+  es: [[/\buno\b/gi, '1'], [/\bdos\b/gi, '2'], [/\btres\b/gi, '3']],
+  fr: [[/\bun\b/gi, '1'], [/\bdeux\b/gi, '2'], [/\btrois\b/gi, '3'], [/\bdix\b/gi, '10']],
+  it: [[/\buno\b/gi, '1'], [/\bdue\b/gi, '2'], [/\btre\b/gi, '3'], [/\bdieci\b/gi, '10']],
+};
+const digitize = (text: string, lang: string) => DIGITS[lang]!.reduce((t, [re, d]) => t.replace(re, d), text);
+
+describe('numbers written as digits (speech recognisers write "1 2 3")', () => {
+  it('reported case: "one two three" recognised as "1 2 3" / "123"', () => {
+    expect(isSpeechCorrect('1 2 3', 'One, two, three.', 'en')).toBe(true);
+    expect(isSpeechCorrect('123', 'One, two, three.', 'en')).toBe(true);
+    expect(isSpeechCorrect('1, 2, 3', 'Eins, zwei, drei.', 'de')).toBe(true);
+    expect(isSpeechCorrect('1 2 3', 'Uno, dos, tres.', 'es')).toBe(true);
+    expect(isSpeechCorrect('1 2 3', 'Un, deux, trois.', 'fr')).toBe(true);
+    expect(isSpeechCorrect('1 2 3', 'Uno, due, tre.', 'it')).toBe(true);
+    expect(isSpeechCorrect('1 2 4', 'One, two, three.', 'en')).toBe(false);
+  });
+
+  it('typed digits are accepted, but articles written as words stay strict', () => {
+    expect(isAnswerCorrect("It is 10 o'clock", ["It is ten o'clock"], 'en')).toBe(true);
+    expect(isAnswerCorrect('Il est 10 heures', ['Il est dix heures'], 'fr')).toBe(true);
+    expect(isAnswerCorrect('Il est 11 heures', ['Il est dix heures'], 'fr')).toBe(false);
+    // un/une are both "1" but without digits the gender of the article is still checked
+    expect(isAnswerCorrect('Je mange un pomme', ['Je mange une pomme'], 'fr')).toBe(false);
+  });
+
+  it('every speak / listen exercise with a number accepts its digit form', () => {
+    const problems: string[] = [];
+    for (const c of courses) {
+      const lang = c.id.slice(3);
+      for (const u of c.units) for (const l of u.lessons) for (const ex of l.exercises) {
+        if (ex.type === 'speak') {
+          const d = digitize(ex.sentence, lang);
+          if (d !== ex.sentence && !isSpeechCorrect(d, ex.sentence, ex.lang)) problems.push(`${ex.id}: "${d}"`);
+        } else if (ex.type === 'listen_type') {
+          for (const a of ex.answers) {
+            const d = digitize(a, lang);
+            if (d !== a && !isAnswerCorrect(d, ex.answers, ex.audioLang)) problems.push(`${ex.id}: "${d}"`);
+          }
+        }
       }
     }
     expect(problems).toEqual([]);

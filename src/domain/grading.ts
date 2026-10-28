@@ -36,13 +36,61 @@ export function foldAccents(normalized: string): string {
     .normalize('NFC');
 }
 
-/** Correct when it matches an answer exactly (after `normalize`) or only differs in accents / ß. */
-export function isAnswerCorrect(input: string, answers: string[]): boolean {
+/**
+ * Number words (accent-folded, see `foldAccents`) → digits, per target language. Speech recognisers
+ * write numbers as digits ("one two three" → "1 2 3"), and learners may type "10" for "ten".
+ * Only applied when the learner's text contains a digit, so articles that double as "one"
+ * (un/une, uno/una, ein/eine) are still graded strictly when written as words.
+ */
+const NUMBER_WORDS: Record<string, Record<string, string>> = (() => {
+  const build = (words: string[][]): Record<string, string> => {
+    const m: Record<string, string> = {};
+    words.forEach((forms, n) => forms.forEach((w) => (m[w] = String(n))));
+    return m;
+  };
+  const tens = (pairs: [number, string[]][]): Record<string, string> =>
+    Object.fromEntries(pairs.flatMap(([n, ws]) => ws.map((w) => [w, String(n)])));
+  return {
+    en: { ...build([['zero'], ['one'], ['two'], ['three'], ['four'], ['five'], ['six'], ['seven'], ['eight'], ['nine'], ['ten'], ['eleven'], ['twelve'], ['thirteen'], ['fourteen'], ['fifteen'], ['sixteen'], ['seventeen'], ['eighteen'], ['nineteen'], ['twenty']]), ...tens([[30, ['thirty']], [40, ['forty']], [50, ['fifty']], [60, ['sixty']], [70, ['seventy']], [80, ['eighty']], [90, ['ninety']], [100, ['hundred']]]) },
+    de: { ...build([['null'], ['eins', 'ein', 'eine'], ['zwei'], ['drei'], ['vier'], ['funf'], ['sechs'], ['sieben'], ['acht'], ['neun'], ['zehn'], ['elf'], ['zwolf'], ['dreizehn'], ['vierzehn'], ['funfzehn'], ['sechzehn'], ['siebzehn'], ['achtzehn'], ['neunzehn'], ['zwanzig']]), ...tens([[30, ['dreissig']], [40, ['vierzig']], [50, ['funfzig']], [60, ['sechzig']], [70, ['siebzig']], [80, ['achtzig']], [90, ['neunzig']], [100, ['hundert', 'einhundert']]]) },
+    es: { ...build([['cero'], ['uno', 'una', 'un'], ['dos'], ['tres'], ['cuatro'], ['cinco'], ['seis'], ['siete'], ['ocho'], ['nueve'], ['diez'], ['once'], ['doce'], ['trece'], ['catorce'], ['quince'], ['dieciseis'], ['diecisiete'], ['dieciocho'], ['diecinueve'], ['veinte']]), ...tens([[30, ['treinta']], [40, ['cuarenta']], [50, ['cincuenta']], [60, ['sesenta']], [70, ['setenta']], [80, ['ochenta']], [90, ['noventa']], [100, ['cien', 'ciento']]]) },
+    fr: { ...build([['zero'], ['un', 'une'], ['deux'], ['trois'], ['quatre'], ['cinq'], ['six'], ['sept'], ['huit'], ['neuf'], ['dix'], ['onze'], ['douze'], ['treize'], ['quatorze'], ['quinze'], ['seize'], ['dixsept'], ['dixhuit'], ['dixneuf'], ['vingt']]), ...tens([[30, ['trente']], [40, ['quarante']], [50, ['cinquante']], [60, ['soixante']], [100, ['cent']]]) },
+    it: { ...build([['zero'], ['uno', 'una', 'un'], ['due'], ['tre'], ['quattro'], ['cinque'], ['sei'], ['sette'], ['otto'], ['nove'], ['dieci'], ['undici'], ['dodici'], ['tredici'], ['quattordici'], ['quindici'], ['sedici'], ['diciassette'], ['diciotto'], ['diciannove'], ['venti']]), ...tens([[30, ['trenta']], [40, ['quaranta']], [50, ['cinquanta']], [60, ['sessanta']], [70, ['settanta']], [80, ['ottanta']], [90, ['novanta']], [100, ['cento']]]) },
+  };
+})();
+
+const hasDigit = (s: string) => /\d/.test(s);
+
+/** Folded text with number words of `lang` replaced by digits. */
+function numberCanon(folded: string, lang: string): string {
+  const map = NUMBER_WORDS[lang];
+  if (!map) return folded;
+  return folded
+    .split(' ')
+    .map((w) => map[w] ?? w)
+    .join(' ');
+}
+
+/** Candidate digit forms of the learner's text: as written, and with digit runs split ("123" → "1 2 3"). */
+function digitForms(folded: string, lang: string): string[] {
+  const c = numberCanon(folded, lang);
+  const split = c.replace(/\d{2,}/g, (d) => d.split('').join(' '));
+  return split === c ? [c] : [c, split];
+}
+
+/**
+ * Correct when it matches an answer exactly (after `normalize`), only differs in accents / ß, or —
+ * when `lang` is given and the learner wrote digits — matches with numbers as digits ("10" = "ten").
+ */
+export function isAnswerCorrect(input: string, answers: string[], lang?: string): boolean {
   const n = normalize(input);
   if (n.length === 0) return false;
   if (answers.some((a) => normalize(a) === n)) return true;
   const f = foldAccents(n);
-  return answers.some((a) => foldAccents(normalize(a)) === f);
+  if (answers.some((a) => foldAccents(normalize(a)) === f)) return true;
+  if (!lang || !hasDigit(f)) return false;
+  const forms = digitForms(f, lang);
+  return answers.some((a) => forms.includes(numberCanon(foldAccents(normalize(a)), lang)));
 }
 
 /**
@@ -72,12 +120,23 @@ export function levenshtein(a: string, b: string): number {
   return prev[b.length];
 }
 
-/** 0..1 similarity: average of token-overlap (Jaccard) and char-level Levenshtein ratio. */
-export function speechMatch(transcript: string, target: string): number {
+/**
+ * 0..1 similarity: average of token-overlap (Jaccard) and char-level Levenshtein ratio.
+ * With `lang`, digits from the recogniser ("1 2 3", "123") count as the number words of the target.
+ */
+export function speechMatch(transcript: string, target: string, lang?: string): number {
   // Recognisers differ in accents/ß (and the learner cannot fix them by voice): compare folded.
-  const t = foldAccents(normalize(transcript));
-  const g = foldAccents(normalize(target));
-  if (!t || !g) return 0;
+  const t0 = foldAccents(normalize(transcript));
+  const g0 = foldAccents(normalize(target));
+  if (!t0 || !g0) return 0;
+  if (lang && hasDigit(t0)) {
+    const g = numberCanon(g0, lang);
+    return Math.max(...digitForms(t0, lang).map((t) => similarity(t, g)));
+  }
+  return similarity(t0, g0);
+}
+
+function similarity(t: string, g: string): number {
   if (t === g) return 1;
   const ta = new Set(t.split(' '));
   const ga = new Set(g.split(' '));
@@ -88,6 +147,6 @@ export function speechMatch(transcript: string, target: string): number {
   return Math.max(0, Math.min(1, (jaccard + lev) / 2));
 }
 
-export function isSpeechCorrect(transcript: string, target: string): boolean {
-  return speechMatch(transcript, target) >= SPEECH_MATCH_THRESHOLD;
+export function isSpeechCorrect(transcript: string, target: string, lang?: string): boolean {
+  return speechMatch(transcript, target, lang) >= SPEECH_MATCH_THRESHOLD;
 }

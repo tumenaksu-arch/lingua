@@ -44,7 +44,7 @@ export function ListenType({ exercise, onAnswer, disabled }: ExerciseProps<Liste
       <CheckBar
         disabled={text.trim().length === 0 || locked}
         onCheck={() => {
-          const ok = isAnswerCorrect(text, exercise.answers);
+          const ok = isAnswerCorrect(text, exercise.answers, exercise.audioLang);
           setChecked(ok);
           onAnswer(ok, text);
         }}

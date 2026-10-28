@@ -64,7 +64,7 @@ export function Speak({ exercise, onAnswer, disabled }: ExerciseProps<SpeakExerc
             onAnswer(true); // skipped exercises are not penalised
             return;
           }
-          onAnswer(isSpeechCorrect(stt.transcript, exercise.sentence), stt.transcript);
+          onAnswer(isSpeechCorrect(stt.transcript, exercise.sentence, exercise.lang), stt.transcript);
         }}
         secondary={unavailable ? undefined : { label: 'Şimdi konuşamıyorum', onPress: () => onAnswer(true) }}
       />
