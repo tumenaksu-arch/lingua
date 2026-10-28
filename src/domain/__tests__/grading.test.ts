@@ -2,7 +2,8 @@ import { normalize, isAnswerCorrect, speechMatch, isSpeechCorrect, levenshtein }
 
 describe('grading', () => {
   test('normalize strips punctuation, case and spaces, keeps diacritics', () => {
-    expect(normalize('  Günaydın,  Dünya! ')).toBe('günaydın dünya');
+    // ı/İ/I all fold to i (locale-independent; a Turkish device lowercases I to ı) — see normalize()
+    expect(normalize('  Günaydın,  Dünya! ')).toBe('günaydin dünya');
     expect(normalize("I'm fine.")).toBe('im fine');
     expect(normalize('¿Cómo estás?')).toBe('cómo estás');
   });

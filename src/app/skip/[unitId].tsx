@@ -13,6 +13,7 @@ import {
   type Exercise,
   type LessonState,
   type Unit,
+  accentHint,
 } from '@/domain';
 import { ExerciseView } from '@/features/lesson/ExerciseView';
 import { playComplete, playCorrect, playWrong } from '@/features/sound';
@@ -23,6 +24,13 @@ import { Body, Button, Caption, FeedbackSheet, Heading, ProgressBar, Screen, Tit
 type Params = { unitId: string };
 
 /** The expected answer shown in the red feedback sheet (same mapping as the lesson screen). */
+/** Accepted only thanks to accent/ß folding → show the proper spelling ("Aksana dikkat: café"). */
+function accentNote(e: Exercise, userAnswer?: string): string | undefined {
+  if (!userAnswer || (e.type !== 'listen_type' && e.type !== 'translate_build')) return undefined;
+  const proper = accentHint(userAnswer, e.answers);
+  return proper ? `Aksana dikkat: ${proper}` : undefined;
+}
+
 function correctAnswerText(e: Exercise): string | undefined {
   switch (e.type) {
     case 'select_translation':
@@ -99,11 +107,11 @@ function SkipSession({ unit, attempt, onRetry }: { unit: Unit; attempt: number; 
   const exercise = state ? current(state) : undefined;
 
   const onAnswer = useCallback(
-    (isCorrect: boolean) => {
+    (isCorrect: boolean, userAnswer?: string) => {
       if (!exercise || feedback || outcome) return;
       void (isCorrect ? playCorrect() : playWrong());
       // No hearts are lost in an exam (and no XP for wrong answers — none is awarded per answer at all).
-      setFeedback({ ok: isCorrect, detail: isCorrect ? undefined : correctAnswerText(exercise) });
+      setFeedback({ ok: isCorrect, detail: isCorrect ? accentNote(exercise, userAnswer) : correctAnswerText(exercise) });
     },
     [exercise, feedback, outcome],
   );

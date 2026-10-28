@@ -17,6 +17,7 @@ import {
   type Exercise,
   type Lesson,
   type LessonState,
+  accentHint,
 } from '@/domain';
 import { ExerciseView } from '@/features/lesson/ExerciseView';
 import { playComplete, playCorrect, playWrong } from '@/features/sound';
@@ -32,6 +33,13 @@ function findLesson(units: { lessons: Lesson[] }[], id: string): Lesson | undefi
 }
 
 /** The expected answer shown in the red feedback sheet. */
+/** Accepted only thanks to accent/ß folding → show the proper spelling ("Aksana dikkat: café"). */
+function accentNote(e: Exercise, userAnswer?: string): string | undefined {
+  if (!userAnswer || (e.type !== 'listen_type' && e.type !== 'translate_build')) return undefined;
+  const proper = accentHint(userAnswer, e.answers);
+  return proper ? `Aksana dikkat: ${proper}` : undefined;
+}
+
 function correctAnswerText(e: Exercise): string | undefined {
   switch (e.type) {
     case 'select_translation':
@@ -81,11 +89,11 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
   const exercise = state ? current(state) : undefined;
 
   const onAnswer = useCallback(
-    (isCorrect: boolean) => {
+    (isCorrect: boolean, userAnswer?: string) => {
       if (!exercise || feedback) return;
       void (isCorrect ? playCorrect() : playWrong());
       if (!isCorrect && !practice && !relaxed) void saveStats(loseHeart(regenerate(stats, Date.now()), Date.now()));
-      setFeedback({ ok: isCorrect, detail: isCorrect ? undefined : correctAnswerText(exercise) });
+      setFeedback({ ok: isCorrect, detail: isCorrect ? accentNote(exercise, userAnswer) : correctAnswerText(exercise) });
     },
     [exercise, feedback, practice, relaxed, saveStats, stats],
   );
