@@ -26,6 +26,8 @@ export interface ShellSpeechRecognition {
   available(): Promise<{ available: boolean }>;
   start(options?: { language?: string; maxResults?: number; partialResults?: boolean; popup?: boolean }): Promise<{ matches?: string[] }>;
   stop(): Promise<void>;
+  /** Plugin-side truth: false once the Android recognizer ended (also after silent errors). */
+  isListening(): Promise<{ listening: boolean }>;
   requestPermissions(): Promise<{ speechRecognition: string }>;
   addListener(event: 'partialResults', cb: (data: { matches: string[] }) => void): Promise<ListenerHandle>;
   addListener(event: 'listeningState', cb: (data: { status: 'started' | 'stopped' }) => void): Promise<ListenerHandle>;
