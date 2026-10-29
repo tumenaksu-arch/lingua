@@ -8,7 +8,8 @@ export interface SpeakableText {
 }
 
 /**
- * Kursun tüm seslendirilen metinleri: listen_type ses metinleri, speak cümleleri
+ * Kursun tüm seslendirilen metinleri: listen_type/listen_select ses metinleri, speak cümleleri,
+ * sohbet satırları, okuma parçaları
  * ve hikâye satırları (hedef dilde, hız 1.0'da okunur). Beyaz boşluk
  * normalize edilir; boş metinler atılır; (dil, metin) ikilisi tekil tutulur.
  * `getStory` verilmezse hikâye satırları toplanmaz (testler için).
@@ -30,6 +31,9 @@ export function collectCourseTexts(course: Course, getStory?: (unitId: string) =
       for (const ex of lesson.exercises) {
         if (ex.type === 'listen_type') push(ex.audioText, ex.audioLang);
         else if (ex.type === 'speak') push(ex.sentence, ex.lang);
+        else if (ex.type === 'listen_select') push(ex.audioText, ex.audioLang);
+        else if (ex.type === 'complete_chat') for (const l of ex.lines) push(l.text, course.toLang);
+        else if (ex.type === 'read_answer') push(ex.passage, course.toLang);
       }
     }
     const story = getStory?.(unit.id);

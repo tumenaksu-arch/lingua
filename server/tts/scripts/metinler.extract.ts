@@ -63,6 +63,20 @@ for (const course of courses) {
             add(lang, ex.sentence);
             for (const o of ex.options) add(lang, o);
             break;
+          case 'listen_select':
+            add(lang, ex.audioText);
+            for (const o of ex.options) add(lang, o);
+            break;
+          case 'picture_select':
+            for (const o of ex.options) add(lang, o.label);
+            break;
+          case 'complete_chat':
+            for (const l of ex.lines) add(lang, l.text);
+            for (const o of ex.options) add(lang, o);
+            break;
+          case 'read_answer':
+            add(lang, ex.passage);
+            break;
         }
       }
     }

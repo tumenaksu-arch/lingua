@@ -1,5 +1,6 @@
 import { course, lesson, listen, sel, speak, unit } from '@/content/builder';
 import type { Story } from '@/content/stories';
+import type { Course } from '@/domain/types';
 
 import { collectCourseTexts } from '../collectTexts';
 
@@ -57,5 +58,19 @@ describe('collectCourseTexts', () => {
   test('hikâyesi olmayan ünite atlanır', () => {
     const texts = collectCourseTexts(c, () => undefined);
     expect(texts).toHaveLength(3);
+  });
+});
+
+describe('collectCourseTexts — new exercise types', () => {
+  it('includes listen_select audio, chat lines and reading passages', () => {
+    const course = {
+      id: 'tr-en', fromLang: 'tr', toLang: 'en', title: 'x', vocab: [],
+      units: [{ id: 'u1', order: 1, title: 't', description: 'd', lessons: [{ id: 'l1', order: 1, vocabIds: [], exercises: [
+        { id: 'a', promptLang: 'en', type: 'listen_select', audioText: 'I am Tom', audioLang: 'en', options: ['I am Tom', 'I am Ali'], correctIndex: 0 },
+        { id: 'b', promptLang: 'en', type: 'complete_chat', lines: [{ speaker: 'a', text: 'Hello!' }], options: ['Hi!', 'Bye'], correctIndex: 0 },
+        { id: 'c', promptLang: 'en', type: 'read_answer', passage: 'Tom is a student. He is ten.', question: 'q', options: ['x', 'y'], correctIndex: 0 },
+      ] }] }],
+    } as unknown as Course;
+    expect(collectCourseTexts(course).map((t) => t.text)).toEqual(['I am Tom', 'Hello!', 'Tom is a student. He is ten.']);
   });
 });
