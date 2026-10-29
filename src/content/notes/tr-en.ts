@@ -526,7 +526,7 @@ export const trEnNotes: CourseNotes = {
       {
         heading: "Belirtiler: 'a sore throat', 'dizzy'",
         body: [
-          "'Boğazım ağrıyor' I have a sore throat kalıbıyla söylenir; sore (ağrılı) sıfatı throat'dan önce gelir. 'Başım dönüyor' ise I feel dizzy demektir ve feel fiili duygu/his bildirirken to be ile birlikte kullanılır.",
+          "'Boğazım ağrıyor' I have a sore throat kalıbıyla söylenir; sore (ağrılı) sıfatı throat'dan önce gelir. 'Başım dönüyor' ise I feel dizzy demektir; feel fiili to be gibi davranır ve yanına yalın sıfat alır.",
         ],
         examples: [
           { target: 'I have a sore throat.', tr: 'Boğazım ağrıyor.' },
@@ -670,11 +670,11 @@ export const trEnNotes: CourseNotes = {
       {
         heading: "'-ed' ve '-ing' sıfatları: bored / boring",
         body: [
-          "Duyan kişiyi anlatan sıfat -ed ile biter (bored = sıkılmış), şeyi anlatan -ing ile (boring = sıkıcı). 'Film sıkıcıydı, ben sıkıldım' = The movie was boring, I was bored.",
+          "Duyan kişiyi anlatan sıfat -ed ile biter (bored = sıkılmış), şeyi anlatan -ing ile (boring = sıkıcı). 'Film sıkıcıydı, ben sıkıldım' = The movie was boring, so I was bored.",
         ],
         examples: [
           { target: 'The children are bored.', tr: 'Çocukların canı sıkılıyor.' },
-          { target: 'The movie was boring, I was bored.', tr: 'Film sıkıcıydı, sıkıldım.' },
+          { target: 'The movie was boring, so I was bored.', tr: 'Film sıkıcıydı, sıkıldım.' },
         ],
       },
       {
