@@ -1,5 +1,6 @@
 import type { Lesson } from '@/domain';
 import {
+  correctAnswerText,
   autoPlayText,
   buildAnswer,
   createBuild,
@@ -86,5 +87,16 @@ describe('exerciseVocabMap / autoPlayText / formatDuration', () => {
   });
   it('formats mm:ss', () => {
     expect(formatDuration(65_000)).toBe('1:05');
+  });
+});
+
+describe('correctAnswerText', () => {
+  it('names the right option for every choice-based type, including the new ones', () => {
+    const base = { id: 'x', promptLang: 'en' as const };
+    expect(correctAnswerText({ ...base, type: 'listen_select', audioText: 'a', audioLang: 'en', options: ['a', 'b'], correctIndex: 1 })).toBe('b');
+    expect(correctAnswerText({ ...base, type: 'picture_select', prompt: 'p', options: [{ emoji: '🍎', label: 'apple' }, { emoji: '🍞', label: 'bread' }], correctIndex: 0 })).toBe('apple');
+    expect(correctAnswerText({ ...base, type: 'complete_chat', lines: [{ speaker: 'a', text: 'Hi' }], options: ['Hi!', 'Bye'], correctIndex: 0 })).toBe('Hi!');
+    expect(correctAnswerText({ ...base, type: 'read_answer', passage: 'p', question: 'q', options: ['x', 'y'], correctIndex: 1 })).toBe('y');
+    expect(correctAnswerText({ ...base, type: 'match_pairs', pairs: [] })).toBeUndefined();
   });
 });

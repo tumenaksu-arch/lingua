@@ -16,6 +16,7 @@ import {
   accentHint,
 } from '@/domain';
 import { ExerciseView } from '@/features/lesson/ExerciseView';
+import { correctAnswerText } from '@/features/lesson/helpers';
 import {
   PLACEMENT_MAX_QUESTIONS,
   PLACEMENT_QUESTIONS_PER_UNIT,
@@ -34,21 +35,6 @@ function accentNote(e: Exercise, userAnswer?: string): string | undefined {
   if (!userAnswer || (e.type !== 'listen_type' && e.type !== 'translate_build')) return undefined;
   const proper = accentHint(userAnswer, e.answers);
   return proper ? `Aksana dikkat: ${proper}` : undefined;
-}
-
-function correctAnswerText(e: Exercise): string | undefined {
-  switch (e.type) {
-    case 'select_translation':
-    case 'fill_blank':
-      return e.options[e.correctIndex];
-    case 'translate_build':
-    case 'listen_type':
-      return e.answers[0];
-    case 'speak':
-      return e.sentence;
-    case 'match_pairs':
-      return undefined;
-  }
 }
 
 type SaveState = { kind: 'idle' } | { kind: 'saving' } | { kind: 'done' } | { kind: 'error'; message: string };

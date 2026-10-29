@@ -135,3 +135,24 @@ export function formatDuration(ms: number): string {
   const m = Math.floor(s / 60);
   return `${m}:${String(s % 60).padStart(2, '0')}`;
 }
+
+/** The expected answer shown in the red feedback sheet (match_pairs has none). */
+export function correctAnswerText(e: Exercise): string | undefined {
+  switch (e.type) {
+    case 'select_translation':
+    case 'fill_blank':
+    case 'listen_select':
+    case 'complete_chat':
+    case 'read_answer':
+      return e.options[e.correctIndex];
+    case 'picture_select':
+      return e.options[e.correctIndex]?.label;
+    case 'translate_build':
+    case 'listen_type':
+      return e.answers[0];
+    case 'speak':
+      return e.sentence;
+    case 'match_pairs':
+      return undefined;
+  }
+}

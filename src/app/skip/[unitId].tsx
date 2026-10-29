@@ -16,6 +16,7 @@ import {
   accentHint,
 } from '@/domain';
 import { ExerciseView } from '@/features/lesson/ExerciseView';
+import { correctAnswerText } from '@/features/lesson/helpers';
 import { playComplete, playCorrect, playWrong } from '@/features/sound';
 import { buildSkipTest } from '@/features/skipTest';
 import { useAppStore } from '@/features/store';
@@ -29,26 +30,6 @@ function accentNote(e: Exercise, userAnswer?: string): string | undefined {
   if (!userAnswer || (e.type !== 'listen_type' && e.type !== 'translate_build')) return undefined;
   const proper = accentHint(userAnswer, e.answers);
   return proper ? `Aksana dikkat: ${proper}` : undefined;
-}
-
-function correctAnswerText(e: Exercise): string | undefined {
-  switch (e.type) {
-    case 'select_translation':
-    case 'fill_blank':
-    case 'listen_select':
-    case 'complete_chat':
-    case 'read_answer':
-      return e.options[e.correctIndex];
-    case 'picture_select':
-      return e.options[e.correctIndex].label;
-    case 'translate_build':
-    case 'listen_type':
-      return e.answers[0];
-    case 'speak':
-      return e.sentence;
-    case 'match_pairs':
-      return undefined;
-  }
 }
 
 export default function SkipTestScreen() {
