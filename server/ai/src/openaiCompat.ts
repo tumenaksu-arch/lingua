@@ -22,6 +22,7 @@ export interface OpenAICompatConfig {
    * (bu parametreyi tanımayan modeller için).
    */
   reasoningEffort?: string;
+  /** Toplam süre bütçesi (tüm denemeler); istemci 55 s bekler. */
   timeoutMs?: number;
 }
 
@@ -72,9 +73,9 @@ function jsonInstruction(schema: ZodType): string {
   return `Output format: respond with ONE JSON object only — no prose, no markdown fences — that validates against this JSON Schema:\n${JSON.stringify(z.toJSONSchema(schema))}`;
 }
 
-async function complete(cfg: OpenAICompatConfig, messages: OAMessage[]): Promise<{ text: string; inTok: number; outTok: number }> {
+async function complete(cfg: OpenAICompatConfig, messages: OAMessage[], budgetMs: number): Promise<{ text: string; inTok: number; outTok: number }> {
   const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), cfg.timeoutMs ?? 25_000);
+  const timer = setTimeout(() => ctrl.abort(), budgetMs);
   try {
     const res = await fetch(`${cfg.baseUrl.replace(/\/$/, "")}/chat/completions`, {
       method: "POST",
@@ -118,8 +119,13 @@ async function parseOnce<T>(
   let inTok = 0;
   let outTok = 0;
   // En fazla iki deneme: ikincisinde modelden geçerli JSON'u yeniden yazması istenir.
+  // Bütçe paylaşımı: yavaş ama geçerli ilk yanıt tüm bütçeyi kullanabilir; düzeltme denemesi
+  // yalnız en az 8 s kaldıysa yapılır.
+  const deadline = Date.now() + (cfg.timeoutMs ?? 50_000);
   for (let attempt = 0; attempt < 2; attempt++) {
-    const r = await complete(cfg, convo);
+    const left = deadline - Date.now();
+    if (attempt > 0 && left < 8_000) break;
+    const r = await complete(cfg, convo, left);
     inTok += r.inTok;
     outTok += r.outTok;
     const parsed = schema.safeParse(extractJsonObject(r.text));
