@@ -6,9 +6,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Body, Caption } from './Typography';
 import { Button } from './Button';
+import { Vox } from './Vox';
 import { fonts, radii, spacing } from './theme';
 import { upperTr } from './upperTr';
 import { useReduceMotion } from './useReduceMotion';
+import { useSettingsStore } from './settingsStore';
 import { useTheme } from './useTheme';
 
 export type FeedbackSheetProps = {
@@ -22,6 +24,8 @@ export type FeedbackSheetProps = {
   extra?: ReactNode;
   /** Override headline (defaults "Nicely done!" / "Correct solution:"). */
   title?: string;
+  /** Show the Vox mascot next to the headline (default true; also honour the "Maskot animasyonları" setting). */
+  mascot?: boolean;
   continueLabel?: string;
   onContinue: () => void;
 };
@@ -37,12 +41,15 @@ export function FeedbackSheet({
   explanation,
   extra,
   title,
+  mascot = true,
   continueLabel = 'Continue',
   onContinue,
 }: FeedbackSheetProps) {
   const insets = useSafeAreaInsets();
   const { colors } = useTheme();
   const reduceMotion = useReduceMotion();
+  const mascotAnimations = useSettingsStore((s) => s.mascotAnimations);
+  const showMascot = mascot && mascotAnimations;
   const correct = result === 'correct';
   const headline = title ?? (correct ? 'Nicely done!' : 'Correct solution:');
 
@@ -68,6 +75,7 @@ export function FeedbackSheet({
       style={[styles.sheet, { backgroundColor: tint, borderTopColor: colors.borderStrong, paddingBottom: insets.bottom + spacing.lg }]}
     >
       <View style={styles.header}>
+        {showMascot ? <Vox mood={correct ? 'happy' : 'sad'} size={48} /> : null}
         <Text style={styles.icon} accessible={false}>
           {correct ? '✅' : '❌'}
         </Text>

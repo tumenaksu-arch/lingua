@@ -13,7 +13,7 @@ import type { QuestStatus } from '@/features/quests';
 import { localDateString, gemsOf, regenerate } from '@/domain';
 import { getUnitNote } from '@/content/notes';
 import { getUnitStory } from '@/content/stories';
-import { Body, Button, Caption, GemChip, Heading, Hearts, PathNode, ProgressBar, Screen, StreakFlame, XpBadge, XpBoostChip, showAlert, spacing, upperTr, useTheme, type PathNodeState } from '@/ui';
+import { Body, Button, Caption, GemChip, Heading, Hearts, PathNode, ProgressBar, Screen, StreakFlame, Vox, XpBadge, XpBoostChip, radii, showAlert, spacing, upperTr, useSettingsStore, useTheme, type PathNodeState } from '@/ui';
 
 const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', it: '🇮🇹', tr: '🇹🇷' };
 const LANG_NAME: Record<string, string> = { en: 'İngilizce', de: 'Almanca', es: 'İspanyolca', fr: 'Fransızca', it: 'İtalyanca', tr: 'Türkçe' };
@@ -64,6 +64,7 @@ export default function LearnScreen() {
       {stats.xpBoostUntil !== undefined ? <XpBoostChip until={stats.xpBoostUntil} style={styles.boostChip} /> : null}
 
       <ScrollView contentContainerStyle={styles.path}>
+        <VoxPrompt />
         <ClassCard />
         <DailyQuestsCard />
         {active === null && (
@@ -198,6 +199,29 @@ export default function LearnScreen() {
         })}
       </ScrollView>
     </Screen>
+  );
+}
+
+/** Vox's nudge above the path: only when no lesson was done today and the mascot setting is on. */
+function VoxPrompt() {
+  const mascot = useSettingsStore((s) => s.mascotAnimations);
+  const rawStats = useAppStore((s) => s.stats);
+  const { colors } = useTheme();
+  const now = useNow();
+  if (!mascot) return null;
+  if (regenerate(rawStats, now).lastActiveDate === localDateString(new Date(now))) return null;
+  return (
+    <View
+      testID="vox-prompt"
+      style={[styles.voxCard, { backgroundColor: colors.surface, borderColor: colors.border }]}
+      accessibilityRole="text"
+      accessibilityLabel="Vox: Bugün 1 ders yapalım mı?"
+    >
+      <Vox mood="idle" size={56} />
+      <View style={[styles.voxBubble, { backgroundColor: colors.primaryTint }]}>
+        <Body color={colors.primaryText}>Bugün 1 ders yapalım mı?</Body>
+      </View>
+    </View>
   );
 }
 
@@ -345,6 +369,8 @@ const styles = StyleSheet.create({
   questTitle: { flexShrink: 1 },
   claimBtn: { borderWidth: 1, borderRadius: 8, paddingHorizontal: spacing.md, paddingVertical: spacing.xs },
   doneBanner: { margin: spacing.lg, marginBottom: 0, padding: spacing.lg, borderRadius: 10, borderWidth: 1, gap: spacing.sm },
+  voxCard: { margin: spacing.lg, marginBottom: 0, flexDirection: 'row', alignItems: 'center', gap: spacing.md, padding: spacing.md, borderRadius: 10, borderWidth: 1 },
+  voxBubble: { flex: 1, borderRadius: radii.lg, paddingHorizontal: spacing.md, paddingVertical: spacing.sm },
   unit: { paddingBottom: spacing.lg },
   unitHeader: { margin: spacing.lg, marginBottom: spacing.sm, padding: spacing.lg, borderRadius: 10, borderWidth: 1, gap: spacing.sm },
   notesChip: { alignSelf: 'flex-start', borderWidth: 1, borderRadius: 8, paddingHorizontal: spacing.md, paddingVertical: spacing.xs },

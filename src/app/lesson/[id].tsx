@@ -27,7 +27,7 @@ import type { AiExplainRequest } from '@/features/lesson/explainApi';
 import { playComplete, playCorrect, playWrong } from '@/features/sound';
 import { exerciseVocabMap, formatDuration, correctAnswerText } from '@/features/lesson/helpers';
 import { useAppStore } from '@/features/store';
-import { Body, Button, Caption, FeedbackSheet, Heading, Hearts, ProgressBar, Screen, Title, XpBoostChip, radii, showAlert, spacing, useSettingsStore, useTheme } from '@/ui';
+import { Body, Button, Caption, FeedbackSheet, Heading, Hearts, ProgressBar, Screen, Title, Vox, XpBoostChip, radii, showAlert, spacing, useSettingsStore, useTheme, voxLineForLesson } from '@/ui';
 
 type Params = { id: string; mode?: 'practice' };
 
@@ -84,6 +84,7 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
   const saveStats = useAppStore((s) => s.saveStats);
   const finishLesson = useAppStore((s) => s.finishLesson);
   const relaxed = useSettingsStore((s) => s.relaxedHearts);
+  const mascot = useSettingsStore((s) => s.mascotAnimations);
   const { colors } = useTheme();
 
   const lesson = useMemo(() => findLesson(course.units, id), [course, id]);
@@ -170,6 +171,16 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
       <Screen>
         <View style={styles.center} accessibilityLiveRegion="polite">
           <Title center accessibilityRole="header">{summary?.dailyGoalJustReached ? 'Günlük hedef tamam! 🎉' : 'Ders tamamlandı! 🎉'}</Title>
+          {mascot ? (
+            <View style={styles.voxWrap}>
+              <Vox mood="cheer" size={110} />
+              <View style={[styles.voxBubble, { backgroundColor: colors.primaryTint }]}>
+                <Body center color={colors.primaryText}>“{voxLineForLesson(lesson.id)}”</Body>
+              </View>
+            </View>
+          ) : (
+            <Caption center color={colors.textMuted}>{voxLineForLesson(lesson.id)}</Caption>
+          )}
           {stats.xpBoostUntil !== undefined ? <XpBoostChip until={stats.xpBoostUntil} style={styles.boostChip} /> : null}
           <View style={styles.statsRow}>
             <Stat label="XP" value={summary ? `+${summary.xpEarned}` : '…'} color={colors.xpText} />
@@ -322,6 +333,8 @@ const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: 'center', gap: spacing.xl, alignItems: 'center' },
   boostChip: { alignSelf: 'center' },
   chest: { borderWidth: 2, borderRadius: radii.lg, padding: spacing.lg, gap: spacing.sm, alignItems: 'center', marginBottom: spacing.lg },
+  voxWrap: { alignItems: 'center', gap: spacing.md },
+  voxBubble: { borderRadius: radii.lg, paddingHorizontal: spacing.lg, paddingVertical: spacing.sm },
   statsRow: { flexDirection: 'row', gap: spacing.md, justifyContent: 'center' },
   stat: { flex: 1, borderWidth: 1, borderRadius: 10, padding: spacing.md, gap: spacing.xs },
   actions: { gap: spacing.md },

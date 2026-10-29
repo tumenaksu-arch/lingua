@@ -21,7 +21,7 @@ jest.mock('expo-router', () => ({
 
 beforeEach(() => {
   useAppStore.setState({ stats: { ...DEFAULT_STATS }, progress: {} });
-  useSettingsStore.setState({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'dogal', hydrated: true });
+  useSettingsStore.setState({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'dogal', mascotAnimations: true, hydrated: true });
 });
 
 async function renderProfile() {
@@ -65,12 +65,22 @@ it('the "Ses" chips toggle voice immediately and persist the full settings objec
   await fireEvent.press(screen.getByRole('button', { name: 'Cihaz sesi' }));
   expect(useSettingsStore.getState().voice).toBe('cihaz');
   let stored = JSON.parse((await AsyncStorage.getItem('settings_v1'))!);
-  expect(stored).toEqual({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'cihaz' });
+  expect(stored).toEqual({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'cihaz', mascotAnimations: true });
 
   await fireEvent.press(screen.getByRole('button', { name: 'Doğal sunucu sesi' }));
   expect(useSettingsStore.getState().voice).toBe('dogal');
   stored = JSON.parse((await AsyncStorage.getItem('settings_v1'))!);
-  expect(stored).toEqual({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'dogal' });
+  expect(stored).toEqual({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'dogal', mascotAnimations: true });
+});
+
+it('the "Maskot animasyonları" switch toggles mascotAnimations', async () => {
+  await renderProfile();
+
+  const toggle = screen.getByLabelText('Maskot animasyonları');
+  expect(toggle.props.value).toBe(true);
+
+  await fireEvent(toggle, 'valueChange', false);
+  expect(useSettingsStore.getState().mascotAnimations).toBe(false);
 });
 
 it('links to the open-source licenses screen', async () => {
