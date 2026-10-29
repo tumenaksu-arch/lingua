@@ -53,5 +53,6 @@ export function applyActivity(stats: UserStats, localDate: string): UserStats {
       lastActiveDate: localDate,
     });
   }
-  return { ...stats, streak: 1, lastActiveDate: localDate };
+  // Job 3A: kaybolan seri mağazadan onarılabilsin diye son değeri saklanır.
+  return { ...stats, streak: 1, lastActiveDate: localDate, lostStreak: { value: stats.streak, lostOn: localDate } };
 }

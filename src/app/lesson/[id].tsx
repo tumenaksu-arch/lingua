@@ -6,6 +6,7 @@ import { getExplanation, genericHint } from '@/content/explanations';
 import {
   answer,
   canStartLesson,
+  chestAvailable,
   createLesson,
   current,
   isFinished,
@@ -14,6 +15,7 @@ import {
   progress,
   regenerate,
   toResult,
+  type ChestReward,
   type Exercise,
   type Lesson,
   type LessonState,
@@ -25,7 +27,7 @@ import type { AiExplainRequest } from '@/features/lesson/explainApi';
 import { playComplete, playCorrect, playWrong } from '@/features/sound';
 import { exerciseVocabMap, formatDuration, correctAnswerText } from '@/features/lesson/helpers';
 import { useAppStore } from '@/features/store';
-import { Body, Button, Caption, FeedbackSheet, Heading, Hearts, ProgressBar, Screen, Title, showAlert, spacing, useSettingsStore, useTheme } from '@/ui';
+import { Body, Button, Caption, FeedbackSheet, Heading, Hearts, ProgressBar, Screen, Title, XpBoostChip, radii, showAlert, spacing, useSettingsStore, useTheme } from '@/ui';
 
 type Params = { id: string; mode?: 'practice' };
 
@@ -168,12 +170,14 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
       <Screen>
         <View style={styles.center} accessibilityLiveRegion="polite">
           <Title center accessibilityRole="header">{summary?.dailyGoalJustReached ? 'Günlük hedef tamam! 🎉' : 'Ders tamamlandı! 🎉'}</Title>
+          {stats.xpBoostUntil !== undefined ? <XpBoostChip until={stats.xpBoostUntil} style={styles.boostChip} /> : null}
           <View style={styles.statsRow}>
             <Stat label="XP" value={summary ? `+${summary.xpEarned}` : '…'} color={colors.xpText} />
             <Stat label="Doğruluk" value={`%${accuracy}`} color={colors.primaryText} />
             <Stat label="Süre" value={formatDuration(result.durationMs)} color={colors.secondaryText} />
           </View>
         </View>
+        <ChestCard />
         {saveError ? (
           <View style={styles.actions}>
             <Caption center color={colors.dangerText} accessibilityRole="alert">Kaydedilemedi: {saveError}</Caption>
@@ -226,6 +230,55 @@ function Stat({ label, value, color }: { label: string; value: string; color: st
   );
 }
 
+function chestRewardText(reward: ChestReward): string {
+  if (reward.kind === 'gems') return `+${reward.amount} 💎`;
+  if (reward.kind === 'streakFreeze') return '1 seri dondurma 🧊';
+  return '15 dk çift XP ⚡';
+}
+
+/**
+ * Ders sonu sandığı (iş 3A): her 3 tamamlanan derste bir görünür, dokununca
+ * enjekte edilebilir rastgelelikle ödül verilir. Ödül bir kez alınır —
+ * açılınca sayaç sıfırlanır ve kart çözülen ödülle kalır.
+ */
+function ChestCard() {
+  const stats = useAppStore((s) => s.stats);
+  const openChest = useAppStore((s) => s.openChest);
+  const { colors } = useTheme();
+  const [reward, setReward] = useState<ChestReward | null>(null);
+  const [opening, setOpening] = useState(false);
+  if (!chestAvailable(stats) && reward === null) return null;
+  if (reward !== null) {
+    return (
+      <View style={[styles.chest, { borderColor: colors.warning, backgroundColor: colors.surface }]} accessible accessibilityLabel={`Sandık ödülü: ${chestRewardText(reward)}`}>
+        <Heading center>🎁</Heading>
+        <Body center>Ödülün: {chestRewardText(reward)}</Body>
+      </View>
+    );
+  }
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel="Sandığı aç"
+      accessibilityState={{ disabled: opening }}
+      disabled={opening}
+      onPress={() => {
+        if (opening) return;
+        setOpening(true);
+        void playComplete();
+        openChest()
+          .then((r) => setReward(r))
+          .catch(() => setReward(null))
+          .finally(() => setOpening(false));
+      }}
+      style={({ pressed }) => [styles.chest, { borderColor: colors.primary, backgroundColor: colors.surface, opacity: pressed || opening ? 0.7 : 1 }]}
+    >
+      <Heading center>🎁</Heading>
+      <Body center>Sandık kazandın! Ödülünü almak için dokun.</Body>
+    </Pressable>
+  );
+}
+
 function OutOfHearts({ lessonId }: { lessonId: string }) {
   const stats = useAppStore((s) => s.stats);
   const setRelaxedHearts = useSettingsStore((s) => s.setRelaxedHearts);
@@ -266,7 +319,9 @@ const styles = StyleSheet.create({
   close: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   progress: { flex: 1 },
   body: { flex: 1, paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.lg },
-  center: { flex: 1, justifyContent: 'center', gap: spacing.xl },
+  center: { flex: 1, justifyContent: 'center', gap: spacing.xl, alignItems: 'center' },
+  boostChip: { alignSelf: 'center' },
+  chest: { borderWidth: 2, borderRadius: radii.lg, padding: spacing.lg, gap: spacing.sm, alignItems: 'center', marginBottom: spacing.lg },
   statsRow: { flexDirection: 'row', gap: spacing.md, justifyContent: 'center' },
   stat: { flex: 1, borderWidth: 1, borderRadius: 10, padding: spacing.md, gap: spacing.xs },
   actions: { gap: spacing.md },

@@ -81,6 +81,15 @@ export const MIGRATIONS: string[] = [
   );
   CREATE INDEX IF NOT EXISTS idx_mistakes_list ON mistakes(user_id, course_id, wrong_count DESC, last_wrong_at DESC);
   `,
+  // İş 3A (Elmas ekonomisi): gems, çift XP, kayıp seri ve sandık sayacı.
+  // Bu alanlar CİHAZ-LOCAL kalır — sunucu şemasına eklenmez ve outbox
+  // satırına dahil edilmez (bkz. statsRepo.statsToServerRow).
+  `
+  ALTER TABLE user_stats ADD COLUMN gems INTEGER NOT NULL DEFAULT 0;
+  ALTER TABLE user_stats ADD COLUMN xp_boost_until INTEGER;
+  ALTER TABLE user_stats ADD COLUMN lost_streak TEXT;
+  ALTER TABLE user_stats ADD COLUMN lessons_since_chest INTEGER NOT NULL DEFAULT 0;
+  `,
 ];
 
 /** Applies pending migrations using PRAGMA user_version. */

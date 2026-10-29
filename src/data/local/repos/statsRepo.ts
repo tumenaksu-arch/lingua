@@ -16,6 +16,11 @@ interface StatsRow {
   daily_goal_xp: number;
   xp_today: number;
   updated_at: number;
+  // İş 3A: cihaz-local ekonomi alanları (sunucu satırına dahil edilmez).
+  gems?: number;
+  xp_boost_until?: number | null;
+  lost_streak?: string | null;
+  lessons_since_chest?: number;
 }
 
 export const DEFAULT_STATS: UserStats = {
@@ -27,7 +32,19 @@ export const DEFAULT_STATS: UserStats = {
   heartsUpdatedAt: 0,
   dailyGoalXp: 20,
   xpToday: 0,
+  gems: 0,
+  lessonsSinceChest: 0,
 };
+
+function parseLostStreak(raw: string | null | undefined): UserStats['lostStreak'] {
+  if (!raw) return undefined;
+  try {
+    const parsed = JSON.parse(raw) as UserStats['lostStreak'];
+    return parsed && typeof parsed.value === 'number' && typeof parsed.lostOn === 'string' ? parsed : undefined;
+  } catch {
+    return undefined;
+  }
+}
 
 function fromRow(r: StatsRow): UserStats {
   return {
@@ -39,10 +56,16 @@ function fromRow(r: StatsRow): UserStats {
     heartsUpdatedAt: r.hearts_updated_at,
     dailyGoalXp: r.daily_goal_xp,
     xpToday: r.xp_today,
+    gems: r.gems ?? 0,
+    xpBoostUntil: r.xp_boost_until ?? undefined,
+    lostStreak: parseLostStreak(r.lost_streak),
+    lessonsSinceChest: r.lessons_since_chest ?? 0,
   };
 }
 
-/** Server-shaped row for the outbox (timestamps as ISO strings). */
+/** Server-shaped row for the outbox (timestamps as ISO strings).
+ *  İş 3A: gems/çift XP/kayıp seri/sandık alanları bilinçli olarak YOK —
+ *  sunucu şeması değişmez, ekonomi cihaz-local kalır. */
 export function statsToServerRow(userId: string, s: UserStats, updatedAt: number) {
   return {
     user_id: userId,
@@ -69,16 +92,21 @@ export function createStatsRepo(db: Database, userId: string) {
     return row?.updated_at ?? 0;
   }
 
-  /** Writes locally without touching the outbox (used by sync pull). */
+  /** Writes locally without touching the outbox (used by sync pull).
+   *  Ekonomi alanları (gems vb.) listede yok: sync pull bunları asla ezmez. */
   async function writeLocal(s: UserStats, updatedAt: number): Promise<void> {
     await db.run(
-      `INSERT INTO user_stats (user_id, xp, streak, last_active_date, streak_freezes, hearts, hearts_updated_at, daily_goal_xp, xp_today, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `INSERT INTO user_stats (user_id, xp, streak, last_active_date, streak_freezes, hearts, hearts_updated_at, daily_goal_xp, xp_today, gems, xp_boost_until, lost_streak, lessons_since_chest, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
        ON CONFLICT(user_id) DO UPDATE SET
          xp = excluded.xp, streak = excluded.streak, last_active_date = excluded.last_active_date,
          streak_freezes = excluded.streak_freezes, hearts = excluded.hearts, hearts_updated_at = excluded.hearts_updated_at,
          daily_goal_xp = excluded.daily_goal_xp, xp_today = excluded.xp_today, updated_at = excluded.updated_at`,
-      [userId, s.xp, s.streak, s.lastActiveDate, s.streakFreezes, s.hearts, s.heartsUpdatedAt, s.dailyGoalXp, s.xpToday, updatedAt],
+      [
+        userId, s.xp, s.streak, s.lastActiveDate, s.streakFreezes, s.hearts, s.heartsUpdatedAt, s.dailyGoalXp, s.xpToday,
+        s.gems ?? 0, s.xpBoostUntil ?? null, s.lostStreak ? JSON.stringify(s.lostStreak) : null, s.lessonsSinceChest ?? 0,
+        updatedAt,
+      ],
     );
   }
 

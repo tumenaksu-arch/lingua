@@ -10,10 +10,10 @@ import { useClassStore } from '@/features/classes/classStore';
 import { dueLabel, pickHomeClass, relativeTime } from '@/features/classes/classView';
 import { useNow } from '@/features/useNow';
 import type { QuestStatus } from '@/features/quests';
-import { localDateString, regenerate } from '@/domain';
+import { localDateString, gemsOf, regenerate } from '@/domain';
 import { getUnitNote } from '@/content/notes';
 import { getUnitStory } from '@/content/stories';
-import { Body, Button, Caption, Heading, Hearts, PathNode, ProgressBar, Screen, StreakFlame, XpBadge, showAlert, spacing, upperTr, useTheme, type PathNodeState } from '@/ui';
+import { Body, Button, Caption, GemChip, Heading, Hearts, PathNode, ProgressBar, Screen, StreakFlame, XpBadge, XpBoostChip, showAlert, spacing, upperTr, useTheme, type PathNodeState } from '@/ui';
 
 const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', it: '🇮🇹', tr: '🇹🇷' };
 const LANG_NAME: Record<string, string> = { en: 'İngilizce', de: 'Almanca', es: 'İspanyolca', fr: 'Fransızca', it: 'İtalyanca', tr: 'Türkçe' };
@@ -55,9 +55,13 @@ export default function LearnScreen() {
           <Body accessible={false}>{LANG_FLAG[course.toLang] ?? '🌐'}</Body>
         </Pressable>
         <StreakFlame streak={stats.streak} active={stats.lastActiveDate === today} />
+        <GemChip gems={gemsOf(stats)} onPress={() => router.push('/shop')} />
         <XpBadge xp={stats.xp} />
         <Hearts hearts={stats.hearts} />
       </View>
+
+      {/* İş 3A: çift XP etkinse üstte geri sayım çipi. */}
+      {stats.xpBoostUntil !== undefined ? <XpBoostChip until={stats.xpBoostUntil} style={styles.boostChip} /> : null}
 
       <ScrollView contentContainerStyle={styles.path}>
         <ClassCard />
@@ -327,6 +331,7 @@ function QuestRow({ quest, onClaim }: { quest: QuestStatus; onClaim: () => void 
 
 const styles = StyleSheet.create({
   topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingVertical: spacing.sm, borderBottomWidth: 1 },
+  boostChip: { alignSelf: 'flex-start', marginTop: spacing.sm, marginLeft: spacing.lg },
   flag: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   path: { paddingBottom: spacing.xxxl },
   questCard: { margin: spacing.lg, marginBottom: 0, padding: spacing.lg, borderRadius: 10, borderWidth: 1, gap: spacing.md },
