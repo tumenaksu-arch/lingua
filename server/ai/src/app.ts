@@ -38,6 +38,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
       apiKey: env.NVIDIA_API_KEY ?? "",
       baseUrl: env.NVIDIA_BASE_URL ?? "https://integrate.api.nvidia.com/v1",
       model: env.NVIDIA_MODEL ?? "mistralai/mistral-large-4-1t-a52b",
+      reasoningEffort: env.NVIDIA_REASONING_EFFORT ?? "low",
     },
   };
 }

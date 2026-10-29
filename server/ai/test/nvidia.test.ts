@@ -97,3 +97,16 @@ describe("extractJsonObject", () => {
     expect(extractJsonObject('{"broken": ')).toBeUndefined();
   });
 });
+
+describe("akıl yürüten modeller", () => {
+  it("içerik null dönerse boş asistan mesajı eklemeden yeniden dener; reasoning_effort gönderilir", async () => {
+    const { llmCalls } = routeFetch(["", JSON.stringify(parsedExplain)]);
+    const cfg = nvidiaOnly();
+    cfg.nvidia.reasoningEffort = "low";
+    const res = await buildApp(cfg).inject({ method: "POST", url: "/v1/explain", headers: { authorization: `Bearer ${await makeToken({})}` }, payload: explainBody });
+    expect(res.statusCode).toBe(200);
+    expect(llmCalls).toHaveLength(2);
+    expect(llmCalls[0]!.body.reasoning_effort).toBe("low");
+    expect(llmCalls[1]!.body.messages.some((m: any) => m.role === "assistant" && m.content === "")).toBe(false);
+  });
+});

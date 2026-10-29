@@ -16,6 +16,12 @@ export interface OpenAICompatConfig {
   apiKey: string;
   baseUrl: string;
   model: string;
+  /**
+   * Akıl yürüten modeller (ör. Mistral Large 4) önce `reasoning_content` üretir; sınırsızken
+   * max_tokens'ı tüketip `content: null` döndürür. "low" bunu kısaltır; boş dize = gönderme
+   * (bu parametreyi tanımayan modeller için).
+   */
+  reasoningEffort?: string;
   timeoutMs?: number;
 }
 
@@ -68,12 +74,20 @@ function jsonInstruction(schema: ZodType): string {
 
 async function complete(cfg: OpenAICompatConfig, messages: OAMessage[]): Promise<{ text: string; inTok: number; outTok: number }> {
   const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), cfg.timeoutMs ?? 30_000);
+  const timer = setTimeout(() => ctrl.abort(), cfg.timeoutMs ?? 25_000);
   try {
     const res = await fetch(`${cfg.baseUrl.replace(/\/$/, "")}/chat/completions`, {
       method: "POST",
       headers: { "content-type": "application/json", authorization: `Bearer ${cfg.apiKey}` },
-      body: JSON.stringify({ model: cfg.model, messages, max_tokens: 1200, temperature: 0.4, stream: false }),
+      body: JSON.stringify({
+        model: cfg.model,
+        messages,
+        // akıl yürütme + yanıt birlikte sığsın (yanıtın kendisi şema gereği kısa)
+        max_tokens: 2500,
+        temperature: 0.4,
+        stream: false,
+        ...(cfg.reasoningEffort ? { reasoning_effort: cfg.reasoningEffort } : {}),
+      }),
       signal: ctrl.signal,
     });
     if (!res.ok) throw new Error(`upstream HTTP ${res.status}`);
@@ -110,6 +124,9 @@ async function parseOnce<T>(
     outTok += r.outTok;
     const parsed = schema.safeParse(extractJsonObject(r.text));
     if (parsed.success) return { stop_reason: "end_turn", parsed_output: parsed.data, usage: { input_tokens: inTok, output_tokens: outTok } };
+    // Boş yanıt (yalnız akıl yürütme, içerik null): boş bir asistan mesajı eklemek API'de 400
+    // verir — aynı isteği yeniden dene.
+    if (!r.text.trim()) continue;
     convo.push(
       { role: "assistant", content: r.text.slice(0, 2000) },
       { role: "user", content: "That was not valid. Reply again with ONLY the JSON object matching the schema." },

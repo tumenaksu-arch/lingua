@@ -77,7 +77,8 @@ interface AiErrorBody {
   message?: unknown;
 }
 
-const TIMEOUT_MS = 20_000;
+// 55 s: NVIDIA (akıl yürüten model + tek düzeltme denemesi) 10–40 s sürebilir; sunucu deneme başına 25 s, en fazla iki deneme.
+const TIMEOUT_MS = 55_000;
 const NETWORK_MESSAGE = 'Bağlantı yok. İnternetini kontrol et.';
 
 function aiBaseUrl(): string {
@@ -100,7 +101,7 @@ function normalizeCode(raw: unknown): AiErrorCode {
 }
 
 /**
- * Authenticated fetch against /ai with a 20 s timeout. A missing session is an
+ * Authenticated fetch against /ai with a 55 s timeout. A missing session is an
  * `auth` error before the network is touched; fetch failures (offline, abort)
  * map to the fixed Turkish network message; a non-2xx answers with the server's
  * Turkish message and machine code.

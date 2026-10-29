@@ -28,7 +28,8 @@ export interface AiExplainResponse {
   remaining: number;
 }
 
-const TIMEOUT_MS = 20_000;
+// 55 s: NVIDIA (akıl yürüten model + tek düzeltme denemesi) 10–40 s sürebilir; sunucu deneme başına 25 s, en fazla iki deneme.
+const TIMEOUT_MS = 55_000;
 const NETWORK_MESSAGE = 'Bağlantı yok. İnternetini kontrol et.';
 
 interface AiErrorBody {
