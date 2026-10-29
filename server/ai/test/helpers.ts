@@ -37,6 +37,7 @@ export function makeConfig(overrides: Partial<AppConfig> = {}): AppConfig {
       model: "claude-opus-5-5",
       effort: "low",
     },
+    nvidia: { apiKey: "", baseUrl: "http://nvidia.test/v1", model: "test/model" },
     ...overrides,
   };
 }

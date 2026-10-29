@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import Fastify, { type FastifyInstance } from "fastify";
 import { verifyUserId } from "./auth.js";
 import { chatOnce, createClaudeClient, explainOnce, type ClaudeConfig } from "./claude.js";
+import { compatChatOnce, compatExplainOnce, type OpenAICompatConfig } from "./openaiCompat.js";
 import { buildExplainBlocks, buildExplainMessages, buildMessages, buildSystemBlocks } from "./prompt.js";
 import { COURSES, getCourse, getScenario } from "./scenarios.js";
 import { ChatBodySchema, ExplainBodySchema } from "./schema.js";
@@ -13,6 +14,8 @@ export interface AppConfig {
   jwtSecret: string;
   usage: UsageConfig;
   claude: ClaudeConfig;
+  /** OpenAI uyumlu yedek sağlayıcı (NVIDIA). Claude anahtarı varsa Claude önceliklidir. */
+  nvidia: OpenAICompatConfig;
 }
 
 export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
@@ -30,6 +33,11 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
       apiKey: env.ANTHROPIC_API_KEY ?? "",
       model: env.AI_MODEL ?? "claude-opus-5-5",
       effort: parseEffort(env.AI_EFFORT),
+    },
+    nvidia: {
+      apiKey: env.NVIDIA_API_KEY ?? "",
+      baseUrl: env.NVIDIA_BASE_URL ?? "https://integrate.api.nvidia.com/v1",
+      model: env.NVIDIA_MODEL ?? "mistralai/mistral-large-4-1t-a52b",
     },
   };
 }
@@ -56,6 +64,23 @@ function userHash(userId: string): string {
 export function buildApp(cfg: AppConfig): FastifyInstance {
   const app = Fastify({ logger: true });
   const claudeClient = cfg.anthropicApiKey ? createClaudeClient(cfg.anthropicApiKey) : null;
+  // Tek giriş noktası: Claude anahtarı varsa Claude, yoksa NVIDIA (OpenAI uyumlu), ikisi de yoksa null (503).
+  const nvidia = cfg.nvidia;
+  const llm = claudeClient
+    ? {
+        chat: (system: Parameters<typeof chatOnce>[2], messages: Parameters<typeof chatOnce>[3]) =>
+          chatOnce(claudeClient, cfg.claude, system, messages),
+        explain: (system: Parameters<typeof explainOnce>[2], messages: Parameters<typeof explainOnce>[3]) =>
+          explainOnce(claudeClient, cfg.claude, system, messages),
+      }
+    : nvidia.apiKey
+      ? {
+          chat: (system: Parameters<typeof chatOnce>[2], messages: Parameters<typeof chatOnce>[3]) =>
+            compatChatOnce(nvidia, system, messages),
+          explain: (system: Parameters<typeof explainOnce>[2], messages: Parameters<typeof explainOnce>[3]) =>
+            compatExplainOnce(nvidia, system, messages),
+        }
+      : null;
 
   // CORS: aynı kaynak yayın; kimlik bilgisi içermeyen minimal yanıt.
   app.addHook("onRequest", (req, reply, done) => {
@@ -83,7 +108,7 @@ export function buildApp(cfg: AppConfig): FastifyInstance {
         req.log.warn({ err }, "usage_remaining_failed");
       }
     }
-    return { enabled: cfg.anthropicApiKey.length > 0, limit: cfg.usage.dailyLimit, remaining };
+    return { enabled: llm !== null, limit: cfg.usage.dailyLimit, remaining };
   });
 
   app.get("/v1/scenarios", async (req, reply) => {
@@ -120,7 +145,7 @@ export function buildApp(cfg: AppConfig): FastifyInstance {
     const body = parsed.data;
 
     // 3) Yapılandırma / senaryo kontrolü (doğrulanmış çağrana 503)
-    if (!claudeClient) {
+    if (!llm) {
       return fail(503, "not_configured", "Yapay zekâ özelliği şu anda yapılandırılmamış.");
     }
     const course = getCourse(body.courseId);
@@ -147,7 +172,7 @@ export function buildApp(cfg: AppConfig): FastifyInstance {
     const system = buildSystemBlocks(course, scenario);
     const messages = buildMessages(body.history, body.message);
     try {
-      const response = await chatOnce(claudeClient, cfg.claude, system, messages);
+      const response = await llm.chat(system, messages);
       if (response.stop_reason === "refusal") {
         await usageRecord(cfg.usage, userId, take.day, 0, 0, true).catch((err) =>
           req.log.error({ err, user: logUser }, "usage_refund_failed"),
@@ -209,7 +234,7 @@ export function buildApp(cfg: AppConfig): FastifyInstance {
     const body = parsed.data;
 
     // 3) Yapılandırma / kurs kontrolü (doğrulanmış çağrana 503)
-    if (!claudeClient) {
+    if (!llm) {
       return fail(503, "not_configured", "Yapay zekâ özelliği şu anda yapılandırılmamış.");
     }
     const course = getCourse(body.courseId);
@@ -236,7 +261,7 @@ export function buildApp(cfg: AppConfig): FastifyInstance {
     const system = buildExplainBlocks(course, body.exerciseType);
     const messages = buildExplainMessages(body);
     try {
-      const response = await explainOnce(claudeClient, cfg.claude, system, messages);
+      const response = await llm.explain(system, messages);
       if (response.stop_reason === "refusal") {
         await usageRecord(cfg.usage, userId, take.day, 0, 0, true).catch((err) =>
           req.log.error({ err, user: logUser }, "usage_refund_failed"),
