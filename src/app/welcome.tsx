@@ -83,6 +83,11 @@ const totals = courses.reduce(
   { units: 0, lessons: 0, words: 0 },
 );
 
+/** Distinct exercise types actually used in the courses (grows with new types, never hard-coded). */
+const exerciseTypeCount = new Set(
+  courses.flatMap((c) => c.units.flatMap((u) => u.lessons.flatMap((l) => l.exercises.map((e) => e.type)))),
+).size;
+
 type SectionId = 'yaklasim' | 'kurslar' | 'platformlar' | 'nasil';
 
 /**
@@ -246,7 +251,7 @@ export default function WelcomeScreen() {
               <Stat value={String(courses.length)} label="Dil" colors={colors} fonts={{ display, mono: monoFont }} wide={wide} />
               <Stat value={String(totals.lessons)} label="Ders" colors={colors} fonts={{ display, mono: monoFont }} wide={wide} />
               <Stat value={String(totals.words)} label="Kelime" colors={colors} fonts={{ display, mono: monoFont }} wide={wide} />
-              <Stat value="6" label="Alıştırma türü" colors={colors} fonts={{ display, mono: monoFont }} wide={wide} />
+              <Stat value={String(exerciseTypeCount)} label="Alıştırma türü" colors={colors} fonts={{ display, mono: monoFont }} wide={wide} />
             </View>
           </Section>
 
