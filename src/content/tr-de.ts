@@ -206,8 +206,8 @@ export const trDe = course(
           { emoji: '🤝', label: 'der Freund' },
           { emoji: '🧑‍🎓', label: 'der Schüler' },
         ], 2),
-        chat([['a', 'Bist du ein Schüler?']], ['Ja, ich bin ein Schüler.', 'Nein, ich bin der Lehrer.', 'Du bist mein Freund.'], 0),
-        read('Ich bin ein Schüler. Du bist mein Freund.', 'Wer sind die Personen im Text?', ['Ein Schüler und ein Freund', 'Ein Schüler und ein Lehrer', 'Drei Freunde'], 0),
+        chat([['a', 'Hallo! Ich bin Tom.']], ['Hallo, Tom! Ich bin Ali.', 'Tschüss, Tom!', 'Tom, du bist ein Schüler.'], 0),
+        read('Ich bin ein Schüler. Du bist mein Freund.', 'Metindeki kişiler kim?', ['Bir öğrenci ve bir arkadaş', 'Bir öğrenci ve bir öğretmen', 'Üç arkadaş'], 0),
       ]),
     ]),
     unit('tr-de.u2', 2, 'Yemek', 'Yiyecek ve içecekleri öğren.', [

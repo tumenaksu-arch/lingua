@@ -10,9 +10,20 @@ begin;
 create table public.activity_days (
   user_id uuid not null references auth.users (id) on delete cascade,
   day     date not null,
-  primary key (user_id, day),
-  check (day between current_date - 1 and current_date + 1)
+  primary key (user_id, day)
 );
+
+-- Yalnız bugün/dün (±1 gün saat dilimi toleransı) yazılabilir. CHECK yerine tetikleyici:
+-- current_date'li CHECK, eski satırlar yedekten geri yüklenirken (pg_restore) patlardı.
+create function public.activity_days_guard() returns trigger language plpgsql as $$
+begin
+  if new.day not between current_date - 1 and current_date + 1 then
+    raise exception 'activity_days: yalnız bugün veya dün yazılabilir' using errcode = '23514';
+  end if;
+  return new;
+end $$;
+create trigger activity_days_guard before insert on public.activity_days
+  for each row execute function public.activity_days_guard();
 
 alter table public.activity_days enable row level security;
 
@@ -24,20 +35,9 @@ create policy own_insert on public.activity_days for insert to authenticated
 create policy own_select on public.activity_days for select to authenticated
   using (user_id = auth.uid());
 
--- …ve karşılıklı arkadaşlar. friends (0001) tek yönlüdür: karşılıklılık için
--- iki yönün de (ben → o ve o → ben) friends'te var olması gerekir.
-create policy mutual_friend_select on public.activity_days for select to authenticated
-  using (
-    user_id <> auth.uid()
-    and exists (
-      select 1 from public.friends f
-      where f.user_id = auth.uid() and f.friend_id = activity_days.user_id
-        and exists (
-          select 1 from public.friends g
-          where g.user_id = activity_days.user_id and g.friend_id = auth.uid()
-        )
-    )
-  );
+-- Arkadaşların günleri doğrudan OKUNMAZ: friends RLS'i karşı tarafın listesini gizlediği için
+-- karşılıklılık bir politika içinde denetlenemez; ortak seri yalnız security definer
+-- friend_streaks() üzerinden (yalnız karşılıklı arkadaşlar için) görülür.
 
 -- anonim sınıf hesapları ortak seri dışında (0002'deki restrictive kalıbı)
 create policy no_anon_insert on public.activity_days as restrictive for insert to authenticated
@@ -86,10 +86,11 @@ begin
   )
   select
     a.friend_id,
+    -- ARDIŞIK ortak gün: start_day'den geriye ilk boşluğa kadar (boşluk yoksa 400).
     coalesce((
-      select count(*)::int
-      from generate_series(0, 399) as k
-      where exists (
+      select min(k)::int
+      from generate_series(0, 400) as k
+      where not exists (
         select 1 from public.activity_days x
         where x.user_id = me and x.day = a.start_day - k::int
           and exists (
@@ -97,7 +98,7 @@ begin
             where y.user_id = a.friend_id and y.day = a.start_day - k::int
           )
       )
-    ), 0) as streak,
+    ), 400) as streak,
     exists (
       select 1 from public.activity_days d
       where d.user_id = me and d.day = current_date

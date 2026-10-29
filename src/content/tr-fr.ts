@@ -209,8 +209,8 @@ export const trFr = course(
           { emoji: '🤝', label: "l'ami" },
           { emoji: '🧑‍🎓', label: "l'étudiant" },
         ], 2),
-        chat([['a', 'Tu es étudiant ?']], ['Oui, je suis étudiant.', 'Non, je suis le professeur.', 'Tu es mon ami.'], 0),
-        read('Je suis étudiant. Tu es mon ami.', 'Qui sont les personnes du texte ?', ['Un étudiant et un ami', 'Un étudiant et un professeur', 'Trois amis'], 0),
+        chat([['a', 'Bonjour ! Je suis Tom.']], ['Bonjour, Tom ! Je suis Ali.', 'Au revoir, Tom !', 'Tom, tu es étudiant.'], 0),
+        read('Je suis étudiant. Tu es mon ami.', 'Metindeki kişiler kim?', ['Bir öğrenci ve bir arkadaş', 'Bir öğrenci ve bir öğretmen', 'Üç arkadaş'], 0),
       ]),
     ]),
     unit('tr-fr.u2', 2, 'Yemek', 'Yiyecek ve içecekleri öğren.', [

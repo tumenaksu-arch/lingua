@@ -227,8 +227,8 @@ export const trIt = course(
           { emoji: '🤝', label: 'amico' },
           { emoji: '🧑‍🎓', label: 'studente' },
         ], 2),
-        chat([['a', 'Sei uno studente?']], ['Sì, sono uno studente.', 'No, sono l\'insegnante.', 'Sei il mio amico.'], 0),
-        read('Io sono uno studente. Tu sei il mio amico.', 'Chi sono le persone del testo?', ['Uno studente e un amico', 'Uno studente e un insegnante', 'Tre amici'], 0),
+        chat([['a', 'Ciao! Sono Tom.']], ['Ciao, Tom! Sono Ali.', 'Arrivederci, Tom!', 'Tom, sei uno studente.'], 0),
+        read('Io sono uno studente. Tu sei il mio amico.', 'Metindeki kişiler kim?', ['Bir öğrenci ve bir arkadaş', 'Bir öğrenci ve bir öğretmen', 'Üç arkadaş'], 0),
       ]),
     ]),
     unit('tr-it.u2', 2, 'Yemek', 'Yiyecek içecek sipariş et ve sevdiklerini anlat.', [

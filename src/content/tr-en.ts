@@ -292,7 +292,7 @@ export const trEn = course(
           { emoji: '🤝', label: 'friend' },
           { emoji: '🧑‍🎓', label: 'student' },
         ], 2),
-        chat([['a', 'Are you a student?']], ['Yes, I am a student.', 'No, I am a teacher.', 'I am your friend.'], 0),
+        chat([['a', 'Hello! I am Tom.']], ['Hello, Tom! I am Ali.', 'Goodbye, Tom!', 'Tom, you are a student.'], 0),
         read('I am a student. You are my friend.', 'Metindeki kişiler kim?', ['Bir öğrenci ve bir arkadaş', 'Bir öğrenci ve bir öğretmen', 'Üç arkadaş'], 0),
       ]),
     ]),

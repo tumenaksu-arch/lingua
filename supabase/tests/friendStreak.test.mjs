@@ -10,7 +10,7 @@
  * the ±1 day write window, the friend_streaks RPC (streak counting from today
  * or yesterday, zero on a gap, non-mutual friends excluded, anon denied).
  *
- * NOTE on the streak fixtures: the CHECK constraint only allows writing
+ * NOTE on the streak fixtures: the guard trigger only allows writing
  * current_date ± 1, so long historical streaks cannot be seeded through the
  * API (in production they accumulate day by day). The fixtures therefore use
  * today/yesterday pairs; the counting loop itself is date-range agnostic
@@ -138,13 +138,13 @@ test('activity_days: only today ± 1 is writable', { skip }, async () => {
   const today = await serverToday();
   const ok = await A().from('activity_days').upsert(
     { user_id: name('A'), day: today },
-    { onConflict: 'user_id,day' },
+    { onConflict: 'user_id,day', ignoreDuplicates: true },
   );
   assert.ifError(ok.error);
 
-  // -3 is outside the ±1 window for every skew the CHECK constraint allows.
+  // -3 is outside the ±1 window for every skew the guard trigger allows.
   const old = await A().from('activity_days').insert({ user_id: name('A'), day: localDay(-3) });
-  assert.ok(old.error, 'three days back must violate the check');
+  assert.ok(old.error, 'three days back must be rejected by the guard trigger');
 });
 
 test('activity_days: anon (no session) can neither read nor insert', { skip }, async () => {
@@ -171,11 +171,10 @@ test('activity_days: a non-mutual follower sees nothing of the followed user', {
   assert.equal(data.length, 0, 'one-directional friendship must not expose activity days');
 });
 
-test('activity_days: the mutual friend sees the day; strangers see nothing', { skip }, async () => {
-  const today = await serverToday();
+test('activity_days: days are never readable directly (only via friend_streaks)', { skip }, async () => {
   const mutual = await B().from('activity_days').select('*').eq('user_id', name('A'));
   assert.ifError(mutual.error);
-  assert.ok(mutual.data.length >= 1, 'B (mutual) must see A\'s days');
+  assert.equal(mutual.data.length, 0, 'even a mutual friend reads days only through friend_streaks()');
 
   // C is mutual with A, not with B.
   const stranger = await users.C.sb.from('activity_days').select('*').eq('user_id', name('B'));

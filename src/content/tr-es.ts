@@ -203,8 +203,8 @@ export const trEs = course(
           { emoji: '🤝', label: 'el amigo' },
           { emoji: '🧑‍🎓', label: 'el estudiante' },
         ], 2),
-        chat([['a', '¿Eres estudiante?']], ['Sí, soy estudiante.', 'No, soy el profesor.', 'Eres mi amigo.'], 0),
-        read('Yo soy estudiante. Tú eres mi amigo.', '¿Quiénes son las personas del texto?', ['Un estudiante y un amigo', 'Un estudiante y un profesor', 'Tres amigos'], 0),
+        chat([['a', '¡Hola! Soy Tom.']], ['¡Hola, Tom! Soy Ali.', '¡Adiós, Tom!', 'Tom, eres estudiante.'], 0),
+        read('Yo soy estudiante. Tú eres mi amigo.', 'Metindeki kişiler kim?', ['Bir öğrenci ve bir arkadaş', 'Bir öğrenci ve bir öğretmen', 'Üç arkadaş'], 0),
       ]),
     ]),
     unit('tr-es.u2', 2, 'Yemek', 'Yiyecek ve içecekleri öğren.', [

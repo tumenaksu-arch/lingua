@@ -302,7 +302,7 @@ export async function markActivityToday(uid: string): Promise<boolean> {
   try {
     const { error } = await sb
       .from('activity_days')
-      .upsert({ user_id: uid, day: localDateString(new Date()) }, { onConflict: 'user_id,day' });
+      .upsert({ user_id: uid, day: localDateString(new Date()) }, { onConflict: 'user_id,day', ignoreDuplicates: true }); // DO NOTHING: update izni yok
     if (error) return false;
     return true;
   } catch {
