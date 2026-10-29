@@ -30,6 +30,10 @@ const HINTS: Record<Exercise['type'], string> = {
   listen_type: 'Yavaş dinle düğmesiyle tekrar dinleyebilirsin.',
   speak: 'Cümleyi yüksek sesle ve açık söyle, sonra tekrar dene.',
   match_pairs: 'Önce emin olduklarını eşleştir; kalan çiftler kendiliğinden çıkar.',
+  listen_select: 'Önce dikkatle dinle, sonra her seçeneği sesin aklında kalanıyla karşılaştır.',
+  picture_select: 'Önce Türkçe kelimeyi düşün, sonra kartlardaki hedef dildeki etiketlerle eşleştir.',
+  complete_chat: 'Sohbetin akışına bak: önceki satıra doğal biçimde cevap veren seçeneği seç.',
+  read_answer: 'Cevap metinde açıkça yazar; önce metni dikkatlice oku, sonra soruya dön.',
 };
 
 export function genericHint(type: Exercise['type']): string {

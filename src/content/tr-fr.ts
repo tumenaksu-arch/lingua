@@ -1,4 +1,4 @@
-import { build, course, fill, lesson, listen, match, sel, speak, unit } from './builder';
+import { build, chat, course, fill, lesson, listen, listenSel, match, pic, read, sel, speak, unit } from './builder';
 
 /** Türkçe → Fransızca. */
 export const trFr = course(
@@ -202,6 +202,15 @@ export const trFr = course(
         fill('___ et un font trois.', ['Deux', 'Un', 'Trois'], 0),
         speak('Un, deux, trois.'),
         sel('"trois" hangisi?', ['deux', 'trois', 'un'], 1),
+        listenSel('Tu es mon ami', ['Tu es mon professeur', 'Tu es mon ami', 'Je suis ton ami'], 1),
+        pic('"ami" hangisi?', [
+          { emoji: '1️⃣', label: 'un' },
+          { emoji: '🧑‍🏫', label: 'le professeur' },
+          { emoji: '🤝', label: "l'ami" },
+          { emoji: '🧑‍🎓', label: "l'étudiant" },
+        ], 2),
+        chat([['a', 'Tu es étudiant ?']], ['Oui, je suis étudiant.', 'Non, je suis le professeur.', 'Tu es mon ami.'], 0),
+        read('Je suis étudiant. Tu es mon ami.', 'Qui sont les personnes du texte ?', ['Un étudiant et un ami', 'Un étudiant et un professeur', 'Trois amis'], 0),
       ]),
     ]),
     unit('tr-fr.u2', 2, 'Yemek', 'Yiyecek ve içecekleri öğren.', [

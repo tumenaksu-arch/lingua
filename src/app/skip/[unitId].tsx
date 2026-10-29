@@ -35,7 +35,12 @@ function correctAnswerText(e: Exercise): string | undefined {
   switch (e.type) {
     case 'select_translation':
     case 'fill_blank':
+    case 'listen_select':
+    case 'complete_chat':
+    case 'read_answer':
       return e.options[e.correctIndex];
+    case 'picture_select':
+      return e.options[e.correctIndex].label;
     case 'translate_build':
     case 'listen_type':
       return e.answers[0];

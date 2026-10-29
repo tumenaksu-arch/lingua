@@ -43,7 +43,11 @@ export type Exercise =
   | MatchPairsExercise
   | ListenTypeExercise
   | SpeakExercise
-  | FillBlankExercise;
+  | FillBlankExercise
+  | ListenSelectExercise
+  | PictureSelectExercise
+  | CompleteChatExercise
+  | ReadAnswerExercise;
 
 interface ExerciseBase {
   id: string;
@@ -90,6 +94,43 @@ export interface FillBlankExercise extends ExerciseBase {
   type: 'fill_blank';
   /** sentence with ___ placeholder */
   sentence: string;
+  options: string[];
+  correctIndex: number;
+}
+
+export interface ListenSelectExercise extends ExerciseBase {
+  type: 'listen_select';
+  /** text to be spoken via TTS, in target language */
+  audioText: string;
+  audioLang: LangCode;
+  /** written options in target language; the correct one matches the audio */
+  options: string[];
+  correctIndex: number;
+}
+
+export interface PictureSelectExercise extends ExerciseBase {
+  type: 'picture_select';
+  /** prompt in the source language, e.g. '"elma" hangisi?' */
+  prompt: string;
+  /** emoji cards labelled in the target language */
+  options: { emoji: string; label: string }[];
+  correctIndex: number;
+}
+
+export interface CompleteChatExercise extends ExerciseBase {
+  type: 'complete_chat';
+  /** conversation so far, in target language; the user's reply is chosen from options */
+  lines: { speaker: 'a' | 'b'; text: string }[];
+  options: string[];
+  correctIndex: number;
+}
+
+export interface ReadAnswerExercise extends ExerciseBase {
+  type: 'read_answer';
+  /** short passage in target language */
+  passage: string;
+  /** question in the source language */
+  question: string;
   options: string[];
   correctIndex: number;
 }

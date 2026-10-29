@@ -144,6 +144,41 @@ describe('every exercise in every course is answerable', () => {
     }
     expect(problems).toEqual([]);
   });
+
+  it('new types (listen_select / picture_select / complete_chat / read_answer): options are unambiguous after normalisation', () => {
+    const problems: string[] = [];
+    for (const { ex } of all) {
+      if (ex.type === 'picture_select') {
+        const vals = ex.options.map((o) => normalize(o.label));
+        if (vals.some((v) => !v)) problems.push(`${ex.id}: empty label`);
+        if (new Set(vals).size !== vals.length) problems.push(`${ex.id}: labels look alike [${ex.options.map((o) => o.label).join(' | ')}]`);
+        if (ex.options.some((o) => !o.emoji.trim())) problems.push(`${ex.id}: empty emoji`);
+        continue;
+      }
+      if (ex.type !== 'listen_select' && ex.type !== 'complete_chat' && ex.type !== 'read_answer') continue;
+      const vals = ex.options.map((o) => normalize(o));
+      if (vals.some((v) => !v)) problems.push(`${ex.id}: empty option`);
+      if (new Set(vals).size !== vals.length) problems.push(`${ex.id}: options look alike [${ex.options.join(' | ')}]`);
+    }
+    expect(problems).toEqual([]);
+  });
+
+  it('complete_chat has at least one non-empty line; read_answer passage has at least two sentences', () => {
+    const problems: string[] = [];
+    for (const { ex } of all) {
+      if (ex.type === 'complete_chat') {
+        if (ex.lines.length < 1) problems.push(`${ex.id}: no chat lines`);
+        ex.lines.forEach((l, i) => {
+          if (!l.text.trim()) problems.push(`${ex.id}: line ${i + 1} is empty`);
+        });
+      }
+      if (ex.type === 'read_answer') {
+        const sentences = ex.passage.split(/[.!?]+/).filter((s) => s.trim().length > 0);
+        if (sentences.length < 2) problems.push(`${ex.id}: passage has ${sentences.length} sentence(s)`);
+      }
+    }
+    expect(problems).toEqual([]);
+  });
 });
 
 /** Independent of grading.ts: how a recogniser / learner writes these numbers as digits. */

@@ -45,6 +45,10 @@ export const EXERCISE_TYPE_LABELS: Record<string, string> = {
   listen_type: 'Dinleme',
   speak: 'Konuşma',
   fill_blank: 'Boşluk doldurma',
+  listen_select: 'Duyduğuna dokunma',
+  picture_select: 'Resimli kelime seçme',
+  complete_chat: 'Sohbeti tamamlama',
+  read_answer: 'Okuma ve cevaplama',
 };
 
 /** 'tr-en.u3.l2' / 'tr-en.u3.story' → 'tr-en.u3'; ids already at unit level stay as-is. */

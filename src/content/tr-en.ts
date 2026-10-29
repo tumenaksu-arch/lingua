@@ -1,4 +1,4 @@
-import { build, course, fill, lesson, listen, match, sel, speak, unit } from './builder';
+import { build, chat, course, fill, lesson, listen, listenSel, match, pic, read, sel, speak, unit } from './builder';
 
 /** Türkçe → İngilizce. Themes mirror Duolingo's opening sections. */
 export const trEn = course(
@@ -285,6 +285,15 @@ export const trEn = course(
         speak('One, two, three.'),
         sel('"teacher" ne demek?', ['öğrenci', 'öğretmen', 'arkadaş'], 1, 'to'),
         speak('I am a student.'),
+        listenSel('You are my friend', ['You are my teacher', 'You are my friend', 'I am your friend'], 1),
+        pic('"arkadaş" hangisi?', [
+          { emoji: '1️⃣', label: 'one' },
+          { emoji: '🧑‍🏫', label: 'teacher' },
+          { emoji: '🤝', label: 'friend' },
+          { emoji: '🧑‍🎓', label: 'student' },
+        ], 2),
+        chat([['a', 'Are you a student?']], ['Yes, I am a student.', 'No, I am a teacher.', 'I am your friend.'], 0),
+        read('I am a student. You are my friend.', 'Metindeki kişiler kim?', ['Bir öğrenci ve bir arkadaş', 'Bir öğrenci ve bir öğretmen', 'Üç arkadaş'], 0),
       ]),
     ]),
     unit('tr-en.u2', 2, 'Yemek', 'Yiyecek içecek sipariş et ve sevdiklerini anlat.', [
