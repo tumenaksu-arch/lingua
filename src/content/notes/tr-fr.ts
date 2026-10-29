@@ -322,7 +322,7 @@ export const trFrNotes: CourseNotes = {
         heading: "Passé composé: geçmişi 'avoir' ile kur",
         body: [
           "Türkçede 'dün yaptım' demek için fiile geçmiş ekini getirirsin; Fransızca'da ise cümle iki parçadan kurulur: avoir (j'ai, tu as, il a, nous avons) + fiilin geçmiş ortaç biçimi. 'Dün ev ödevimi yaptım' = Hier j'ai fait mes devoirs.",
-          "Ortaç çoğu fiilde -er/-ir fiillerinde köke -é/-i eklenerek yapılır: regarder → regardé, finir → fini. Bu ortaç tek başına kullanılmaz, mutlaka j'ai / tu as gibi bir parçacık ister.",
+          "Ortaç çoğu fiilde köke -é/-i eklenerek yapılır: regarder → regardé, finir → fini. Bu ortaç tek başına kullanılmaz, mutlaka j'ai / tu as gibi bir parçacık ister.",
         ],
         examples: [
           { target: "Hier j'ai fait mes devoirs.", tr: 'Dün ev ödevimi yaptım.' },
@@ -334,7 +334,7 @@ export const trFrNotes: CourseNotes = {
         heading: 'Sık kullanılan düzensiz ortaçlar',
         body: [
           "Bazı fiillerin ortacı düzensizdir ve fiille birlikte ezberlenir: faire → fait (yapmak), voir → vu (görmek), prendre → pris (almak), dormir → dormi (uyumak), lire → lu (okumak), boire → bu (içmek).",
-          "'J'ai pris un café' = 'kahve aldım/içtim'. Türkçe'de 'içtim' denirken Fransızca'da yemek içmek için 'prendre' (almak) fiili çok kullanılır.",
+          "'J'ai pris un café' = 'kahve aldım/içtim'. Türkçe'de 'kahve içtim' denirken Fransızca'da yiyecek ve içecek için 'prendre' (almak) fiili çok kullanılır.",
         ],
         examples: [
           { target: "J'ai vu un film.", tr: 'Bir film gördüm (izledim).' },
@@ -346,7 +346,7 @@ export const trFrNotes: CourseNotes = {
         heading: "Soru ve olumsuz: 'Qu'est-ce que' ve 'ne ... pas'",
         body: [
           "Geçmişte 'ne yaptın?' sorusu 'Qu'est-ce que tu as fait ?' biçimindedir; 'qu'est-ce que' kalıbı nesne sorularında kullanılır. Kelime sırası değişmez: qu'est-ce que + özne + avoir.",
-          "Olumsuzda 'ne ... pas' ortacın önüne gelir: 'Je n'ai pas dormi' (Uyumadım). 'Je' ile 'ne' kısalır: 'je n'ai pas'.",
+          "Olumsuzda 'ne ... pas' ortacın önüne gelir: 'Je n'ai pas dormi' (Uyumadım). 'Ne' ünlüden önce kısalır: 'je n'ai pas'.",
         ],
         examples: [
           { target: "Qu'est-ce que tu as fait hier ?", tr: 'Dün ne yaptın?' },
@@ -376,7 +376,7 @@ export const trFrNotes: CourseNotes = {
         heading: "'Faire' kalıpları: ev işleri",
         body: [
           "Fransızca'da ev işleri 'faire' (yapmak) fiiliyle kurulur: faire le ménage (evi temizlemek), faire la vaisselle (bulaşık yıkamak). Türkçe 'temizlik yaparım' der gibi düşün; 'faire' + ev işi kalıbı sabittir.",
-          "'Laver' (yıkamak) fiili de benzer: laver le linge (çamaşır yıkamak). 'Ranger' ise toplamak/düzenlemek demektir: ranger sa chambre (odasını toplamak).",
+          "'Laver' (yıkamak) fiili de benzer şekilde kullanılır: laver le linge (çamaşır yıkamak). 'Ranger' ise toplamak/düzenlemek demektir: ranger sa chambre (odasını toplamak).",
         ],
         examples: [
           { target: 'Le samedi je fais le ménage.', tr: 'Cumartesi evi temizlerim.' },
