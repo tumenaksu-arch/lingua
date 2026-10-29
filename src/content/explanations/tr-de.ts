@@ -422,9 +422,9 @@ export const trDeExplanations: CourseExplanations = {
   'tr-de.u15.l3.e4': "Doğru cevap 'Ich finde den Film gut'. 'bence film iyi' = ich finde den Film gut; finde fiili ikinci sırada.",
   'tr-de.u15.l3.e5': "Doğru cevap 'Das stimmt'. 'haklısın!' = Das stimmt; tek kelimelik onay kalıbını ezberle.",
   'tr-de.u15.l3.e8': "Boşluğa 'Findest' gelir: 'Findest du, der Test war schwer?' (Sence test zor muydu?). findest du = 'sence'.",
-  'tr-de.u15.l3.e9': "Boşluğa 'stimmt' gelir: 'Das stimmt, ich auch.' (Doğru, ben de öyle düşünüyorum).",
+  'tr-de.u15.l3.e9': "Boşluğa 'stimmt' gelir: 'Das stimmt!' (Haklısın / Doğru). denke ve finde bu kalıpta tek başına kullanılmaz, bir nesne ister: Das denke ich auch.",
 
-  'tr-de.u15.l4.e1': "Doğru cevap 'ich finde'. 'bence' = ich finde; ich denke 'sanıyorum', das stimmt 'doğru' demektir.",
+  'tr-de.u15.l4.e1': "Doğru cevap 'ich finde'. 'bence' = ich finde; das stimmt 'doğru' demektir, ich schlafe ise 'uyuyorum'.",
   'tr-de.u15.l4.e2': "Doğru cevap 'mutlu'. glücklich mutludur; traurig üzgün, müde yorgundur.",
   'tr-de.u15.l4.e4': "Doğru cevap 'Ich finde das Wetter schön'. 'bence hava güzel' = ich finde + cümle; fiil ikinci sırada.",
   'tr-de.u15.l4.e5': "Doğru cevap 'Ich fühle mich gut, weil ich glücklich bin'. kendini hissetmek = sich fühlen; weil'de fiil sona gider: glücklich bin.",
@@ -437,7 +437,7 @@ export const trDeExplanations: CourseExplanations = {
   'tr-de.u16.l1.e4': "Doğru cevap 'Ich möchte ein Getränk bestellen'. kibar istek: ich möchte; Getränk nötr: ein.",
   'tr-de.u16.l1.e5': "Doğru cevap 'Ich möchte den Nachtisch'. 'tatlı istiyorum' = ich möchte den Nachtisch; der Nachtisch erildir.",
   'tr-de.u16.l1.e8': "Boşluğa 'bestellen' gelir: 'Was möchten Sie bestellen, Herr Weber?' garsona sipariş verilir: bestellen.",
-  'tr-de.u16.l1.e9': "Boşluğa 'Vorspeise' gelir: 'Die Vorspeise ist sehr lecker.' (Başlangıç çok lezzetli). Getränk dişil değildir.",
+  'tr-de.u16.l1.e9': "Boşluğa 'Vorspeise' gelir: 'Die Vorspeise ist sehr lecker.' Getränk nötr (das), Nachtisch eril (der) olduğu için 'die' yalnızca Vorspeise ile uyar.",
 
   'tr-de.u16.l2.e1': "Doğru cevap 'reservieren'. rezervasyon yapmak = reservieren; bestellen sipariş, anrufen aramaktır.",
   'tr-de.u16.l2.e2': "Doğru cevap 'der Tisch'. Tisch masadır ve eril olduğu için der alır; Termin randevu, Telefon telefondur.",
