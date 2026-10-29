@@ -535,7 +535,7 @@ export const trItExplanations: CourseExplanations = {
 
   'tr-it.u13.l3.e1': "'Prossimo' gelecek/sıradaki demektir; 'ieri' dün, 'lento' yavaştır. Doğru cevap prossimo.",
   'tr-it.u13.l3.e2': "'Il viaggio' yolculuk demektir; 'vacanza' tatil, 'valigia' bavuldur. Doğru cevap viaggio.",
-  'tr-it.u13.l3.e4': "Program sormak: Qual è il programma di domani? 'Qual è' (hangisidir/h nedir) soru kalıbıdır; 'di domani' yarınki demektir.",
+  'tr-it.u13.l3.e4': "Program sormak: Qual è il programma di domani? 'Qual è' (hangisidir / nedir) soru kalıbıdır; 'di domani' yarınki demektir.",
   'tr-it.u13.l3.e5': "'Insieme' birlikte demektir ve cümle başına ya da sonuna gelebilir: Andiamo in vacanza insieme. 'Solo' (yalnız) zıt anlamlıdır.",
   'tr-it.u13.l3.e7': "'Settimana' dişildir: la settimana; sıfat cinsiyete uyar: la settimana prossima (gelecek hafta). 'Prossimo' isimden sonra gelir.",
   'tr-it.u13.l3.e9': "Tren kalkışı 'partire' fiiliyle: Il treno parte alle nove (Tren dokuzda kalkar). 'Tornare' dönmek, tren için değil yolcu içindir.",
@@ -626,7 +626,7 @@ export const trItExplanations: CourseExplanations = {
 
   'tr-it.u16.l2.e1': "'Aspettare' beklemek demektir; 'occupato' dolu, 'prenotare' rezervasyon yapmaktır. Doğru cevap aspettare.",
   'tr-it.u16.l2.e2': "'Minuto' dakika demektir; 'ora' saat, 'giorno' gündür. Doğru cevap minuto.",
-  'tr-it.u16.l2.e4': "Bekleme ricası 'potrebbe/può aspettare' ile kurulur: Può aspettare dieci minuti? (On dakika bekleyebilir misiniz?). 'Dieci' on demektir.",
+  'tr-it.u16.l2.e4': "Bekleme ricası 'potrebbe aspettare' (bekleyebilir miydiniz) ile kurulur: Potrebbe aspettare dieci minuti? 'Dieci' on demektir.",
   'tr-it.u16.l2.e5': "Garson dili 'desidera' (ister mi?): Desidera qualcos'altro? 'Qualcos'altro' = qualcosa + altro (başka bir şey); ünlü kısalması yapılır.",
   'tr-it.u16.l2.e7': "Başka yer aranması masanın dolu olduğunu gösterir: Il tavolo è occupato. 'Libero' olsaydı yer değiştirilmezdi; 'vuoto' ise içi boş demektir, kullanımda olmaz.",
   'tr-it.u16.l2.e9': "Bilgi isteme 'un'informazione' kalıbıdır: Vorrei un'informazione. 'Un'' = una kısaltması; ünlüyle başlayan dişil isimlerde kullanılır. 'Prenotazione' rezervasyon demektir.",
@@ -642,7 +642,7 @@ export const trItExplanations: CourseExplanations = {
 
   'tr-it.u16.l4.e1': "'Qualcos'altro' başka bir şey demektir; birleşik yazılır ve ünlü kısalması yapılır. 'Ogni cosa' her şey, 'una cosa' bir şey demektir.",
   'tr-it.u16.l4.e2': "'Informazione' bilgi demektir; 'prenotazione' rezervasyon, 'lezione' derstir. Doğru cevap bilgi.",
-  'tr-it.u16.l4.e4': "Hesap istemenin kısa yolu 'il conto, per favore' (hesap, lütfen) kalıbıdır; 'potrei avere il conto?' (hesabı alabilir miyim?) daha resmî bir varyanttır.",
+  'tr-it.u16.l4.e4': "Hesap istemenin en yaygın yolu 'il conto, per favore' (hesap, lütfen) kalıbıdır; daha resmî seçenek 'potrei avere il conto?' (hesabı alabilir miyim?) sorusudur.",
   'tr-it.u16.l4.e5': "Dolu mu sorusu 'essere occupato' kalıbıyla: Questo tavolo è occupato? 'Occupato' masa/yer için dolu, kişiler için ise meşgul demektir.",
   'tr-it.u16.l4.e7': "Dolu olduğu için başka yer seçiliyor: Il tavolo è occupato. 'Conto' hesap, 'minuto' dakika demektir; yer eşyası değildir.",
   'tr-it.u16.l4.e9': "Yol sormadan önce bilgi istenir: Scusi, un'informazione, per favore. 'Prenotazione' rezervasyon demektir, istek bağlamına uymaz.",
