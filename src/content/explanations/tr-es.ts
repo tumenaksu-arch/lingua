@@ -590,7 +590,7 @@ export const trEsExplanations: CourseExplanations = {
   'tr-es.u12.l3.e7':
     "Cümle banka eczanenin karşısında demek; 'enfrente de' karşısında kalıbı kullanılır.",
   'tr-es.u12.l3.e9':
-    "Cümle sokağı geç ve sağa dön demek; 'cruza' geç emri, 'sigue' devam et ve 'llega' varır anlamına gelir.",
+    "Cümle sokağı geç ve sağa dön demek; 'cruza' geç emridir, 'gira' dönmek emri olduğu için 'la calle' ile kullanılmaz ve 'llega' varır anlamına gelir.",
   // ---- tr-es.u12.l4 ----
   'tr-es.u12.l4.e1':
     "'la calle' sokak demektir; 'la esquina' köşe, 'el mapa' harita anlamına gelir.",

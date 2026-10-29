@@ -353,7 +353,7 @@ export const trEsNotes: CourseNotes = {
       {
         heading: '-Ar fiillerinin geçmişi',
         body: [
-          '-Ar ile biten fiillerde geçmiş kişisi -é ile biter: trabajé (çalıştım), estudié (çalıştım/ders çalıştım), compré (aldım). Özne zamirine gerek yok; fiil kendisi ben anlamını taşır.',
+          '-Ar ile biten fiillerde geçmiş kişisi -é ile biter: trabajé (çalıştım), estudié (ders çalıştım), compré (aldım). Özne zamirine gerek yok; fiil kendisi ben anlamını taşır.',
           '-Er/-ir fiillerinde ise -í ile biter: comí, bebí, dormí (uyudum). Bu kalıp çok düzenlidir, tek yapman gereken fiil köküne -é/-í eklemek.',
         ],
         examples: [
@@ -365,8 +365,8 @@ export const trEsNotes: CourseNotes = {
       {
         heading: 'Düzensiz fiiller: fui, vi, hice',
         body: [
-          'Bazı yaygın fiiller düzensizdir ve ayrıca ezberlenir: ir (gitmek) → fui, ver (görmek/izlemek) → vi, hacer (yapmak) → hice, salir (çıkmak) → salí.',
-          'Türkçede de gitmek için farklı bir kök düşünmezsin ama İspanyolcada bu fiillerin geçmiş biçimi fiilin kendisine benzemeyebilir; en yaygın olanları bu ünitede öğren.',
+          'Bazı yaygın fiiller düzensizdir ve ayrıca ezberlenir: ir (gitmek) → fui, ver (görmek/izlemek) → vi, hacer (yapmak) → hice.',
+          'Bu fiillerin geçmiş biçimi fiilin kendisine benzemez; en yaygın olanlarını bu ünitede öğreniyorsun. salir (dışarı çıkmak) düzenlidir: salí.',
         ],
         examples: [
           { target: 'Ayer hice la tarea.', tr: 'Dün ödevimi yaptım.' },
@@ -575,7 +575,7 @@ export const trEsNotes: CourseNotes = {
       {
         heading: 'tan ... como ve en üstünlük',
         body: [
-          'eşit karşılaştırma için tan + sıfat + como kullanılır: tan difícil como (kadar zor). Olumsuzda no es tan ... como (kadar ... değil).',
+          'Eşit karşılaştırma için tan + sıfat + como kullanılır: tan difícil como (kadar zor). Olumsuzda no es tan ... como (kadar ... değil).',
           'En üstünlük için artikel + en üstünlük biçimi: el más rápido de todos (hepsinin en hızlısı), el mejor (en iyi). Türkçedeki en eki için ayrı bir kelime gerekmez.',
         ],
         examples: [
@@ -635,7 +635,7 @@ export const trEsNotes: CourseNotes = {
       {
         heading: 'Quisiera ve me gustaría',
         body: [
-          'İspanyolcada sipariş ve isteklerde quisiera (isterdim) ve me gustaría (isterim) kalıpları quiero (istiyorum) dan daha kibar kabul edilir: quisiera un té (bir çay isterdim).',
+          'İspanyolcada sipariş ve isteklerde quisiera (isterdim) ve me gustaría (isterim) kalıpları quiero’dan (istiyorum) daha kibar kabul edilir: quisiera un té (bir çay isterdim).',
           'Restoranda masa istemek için: quisiera una mesa para dos (iki kişilik bir masa isterdim). para + sayı kalıbı kişi sayısını bildirir.',
         ],
         examples: [
