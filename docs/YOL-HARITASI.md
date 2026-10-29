@@ -49,5 +49,13 @@ Değişmez kurallar: yayınlanmış içerik yalnız BÜYÜR (`src/content/__test
 - Servis `server/tts` (FastAPI), konteyner `lovevox_tts` (YALNIZ işlemci: GPU ankaokul_llm'e ayrılmış; cpus 6), yol `ankaxai.ai/lovevox-api/tts/`, mp3 disk önbelleği (4 GB LRU), kurs metinleri (3.509 cümle × hız 1.0/0.8) önceden ısıtılır: `docker exec lovevox_tts python /srv/scripts/isit.py --base-url http://127.0.0.1:8090 --input /cache/metinler.json`.
 - Uygulama: Profil → Ses "Doğal (sunucu) / Cihaz sesi" (varsayılan doğal); sunucuya ulaşılamazsa cihaz sesine düşer ve 60 sn sunucuyu atlar; Profil → "Açık kaynak lisansları".
 - iOS: şimdilik PWA (karar değişmedi).
+## 8. Duolingo eksiklerini kapatma (2026-10-29, sürüyor)
+- Plan: `docs/tasarim/duolingo-eksikleri.md` (5 dalga).
+- Dalga 1 ✅ canlı: "Hatalarım / Zayıf kelimeler" pratiği (`/practice/[mode]`, cihazda `mistakes` tablosu, 2 art arda doğruda düşer), "Seviyemi bul" (`/placement`, ünite başına 3 soru, ≥2 doğru geçer, XP yok), yapay zekâ "Cevabımı açıkla" (`POST /v1/explain`, aynı günlük kota; anahtar yokken gizli). Göç 0007: `practice_completed` sınıf liginde sayılır.
+- Dalga 2 ✅: yeni türler `listen_select`, `picture_select`, `complete_chat`, `read_answer` (kurucular `listenSel/pic/chat/read`).
+- Dalga 3: elmas + mağaza (`/shop`: seri dondurma 200, can 350, 15 dk çift XP 100, seri onarma 400) + her 3 derste sandık; elmaslar ŞİMDİLİK CİHAZ-YEREL (sunucuya gitmez, cihazlar arası eşitlenmez). Arkadaşla ortak seri (göç 0006 `activity_days` + `friend_streaks()`; günler doğrudan okunamaz). Maskot Vox (Profil'den kapatılabilir).
+- Dalga 4: Konuş sekmesinde sesli mod; Profil'de Love-Vox puanı (A1/A2/B1) ve çevrimdışı ses paketi (`lovevox-tts-v1` önbelleği).
+- Dalga 5: her kursa 8 A2 ünitesi + not/hikâye/açıklama; dil başına bağımsız inceleme işçisi.
+
 ## Sıra
 0 (sürüyor) → 1 → 2 → 3 → 4 → 5 → 6 → 7 (kullanıcının istediği sıra). 5 sırası gelince önce kısa tasarım + kullanıcı onayı.
