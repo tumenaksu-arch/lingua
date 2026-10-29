@@ -2,6 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 
 const KEY = 'settings_v1';
+// Konuşma pratiği modu AYRI bir anahtarda saklanır: `settings_v1` içindeki
+// alanlar "tam nesne" olarak kalıcıdır ve mevcut testlerin/verinin şeması değişmez.
+const KONUS_MODE_KEY = 'konus_mode_v1';
 
 /** Allowed values for the "slow pronunciation" speech rate (turtle button). */
 export const SLOW_RATES = [0.3, 0.4, 0.5, 0.6, 0.7, 0.8] as const;
@@ -18,6 +21,8 @@ interface Settings {
 }
 
 export type VoiceSetting = Settings['voice'];
+/** Konuşma pratiği giriş modu: yazılı klavye ya da sesli mikrofon. */
+export type KonusMode = 'yazili' | 'sesli';
 
 interface SettingsState extends Settings {
   hydrated: boolean;
@@ -27,6 +32,9 @@ interface SettingsState extends Settings {
   setRelaxedHearts: (on: boolean) => Promise<void>;
   setVoice: (voice: VoiceSetting) => Promise<void>;
   setMascotAnimations: (on: boolean) => Promise<void>;
+  /** Konuşma pratiği giriş modu (tercih hatırlanır). */
+  konusMode: KonusMode;
+  setKonusMode: (mode: KonusMode) => Promise<void>;
 }
 
 const DEFAULTS: Settings = { soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'dogal', mascotAnimations: true };
@@ -54,9 +62,11 @@ function snapshot(s: SettingsState): Settings {
 export const useSettingsStore = create<SettingsState>((set, get) => ({
   ...DEFAULTS,
   hydrated: false,
+  konusMode: 'yazili',
   async hydrate() {
     if (get().hydrated) return;
     try {
+      const storedMode = await AsyncStorage.getItem(KONUS_MODE_KEY);
       const raw = await AsyncStorage.getItem(KEY);
       const parsed = raw ? (JSON.parse(raw) as Partial<Settings>) : {};
       // missing/invalid stored value falls back to the default (0.6)
@@ -70,10 +80,11 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
         voice: parsed.voice === 'cihaz' ? 'cihaz' : DEFAULTS.voice,
         // stored data from before the mascot setting: missing ⇒ on
         mascotAnimations: typeof parsed.mascotAnimations === 'boolean' ? parsed.mascotAnimations : DEFAULTS.mascotAnimations,
+        konusMode: storedMode === 'sesli' ? 'sesli' : 'yazili',
         hydrated: true,
       });
     } catch {
-      set({ hydrated: true });
+      set({ hydrated: true, konusMode: 'yazili' });
     }
   },
   async setSoundEnabled(soundEnabled) {
@@ -96,5 +107,14 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   async setMascotAnimations(mascotAnimations) {
     set({ mascotAnimations });
     await persist(snapshot(get()));
+  },
+
+  async setKonusMode(konusMode) {
+    set({ konusMode });
+    try {
+      await AsyncStorage.setItem(KONUS_MODE_KEY, konusMode);
+    } catch {
+      /* best effort */
+    }
   },
 }));
