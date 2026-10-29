@@ -437,4 +437,292 @@ export const trEnNotes: CourseNotes = {
       },
     ],
   },
+  'tr-en.u13': {
+    unitId: 'tr-en.u13',
+    title: 'Geçmiş zaman: günlük rutin',
+    sections: [
+      {
+        heading: "'didn't' ile olumsuz ve 'did' ile sorular",
+        body: [
+          "Geçmiş zamanda olumsuz cümle 'did not' (kısaca didn't) ile kurulur ve asıl fiil yalın kalır: I didn't watch TV. Sorular 'Did you...?' biçimindedir ve fiil yine yalındır: Did you sleep well? 'What did you do?' kalıbında da fiil do biçiminde yalın kalır.",
+        ],
+        examples: [
+          { target: "I didn't watch TV last night.", tr: 'Dün gece televizyon izlemedim.' },
+          { target: 'What did you do yesterday?', tr: 'Dün ne yaptın?' },
+        ],
+      },
+      {
+        heading: 'Yeni düzensiz fiiller',
+        body: [
+          "buy → bought (satın aldı), come → came (geldi), take → took (aldı/götürdü), make → made (yaptı), spend → spent (harcadı/geçirdi). Bu fiillere -ed gelmez; geçmiş biçimleri ezberlenir.",
+        ],
+        examples: [
+          { target: 'We bought bread this morning.', tr: 'Bu sabah ekmek aldık.' },
+          { target: 'She made a cake for my birthday.', tr: 'Doğum günüm için pasta yaptı.' },
+        ],
+      },
+      {
+        heading: "'got up' ve 'woke up'",
+        body: [
+          "Türkçedeki 'kalkmak (yataktan)' için get up, 'uyanmak' için wake up kullanılır; ikisi de geçmişte düzensizdir: got up, woke up. 'I woke up at seven' = saat yedide uyandım.",
+        ],
+        examples: [
+          { target: 'I got up late yesterday.', tr: 'Dün geç kalktım.' },
+          { target: 'I woke up at seven.', tr: 'Saat yedide uyandım.' },
+        ],
+      },
+    ],
+  },
+  'tr-en.u14': {
+    unitId: 'tr-en.u14',
+    title: 'Ev ve ev işleri',
+    sections: [
+      {
+        heading: "Ev işleri için 'do' ve 'wash'",
+        body: [
+          "Türkçedeki 'çamaşır yıkamak, bulaşık yıkamak' kalıpları İngilizcede do ve wash fiilleriyle kurulur: do the laundry, wash the dishes. 'the' ekini unutmayın; chores ve housework ev işlerinin bütününü anlatır.",
+        ],
+        examples: [
+          { target: 'She does the laundry on Saturdays.', tr: 'Cumartesi günleri çamaşır yıkar.' },
+          { target: 'He helps with the housework.', tr: 'Ev işlerine yardım eder.' },
+        ],
+      },
+      {
+        heading: "'want you to' ile istek",
+        body: [
+          "Birinden bir şey yapmasını istemek için 'I want you to + fiil' kalıbı kullanılır: I want you to tidy your room. Türkçedeki '-manı istiyorum' ekinin karşılığıdır ve kişi değiştiğinde you da değişir.",
+        ],
+        examples: [
+          { target: 'I want you to tidy your room.', tr: 'Odanı toplamanı istiyorum.' },
+          { target: 'We share the chores at home.', tr: 'Evde ev işlerini paylaşırız.' },
+        ],
+      },
+      {
+        heading: 'Yer bildiren edatlar: behind, next to, between',
+        body: [
+          "'Arkasında' behind, 'bitişiğinde' next to, 'arasında' between kelimeleriyle söylenir. Between her zaman iki şey arasında anlamı verir ve and ile birlikte kullanılır: between the bank and the pharmacy.",
+        ],
+        examples: [
+          { target: 'The garden is behind the house.', tr: 'Bahçe evin arkasında.' },
+          { target: 'The post office is between the bank and the pharmacy.', tr: 'Postane banka ile eczanenin arasında.' },
+        ],
+      },
+    ],
+  },
+  'tr-en.u15': {
+    unitId: 'tr-en.u15',
+    title: 'Doktorda ve hastanede',
+    sections: [
+      {
+        heading: "Şikâyet: 'What is the matter?'",
+        body: [
+          "Doktor 'Neyiniz var?' demek için 'What is the matter?' sorusunu sorar; hasta da 'I do not feel well' (kendimi iyi hissetmiyorum) diyerek başlar. 'the matter' kalıbı bir bütün olarak ezberlenmelidir.",
+        ],
+        examples: [
+          { target: 'What is the matter?', tr: 'Neyiniz var?' },
+          { target: 'I do not feel well.', tr: 'Kendimi iyi hissetmiyorum.' },
+        ],
+      },
+      {
+        heading: "Belirtiler: 'a sore throat', 'dizzy'",
+        body: [
+          "'Boğazım ağrıyor' I have a sore throat kalıbıyla söylenir; sore (ağrılı) sıfatı throat'dan önce gelir. 'Başım dönüyor' ise I feel dizzy demektir ve feel fiili duygu/his bildirirken to be ile birlikte kullanılır.",
+        ],
+        examples: [
+          { target: 'I have a sore throat.', tr: 'Boğazım ağrıyor.' },
+          { target: 'I feel dizzy.', tr: 'Başım dönüyor.' },
+        ],
+      },
+      {
+        heading: "Muayenede: 'take one's temperature' ve check-up",
+        body: [
+          "Ateş ölçmek 'take someone's temperature' kalıbıdır: The nurse took my temperature. Düzenli sağlık kontrolü ise check-up'dır ve 'I have a check-up every year' gibi söylenir.",
+        ],
+        examples: [
+          { target: 'The nurse took my temperature.', tr: 'Hemşire ateşimi ölçtü.' },
+          { target: 'I have a check-up every year.', tr: 'Her yıl kontrole giderim.' },
+        ],
+      },
+    ],
+  },
+  'tr-en.u16': {
+    unitId: 'tr-en.u16',
+    title: 'Şehirde yön tarifi',
+    sections: [
+      {
+        heading: "Yol tarifinde fiil kalıpları: go, turn, walk, cross",
+        body: [
+          "İngilizce yol tarifi kısa fiil cümleleriyle verilir: Go straight (düz git), Turn left/right (sola/sağa dön), Walk two blocks (iki blok yürü), Cross the street (sokaktan karşıya geç). Emir kipinde fiil yalın başlar.",
+        ],
+        examples: [
+          { target: 'Go straight, then turn left.', tr: 'Düz git, sonra sola dön.' },
+          { target: 'Cross the street at the lights.', tr: 'Işıklardan karşıya geç.' },
+        ],
+      },
+      {
+        heading: "'at' ile köşe ve ışıklar",
+        body: [
+          "Köşe ve trafik ışığı gibi 'nokta' kabul edilen yerlerde at kullanılır: at the corner, at the traffic lights. Türkçedeki '-da, -de' ekinin tek karşılığı yoktur; nokta ise at, çevre ise in/on tercih edilir.",
+        ],
+        examples: [
+          { target: 'The bank is at the corner.', tr: 'Banka köşede.' },
+          { target: 'Turn right at the traffic lights.', tr: 'Trafik ışıklarında sağa dön.' },
+        ],
+      },
+      {
+        heading: "Konum edatları: opposite, next to, between, behind",
+        body: [
+          "'Karşısında' opposite (the pharmacy is opposite the bank), 'bitişiğinde' next to, 'arkasında' behind, 'arasında' between. Bu edatlar isim öbeğinden önce gelir ve cümlede fiille birlikte kullanılır.",
+        ],
+        examples: [
+          { target: 'The cafe is next to the library.', tr: 'Kafe kütüphanenin bitişiğinde.' },
+          { target: 'The bus stop is behind our house.', tr: 'Otobüs durağı evimizin arkasında.' },
+        ],
+      },
+    ],
+  },
+  'tr-en.u17': {
+    unitId: 'tr-en.u17',
+    title: 'Tatil planları ve seyahat',
+    sections: [
+      {
+        heading: "'be going to' ile tatil planları",
+        body: [
+          "Önceden kararlaştırılmış tatil planları 'be going to' ile anlatılır: We are going on holiday in July. 'Tatile gitmek' go on holiday kalıbıdır; tek başına go holiday denmez.",
+        ],
+        examples: [
+          { target: 'We are going on holiday in July.', tr: 'Temmuzda tatile gideceğiz.' },
+          { target: 'We are going to book a hotel.', tr: 'Bir otel ayırtacağız.' },
+        ],
+      },
+      {
+        heading: "'book' fiili: yer ayırtmak",
+        body: [
+          "Book kelimesi kitap dışında 'yer ayırtmak' anlamında da çok kullanılır: book a hotel, book a table, book a flight. Türkçedeki 'ayırtmak' karşılığıdır; nesne her zaman rezerve edilen şeydir.",
+        ],
+        examples: [
+          { target: 'We are going to book a hotel near the beach.', tr: 'Plaja yakın bir otel ayırtacağız.' },
+          { target: 'Could I book by phone?', tr: 'Telefonla rezervasyon yapabilir miyim?' },
+        ],
+      },
+      {
+        heading: "'ready', 'pack' ve seyahat kelimeleri",
+        body: [
+          "'Hazır' ready sıfatı to be ile kullanılır: I am ready. Bavul hazırlamak pack (bir) suitcase demektir; 'pack' burada eşya toplamak anlamındadır. Uçuş kalkış saati için 'Our flight leaves at nine' denir.",
+        ],
+        examples: [
+          { target: 'I am packing my suitcase.', tr: 'Bavulumu hazırlıyorum.' },
+          { target: 'Our flight leaves at nine.', tr: 'Uçuşumuz saat dokuzda kalkıyor.' },
+        ],
+      },
+    ],
+  },
+  'tr-en.u18': {
+    unitId: 'tr-en.u18',
+    title: 'Karşılaştırmalar',
+    sections: [
+      {
+        heading: "Karşılaştırma: '-er' ve 'than'",
+        body: [
+          "Türkçedeki '-den daha' yapısı İngilizcede sıfata -er + than ile kurulur: taller than, faster than. Kısa sıfatlara -er gelir; 'than' karşılaştırmanın iki tarafını birleştirir ve atlanmaz.",
+        ],
+        examples: [
+          { target: 'My brother is taller than me.', tr: 'Erkek kardeşim benden uzun.' },
+          { target: 'The train is faster than the bus.', tr: 'Tren otobüsten daha hızlı.' },
+        ],
+      },
+      {
+        heading: "'more' ile uzun sıfatlar",
+        body: [
+          "Uzun sıfatlarda -er gelmez; more + sıfat kullanılır: more expensive than. 'Daha pahalı' = more expensive; 'expensiver' diye bir biçim yoktur.",
+        ],
+        examples: [
+          { target: 'This hotel is more expensive than the other one.', tr: 'Bu otel diğerinden daha pahalı.' },
+          { target: 'Winter is colder than autumn.', tr: 'Kış sonbahardan daha soğuk.' },
+        ],
+      },
+      {
+        heading: "Üstünlük: 'the -est' ve 'the most'",
+        body: [
+          "En üstün derece the + -est (the biggest) ya da the most + sıfat (the most expensive) ile kurulur. 'En iyi' ve 'en kötü' düzensizdir: the best, the worst; goodest/badder denmez.",
+        ],
+        examples: [
+          { target: 'This is the best pizza in town.', tr: 'Bu şehirdeki en iyi pizza bu.' },
+          { target: 'The blue whale is the biggest animal.', tr: 'Mavi balina en büyük hayvandır.' },
+        ],
+      },
+    ],
+  },
+  'tr-en.u19': {
+    unitId: 'tr-en.u19',
+    title: 'Duygular, kişilik ve fikir bildirme',
+    sections: [
+      {
+        heading: "Duygular: 'I am + sıfat'",
+        body: [
+          "Duygular to be + sıfat ile söylenir: I am happy, she is sad. 'Hissetmek' anlamındaki feel fiili de aynı yapıyı alır: I feel dizzy. Türkçedeki gibi fiile ek gelmez.",
+        ],
+        examples: [
+          { target: 'She is happy today.', tr: 'O bugün mutlu.' },
+          { target: 'I am nervous before the exam.', tr: 'Sınavdan önce gerginim.' },
+        ],
+      },
+      {
+        heading: "'-ed' ve '-ing' sıfatları: bored / boring",
+        body: [
+          "Duyan kişiyi anlatan sıfat -ed ile biter (bored = sıkılmış), şeyi anlatan -ing ile (boring = sıkıcı). 'Film sıkıcıydı, ben sıkıldım' = The movie was boring, I was bored.",
+        ],
+        examples: [
+          { target: 'The children are bored.', tr: 'Çocukların canı sıkılıyor.' },
+          { target: 'The movie was boring, I was bored.', tr: 'Film sıkıcıydı, sıkıldım.' },
+        ],
+      },
+      {
+        heading: "Fikir bildirme: 'I think', 'in my opinion', 'I agree'",
+        body: [
+          "Görüş bildirirken 'I think + cümle' (bence...) ya da cümle başında 'In my opinion' kullanılır. Aynı fikirdeyseniz 'I agree with you' dersiniz; 'I am agree' denmez.",
+        ],
+        examples: [
+          { target: 'I think English is useful.', tr: 'Bence İngilizce faydalı.' },
+          { target: 'I agree with you.', tr: 'Sana katılıyorum.' },
+        ],
+      },
+    ],
+  },
+  'tr-en.u20': {
+    unitId: 'tr-en.u20',
+    title: 'Kibar istekler: restoran, telefon, resmî durumlar',
+    sections: [
+      {
+        heading: 'Restoranda: rezervasyon ve sipariş',
+        body: [
+          "Restoranda 'I have a reservation for two' (iki kişilik rezervasyonum var) ve 'A table for two, please' (iki kişilik masa, lütfen) kalıpları kullanılır. Garson sipariş için 'Are you ready to order?' diye sorar.",
+        ],
+        examples: [
+          { target: 'I have a reservation for two.', tr: 'İki kişilik rezervasyonum var.' },
+          { target: 'Are you ready to order?', tr: 'Sipariş vermeye hazır mısınız?' },
+        ],
+      },
+      {
+        heading: "Telefonda: 'hold on', 'spell', 'repeat'",
+        body: [
+          "Telefonda bekletmek için 'hold on', adı harf harf söyletmek için 'spell', anlamadığınızı belirtmek için 'Could you repeat that?' kullanılır. Heceleme isteği çok yaygındır: Could you spell your name, please?",
+        ],
+        examples: [
+          { target: 'Could you hold on, please?', tr: 'Hatta bekleyebilir misiniz?' },
+          { target: 'Could you spell your name, please?', tr: 'Adınızı heceleyebilir misiniz?' },
+        ],
+      },
+      {
+        heading: "Resmî durumlarda: 'fill in', 'sign', 'available'",
+        body: [
+          "Resmî yerlerde form doldurmak 'fill in a form', imzalamak 'sign' demektir. Birinin müsait olup olmadığını 'available' ile sorarsınız: Is this seat available? / The doctor is not available now.",
+        ],
+        examples: [
+          { target: 'Please fill in this form.', tr: 'Lütfen bu formu doldurun.' },
+          { target: 'Is this seat available?', tr: 'Bu koltuk boş mu?' },
+        ],
+      },
+    ],
+  },
 };
