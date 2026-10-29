@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SLOW_RATES, useSettingsStore } from '../settingsStore';
 
 function resetStore() {
-  useSettingsStore.setState({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'dogal', hydrated: false });
+  useSettingsStore.setState({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'dogal', mascotAnimations: true, hydrated: false });
 }
 
 describe('settingsStore', () => {
@@ -32,7 +32,7 @@ describe('settingsStore', () => {
   it('persists the FULL settings object after setSlowRate', async () => {
     await useSettingsStore.getState().setSlowRate(0.5);
     const stored = JSON.parse((await AsyncStorage.getItem('settings_v1'))!);
-    expect(stored).toEqual({ soundEnabled: true, slowRate: 0.5, relaxedHearts: false, voice: 'dogal' });
+    expect(stored).toEqual({ soundEnabled: true, slowRate: 0.5, relaxedHearts: false, voice: 'dogal', mascotAnimations: true });
   });
 
   it('persists relaxedHearts together with soundEnabled and slowRate (no erase regression)', async () => {
@@ -50,7 +50,7 @@ describe('settingsStore', () => {
     // and toggling one setting never erases the others
     await useSettingsStore.getState().setRelaxedHearts(false);
     const stored = JSON.parse((await AsyncStorage.getItem('settings_v1'))!);
-    expect(stored).toEqual({ soundEnabled: false, slowRate: 0.4, relaxedHearts: false, voice: 'dogal' });
+    expect(stored).toEqual({ soundEnabled: false, slowRate: 0.4, relaxedHearts: false, voice: 'dogal', mascotAnimations: true });
   });
 
   it('hydrates legacy data without relaxedHearts: relaxedHearts false', async () => {
@@ -105,10 +105,27 @@ describe('settingsStore', () => {
     expect(useSettingsStore.getState().voice).toBe('cihaz');
   });
 
+  it('defaults mascotAnimations to true', () => {
+    expect(useSettingsStore.getState().mascotAnimations).toBe(true);
+  });
+
+  it('hydrates legacy data without mascotAnimations: mascotAnimations true', async () => {
+    await AsyncStorage.setItem('settings_v1', JSON.stringify({ soundEnabled: false, slowRate: 0.5, relaxedHearts: true, voice: 'cihaz' }));
+    await useSettingsStore.getState().hydrate();
+    expect(useSettingsStore.getState().mascotAnimations).toBe(true);
+  });
+
+  it('persists mascotAnimations together with the other settings', async () => {
+    await useSettingsStore.getState().setMascotAnimations(false);
+    expect(useSettingsStore.getState().mascotAnimations).toBe(false);
+    const stored = JSON.parse((await AsyncStorage.getItem('settings_v1'))!);
+    expect(stored).toEqual({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'dogal', mascotAnimations: false });
+  });
+
   it('persists the FULL settings object after setVoice', async () => {
     await useSettingsStore.getState().setVoice('cihaz');
     expect(useSettingsStore.getState().voice).toBe('cihaz');
     const stored = JSON.parse((await AsyncStorage.getItem('settings_v1'))!);
-    expect(stored).toEqual({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'cihaz' });
+    expect(stored).toEqual({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'cihaz', mascotAnimations: true });
   });
 });

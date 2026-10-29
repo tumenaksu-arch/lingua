@@ -151,6 +151,8 @@ export default function ProfileScreen() {
   const setRelaxedHearts = useSettingsStore((s) => s.setRelaxedHearts);
   const voice = useSettingsStore((s) => s.voice);
   const setVoice = useSettingsStore((s) => s.setVoice);
+  const mascotAnimations = useSettingsStore((s) => s.mascotAnimations);
+  const setMascotAnimations = useSettingsStore((s) => s.setMascotAnimations);
   const rawStats = useAppStore((s) => s.stats);
   const user = useAppStore((s) => s.user);
   const course = useAppStore((s) => s.course);
@@ -321,6 +323,16 @@ export default function ProfileScreen() {
             trackColor={{ true: colors.primary, false: colors.border }}
           />
         </View>
+        <View style={styles.row}>
+          <Body>Maskot animasyonları</Body>
+          <Switch
+            value={mascotAnimations}
+            onValueChange={(on) => void setMascotAnimations(on)}
+            accessibilityLabel="Maskot animasyonları"
+            trackColor={{ true: colors.primary, false: colors.border }}
+          />
+        </View>
+        <Caption color={colors.textMuted}>Kapalıyken Vox maskotu hiçbir ekranda gösterilmez.</Caption>
         <View style={styles.row}>
           <Body>Yavaş seslendirme hızı</Body>
           <Caption color={colors.textMuted}>%{Math.round(slowRate * 100)}</Caption>

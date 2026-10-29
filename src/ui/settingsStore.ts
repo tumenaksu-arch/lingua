@@ -13,6 +13,8 @@ interface Settings {
   relaxedHearts: boolean;
   /** 'dogal' (default): natural server voice, falls back to the device engine offline; 'cihaz': device TTS only. */
   voice: 'dogal' | 'cihaz';
+  /** Show the Vox parrot mascot and its animations (default on; off hides Vox everywhere). */
+  mascotAnimations: boolean;
 }
 
 export type VoiceSetting = Settings['voice'];
@@ -24,9 +26,10 @@ interface SettingsState extends Settings {
   setSlowRate: (rate: number) => Promise<void>;
   setRelaxedHearts: (on: boolean) => Promise<void>;
   setVoice: (voice: VoiceSetting) => Promise<void>;
+  setMascotAnimations: (on: boolean) => Promise<void>;
 }
 
-const DEFAULTS: Settings = { soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'dogal' };
+const DEFAULTS: Settings = { soundEnabled: true, slowRate: 0.6, relaxedHearts: false, voice: 'dogal', mascotAnimations: true };
 
 /** Snap an arbitrary rate to the nearest allowed SLOW_RATES value. */
 function snapRate(rate: number): number {
@@ -44,7 +47,7 @@ async function persist(s: Settings) {
 
 /** Always persist the FULL settings object (missing fields would erase each other on hydrate). */
 function snapshot(s: SettingsState): Settings {
-  return { soundEnabled: s.soundEnabled, slowRate: s.slowRate, relaxedHearts: s.relaxedHearts, voice: s.voice };
+  return { soundEnabled: s.soundEnabled, slowRate: s.slowRate, relaxedHearts: s.relaxedHearts, voice: s.voice, mascotAnimations: s.mascotAnimations };
 }
 
 /** Device-level preferences (not synced to the account). */
@@ -65,6 +68,8 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
         relaxedHearts: typeof parsed.relaxedHearts === 'boolean' ? parsed.relaxedHearts : DEFAULTS.relaxedHearts,
         // stored data from before the voice setting: missing ⇒ doğal
         voice: parsed.voice === 'cihaz' ? 'cihaz' : DEFAULTS.voice,
+        // stored data from before the mascot setting: missing ⇒ on
+        mascotAnimations: typeof parsed.mascotAnimations === 'boolean' ? parsed.mascotAnimations : DEFAULTS.mascotAnimations,
         hydrated: true,
       });
     } catch {
@@ -86,6 +91,10 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   },
   async setVoice(voice) {
     set({ voice });
+    await persist(snapshot(get()));
+  },
+  async setMascotAnimations(mascotAnimations) {
+    set({ mascotAnimations });
     await persist(snapshot(get()));
   },
 }));
