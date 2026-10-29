@@ -78,6 +78,6 @@ it('renders no skip chip for a fully completed unit', async () => {
   );
 
   expect(screen.queryByRole('button', { name: 'Temeller ünitesini atla' })).toBeNull();
-  // the other 11 units still offer the chip
-  expect(screen.queryAllByRole('button', { name: /ünitesini atla$/ })).toHaveLength(11);
+  // the other units still offer the chip (all units except the completed first one)
+  expect(screen.queryAllByRole('button', { name: /ünitesini atla$/ })).toHaveLength(trEn.units.length - 1);
 });
