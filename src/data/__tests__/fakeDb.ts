@@ -6,6 +6,7 @@ const PKS: Record<string, string[]> = {
   user_stats: ['user_id'],
   user_progress: ['user_id', 'lesson_id'],
   srs_cards: ['user_id', 'vocab_id'],
+  mistakes: ['user_id', 'course_id', 'exercise_id'],
   events: ['id'],
   sync_meta: ['key'],
   courses: ['id'], units: ['id'], lessons: ['id'], exercises: ['id'], vocab: ['id'],
@@ -51,7 +52,11 @@ export class FakeDb implements Database {
     }
     if ((m = s.match(/^UPDATE (\w+) SET (.+) WHERE (.+)$/i))) {
       const [, table, setStr, whereStr] = m;
-      const parts = setStr.split(',').map((a) => a.split('=').map((x) => x.trim()) as [string, string]);
+      // Split on the FIRST '=' only, so `col = col + 1` keeps its increment expression.
+      const parts = setStr.split(',').map((a) => {
+        const eq = a.indexOf('=');
+        return [a.slice(0, eq).trim(), a.slice(eq + 1).trim()] as [string, string];
+      });
       // `col = ?` assignments consume params left-to-right, before the WHERE params.
       let i = 0;
       const assigns: [string, SqlValue][] = [];
@@ -79,12 +84,20 @@ export class FakeDb implements Database {
   async getAll<T>(sql: string, params: SqlParams = []): Promise<T[]> {
     const s = sql.replace(/\s+/g, ' ').trim();
     if (/^PRAGMA user_version$/i.test(s)) return [{ user_version: 0 } as T];
-    const m = s.match(/^SELECT (.+?) FROM (\w+)(?: WHERE (.+?))?(?: ORDER BY (\w+) (ASC|DESC))?(?: LIMIT \?)?$/i);
+    const m = s.match(/^SELECT (.+?) FROM (\w+)(?: WHERE (.+?))?(?: ORDER BY (\w+) (ASC|DESC)(?:, ?(\w+) (ASC|DESC))?)?(?: LIMIT \?)?$/i);
     if (!m) throw new Error(`FakeDb.getAll: unsupported SQL: ${s}`);
-    const [, select, table, whereStr, orderCol, dir] = m;
+    const [, select, table, whereStr, orderCol, dir, orderCol2, dir2] = m;
     const limit = /LIMIT \?$/i.test(s) ? Number(params[params.length - 1]) : Infinity;
     let rows = this.t(table).filter(whereStr ? this.where(whereStr, params) : () => true);
-    if (orderCol) rows = [...rows].sort((a, b) => (Number(a[orderCol]) - Number(b[orderCol])) * (dir.toUpperCase() === 'DESC' ? -1 : 1));
+    if (orderCol) {
+      const d1 = dir!.toUpperCase() === 'DESC' ? -1 : 1;
+      rows = [...rows].sort((a, b) => {
+        const first = (Number(a[orderCol]) - Number(b[orderCol])) * d1;
+        if (first !== 0 || !orderCol2) return first;
+        const d2 = dir2!.toUpperCase() === 'DESC' ? -1 : 1;
+        return (Number(a[orderCol2]) - Number(b[orderCol2])) * d2;
+      });
+    }
     rows = rows.slice(0, limit);
     if (/^COUNT\(\*\) AS n$/i.test(select)) return [{ n: rows.length } as T];
     if (select === '*') return rows.map((r) => ({ ...r }) as T);

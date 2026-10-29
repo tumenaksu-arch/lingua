@@ -65,6 +65,22 @@ export const MIGRATIONS: string[] = [
   );
   CREATE TABLE IF NOT EXISTS sync_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
   `,
+  // Job 1A (Practice Hub "Hatalarım"): exercises answered wrong. Device-local
+  // only — never enqueued to the outbox. Cleared after 2 consecutive correct
+  // answers (see repos/mistakesRepo.ts).
+  `
+  CREATE TABLE IF NOT EXISTS mistakes (
+    user_id TEXT NOT NULL,
+    course_id TEXT NOT NULL,
+    exercise_id TEXT NOT NULL,
+    wrong_count INTEGER NOT NULL DEFAULT 0,
+    correct_streak INTEGER NOT NULL DEFAULT 0,
+    last_wrong_at INTEGER NOT NULL DEFAULT 0,
+    updated_at INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (user_id, course_id, exercise_id)
+  );
+  CREATE INDEX IF NOT EXISTS idx_mistakes_list ON mistakes(user_id, course_id, wrong_count DESC, last_wrong_at DESC);
+  `,
 ];
 
 /** Applies pending migrations using PRAGMA user_version. */

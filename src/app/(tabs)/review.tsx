@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { useFocusEffect } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 
 import { getVocab } from '@/content';
 import type { SrsCard, VocabItem } from '@/domain';
+import { PracticeCard } from '@/features/practice/PracticeCard';
 import { playCorrect, playWrong } from '@/features/sound';
 import { useAppStore } from '@/features/store';
 import { speak } from '@/speech';
@@ -17,24 +18,32 @@ export default function ReviewScreen() {
   const loadDueCards = useAppStore((s) => s.loadDueCards);
   const startReviewSession = useAppStore((s) => s.startReviewSession);
   const reviewCard = useAppStore((s) => s.reviewCard);
+  const mistakeCount = useAppStore((s) => s.mistakeCount);
+  const weakWordCards = useAppStore((s) => s.weakWordCards);
   const { colors } = useTheme();
 
   const [deck, setDeck] = useState<Deck | null>(null);
+  const [counts, setCounts] = useState<{ mistakes: number; weak: number }>({ mistakes: 0, weak: 0 });
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [done, setDone] = useState({ right: 0, wrong: 0 });
   const shownAt = useRef(0);
 
   const load = useCallback(async () => {
-    const cards = await loadDueCards(20);
+    const [cards, mistakes, weak] = await Promise.all([
+      loadDueCards(20),
+      mistakeCount(),
+      weakWordCards(20),
+    ]);
     if (cards.length > 0) void startReviewSession();
     const vocab = new Map(getVocab(course.id).map((v) => [v.id, v]));
     setDeck({ cards: cards.filter((c) => vocab.has(c.vocabId)), vocab });
+    setCounts({ mistakes, weak: weak.length });
     setIndex(0);
     setFlipped(false);
     setDone({ right: 0, wrong: 0 });
     shownAt.current = Date.now();
-  }, [course.id, loadDueCards, startReviewSession]);
+  }, [course.id, loadDueCards, mistakeCount, startReviewSession, weakWordCards]);
 
   useFocusEffect(useCallback(() => { void load(); }, [load]));
   // Reset the response timer whenever a different card is shown (new index or a reloaded deck).
@@ -42,10 +51,29 @@ export default function ReviewScreen() {
 
   if (!deck) return <Screen edges={['top']} />;
 
+  // Practice Hub entry cards (Duolingo "Practice Hub"), above the flashcard deck.
+  const practiceCards = (
+    <View style={styles.practiceCards}>
+      <PracticeCard
+        title="Hatalarım"
+        count={counts.mistakes}
+        emptyText="Henüz hata yok — harika!"
+        onPress={counts.mistakes > 0 ? () => router.push('/practice/mistakes') : undefined}
+      />
+      <PracticeCard
+        title="Zayıf kelimeler"
+        count={counts.weak}
+        emptyText="Henüz zayıf kelime yok — harika!"
+        onPress={counts.weak > 0 ? () => router.push('/practice/words') : undefined}
+      />
+    </View>
+  );
+
   const card = deck.cards[index];
   if (!card) {
     return (
       <Screen edges={['top']}>
+        {practiceCards}
         <View style={styles.center}>
           <Title center>{deck.cards.length ? 'Tekrar bitti! 🎉' : 'Bugün tekrar yok ✅'}</Title>
           <Body center color={colors.textMuted}>
@@ -74,6 +102,8 @@ export default function ReviewScreen() {
         <ProgressBar progress={index / deck.cards.length} style={{ flex: 1 }} />
         <Caption accessibilityLabel={`Kart ${index + 1} / ${deck.cards.length}`}>{index + 1}/{deck.cards.length}</Caption>
       </View>
+
+      {practiceCards}
 
       <Pressable
         onPress={() => setFlipped((f) => !f)}
@@ -109,6 +139,7 @@ export default function ReviewScreen() {
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: 'center', gap: spacing.lg },
   header: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, marginBottom: spacing.xl },
+  practiceCards: { gap: spacing.sm, marginBottom: spacing.xl },
   card: { flex: 1, borderWidth: 1, borderRadius: 10, padding: spacing.xl, alignItems: 'center', justifyContent: 'center', gap: spacing.md, marginBottom: spacing.xl },
   speaker: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   actions: { flexDirection: 'row', gap: spacing.md },
