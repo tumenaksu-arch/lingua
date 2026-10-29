@@ -7,6 +7,7 @@
 import { courses } from '@/content';
 import type { Exercise, Lesson, Unit } from '@/domain';
 import {
+  ablativeSuffix,
   createPlacement,
   finishPlacement,
   PLACEMENT_MAX_QUESTIONS,
@@ -159,4 +160,12 @@ test('questions spread round-robin across the unit\'s lessons', () => {
   const q = placementQuestions(unit, 0);
   expect(q).toHaveLength(3);
   expect(new Set(q.map((e) => e.id.split('.')[1])).size).toBeGreaterThan(1);
+});
+
+describe('ablativeSuffix', () => {
+  it('follows Turkish vowel harmony for unit numbers', () => {
+    expect([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 16, 20].map((n) => `${n}${ablativeSuffix(n)}`)).toEqual([
+      "1'den", "2'den", "3'ten", "4'ten", "5'ten", "6'dan", "7'den", "8'den", "9'dan", "10'dan", "12'den", "16'dan", "20'den",
+    ]);
+  });
 });

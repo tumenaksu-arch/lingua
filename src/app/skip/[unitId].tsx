@@ -254,7 +254,7 @@ function Stat({ label, value, color }: { label: string; value: string; color: st
   const { colors } = useTheme();
   return (
     <View style={[styles.stat, { borderColor: color, backgroundColor: colors.surface }]} accessible accessibilityLabel={`${label}: ${value}`}>
-      <Caption center color={color}>{label}</Caption>
+      <Caption center color={color} numberOfLines={1}>{label}</Caption>
       <Heading center color={color}>{value}</Heading>
     </View>
   );
@@ -268,6 +268,7 @@ const styles = StyleSheet.create({
   body: { flex: 1, paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.lg },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center', gap: spacing.xl },
   statsRow: { flexDirection: 'row', gap: spacing.md, justifyContent: 'center' },
-  stat: { flex: 1, borderWidth: 1, borderRadius: 10, padding: spacing.md, gap: spacing.xs },
+  // sm padding: three stats + 'DOĞRULUK' fit one line at 390px (md split it as 'Doğru/luk')
+  stat: { flex: 1, borderWidth: 1, borderRadius: 10, paddingVertical: spacing.md, paddingHorizontal: spacing.xs, gap: spacing.xs },
   actions: { gap: spacing.md },
 });

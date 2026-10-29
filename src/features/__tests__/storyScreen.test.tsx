@@ -41,7 +41,7 @@ const mockStory: Story = {
 };
 
 jest.mock('expo-router', () => ({
-  router: { push: jest.fn(), replace: jest.fn(), back: jest.fn() },
+  router: { push: jest.fn(), replace: jest.fn(), back: jest.fn(), canGoBack: jest.fn(() => true) },
   useLocalSearchParams: jest.fn(() => ({ unitId: 'tr-en.u1' })),
 }));
 

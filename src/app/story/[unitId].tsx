@@ -1,7 +1,8 @@
-import { router, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import { useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
+import { backOrHome } from '@/features/nav/backOrHome';
 import { courses } from '@/content';
 import { getUnitStory } from '@/content/stories';
 import type { LangCode } from '@/domain';
@@ -45,7 +46,7 @@ export default function StoryScreen() {
     return (
       <Screen>
         <Title>Hikâye bulunamadı</Title>
-        <Button title="Geri" onPress={() => router.back()} />
+        <Button title="Geri" onPress={backOrHome} />
       </Screen>
     );
   }
@@ -192,7 +193,7 @@ export default function StoryScreen() {
                 startFinish();
               }}
             />
-            <Button title="Ana sayfa" variant="outline" onPress={() => router.back()} />
+            <Button title="Ana sayfa" variant="outline" onPress={backOrHome} />
           </View>
         </Screen>
       );
@@ -216,7 +217,7 @@ export default function StoryScreen() {
           <Stat label="XP" value={summary ? `+${summary.xpEarned}` : '…'} color={colors.xpText} />
         </View>
       </View>
-      <Button title="Bitir" onPress={() => router.back()} />
+      <Button title="Bitir" onPress={backOrHome} />
     </Screen>
   );
 }

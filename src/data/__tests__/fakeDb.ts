@@ -32,7 +32,7 @@ export class FakeDb implements Database {
     const s = sql.replace(/\s+/g, ' ').trim();
     let m: RegExpMatchArray | null;
     if ((m = s.match(/^INSERT (?:OR (REPLACE|IGNORE) )?INTO (\w+) \(([^)]+)\) VALUES \(([^)]+)\)(?: ON CONFLICT\(([^)]+)\) DO UPDATE SET (.+))?$/i))) {
-      const [, mode, table, colsStr] = m;
+      const [, mode, table, colsStr, , , setStr] = m;
       const cols = colsStr.split(',').map((c) => c.trim());
       const row: Row = {};
       cols.forEach((c, i) => (row[c] = params[i] ?? null));
@@ -42,7 +42,16 @@ export class FakeDb implements Database {
       if (table === 'outbox') { row.id = ++this.seq; row.attempts = 0; }
       if (idx === -1) rows.push(row);
       else if (mode?.toUpperCase() === 'IGNORE') return;
-      else rows[idx] = { ...rows[idx], ...row };
+      else if (setStr) {
+        // Like SQLite: ON CONFLICT DO UPDATE touches ONLY the columns named in SET (col = excluded.col).
+        const next = { ...rows[idx] };
+        for (const a of setStr.split(',')) {
+          const mm = a.trim().match(/^(\w+) = excluded\.(\w+)$/i);
+          if (!mm) throw new Error(`FakeDb: unsupported SET clause "${a.trim()}"`);
+          next[mm[1]] = row[mm[2]] ?? null;
+        }
+        rows[idx] = next;
+      } else rows[idx] = { ...rows[idx], ...row };
       return;
     }
     if ((m = s.match(/^DELETE FROM (\w+) WHERE (.+)$/i))) {

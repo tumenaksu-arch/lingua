@@ -49,8 +49,12 @@ export function current(state: LessonState): Exercise | undefined {
   return id === undefined ? undefined : state.exercises[id];
 }
 
-/** Infinity hearts = hearts disabled (e.g. practice mode). */
-export function answer(state: LessonState, exerciseId: string, isCorrect: boolean): LessonState {
+/**
+ * Infinity hearts = hearts disabled (e.g. practice mode).
+ * `requeue: false` (placement exam): a wrong answer is final — it is NOT put back
+ * at the end of the queue, so every question is asked exactly once.
+ */
+export function answer(state: LessonState, exerciseId: string, isCorrect: boolean, opts: { requeue?: boolean } = {}): LessonState {
   if (state.queue[0] !== exerciseId || state.failed) return state;
   const rest = state.queue.slice(1);
   if (isCorrect) {
@@ -67,7 +71,7 @@ export function answer(state: LessonState, exerciseId: string, isCorrect: boolea
   const hearts = Number.isFinite(state.hearts) ? Math.max(0, state.hearts - 1) : state.hearts;
   return {
     ...state,
-    queue: [...rest, exerciseId], // Duolingo: wrong answers come back at the end
+    queue: opts.requeue === false ? rest : [...rest, exerciseId], // Duolingo: wrong answers come back at the end
     mistakes: state.mistakes.includes(exerciseId) ? state.mistakes : [...state.mistakes, exerciseId],
     wrongCounts: { ...state.wrongCounts, [exerciseId]: (state.wrongCounts[exerciseId] ?? 0) + 1 },
     hearts,

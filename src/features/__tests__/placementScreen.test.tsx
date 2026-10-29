@@ -71,7 +71,7 @@ async function renderExam() {
   await screen.findByText('SEVİYE TESPİTİ');
 }
 
-/** Answer the visible question: 'a' is correct, 'b' is wrong (wrong re-queues to the end). */
+/** Answer the visible question: 'a' is correct, 'b' is wrong (placement never re-queues). */
 async function answerCurrent(option: 'a' | 'b') {
   const radio = screen.queryAllByRole('radio').find((r) => r.props.accessibilityLabel === option);
   expect(radio).toBeTruthy();
@@ -85,20 +85,19 @@ test('3/3 then 2/3 pass, 1/3 ends the exam; only passed units are saved and the 
 
   // unit 1: 3/3
   for (let i = 0; i < 3; i++) await answerCurrent('a');
-  // unit 2: 2/3 — one wrong (retried correct) counts as a mistake
-  await answerCurrent('b');
-  for (let i = 0; i < 3; i++) await answerCurrent('a');
-  // unit 3: 1/3 — two wrongs fail the unit and end the exam
-  await answerCurrent('b');
-  await answerCurrent('a');
+  // unit 2: 2/3 — each question is asked once; a wrong answer is final (no re-queue)
   await answerCurrent('b');
   await answerCurrent('a');
   await answerCurrent('a');
+  // unit 3: 1/3 — two wrongs fail the unit and end the exam after exactly 3 questions
+  await answerCurrent('b');
+  await answerCurrent('a');
+  await answerCurrent('b');
 
   expect(completeUnitsByPlacement).toHaveBeenCalledTimes(1);
   expect(completeUnitsByPlacement).toHaveBeenCalledWith(['u1', 'u2']);
 
-  await screen.findByText("Ünite 3'den başlıyorsun");
+  await screen.findByText("Ünite 3'ten başlıyorsun");
   expect(screen.getByText('✓ Ünite 1')).toBeTruthy();
   expect(screen.getByText('✓ Ünite 2')).toBeTruthy();
   expect(screen.getByText('Seviye tespiti XP kazandırmaz.')).toBeTruthy();

@@ -61,3 +61,13 @@ describe('lesson state machine', () => {
     expect(s.hearts).toBe(Infinity);
   });
 });
+
+describe('answer with requeue: false (placement exam)', () => {
+  it('a wrong answer is final: the question is not asked again and the exam ends after one pass', () => {
+    let s = createLesson('p', exercises, Infinity);
+    for (const e of exercises) s = answer(s, current(s)!.id, e.id !== exercises[0]!.id, { requeue: false });
+    expect(isFinished(s)).toBe(true);
+    expect(s.answered).toBe(exercises.length);
+    expect(toResult(s, 0).correct).toBe(exercises.length - 1);
+  });
+});

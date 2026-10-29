@@ -93,7 +93,8 @@ export function createStatsRepo(db: Database, userId: string) {
   }
 
   /** Writes locally without touching the outbox (used by sync pull).
-   *  Ekonomi alanları (gems vb.) listede yok: sync pull bunları asla ezmez. */
+   *  Ekonomi alanları (gems vb.) çakışmada GÜNCELLENMEZ: sunucu satırında yoklar,
+   *  sync pull bunları asla ezmez (yalnız ilk INSERT'te yazılır). */
   async function writeLocal(s: UserStats, updatedAt: number): Promise<void> {
     await db.run(
       `INSERT INTO user_stats (user_id, xp, streak, last_active_date, streak_freezes, hearts, hearts_updated_at, daily_goal_xp, xp_today, gems, xp_boost_until, lost_streak, lessons_since_chest, updated_at)
@@ -110,10 +111,20 @@ export function createStatsRepo(db: Database, userId: string) {
     );
   }
 
-  /** User-initiated write: local row + outbox in one transaction. */
+  /** User-initiated write: local row + outbox in one transaction. Unlike the
+   *  sync pull, the device-local economy fields ARE written here (otherwise a
+   *  reload would reset gems / Çift XP / chest counter / lost streak). */
   async function save(s: UserStats, now = Date.now()): Promise<void> {
     await db.transaction(async () => {
       await writeLocal(s, now);
+      await db.run(
+        `INSERT INTO user_stats (user_id, gems, xp_boost_until, lost_streak, lessons_since_chest)
+         VALUES (?, ?, ?, ?, ?)
+         ON CONFLICT(user_id) DO UPDATE SET
+           gems = excluded.gems, xp_boost_until = excluded.xp_boost_until,
+           lost_streak = excluded.lost_streak, lessons_since_chest = excluded.lessons_since_chest`,
+        [userId, s.gems ?? 0, s.xpBoostUntil ?? null, s.lostStreak ? JSON.stringify(s.lostStreak) : null, s.lessonsSinceChest ?? 0],
+      );
       await enqueue(db, 'user_stats', 'upsert', statsToServerRow(userId, s, now), now);
     });
   }

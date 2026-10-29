@@ -1,6 +1,7 @@
-import { router, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
+import { backOrHome } from '@/features/nav/backOrHome';
 import { courses } from '@/content';
 import { getUnitNote } from '@/content/notes';
 import type { LangCode } from '@/domain';
@@ -52,7 +53,7 @@ export default function UnitNotesScreen() {
           </View>
         )}
       </ScrollView>
-      <Button title="Kapat" variant="secondary" onPress={() => router.back()} />
+      <Button title="Kapat" variant="secondary" onPress={backOrHome} />
     </Screen>
   );
 }

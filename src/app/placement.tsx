@@ -20,6 +20,7 @@ import { correctAnswerText } from '@/features/lesson/helpers';
 import {
   PLACEMENT_MAX_QUESTIONS,
   PLACEMENT_QUESTIONS_PER_UNIT,
+  ablativeSuffix,
   createPlacement,
   finishPlacement,
   placementQuestions,
@@ -128,7 +129,7 @@ export default function PlacementScreen() {
   return (
     <Screen>
       <View style={styles.center} accessibilityLiveRegion="polite">
-        <Title center accessibilityRole="header">Ünite {passedUnits.length + 1}&apos;den başlıyorsun</Title>
+        <Title center accessibilityRole="header">Ünite {passedUnits.length + 1}{ablativeSuffix(passedUnits.length + 1)} başlıyorsun</Title>
         {passedUnits.length > 0 ? (
           <View style={styles.passedList}>
             <Caption center color={colors.textMuted}>Geçtiğin üniteler tamamlandı sayıldı:</Caption>
@@ -194,7 +195,8 @@ function PlacementUnitSession({
 
   const onContinue = useCallback(() => {
     if (!state || !exercise || !feedback) return;
-    const next = answer(state, exercise.id, feedback.ok);
+    // Placement asks each question once: a wrong answer is final, never re-queued.
+    const next = answer(state, exercise.id, feedback.ok, { requeue: false });
     setState(next);
     setFeedback(null);
     if (isFinished(next)) {

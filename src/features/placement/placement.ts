@@ -94,3 +94,14 @@ export function skipEmptyPlacementUnit(state: PlacementState): PlacementState {
 export function finishPlacement(state: PlacementState): PlacementState {
   return state.done ? state : { ...state, done: true };
 }
+
+/** Turkish ablative suffix after a unit number read aloud: 1'den, 3'ten, 6'dan, 10'dan, 20'den… */
+export function ablativeSuffix(n: number): string {
+  const last = n % 10;
+  const word = last !== 0 ? last : n % 100 !== 0 ? (n % 100) / 10 * 10 : 100;
+  const map: Record<number, string> = {
+    1: "'den", 2: "'den", 3: "'ten", 4: "'ten", 5: "'ten", 6: "'dan", 7: "'den", 8: "'den", 9: "'dan",
+    10: "'dan", 20: "'den", 30: "'dan", 40: "'tan", 50: "'den", 60: "'tan", 70: "'ten", 80: "'den", 90: "'dan", 100: "'den",
+  };
+  return map[word] ?? "'den";
+}

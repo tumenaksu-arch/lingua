@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 
+import { backOrHome } from '@/features/nav/backOrHome';
 import { aiChat, aiScenarios, aiStatus, AiError, type AiScenario } from '@/data/remote/ai';
 import type { LangCode } from '@/domain';
 import { CharacterCard } from '@/features/conversation/CharacterCard';
@@ -296,6 +297,7 @@ export default function ConversationScreen() {
             </Body>
             <Button title="Giriş yap" onPress={() => router.push('/auth')} />
             <Button title="Sınıf koduyla katıl" variant="outline" onPress={() => router.push('/sinif-katil')} />
+            <Button title="Geri" variant="secondary" onPress={backOrHome} />
           </View>
         ) : state.kind === 'loading' ? (
           <View style={styles.center}>
@@ -310,6 +312,7 @@ export default function ConversationScreen() {
                 Yapay zekâ destekli konuşma alıştırmaları üzerinde çalışıyoruz. Çok yakında burada olacak!
               </Body>
             </View>
+            <Button title="Geri" variant="secondary" onPress={backOrHome} />
           </View>
         ) : state.kind === 'error' ? (
           <View style={[styles.center, styles.errorBody]}>
@@ -322,7 +325,7 @@ export default function ConversationScreen() {
                 setReloadKey((k) => k + 1);
               }}
             />
-            <Button title="Geri" variant="outline" onPress={() => router.back()} />
+            <Button title="Geri" variant="outline" onPress={backOrHome} />
           </View>
         ) : (
           <>
@@ -339,7 +342,7 @@ export default function ConversationScreen() {
               <Pressable
                 accessibilityRole="button"
                 accessibilityLabel="Kapat"
-                onPress={() => router.back()}
+                onPress={backOrHome}
                 style={({ pressed }) => [styles.close, { opacity: pressed ? 0.6 : 1 }]}
               >
                 <Text style={[styles.closeText, { color: colors.textMuted }]}>✕</Text>
