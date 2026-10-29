@@ -5,9 +5,28 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { DEFAULT_STATS } from '@/data';
 import type { Course, Exercise } from '@/domain';
 import { useAppStore } from '@/features/store';
+import { aiStatus } from '@/features/conversation';
+import { aiExplain } from '@/features/lesson/explainApi';
 import { useSettingsStore } from '@/ui/settingsStore';
 
 import LessonScreen from '@/app/lesson/[id]';
+
+jest.mock('@/features/conversation', () => ({
+  AiError: class AiError extends Error {
+    code: string;
+    constructor(code: string, message: string) {
+      super(message);
+      this.name = 'AiError';
+      this.code = code;
+    }
+  },
+  aiStatus: jest.fn(),
+}));
+
+jest.mock('@/features/lesson/explainApi', () => ({ aiExplain: jest.fn() }));
+
+const aiStatusMock = aiStatus as jest.Mock;
+const aiExplainMock = aiExplain as jest.Mock;
 
 const METRICS = { frame: { x: 0, y: 0, width: 390, height: 844 }, insets: { top: 0, left: 0, right: 0, bottom: 0 } };
 
@@ -61,6 +80,10 @@ beforeEach(() => {
     finishLesson,
   });
   useSettingsStore.setState({ soundEnabled: true, slowRate: 0.6, relaxedHearts: false, hydrated: true });
+  // AI kapalı varsayılanı: ExplainButton hiç görünmez, mevcut akışlar etkilenmez.
+  aiStatusMock.mockClear();
+  aiExplainMock.mockClear();
+  aiStatusMock.mockResolvedValue({ enabled: false, limit: 30, remaining: null });
   mockReplace.mockClear();
 });
 
@@ -117,6 +140,62 @@ describe('lesson screen with Rahat mod on', () => {
     await answerCurrentCorrect();
     expect(finishLesson).toHaveBeenCalledTimes(1);
     expect(screen.getByText('Ders tamamlandı! 🎉')).toBeTruthy();
+  });
+});
+
+describe("ExplainButton (Cevabımı açıkla)", () => {
+  beforeEach(() => {
+    useSettingsStore.setState({ relaxedHearts: true });
+  });
+
+  it('yanlış cevapta düğme görünür; dokununca doğru gövdeyle istek atılır ve açıklama görünür', async () => {
+    aiStatusMock.mockResolvedValue({ enabled: true, limit: 30, remaining: 10 });
+    aiExplainMock.mockResolvedValue({ explanation: 'Cevabında küçük bir yazım hatası var.', tip: null, remaining: 9 });
+    await renderLesson();
+
+    const wrong = screen.queryAllByRole('radio').find((r) => r.props.accessibilityLabel === 'b');
+    expect(wrong).toBeTruthy();
+    await fireEvent.press(wrong!);
+    await fireEvent.press(screen.getByRole('button', { name: 'Kontrol et' }));
+    const button = await screen.findByRole('button', { name: '🤖 Cevabımı açıkla' });
+    await fireEvent.press(button);
+
+    await screen.findByText('Cevabında küçük bir yazım hatası var.');
+    expect(aiExplainMock).toHaveBeenCalledTimes(1);
+    // doğru cevap metni ekrandaki "Doğru cevap:" ile aynı kaynaktan gelir
+    expect(aiExplainMock).toHaveBeenCalledWith({
+      courseId: 'c-test',
+      exerciseType: 'select_translation',
+      prompt: 'p-e1',
+      userAnswer: 'b',
+      correctAnswer: 'a',
+    });
+    // ikinci dokunuş yeni istek atmaz
+    await fireEvent.press(screen.getByText('Cevabında küçük bir yazım hatası var.'));
+    expect(aiExplainMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('doğru cevapta düğme görünmez', async () => {
+    aiStatusMock.mockResolvedValue({ enabled: true, limit: 30, remaining: 10 });
+    await renderLesson();
+
+    const right = screen.queryAllByRole('radio').find((r) => r.props.accessibilityLabel === 'a');
+    expect(right).toBeTruthy();
+    await fireEvent.press(right!);
+    await fireEvent.press(screen.getByRole('button', { name: 'Kontrol et' }));
+
+    expect(screen.getByText('Harika!')).toBeTruthy();
+    expect(screen.queryByRole('button', { name: '🤖 Cevabımı açıkla' })).toBeNull();
+    expect(aiExplainMock).not.toHaveBeenCalled();
+  });
+
+  it('AI kapalıyken yanlış cevapta bile düğme görünmez', async () => {
+    aiStatusMock.mockResolvedValue({ enabled: false, limit: 30, remaining: null });
+    await renderLesson();
+
+    await answerCurrentWrong();
+    expect(screen.queryByRole('button', { name: '🤖 Cevabımı açıkla' })).toBeNull();
+    expect(aiExplainMock).not.toHaveBeenCalled();
   });
 });
 

@@ -31,3 +31,20 @@ export const ChatBodySchema = z.object({
   history: z.array(ChatMessageSchema).max(20),
   message: z.string().min(1).max(500),
 });
+
+// "Cevabımı açıkla" ucunun Claude'dan zorunlu kılınan yapılandırılmış yanıtı.
+export const ExplainOutputSchema = z.object({
+  // Türkçe, en fazla ~4 kısa cümle kuralıyla tutarlı zarfsal üst sınırlar.
+  explanation: z.string().max(1000),
+  tip: z.string().max(300).optional(),
+});
+
+export type ExplainOutput = z.infer<typeof ExplainOutputSchema>;
+
+export const ExplainBodySchema = z.object({
+  courseId: z.string().min(1).max(20),
+  exerciseType: z.string().min(1).max(40),
+  prompt: z.string().min(1).max(400),
+  userAnswer: z.string().min(1).max(400),
+  correctAnswer: z.string().min(1).max(400),
+});

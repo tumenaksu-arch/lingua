@@ -20,6 +20,8 @@ import {
   accentHint,
 } from '@/domain';
 import { ExerciseView } from '@/features/lesson/ExerciseView';
+import { ExplainButton } from '@/features/lesson/ExplainButton';
+import type { AiExplainRequest } from '@/features/lesson/explainApi';
 import { playComplete, playCorrect, playWrong } from '@/features/sound';
 import { exerciseVocabMap, formatDuration } from '@/features/lesson/helpers';
 import { useAppStore } from '@/features/store';
@@ -55,6 +57,30 @@ function correctAnswerText(e: Exercise): string | undefined {
   }
 }
 
+/** The exercise prompt as the learner saw it (question or sentence to complete). */
+function exercisePromptText(e: Exercise): string | undefined {
+  switch (e.type) {
+    case 'select_translation':
+    case 'translate_build':
+      return e.prompt;
+    case 'listen_type':
+      return e.audioText;
+    case 'speak':
+    case 'fill_blank':
+      return e.sentence;
+    case 'match_pairs':
+      return undefined;
+  }
+}
+
+/** "Cevabımı açıkla" request for a wrong answer; null when the exercise carries no text answer. */
+function explainRequestFor(courseId: string, e: Exercise, userAnswer: string): AiExplainRequest | null {
+  const prompt = exercisePromptText(e);
+  const correctAnswer = correctAnswerText(e);
+  if (!prompt || !correctAnswer) return null;
+  return { courseId, exerciseType: e.type, prompt, userAnswer, correctAnswer };
+}
+
 export default function LessonScreen() {
   const { id, mode } = useLocalSearchParams<Params>();
   const practice = mode === 'practice';
@@ -81,19 +107,23 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
   const [state, setState] = useState<LessonState | null>(() =>
     lesson ? createLesson(lesson.id, lesson.exercises, hearts) : null,
   );
-  const [feedback, setFeedback] = useState<{ ok: boolean; detail?: string } | null>(null);
+  const [feedback, setFeedback] = useState<{ ok: boolean; detail?: string; userAnswer?: string } | null>(null);
   const [summary, setSummary] = useState<{ xpEarned: number; dailyGoalJustReached: boolean } | null>(null);
   const [finished, setFinished] = useState<{ durationMs: number; saving: boolean } | null>(null);
   const [saveError, setSaveError] = useState<string | null>(null);
 
   const exercise = state ? current(state) : undefined;
+  const explainRequest =
+    feedback && !feedback.ok && exercise && feedback.userAnswer
+      ? explainRequestFor(course.id, exercise, feedback.userAnswer)
+      : null;
 
   const onAnswer = useCallback(
     (isCorrect: boolean, userAnswer?: string) => {
       if (!exercise || feedback) return;
       void (isCorrect ? playCorrect() : playWrong());
       if (!isCorrect && !practice && !relaxed) void saveStats(loseHeart(regenerate(stats, Date.now()), Date.now()));
-      setFeedback({ ok: isCorrect, detail: isCorrect ? accentNote(exercise, userAnswer) : correctAnswerText(exercise) });
+      setFeedback({ ok: isCorrect, detail: isCorrect ? accentNote(exercise, userAnswer) : correctAnswerText(exercise), userAnswer });
     },
     [exercise, feedback, practice, relaxed, saveStats, stats],
   );
@@ -193,6 +223,7 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
         explanation={
           feedback?.ok || !exercise ? undefined : (getExplanation(exercise.id) ?? genericHint(exercise.type))
         }
+        extra={explainRequest ? <ExplainButton {...explainRequest} /> : undefined}
         continueLabel="Devam"
         onContinue={onContinue}
       />

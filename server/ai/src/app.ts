@@ -1,10 +1,10 @@
 import { createHash } from "node:crypto";
 import Fastify, { type FastifyInstance } from "fastify";
 import { verifyUserId } from "./auth.js";
-import { chatOnce, createClaudeClient, type ClaudeConfig } from "./claude.js";
-import { buildMessages, buildSystemBlocks } from "./prompt.js";
+import { chatOnce, createClaudeClient, explainOnce, type ClaudeConfig } from "./claude.js";
+import { buildExplainBlocks, buildExplainMessages, buildMessages, buildSystemBlocks } from "./prompt.js";
 import { COURSES, getCourse, getScenario } from "./scenarios.js";
-import { ChatBodySchema } from "./schema.js";
+import { ChatBodySchema, ExplainBodySchema } from "./schema.js";
 import { usageRecord, usageRemaining, usageTake, type UsageConfig, type UsageTakeResult } from "./usage.js";
 
 export interface AppConfig {
@@ -182,6 +182,93 @@ export function buildApp(cfg: AppConfig): FastifyInstance {
         req.log.error({ err: refundErr, user: logUser }, "usage_refund_failed"),
       );
       req.log.warn({ err, user: logUser, status: 502, latencyMs: Date.now() - startedAt }, "chat_upstream_error");
+      return fail(502, "upstream", "Beklenmedik bir hata oluştu, lütfen tekrar dene.");
+    }
+  });
+
+  app.post("/v1/explain", async (req, reply) => {
+    const startedAt = Date.now();
+    let logUser = "-";
+    const fail = (status: number, error: string, message: string, extra?: object) =>
+      reply.status(status).send({ error, message, ...extra });
+
+    // 1) Kimlik doğrulama — /v1/chat ile aynı sıra: doğrulanamayan çağrılan
+    // her zaman 401 alır.
+    const auth = await verifyUserId(req.headers.authorization, cfg.jwtSecret);
+    if (!auth.ok || !auth.userId) {
+      return fail(401, "auth", "Oturum doğrulanamadı, lütfen tekrar giriş yap.");
+    }
+    const userId = auth.userId;
+    logUser = userHash(userId);
+
+    // 2) Doğrulama
+    const parsed = ExplainBodySchema.safeParse(req.body);
+    if (!parsed.success) {
+      return fail(400, "bad_request", "Geçersiz istek: courseId, exerciseType, prompt (≤ 400), userAnswer (≤ 400) ve correctAnswer (≤ 400) gerekli.");
+    }
+    const body = parsed.data;
+
+    // 3) Yapılandırma / kurs kontrolü (doğrulanmış çağrana 503)
+    if (!claudeClient) {
+      return fail(503, "not_configured", "Yapay zekâ özelliği şu anda yapılandırılmamış.");
+    }
+    const course = getCourse(body.courseId);
+    if (!course) {
+      return fail(400, "bad_request", "Bilinmeyen kurs (courseId).");
+    }
+
+    // 4) Günlük sınır: bir açıklama da 1 mesaj sayılır (aynı sayaç)
+    let take: UsageTakeResult;
+    try {
+      take = await usageTake(cfg.usage, userId);
+    } catch (err) {
+      req.log.error({ err, user: logUser }, "usage_take_failed");
+      return fail(502, "upstream", "Kullanım sayacına ulaşılamadı, lütfen tekrar dene.");
+    }
+    if (take.used < 0) {
+      return fail(429, "limit", "Bugünlük yapay zekâ mesaj limitin doldu, yarın tekrar dene.", {
+        remaining: 0,
+      });
+    }
+
+    // 5) Claude çağrısı — günlükte metin YOK (yalnız kullanıcı hash'i, durum,
+    // süre, token).
+    const system = buildExplainBlocks(course, body.exerciseType);
+    const messages = buildExplainMessages(body);
+    try {
+      const response = await explainOnce(claudeClient, cfg.claude, system, messages);
+      if (response.stop_reason === "refusal") {
+        await usageRecord(cfg.usage, userId, take.day, 0, 0, true).catch((err) =>
+          req.log.error({ err, user: logUser }, "usage_refund_failed"),
+        );
+        return fail(502, "upstream", "Bu konuda şu anda yardımcı olamıyorum, lütfen tekrar dene.");
+      }
+      const output = response.parsed_output;
+      if (!output) {
+        await usageRecord(cfg.usage, userId, take.day, 0, 0, true).catch((err) =>
+          req.log.error({ err, user: logUser }, "usage_refund_failed"),
+        );
+        return fail(502, "upstream", "Yanıt alınamadı, lütfen tekrar dene.");
+      }
+      const inputTokens = response.usage?.input_tokens ?? 0;
+      const outputTokens = response.usage?.output_tokens ?? 0;
+      await usageRecord(cfg.usage, userId, take.day, inputTokens, outputTokens, false).catch((err) =>
+        req.log.error({ err, user: logUser }, "usage_record_failed"),
+      );
+      req.log.info(
+        { user: logUser, status: 200, latencyMs: Date.now() - startedAt, inputTokens, outputTokens },
+        "explain_ok",
+      );
+      return {
+        explanation: output.explanation,
+        tip: output.tip ?? null,
+        remaining: Math.max(0, cfg.usage.dailyLimit - take.used),
+      };
+    } catch (err) {
+      await usageRecord(cfg.usage, userId, take.day, 0, 0, true).catch((refundErr) =>
+        req.log.error({ err: refundErr, user: logUser }, "usage_refund_failed"),
+      );
+      req.log.warn({ err, user: logUser, status: 502, latencyMs: Date.now() - startedAt }, "explain_upstream_error");
       return fail(502, "upstream", "Beklenmedik bir hata oluştu, lütfen tekrar dene.");
     }
   });

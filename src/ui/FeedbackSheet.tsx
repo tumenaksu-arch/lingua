@@ -1,5 +1,5 @@
 import * as Haptics from 'expo-haptics';
-import { useEffect } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { AccessibilityInfo, StyleSheet, Text, View } from 'react-native';
 import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -18,6 +18,8 @@ export type FeedbackSheetProps = {
   detail?: string;
   /** "Neden?" explanation for wrong answers (specific text or the generic per-type hint). */
   explanation?: string;
+  /** Extra content under the explanation (e.g. the AI "Cevabımı açıkla" button). */
+  extra?: ReactNode;
   /** Override headline (defaults "Nicely done!" / "Correct solution:"). */
   title?: string;
   continueLabel?: string;
@@ -33,6 +35,7 @@ export function FeedbackSheet({
   result,
   detail,
   explanation,
+  extra,
   title,
   continueLabel = 'Continue',
   onContinue,
@@ -79,6 +82,7 @@ export function FeedbackSheet({
           ) : null}
         </View>
       </View>
+      {extra}
       <Button title={continueLabel} variant={correct ? 'primary' : 'danger'} onPress={onContinue} silent />
     </Animated.View>
   );
