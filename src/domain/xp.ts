@@ -1,4 +1,5 @@
 import type { LessonResult, UserStats } from './types';
+import { xpBoostMultiplier } from './economy';
 import { applyActivity } from './streak';
 
 export const BASE_LESSON_XP = 10;
@@ -27,7 +28,8 @@ export function applyLessonResult(
   _now: number,
   localDate: string,
 ): ApplyLessonOutcome {
-  const xpEarned = lessonXp(result);
+  // Çift XP etkinse merkezî çarpan burada uygulanır (görev ödülü bu akışa girmez).
+  const xpEarned = lessonXp(result) * xpBoostMultiplier(stats, _now);
   const newDay = stats.lastActiveDate !== localDate;
   const xpBefore = newDay ? 0 : stats.xpToday;
   const xpToday = xpBefore + xpEarned;

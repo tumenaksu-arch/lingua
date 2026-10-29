@@ -29,6 +29,14 @@ describe('streak', () => {
     expect(s.streak).toBe(1);
     expect(s.streakFreezes).toBe(1);
   });
+  test('a reset records the lost streak for the shop repair', () => {
+    const s = applyActivity({ ...base, streakFreezes: 0 }, '2026-10-12');
+    expect(s.streak).toBe(1);
+    expect(s.lostStreak).toEqual({ value: 3, lostOn: '2026-10-12' });
+  });
+  test('no lostStreak record on a normal increment', () => {
+    expect(applyActivity(base, '2026-10-11').lostStreak).toBeUndefined();
+  });
   test('reaching day 7 awards a streak freeze', () => {
     const s = applyActivity({ ...base, streak: 6, streakFreezes: 0 }, '2026-10-11');
     expect(s.streak).toBe(7);

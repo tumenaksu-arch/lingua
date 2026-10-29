@@ -156,6 +156,18 @@ export interface UserStats {
   heartsUpdatedAt: number; // epoch ms
   dailyGoalXp: number;
   xpToday: number;
+  /**
+   * Elmas bakiyesi (mağaza ekonomisi). Cihaz-local kalır — sunucu şemasına
+   * gönderilmez (bkz. statsRepo.statsToServerRow). Eski kayıtlarda alan yok;
+   * `undefined` 0 sayılır.
+   */
+  gems?: number;
+  /** Çift XP bitiş zamanı (epoch ms). Yoksa veya geçmişse XP çarpanı 1. */
+  xpBoostUntil?: number;
+  /** Seri kırıldığında kaydedilen son değer (mağaza "seri onarma" için). */
+  lostStreak?: { value: number; lostOn: string };
+  /** Sandık sayacı: son sandıktan sonra tamamlanan ders sayısı (3'e ulaşınca sandık açılır). */
+  lessonsSinceChest?: number;
 }
 
 export interface LessonResult {

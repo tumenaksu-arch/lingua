@@ -5,15 +5,28 @@ import {
   advanceGoalStreak,
   applyActivity,
   applyLessonResult,
+  awardGems,
+  buyItem as buyItemDomain,
   createCard,
   evaluate as evaluateAchievements,
+  gemsOf,
   type GoalStreak,
   gradeFromOutcome,
+  GEMS_DAILY_GOAL,
+  GEMS_QUEST,
+  GEMS_STORY,
+  lessonGems,
   localDateString,
+  openChest as openChestDomain,
   regenerate,
   review,
+  SHOP_PRICES,
+  xpBoostMultiplier,
+  STARTER_GEMS,
+  type ChestReward,
   type Course,
   type LessonResult,
+  type ShopItem,
   type SrsCard,
   type UserStats,
 } from '@/domain';
@@ -68,6 +81,8 @@ const REVIEWED_COUNT_KEY = 'srs_reviewed_count';
 const REVIEW_SESSIONS_KEY = 'srs_review_sessions';
 const GOAL_STREAK_KEY = 'goal_streak';
 const REMINDER_KEY = 'reminder_hour';
+/** İş 3A: hoş geldin elması bir kez verilir (bayrak cihaz başına sync_meta'da). */
+const GEMS_WELCOMED_KEY = 'gems_welcomed';
 
 /** Story XP: base 10, +2 per correct comprehension answer (roadmap item 2). */
 export const STORY_BASE_XP = 10;
@@ -186,6 +201,18 @@ export interface AppState {
   refreshQuests: () => Promise<void>;
   /** Claims a completed quest's +10 XP reward; a second claim returns 0 and changes nothing. */
   claimQuest: (questId: string) => Promise<{ xpEarned: number }>;
+  /**
+   * Mağaza satın alması (iş 3A): tek dokunuşluk; bakiye yetersizse ok:false döner
+   * (`reason`: 'insufficient' | 'full' | 'unavailable'). Başarıda bakiye düşer ve
+   * etki (dondurma / can dolumu / çift XP / seri onarımı) uygulanır.
+   */
+  buyItem: (item: ShopItem) => Promise<{ ok: boolean; gems: number; reason?: 'insufficient' | 'full' | 'unavailable' }>;
+  /**
+   * Ders sonu sandığını açar (her 3 tamamlanan derste bir). Sandık hazır değilse
+   * null; aksi hâlde ödül stats'a uygulanmış hâlde döner. `rng` testler için
+   * enjekte edilebilir (varsayılan Math.random).
+   */
+  openChest: (rng?: () => number) => Promise<ChestReward | null>;
   /** Number of previous skip-test attempts for the unit (count of `unit_skip_attempt` events). */
   skipAttempts: (unitId: string) => Promise<number>;
   /**
@@ -396,6 +423,7 @@ async function claimQuestPayout(r: Repos, questId: string): Promise<{ xpEarned: 
     await useAppStore.getState().refreshQuests();
     return { xpEarned: 0 };
   }
+  next = withGemAward(next, 'quest'); // iş 3A: görev ödülü +10 elmas
   await r.stats.save(next, now);
   await r.progress.logEvent(`quest:${date}:${questId}`, 'quest_claimed', { xp: xpEarned, questId, date }, now);
   useAppStore.setState({ stats: next });
@@ -406,6 +434,19 @@ async function claimQuestPayout(r: Repos, questId: string): Promise<{ xpEarned: 
   await unlockAchievements(db, useAppStore.getState, useAppStore.setState);
   void useAppStore.getState().sync();
   return { xpEarned };
+}
+
+/** İş 3A elmas kazanç nedenleri (store içi); görev/sandık XP çarpanına girmez. */
+type GemAwardReason = 'lesson' | 'perfectLesson' | 'quest' | 'story' | 'dailyGoal';
+
+function withGemAward(stats: UserStats, reason: GemAwardReason): UserStats {
+  const amount =
+    reason === 'lesson' ? lessonGems(false)
+    : reason === 'perfectLesson' ? lessonGems(true)
+    : reason === 'quest' ? GEMS_QUEST
+    : reason === 'story' ? GEMS_STORY
+    : GEMS_DAILY_GOAL;
+  return awardGems(stats, amount);
 }
 
 export const useAppStore = create<AppState>((set, get) => ({
@@ -444,7 +485,15 @@ export const useAppStore = create<AppState>((set, get) => ({
     const savedCourse = await getMeta(db, COURSE_KEY);
     const course = (savedCourse && getCourse(savedCourse)) || courses[0]!;
     const now = Date.now();
-    const stats = regenerate(await repos.stats.get(), now);
+    // Hoş geldin hediyesi: eski kayıtlarda gems alanı yoktur; cihaz başına bir
+    // kez 50 elmas verilir (bayrak sync_meta'da, tekrar verilmez).
+    let stats = regenerate(await repos.stats.get(), now);
+    if ((await getMeta(db, GEMS_WELCOMED_KEY)) !== '1') {
+      stats = awardGems(stats, STARTER_GEMS);
+      // writeLocal: sunucu satırı zaten aynı, gereksiz outbox write'ı yok.
+      await repos.stats.writeLocal(stats, now);
+      await setMeta(db, GEMS_WELCOMED_KEY, '1');
+    }
     const progressList = await repos.progress.all();
     const progress = Object.fromEntries(progressList.map((p) => [p.lessonId, p]));
     const dueCount = await repos.srs.countDue(now, `${course.id}.`);
@@ -513,7 +562,13 @@ export const useAppStore = create<AppState>((set, get) => ({
     const r = requireRepos();
     const now = Date.now();
     const outcome = applyLessonResult(get().stats, result, now, localDateString(new Date()));
-    await r.stats.save(outcome.stats, now);
+    // İş 3A: ders bitişi +5 (hatasız +10) elmas, günlük hedefe ilk ulaşma +5,
+    // sandık sayacı ilerler (her 3 derste bir ders sonu sandığı).
+    let next: UserStats = outcome.stats;
+    next = withGemAward(next, result.mistakes.length === 0 ? 'perfectLesson' : 'lesson');
+    if (outcome.dailyGoalJustReached) next = withGemAward(next, 'dailyGoal');
+    next = { ...next, lessonsSinceChest: (next.lessonsSinceChest ?? 0) + 1 };
+    await r.stats.save(next, now);
     const lp = await r.progress.completeLesson(result.lessonId, now);
     await r.progress.logEvent(`${result.lessonId}:${now}`, 'lesson_completed', {
       xp: outcome.xpEarned,
@@ -543,7 +598,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     }
 
     set((s) => ({
-      stats: outcome.stats,
+      stats: next,
       progress: { ...s.progress, [lp.lessonId]: lp },
     }));
     set({ dueCount: await r.srs.countDue(now, `${get().course.id}.`) });
@@ -565,15 +620,18 @@ export const useAppStore = create<AppState>((set, get) => ({
     const r = requireRepos();
     const now = Date.now();
     // First completion: 10 + 2 per correct answer; re-completions: flat 5 XP.
-    // Same stats pipeline as lessons (streak, daily goal).
-    const xpEarned = get().progress[storyId]?.completedAt ? STORY_REPEAT_XP : storyXp(correct);
+    // Same stats pipeline as lessons (streak, daily goal). İş 3A: çift XP
+    // etkinse çarpan uygulanır; hikâye bitişi +5 elmas.
+    const baseXp = get().progress[storyId]?.completedAt ? STORY_REPEAT_XP : storyXp(correct);
     const localDate = localDateString(new Date());
     const prev = get().stats;
+    const xpEarned = baseXp * xpBoostMultiplier(prev, now);
     const newDay = prev.lastActiveDate !== localDate;
     const xpBefore = newDay ? 0 : prev.xpToday;
     const xpToday = xpBefore + xpEarned;
     let next: UserStats = { ...prev, xp: prev.xp + xpEarned, xpToday };
     next = applyActivity(next, localDate);
+    next = withGemAward(next, 'story');
     await r.stats.save(next, now);
     const lp = await r.progress.completeLesson(storyId, now);
     // Unique id even for same-millisecond repeats (events are INSERT OR IGNORE).
@@ -860,10 +918,11 @@ export const useAppStore = create<AppState>((set, get) => ({
     if (mode === 'mistakes') {
       await r.mistakes.record(get().course.id, wrongIds, correctIds, now);
     }
-    const xpEarned = practiceXp(correct, total);
+    // İş 3A: çift XP etkinse pratik oturumu XP'si de iki katına çıkar.
+    const prev = get().stats;
+    const xpEarned = practiceXp(correct, total) * xpBoostMultiplier(prev, now);
     const localDate = localDateString(new Date());
     // Same stats pipeline as lessons/stories: total + today XP, streak activity.
-    const prev = get().stats;
     const newDay = prev.lastActiveDate !== localDate;
     const xpBefore = newDay ? 0 : prev.xpToday;
     const xpToday = xpBefore + xpEarned;
@@ -938,6 +997,35 @@ export const useAppStore = create<AppState>((set, get) => ({
     } finally {
       set((s) => ({ claimingQuestIds: s.claimingQuestIds.filter((id) => id !== questId) }));
     }
+  },
+
+  async buyItem(item) {
+    const r = requireRepos();
+    const now = Date.now();
+    const today = localDateString(new Date());
+    // Kalpler ara sıra yenilenir: satın alma kararı güncel (yenilenmiş) kalple verilir.
+    const prev = regenerate(get().stats, now);
+    const res = buyItemDomain(prev, item, now, today);
+    if (!res.ok) return { ok: false, gems: gemsOf(prev), reason: res.reason };
+    await r.stats.save(res.stats, now);
+    // Sunucu bilinmeyen event tiplerini düz satır olarak kabul eder.
+    await r.progress.logEvent(`shop:${item}:${now}`, 'shop_purchase', { item, price: SHOP_PRICES[item] }, now);
+    set({ stats: res.stats });
+    void get().sync();
+    return { ok: true, gems: gemsOf(res.stats) };
+  },
+
+  async openChest(rng = Math.random) {
+    const r = requireRepos();
+    const now = Date.now();
+    const out = openChestDomain(get().stats, now, rng);
+    if (!out) return null;
+    await r.stats.save(out.stats, now);
+    // Unique id even for same-millisecond opens (events are INSERT OR IGNORE).
+    await r.progress.logEvent(`chest:${now}:${Math.random().toString(36).slice(2, 8)}`, 'chest_opened', { reward: out.reward }, now);
+    set({ stats: out.stats });
+    void get().sync();
+    return out.reward;
   },
 
   async setDailyGoal(xp) {

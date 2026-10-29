@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { MAX_FONT_SCALE_DENSE, fontSize, fonts, radii, spacing } from './theme';
 import { useTheme } from './useTheme';
@@ -65,6 +66,54 @@ export type XpBadgeProps = ChipProps & { xp: number };
 export function XpBadge({ xp, style }: XpBadgeProps) {
   const { colors } = useTheme();
   return <Chip icon="⚡" value={`${xp} XP`} color={colors.xpText} label={`${xp} XP`} style={style} />;
+}
+
+export type GemChipProps = ChipProps & { gems: number; /** Mağazayı açar; verilmezse salt metin. */
+  onPress?: () => void };
+/** Elmas bakiyesi; dokununca mağazayı açar. */
+export function GemChip({ gems, onPress, style }: GemChipProps) {
+  const { colors } = useTheme();
+  const chip = (
+    <Chip icon="💎" value={gems} color={colors.secondaryText} label={`${gems} elmas`} style={style} />
+  );
+  if (!onPress) return chip;
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={`${gems} elmas. Mağazayı aç`}
+      onPress={onPress}
+      hitSlop={8}
+    >
+      {chip}
+    </Pressable>
+  );
+}
+
+export type XpBoostChipProps = ChipProps & { until: number };
+/**
+ * "⚡ Çift XP — 12:34" geri sayım çipi. Süre dolunca kendini gizler;
+ * saniyelik tick kendi içinde döner (ana sayfa ve ders sonu ekranı).
+ */
+export function XpBoostChip({ until, style }: XpBoostChipProps) {
+  const { colors } = useTheme();
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, []);
+  if (until <= now) return null;
+  const totalSec = Math.max(0, Math.floor((until - now) / 1000));
+  const mm = String(Math.floor(totalSec / 60)).padStart(2, '0');
+  const ss = String(totalSec % 60).padStart(2, '0');
+  return (
+    <Chip
+      icon="⚡"
+      value={`Çift XP — ${mm}:${ss}`}
+      color={colors.xpText}
+      label={`Çift XP aktif, kalan süre ${mm} dakika ${ss} saniye`}
+      style={[{ borderColor: colors.xpText }, style]}
+    />
+  );
 }
 
 const styles = StyleSheet.create({
