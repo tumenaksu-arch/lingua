@@ -12061,6 +12061,750 @@
  },
  {
   "lang": "es",
+  "text": "ayer"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer fui al parque."
+ },
+ {
+  "lang": "es",
+  "text": "anoche"
+ },
+ {
+  "lang": "es",
+  "text": "Anoche dormí bien."
+ },
+ {
+  "lang": "es",
+  "text": "hacer"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer hice la tarea."
+ },
+ {
+  "lang": "es",
+  "text": "ir"
+ },
+ {
+  "lang": "es",
+  "text": "Fui al parque ayer."
+ },
+ {
+  "lang": "es",
+  "text": "ver"
+ },
+ {
+  "lang": "es",
+  "text": "Anoche vi una película."
+ },
+ {
+  "lang": "es",
+  "text": "dormir"
+ },
+ {
+  "lang": "es",
+  "text": "Anoche dormí ocho horas."
+ },
+ {
+  "lang": "es",
+  "text": "trabajar"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer trabajé ocho horas."
+ },
+ {
+  "lang": "es",
+  "text": "estudiar"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer estudié español."
+ },
+ {
+  "lang": "es",
+  "text": "entonces"
+ },
+ {
+  "lang": "es",
+  "text": "Entonces fui a casa."
+ },
+ {
+  "lang": "es",
+  "text": "cansado"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy estoy muy cansado."
+ },
+ {
+  "lang": "es",
+  "text": "la tarea"
+ },
+ {
+  "lang": "es",
+  "text": "Hice la tarea ayer."
+ },
+ {
+  "lang": "es",
+  "text": "salir"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer salí con mis amigos."
+ },
+ {
+  "lang": "es",
+  "text": "la casa"
+ },
+ {
+  "lang": "es",
+  "text": "Mi casa es pequeña."
+ },
+ {
+  "lang": "es",
+  "text": "la cocina"
+ },
+ {
+  "lang": "es",
+  "text": "La cocina está sucia."
+ },
+ {
+  "lang": "es",
+  "text": "el baño"
+ },
+ {
+  "lang": "es",
+  "text": "El baño está limpio."
+ },
+ {
+  "lang": "es",
+  "text": "el dormitorio"
+ },
+ {
+  "lang": "es",
+  "text": "Mi dormitorio es ordenado."
+ },
+ {
+  "lang": "es",
+  "text": "la cama"
+ },
+ {
+  "lang": "es",
+  "text": "Hago la cama todos los días."
+ },
+ {
+  "lang": "es",
+  "text": "limpiar"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer limpié el baño."
+ },
+ {
+  "lang": "es",
+  "text": "lavar"
+ },
+ {
+  "lang": "es",
+  "text": "Lavo la ropa los sábados."
+ },
+ {
+  "lang": "es",
+  "text": "la ropa"
+ },
+ {
+  "lang": "es",
+  "text": "La ropa está sucia."
+ },
+ {
+  "lang": "es",
+  "text": "el suelo"
+ },
+ {
+  "lang": "es",
+  "text": "El suelo está sucio."
+ },
+ {
+  "lang": "es",
+  "text": "ordenado"
+ },
+ {
+  "lang": "es",
+  "text": "sucio"
+ },
+ {
+  "lang": "es",
+  "text": "normalmente"
+ },
+ {
+  "lang": "es",
+  "text": "Normalmente limpio los sábados."
+ },
+ {
+  "lang": "es",
+  "text": "el cuerpo"
+ },
+ {
+  "lang": "es",
+  "text": "Me duele el cuerpo."
+ },
+ {
+  "lang": "es",
+  "text": "la cabeza"
+ },
+ {
+  "lang": "es",
+  "text": "Me duele la cabeza."
+ },
+ {
+  "lang": "es",
+  "text": "el brazo"
+ },
+ {
+  "lang": "es",
+  "text": "Me duele el brazo."
+ },
+ {
+  "lang": "es",
+  "text": "la pierna"
+ },
+ {
+  "lang": "es",
+  "text": "Me duele la pierna."
+ },
+ {
+  "lang": "es",
+  "text": "la mano"
+ },
+ {
+  "lang": "es",
+  "text": "Me duele la mano."
+ },
+ {
+  "lang": "es",
+  "text": "doler"
+ },
+ {
+  "lang": "es",
+  "text": "el resfriado"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo un resfriado."
+ },
+ {
+  "lang": "es",
+  "text": "la fiebre"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo fiebre."
+ },
+ {
+  "lang": "es",
+  "text": "la medicina"
+ },
+ {
+  "lang": "es",
+  "text": "Tomo la medicina."
+ },
+ {
+  "lang": "es",
+  "text": "la farmacia"
+ },
+ {
+  "lang": "es",
+  "text": "La farmacia está cerca."
+ },
+ {
+  "lang": "es",
+  "text": "el hospital"
+ },
+ {
+  "lang": "es",
+  "text": "El hospital está lejos."
+ },
+ {
+  "lang": "es",
+  "text": "enfermo"
+ },
+ {
+  "lang": "es",
+  "text": "Estoy enfermo."
+ },
+ {
+  "lang": "es",
+  "text": "la calle"
+ },
+ {
+  "lang": "es",
+  "text": "La calle está aquí."
+ },
+ {
+  "lang": "es",
+  "text": "el autobús"
+ },
+ {
+  "lang": "es",
+  "text": "El autobús está en la parada."
+ },
+ {
+  "lang": "es",
+  "text": "el metro"
+ },
+ {
+  "lang": "es",
+  "text": "El metro es rápido."
+ },
+ {
+  "lang": "es",
+  "text": "la parada"
+ },
+ {
+  "lang": "es",
+  "text": "La parada está cerca."
+ },
+ {
+  "lang": "es",
+  "text": "el mapa"
+ },
+ {
+  "lang": "es",
+  "text": "Miro el mapa."
+ },
+ {
+  "lang": "es",
+  "text": "seguir"
+ },
+ {
+  "lang": "es",
+  "text": "Sigue recto."
+ },
+ {
+  "lang": "es",
+  "text": "cruzar"
+ },
+ {
+  "lang": "es",
+  "text": "Cruza la calle."
+ },
+ {
+  "lang": "es",
+  "text": "la esquina"
+ },
+ {
+  "lang": "es",
+  "text": "Gira en la esquina."
+ },
+ {
+  "lang": "es",
+  "text": "girar"
+ },
+ {
+  "lang": "es",
+  "text": "Gira a la derecha."
+ },
+ {
+  "lang": "es",
+  "text": "recto"
+ },
+ {
+  "lang": "es",
+  "text": "enfrente"
+ },
+ {
+  "lang": "es",
+  "text": "La estación está enfrente."
+ },
+ {
+  "lang": "es",
+  "text": "llegar"
+ },
+ {
+  "lang": "es",
+  "text": "¿Cómo llego a la estación?"
+ },
+ {
+  "lang": "es",
+  "text": "la playa"
+ },
+ {
+  "lang": "es",
+  "text": "Voy a la playa en verano."
+ },
+ {
+  "lang": "es",
+  "text": "el mar"
+ },
+ {
+  "lang": "es",
+  "text": "Me gusta el mar."
+ },
+ {
+  "lang": "es",
+  "text": "la montaña"
+ },
+ {
+  "lang": "es",
+  "text": "La montaña es alta."
+ },
+ {
+  "lang": "es",
+  "text": "el verano"
+ },
+ {
+  "lang": "es",
+  "text": "En verano hace calor."
+ },
+ {
+  "lang": "es",
+  "text": "las vacaciones"
+ },
+ {
+  "lang": "es",
+  "text": "Las vacaciones son en agosto."
+ },
+ {
+  "lang": "es",
+  "text": "próximo"
+ },
+ {
+  "lang": "es",
+  "text": "El próximo mes viajo."
+ },
+ {
+  "lang": "es",
+  "text": "pensar"
+ },
+ {
+  "lang": "es",
+  "text": "Pienso viajar."
+ },
+ {
+  "lang": "es",
+  "text": "visitar"
+ },
+ {
+  "lang": "es",
+  "text": "Voy a visitar Madrid."
+ },
+ {
+  "lang": "es",
+  "text": "llevar"
+ },
+ {
+  "lang": "es",
+  "text": "Llevo una maleta."
+ },
+ {
+  "lang": "es",
+  "text": "el mes"
+ },
+ {
+  "lang": "es",
+  "text": "El próximo mes es julio."
+ },
+ {
+  "lang": "es",
+  "text": "juntos"
+ },
+ {
+  "lang": "es",
+  "text": "Viajamos juntos."
+ },
+ {
+  "lang": "es",
+  "text": "pronto"
+ },
+ {
+  "lang": "es",
+  "text": "Nos vemos pronto."
+ },
+ {
+  "lang": "es",
+  "text": "mejor"
+ },
+ {
+  "lang": "es",
+  "text": "El tren es mejor que el coche."
+ },
+ {
+  "lang": "es",
+  "text": "peor"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy estoy peor."
+ },
+ {
+  "lang": "es",
+  "text": "mayor"
+ },
+ {
+  "lang": "es",
+  "text": "Mi hermano es mayor que yo."
+ },
+ {
+  "lang": "es",
+  "text": "menor"
+ },
+ {
+  "lang": "es",
+  "text": "Mi hermana es menor."
+ },
+ {
+  "lang": "es",
+  "text": "más"
+ },
+ {
+  "lang": "es",
+  "text": "El tren es más rápido."
+ },
+ {
+  "lang": "es",
+  "text": "menos"
+ },
+ {
+  "lang": "es",
+  "text": "El autobús es menos rápido."
+ },
+ {
+  "lang": "es",
+  "text": "tan"
+ },
+ {
+  "lang": "es",
+  "text": "Este examen no es tan difícil."
+ },
+ {
+  "lang": "es",
+  "text": "el equipo"
+ },
+ {
+  "lang": "es",
+  "text": "Mi equipo es bueno."
+ },
+ {
+  "lang": "es",
+  "text": "el examen"
+ },
+ {
+  "lang": "es",
+  "text": "El examen es difícil."
+ },
+ {
+  "lang": "es",
+  "text": "fácil"
+ },
+ {
+  "lang": "es",
+  "text": "El examen es fácil."
+ },
+ {
+  "lang": "es",
+  "text": "difícil"
+ },
+ {
+  "lang": "es",
+  "text": "rápido"
+ },
+ {
+  "lang": "es",
+  "text": "El tren es rápido."
+ },
+ {
+  "lang": "es",
+  "text": "feliz"
+ },
+ {
+  "lang": "es",
+  "text": "Estoy feliz hoy."
+ },
+ {
+  "lang": "es",
+  "text": "triste"
+ },
+ {
+  "lang": "es",
+  "text": "No estoy triste."
+ },
+ {
+  "lang": "es",
+  "text": "contento"
+ },
+ {
+  "lang": "es",
+  "text": "Estoy contento."
+ },
+ {
+  "lang": "es",
+  "text": "genial"
+ },
+ {
+  "lang": "es",
+  "text": "¡Genial!"
+ },
+ {
+  "lang": "es",
+  "text": "nervioso"
+ },
+ {
+  "lang": "es",
+  "text": "Estoy nervioso por el examen."
+ },
+ {
+  "lang": "es",
+  "text": "tranquilo"
+ },
+ {
+  "lang": "es",
+  "text": "Mi padre es tranquilo."
+ },
+ {
+  "lang": "es",
+  "text": "fuerte"
+ },
+ {
+  "lang": "es",
+  "text": "Mi hermano es fuerte."
+ },
+ {
+  "lang": "es",
+  "text": "amable"
+ },
+ {
+  "lang": "es",
+  "text": "El profesor es amable."
+ },
+ {
+  "lang": "es",
+  "text": "tímido"
+ },
+ {
+  "lang": "es",
+  "text": "El niño es tímido."
+ },
+ {
+  "lang": "es",
+  "text": "creer"
+ },
+ {
+  "lang": "es",
+  "text": "Creo que sí."
+ },
+ {
+  "lang": "es",
+  "text": "la razón"
+ },
+ {
+  "lang": "es",
+  "text": "Tienes razón."
+ },
+ {
+  "lang": "es",
+  "text": "importante"
+ },
+ {
+  "lang": "es",
+  "text": "La familia es importante."
+ },
+ {
+  "lang": "es",
+  "text": "quisiera"
+ },
+ {
+  "lang": "es",
+  "text": "Quisiera una mesa para dos."
+ },
+ {
+  "lang": "es",
+  "text": "me gustaría"
+ },
+ {
+  "lang": "es",
+  "text": "Me gustaría un té."
+ },
+ {
+  "lang": "es",
+  "text": "podría"
+ },
+ {
+  "lang": "es",
+  "text": "¿Podría repetir, por favor?"
+ },
+ {
+  "lang": "es",
+  "text": "llamar"
+ },
+ {
+  "lang": "es",
+  "text": "Voy a llamar a mi madre."
+ },
+ {
+  "lang": "es",
+  "text": "el teléfono"
+ },
+ {
+  "lang": "es",
+  "text": "El teléfono está en la mesa."
+ },
+ {
+  "lang": "es",
+  "text": "reservar"
+ },
+ {
+  "lang": "es",
+  "text": "Quiero reservar una mesa."
+ },
+ {
+  "lang": "es",
+  "text": "la mesa"
+ },
+ {
+  "lang": "es",
+  "text": "¿Está libre esta mesa?"
+ },
+ {
+  "lang": "es",
+  "text": "traer"
+ },
+ {
+  "lang": "es",
+  "text": "¿Puede traer la cuenta?"
+ },
+ {
+  "lang": "es",
+  "text": "la propina"
+ },
+ {
+  "lang": "es",
+  "text": "Dejo una propina."
+ },
+ {
+  "lang": "es",
+  "text": "el camarero"
+ },
+ {
+  "lang": "es",
+  "text": "El camarero trae el menú."
+ },
+ {
+  "lang": "es",
+  "text": "con gusto"
+ },
+ {
+  "lang": "es",
+  "text": "Te ayudo con gusto."
+ },
+ {
+  "lang": "es",
+  "text": "libre"
+ },
+ {
+  "lang": "es",
   "text": "Sí, por favor"
  },
  {
@@ -13244,6 +13988,1798 @@
   "text": "Juego al fútbol con mi amigo"
  },
  {
+  "lang": "es",
+  "text": "Ayer fui al parque"
+ },
+ {
+  "lang": "es",
+  "text": "Fui al parque ayer"
+ },
+ {
+  "lang": "es",
+  "text": "Anoche dormí bien"
+ },
+ {
+  "lang": "es",
+  "text": "Dormí bien anoche"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer fui al parque con mi hermano"
+ },
+ {
+  "lang": "es",
+  "text": "Fui al parque con mi hermano ayer"
+ },
+ {
+  "lang": "es",
+  "text": "Anoche ___ una película."
+ },
+ {
+  "lang": "es",
+  "text": "vi"
+ },
+ {
+  "lang": "es",
+  "text": "voy"
+ },
+ {
+  "lang": "es",
+  "text": "dormí"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy estoy muy ___."
+ },
+ {
+  "lang": "es",
+  "text": "Ayer voy al parque"
+ },
+ {
+  "lang": "es",
+  "text": "Anoche fui al parque"
+ },
+ {
+  "lang": "es",
+  "text": "Hola, Ali. ¿Qué hiciste ayer?"
+ },
+ {
+  "lang": "es",
+  "text": "Fui al parque con mi hermano."
+ },
+ {
+  "lang": "es",
+  "text": "Mañana voy al parque."
+ },
+ {
+  "lang": "es",
+  "text": "No, no fui al parque."
+ },
+ {
+  "lang": "es",
+  "text": "Ayer fui al parque. Anoche dormí bien, pero hoy estoy cansado."
+ },
+ {
+  "lang": "es",
+  "text": "Ayer hice la tarea"
+ },
+ {
+  "lang": "es",
+  "text": "Hice la tarea ayer"
+ },
+ {
+  "lang": "es",
+  "text": "Anoche vi una película"
+ },
+ {
+  "lang": "es",
+  "text": "Vi una película anoche"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer ___ al parque."
+ },
+ {
+  "lang": "es",
+  "text": "fui"
+ },
+ {
+  "lang": "es",
+  "text": "hice"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy ___ la tarea."
+ },
+ {
+  "lang": "es",
+  "text": "hago"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer hago la tarea"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer vi la tarea"
+ },
+ {
+  "lang": "es",
+  "text": "Anoche hice la tarea y vi una película. Hoy estoy cansado."
+ },
+ {
+  "lang": "es",
+  "text": "Ayer trabajé ocho horas"
+ },
+ {
+  "lang": "es",
+  "text": "Trabajé ocho horas ayer"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer estudié español"
+ },
+ {
+  "lang": "es",
+  "text": "Estudié español ayer"
+ },
+ {
+  "lang": "es",
+  "text": "Anoche ___ ocho horas."
+ },
+ {
+  "lang": "es",
+  "text": "comí"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer trabajé mucho."
+ },
+ {
+  "lang": "es",
+  "text": "Ayer ___ con mis amigos."
+ },
+ {
+  "lang": "es",
+  "text": "salí"
+ },
+ {
+  "lang": "es",
+  "text": "estudio"
+ },
+ {
+  "lang": "es",
+  "text": "duermo"
+ },
+ {
+  "lang": "es",
+  "text": "Estudié español en casa"
+ },
+ {
+  "lang": "es",
+  "text": "Estudio español en casa"
+ },
+ {
+  "lang": "es",
+  "text": "Estudié inglés en casa"
+ },
+ {
+  "lang": "es",
+  "text": "¿Qué hiciste ayer?"
+ },
+ {
+  "lang": "es",
+  "text": "Estudié español en casa."
+ },
+ {
+  "lang": "es",
+  "text": "Mañana estudio español."
+ },
+ {
+  "lang": "es",
+  "text": "No, no estudio español."
+ },
+ {
+  "lang": "es",
+  "text": "Ayer trabajé ocho horas. Anoche dormí muy bien."
+ },
+ {
+  "lang": "es",
+  "text": "Entonces fui a casa"
+ },
+ {
+  "lang": "es",
+  "text": "Fui a casa entonces"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy estoy muy cansado"
+ },
+ {
+  "lang": "es",
+  "text": "Estoy muy cansado hoy"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer trabajé, ___ hoy estoy cansado."
+ },
+ {
+  "lang": "es",
+  "text": "Anoche ___ con mis amigos."
+ },
+ {
+  "lang": "es",
+  "text": "estudié"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer dormí bien"
+ },
+ {
+  "lang": "es",
+  "text": "Anoche dormí mal"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer salí con mis amigos y trabajé seis horas. Anoche dormí ocho horas, pero hoy estoy cansado."
+ },
+ {
+  "lang": "es",
+  "text": "Mi casa es pequeña"
+ },
+ {
+  "lang": "es",
+  "text": "La cocina está sucia"
+ },
+ {
+  "lang": "es",
+  "text": "Mi ___ es grande y ordenado."
+ },
+ {
+  "lang": "es",
+  "text": "dormitorio"
+ },
+ {
+  "lang": "es",
+  "text": "cama"
+ },
+ {
+  "lang": "es",
+  "text": "ropa"
+ },
+ {
+  "lang": "es",
+  "text": "Mi casa es grande."
+ },
+ {
+  "lang": "es",
+  "text": "El ___ está limpio."
+ },
+ {
+  "lang": "es",
+  "text": "baño"
+ },
+ {
+  "lang": "es",
+  "text": "Mi cocina es pequeña"
+ },
+ {
+  "lang": "es",
+  "text": "Mi casa es grande"
+ },
+ {
+  "lang": "es",
+  "text": "Mi casa es pequeña pero bonita. La cocina es grande y el baño está limpio."
+ },
+ {
+  "lang": "es",
+  "text": "Hago la cama todos los días"
+ },
+ {
+  "lang": "es",
+  "text": "Todos los días hago la cama"
+ },
+ {
+  "lang": "es",
+  "text": "Lavo la ropa los sábados"
+ },
+ {
+  "lang": "es",
+  "text": "Los sábados lavo la ropa"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer ___ el baño."
+ },
+ {
+  "lang": "es",
+  "text": "limpié"
+ },
+ {
+  "lang": "es",
+  "text": "lavo"
+ },
+ {
+  "lang": "es",
+  "text": "limpio"
+ },
+ {
+  "lang": "es",
+  "text": "La ropa está ___."
+ },
+ {
+  "lang": "es",
+  "text": "sucia"
+ },
+ {
+  "lang": "es",
+  "text": "Lavo la cama los sábados"
+ },
+ {
+  "lang": "es",
+  "text": "Limpio la ropa los domingos"
+ },
+ {
+  "lang": "es",
+  "text": "¿Qué haces los sábados?"
+ },
+ {
+  "lang": "es",
+  "text": "Lavo la ropa."
+ },
+ {
+  "lang": "es",
+  "text": "Lavo la cama."
+ },
+ {
+  "lang": "es",
+  "text": "Duermo en la cocina."
+ },
+ {
+  "lang": "es",
+  "text": "Los sábados lavo la ropa y limpio el baño. Hago la cama todos los días."
+ },
+ {
+  "lang": "es",
+  "text": "El suelo está sucio"
+ },
+ {
+  "lang": "es",
+  "text": "Normalmente limpio los sábados"
+ },
+ {
+  "lang": "es",
+  "text": "Limpio los sábados normalmente"
+ },
+ {
+  "lang": "es",
+  "text": "Mi dormitorio es muy ___ y limpio."
+ },
+ {
+  "lang": "es",
+  "text": "suelo"
+ },
+ {
+  "lang": "es",
+  "text": "La cocina está muy ___."
+ },
+ {
+  "lang": "es",
+  "text": "Normalmente lavo los sábados"
+ },
+ {
+  "lang": "es",
+  "text": "Normalmente limpio los domingos"
+ },
+ {
+  "lang": "es",
+  "text": "Mi dormitorio es ordenado, pero el suelo está sucio. Normalmente limpio los sábados."
+ },
+ {
+  "lang": "es",
+  "text": "Mi casa es grande y bonita"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer limpié el baño"
+ },
+ {
+  "lang": "es",
+  "text": "Limpié el baño ayer"
+ },
+ {
+  "lang": "es",
+  "text": "Hago ___ cama todos los días."
+ },
+ {
+  "lang": "es",
+  "text": "la"
+ },
+ {
+  "lang": "es",
+  "text": "el"
+ },
+ {
+  "lang": "es",
+  "text": "los"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer limpié la casa."
+ },
+ {
+  "lang": "es",
+  "text": "Los sábados ___ la ropa."
+ },
+ {
+  "lang": "es",
+  "text": "Ayer limpié la casa"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer limpié el casa"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer lavé la casa"
+ },
+ {
+  "lang": "es",
+  "text": "Necesito ayuda. ¿Qué haces los domingos?"
+ },
+ {
+  "lang": "es",
+  "text": "Limpio la casa."
+ },
+ {
+  "lang": "es",
+  "text": "La cama es cómoda."
+ },
+ {
+  "lang": "es",
+  "text": "Los sábados lavo la ropa. Los domingos limpio la casa y hago la cama."
+ },
+ {
+  "lang": "es",
+  "text": "Me duele la cabeza"
+ },
+ {
+  "lang": "es",
+  "text": "Me duele el brazo"
+ },
+ {
+  "lang": "es",
+  "text": "Me duele el ___."
+ },
+ {
+  "lang": "es",
+  "text": "brazo"
+ },
+ {
+  "lang": "es",
+  "text": "cabeza"
+ },
+ {
+  "lang": "es",
+  "text": "mano"
+ },
+ {
+  "lang": "es",
+  "text": "Me duele mucho el ___."
+ },
+ {
+  "lang": "es",
+  "text": "resfriado"
+ },
+ {
+  "lang": "es",
+  "text": "fiebre"
+ },
+ {
+  "lang": "es",
+  "text": "Me duele la pierna"
+ },
+ {
+  "lang": "es",
+  "text": "Me duele la pierno"
+ },
+ {
+  "lang": "es",
+  "text": "Me duele el pierna"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo un resfriado y me duele la cabeza. Me duele el brazo también."
+ },
+ {
+  "lang": "es",
+  "text": "Me duele la mano"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo fiebre"
+ },
+ {
+  "lang": "es",
+  "text": "Me ___ la cabeza."
+ },
+ {
+  "lang": "es",
+  "text": "duele"
+ },
+ {
+  "lang": "es",
+  "text": "duelen"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo un resfriado"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo una resfriado"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo un resfriados"
+ },
+ {
+  "lang": "es",
+  "text": "Doctor, me duele la cabeza y tengo fiebre."
+ },
+ {
+  "lang": "es",
+  "text": "¿Te duele el brazo también?"
+ },
+ {
+  "lang": "es",
+  "text": "La farmacia vende ropa."
+ },
+ {
+  "lang": "es",
+  "text": "Tengo fiebre y un resfriado. Me duele el cuerpo, pero no me duele la cabeza."
+ },
+ {
+  "lang": "es",
+  "text": "Tomo la medicina"
+ },
+ {
+  "lang": "es",
+  "text": "La farmacia está cerca"
+ },
+ {
+  "lang": "es",
+  "text": "El hospital está lejos"
+ },
+ {
+  "lang": "es",
+  "text": "No puedo ir a la escuela porque estoy ___."
+ },
+ {
+  "lang": "es",
+  "text": "Tomo ___ medicina."
+ },
+ {
+  "lang": "es",
+  "text": "un"
+ },
+ {
+  "lang": "es",
+  "text": "La farmacia está lejos"
+ },
+ {
+  "lang": "es",
+  "text": "El hospital está cerca"
+ },
+ {
+  "lang": "es",
+  "text": "Estoy enfermo. Tomo la medicina y descanso en casa."
+ },
+ {
+  "lang": "es",
+  "text": "Estoy enfermo y me duele la cabeza"
+ },
+ {
+  "lang": "es",
+  "text": "La farmacia está cerca del hospital"
+ },
+ {
+  "lang": "es",
+  "text": "Estoy enfermo y me duele el cuerpo"
+ },
+ {
+  "lang": "es",
+  "text": "Me ___ la cabeza y tengo fiebre."
+ },
+ {
+  "lang": "es",
+  "text": "dolor"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo fiebre y me duele la cabeza."
+ },
+ {
+  "lang": "es",
+  "text": "El médico trabaja en el ___."
+ },
+ {
+  "lang": "es",
+  "text": "hospital"
+ },
+ {
+  "lang": "es",
+  "text": "playa"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo fiebre y me duele la cabeza"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo fiebre y me duele la mano"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo resfriado y me duele la cabeza"
+ },
+ {
+  "lang": "es",
+  "text": "Buenos días, doctor. Me duele la pierna."
+ },
+ {
+  "lang": "es",
+  "text": "¿Desde cuándo te duele?"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo un resfriado. Ayer me dolió la cabeza, hoy me duele el brazo."
+ },
+ {
+  "lang": "es",
+  "text": "El autobús está en la parada"
+ },
+ {
+  "lang": "es",
+  "text": "El metro es rápido"
+ },
+ {
+  "lang": "es",
+  "text": "El autobús está en ___ parada."
+ },
+ {
+  "lang": "es",
+  "text": "¿Dónde está la parada?"
+ },
+ {
+  "lang": "es",
+  "text": "Miro el ___."
+ },
+ {
+  "lang": "es",
+  "text": "mapa"
+ },
+ {
+  "lang": "es",
+  "text": "calle"
+ },
+ {
+  "lang": "es",
+  "text": "parada"
+ },
+ {
+  "lang": "es",
+  "text": "El metro es lento"
+ },
+ {
+  "lang": "es",
+  "text": "El autobús es rápido"
+ },
+ {
+  "lang": "es",
+  "text": "La parada está cerca de mi casa. El autobús es lento, pero el metro es rápido."
+ },
+ {
+  "lang": "es",
+  "text": "Sigue recto"
+ },
+ {
+  "lang": "es",
+  "text": "Gira en la esquina"
+ },
+ {
+  "lang": "es",
+  "text": "En la esquina gira"
+ },
+ {
+  "lang": "es",
+  "text": "___ a la derecha en la esquina."
+ },
+ {
+  "lang": "es",
+  "text": "Gira"
+ },
+ {
+  "lang": "es",
+  "text": "Cruza"
+ },
+ {
+  "lang": "es",
+  "text": "Gira a la izquierda en la esquina."
+ },
+ {
+  "lang": "es",
+  "text": "Sigue ___ dos calles."
+ },
+ {
+  "lang": "es",
+  "text": "gira"
+ },
+ {
+  "lang": "es",
+  "text": "esquina"
+ },
+ {
+  "lang": "es",
+  "text": "Gira a la derecha"
+ },
+ {
+  "lang": "es",
+  "text": "Gira a la izquierda"
+ },
+ {
+  "lang": "es",
+  "text": "Sigue a la derecha"
+ },
+ {
+  "lang": "es",
+  "text": "Sigue recto y gira a la derecha."
+ },
+ {
+  "lang": "es",
+  "text": "La estación es grande."
+ },
+ {
+  "lang": "es",
+  "text": "Para llegar a la escuela, sigue recto dos calles. Luego gira a la izquierda en la esquina."
+ },
+ {
+  "lang": "es",
+  "text": "Cruza la calle"
+ },
+ {
+  "lang": "es",
+  "text": "Cómo llego a la estación"
+ },
+ {
+  "lang": "es",
+  "text": "El banco está ___ de la farmacia."
+ },
+ {
+  "lang": "es",
+  "text": "Cruza la calle y sigue recto."
+ },
+ {
+  "lang": "es",
+  "text": "___ la calle y gira a la derecha."
+ },
+ {
+  "lang": "es",
+  "text": "Llega"
+ },
+ {
+  "lang": "es",
+  "text": "Cruza el calle"
+ },
+ {
+  "lang": "es",
+  "text": "Gira la calle"
+ },
+ {
+  "lang": "es",
+  "text": "El hospital está enfrente de la farmacia. Para llegar, cruza la calle y sigue recto."
+ },
+ {
+  "lang": "es",
+  "text": "La estación está enfrente"
+ },
+ {
+  "lang": "es",
+  "text": "Gira a la izquierda en la esquina"
+ },
+ {
+  "lang": "es",
+  "text": "En la esquina gira a la izquierda"
+ },
+ {
+  "lang": "es",
+  "text": "¿Cómo llego al hotel?"
+ },
+ {
+  "lang": "es",
+  "text": "Cómo llego al hotel"
+ },
+ {
+  "lang": "es",
+  "text": "___ recto y luego cruza la calle."
+ },
+ {
+  "lang": "es",
+  "text": "Sigue"
+ },
+ {
+  "lang": "es",
+  "text": "Para ___ a la escuela, sigue recto."
+ },
+ {
+  "lang": "es",
+  "text": "llego"
+ },
+ {
+  "lang": "es",
+  "text": "llegas"
+ },
+ {
+  "lang": "es",
+  "text": "Sigue recto y gira a la izquierda"
+ },
+ {
+  "lang": "es",
+  "text": "Sigue recto y gira a la derecha"
+ },
+ {
+  "lang": "es",
+  "text": "Sigue recto y cruza la izquierda"
+ },
+ {
+  "lang": "es",
+  "text": "Perdón, ¿dónde está la parada de metro?"
+ },
+ {
+  "lang": "es",
+  "text": "Está enfrente del banco."
+ },
+ {
+  "lang": "es",
+  "text": "Es rápido y barato."
+ },
+ {
+  "lang": "es",
+  "text": "Yo voy en metro."
+ },
+ {
+  "lang": "es",
+  "text": "Para ir al parque: sigue recto, cruza la calle y gira a la derecha en la esquina. El parque está enfrente del hotel."
+ },
+ {
+  "lang": "es",
+  "text": "En verano voy a la playa"
+ },
+ {
+  "lang": "es",
+  "text": "Voy a la playa en verano"
+ },
+ {
+  "lang": "es",
+  "text": "Me gusta el mar"
+ },
+ {
+  "lang": "es",
+  "text": "En verano voy a la ___."
+ },
+ {
+  "lang": "es",
+  "text": "verano"
+ },
+ {
+  "lang": "es",
+  "text": "mes"
+ },
+ {
+  "lang": "es",
+  "text": "Las ___ son en agosto."
+ },
+ {
+  "lang": "es",
+  "text": "vacaciones"
+ },
+ {
+  "lang": "es",
+  "text": "playas"
+ },
+ {
+  "lang": "es",
+  "text": "veranos"
+ },
+ {
+  "lang": "es",
+  "text": "En verano voy a la montaña"
+ },
+ {
+  "lang": "es",
+  "text": "En invierno voy a la playa"
+ },
+ {
+  "lang": "es",
+  "text": "En verano voy a la playa con mi familia. El mar está frío, pero me gusta nadar."
+ },
+ {
+  "lang": "es",
+  "text": "El próximo mes voy a España"
+ },
+ {
+  "lang": "es",
+  "text": "Voy a España el próximo mes"
+ },
+ {
+  "lang": "es",
+  "text": "Pienso viajar el próximo mes"
+ },
+ {
+  "lang": "es",
+  "text": "El próximo mes pienso viajar"
+ },
+ {
+  "lang": "es",
+  "text": "Pienso ___ Madrid."
+ },
+ {
+  "lang": "es",
+  "text": "visita"
+ },
+ {
+  "lang": "es",
+  "text": "visito"
+ },
+ {
+  "lang": "es",
+  "text": "Pienso viajar el próximo mes."
+ },
+ {
+  "lang": "es",
+  "text": "El ___ mes es julio."
+ },
+ {
+  "lang": "es",
+  "text": "Pienso viajar el mes próximo"
+ },
+ {
+  "lang": "es",
+  "text": "Pienso nadar el próximo mes"
+ },
+ {
+  "lang": "es",
+  "text": "¿Qué piensas hacer el próximo mes?"
+ },
+ {
+  "lang": "es",
+  "text": "Pienso viajar a Madrid."
+ },
+ {
+  "lang": "es",
+  "text": "Viajé a Madrid el año pasado."
+ },
+ {
+  "lang": "es",
+  "text": "Me gusta Madrid."
+ },
+ {
+  "lang": "es",
+  "text": "Pienso visitar la montaña el próximo mes. Mi hermano piensa ir a la playa."
+ },
+ {
+  "lang": "es",
+  "text": "Nos vemos pronto"
+ },
+ {
+  "lang": "es",
+  "text": "Te veo pronto"
+ },
+ {
+  "lang": "es",
+  "text": "Voy a llevar una maleta"
+ },
+ {
+  "lang": "es",
+  "text": "Llevo una maleta"
+ },
+ {
+  "lang": "es",
+  "text": "Vamos juntos a la playa"
+ },
+ {
+  "lang": "es",
+  "text": "Quiero ___ a Madrid."
+ },
+ {
+  "lang": "es",
+  "text": "Llevo ___ maleta."
+ },
+ {
+  "lang": "es",
+  "text": "una"
+ },
+ {
+  "lang": "es",
+  "text": "Llevo un maleta"
+ },
+ {
+  "lang": "es",
+  "text": "Llevo una maletas"
+ },
+ {
+  "lang": "es",
+  "text": "el próximo mes"
+ },
+ {
+  "lang": "es",
+  "text": "El próximo mes voy a visitar a mi abuela. Llevo una maleta y vamos juntos a su casa."
+ },
+ {
+  "lang": "es",
+  "text": "En las vacaciones de verano voy al mar"
+ },
+ {
+  "lang": "es",
+  "text": "Voy al mar en las vacaciones de verano"
+ },
+ {
+  "lang": "es",
+  "text": "Voy a llevar un libro"
+ },
+ {
+  "lang": "es",
+  "text": "Llevo un libro"
+ },
+ {
+  "lang": "es",
+  "text": "Pienso ir a la playa en verano"
+ },
+ {
+  "lang": "es",
+  "text": "¿Qué piensas ___ este verano?"
+ },
+ {
+  "lang": "es",
+  "text": "Pienso visitar Madrid en verano."
+ },
+ {
+  "lang": "es",
+  "text": "El próximo mes ___ visitar la montaña."
+ },
+ {
+  "lang": "es",
+  "text": "voy a"
+ },
+ {
+  "lang": "es",
+  "text": "voy a ir"
+ },
+ {
+  "lang": "es",
+  "text": "Pienso visitar Madrid en verano"
+ },
+ {
+  "lang": "es",
+  "text": "Pienso visitar Madrid en invierno"
+ },
+ {
+  "lang": "es",
+  "text": "Pienso visitar Barcelona en verano"
+ },
+ {
+  "lang": "es",
+  "text": "¿Adónde vas de vacaciones?"
+ },
+ {
+  "lang": "es",
+  "text": "Voy a la playa con mi familia."
+ },
+ {
+  "lang": "es",
+  "text": "Fui a la playa el año pasado."
+ },
+ {
+  "lang": "es",
+  "text": "Me gusta la playa."
+ },
+ {
+  "lang": "es",
+  "text": "Me gusta mucho el verano. Pienso llevar dos maletas y visitar la playa y la montaña."
+ },
+ {
+  "lang": "es",
+  "text": "El tren es más rápido"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy estoy peor"
+ },
+ {
+  "lang": "es",
+  "text": "Estoy peor hoy"
+ },
+ {
+  "lang": "es",
+  "text": "El café es ___ caro que el té."
+ },
+ {
+  "lang": "es",
+  "text": "muy"
+ },
+ {
+  "lang": "es",
+  "text": "El tren es más rápido que el coche."
+ },
+ {
+  "lang": "es",
+  "text": "El tren es menos rápido"
+ },
+ {
+  "lang": "es",
+  "text": "El tren es más lento"
+ },
+ {
+  "lang": "es",
+  "text": "¿Qué es más caro: el té o el café?"
+ },
+ {
+  "lang": "es",
+  "text": "El café es más caro."
+ },
+ {
+  "lang": "es",
+  "text": "El café es bueno."
+ },
+ {
+  "lang": "es",
+  "text": "Mi coche es rápido, pero el tren es más rápido. El autobús es menos rápido que el coche."
+ },
+ {
+  "lang": "es",
+  "text": "tan ... como"
+ },
+ {
+  "lang": "es",
+  "text": "más ... que"
+ },
+ {
+  "lang": "es",
+  "text": "Mi hermana es menor"
+ },
+ {
+  "lang": "es",
+  "text": "Mi hermana es más pequeña"
+ },
+ {
+  "lang": "es",
+  "text": "Este examen no es tan difícil"
+ },
+ {
+  "lang": "es",
+  "text": "El examen no es tan difícil"
+ },
+ {
+  "lang": "es",
+  "text": "Mi hermano es mayor"
+ },
+ {
+  "lang": "es",
+  "text": "Mi hermano es ___ que yo."
+ },
+ {
+  "lang": "es",
+  "text": "Este examen no es tan ___."
+ },
+ {
+  "lang": "es",
+  "text": "que"
+ },
+ {
+  "lang": "es",
+  "text": "Este examen es tan difícil"
+ },
+ {
+  "lang": "es",
+  "text": "Este examen no es más difícil"
+ },
+ {
+  "lang": "es",
+  "text": "¿Qué es más difícil: el examen o la tarea?"
+ },
+ {
+  "lang": "es",
+  "text": "El examen es más difícil."
+ },
+ {
+  "lang": "es",
+  "text": "La tarea es fácil."
+ },
+ {
+  "lang": "es",
+  "text": "El examen es mañana."
+ },
+ {
+  "lang": "es",
+  "text": "Mi hermano es mayor que yo y mi hermana es menor. Este examen no es tan difícil como piensas."
+ },
+ {
+  "lang": "es",
+  "text": "El examen es difícil"
+ },
+ {
+  "lang": "es",
+  "text": "Mi equipo es el mejor"
+ },
+ {
+  "lang": "es",
+  "text": "El examen es fácil"
+ },
+ {
+  "lang": "es",
+  "text": "El examen no es fácil, es ___."
+ },
+ {
+  "lang": "es",
+  "text": "Mi ___ es bueno."
+ },
+ {
+  "lang": "es",
+  "text": "equipo"
+ },
+ {
+  "lang": "es",
+  "text": "examen"
+ },
+ {
+  "lang": "es",
+  "text": "El equipo es difícil"
+ },
+ {
+  "lang": "es",
+  "text": "Mi equipo es bueno y tu equipo es peor. Mi examen es fácil."
+ },
+ {
+  "lang": "es",
+  "text": "Este examen es más fácil"
+ },
+ {
+  "lang": "es",
+  "text": "Mi equipo es mejor que tu equipo"
+ },
+ {
+  "lang": "es",
+  "text": "El tren es más ___ que el autobús."
+ },
+ {
+  "lang": "es",
+  "text": "Mi equipo es el mejor."
+ },
+ {
+  "lang": "es",
+  "text": "Este examen es el ___ de todos."
+ },
+ {
+  "lang": "es",
+  "text": "El tren es más rápido que el coche"
+ },
+ {
+  "lang": "es",
+  "text": "El tren es menos rápido que el coche"
+ },
+ {
+  "lang": "es",
+  "text": "El coche es más rápido que el tren"
+ },
+ {
+  "lang": "es",
+  "text": "La tarea es difícil."
+ },
+ {
+  "lang": "es",
+  "text": "El tren es rápido, el coche es más rápido y el avión es el más rápido de todos. Pero mi examen es difícil."
+ },
+ {
+  "lang": "es",
+  "text": "Hoy estoy feliz"
+ },
+ {
+  "lang": "es",
+  "text": "Estoy feliz hoy"
+ },
+ {
+  "lang": "es",
+  "text": "No estoy triste"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy estoy muy feliz"
+ },
+ {
+  "lang": "es",
+  "text": "Estoy muy feliz hoy"
+ },
+ {
+  "lang": "es",
+  "text": "No estoy triste, estoy ___."
+ },
+ {
+  "lang": "es",
+  "text": "Estoy muy contento hoy."
+ },
+ {
+  "lang": "es",
+  "text": "—Vamos a la playa. —¡___!"
+ },
+ {
+  "lang": "es",
+  "text": "Genial"
+ },
+ {
+  "lang": "es",
+  "text": "Triste"
+ },
+ {
+  "lang": "es",
+  "text": "Nervioso"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy estoy muy contento"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy estoy muy triste"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer estoy muy contento"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy estoy feliz y mi hermano está contento. No estamos tristes."
+ },
+ {
+  "lang": "es",
+  "text": "Estoy nervioso por el examen"
+ },
+ {
+  "lang": "es",
+  "text": "Por el examen estoy nervioso"
+ },
+ {
+  "lang": "es",
+  "text": "Mi padre es tranquilo"
+ },
+ {
+  "lang": "es",
+  "text": "Mi hermano es fuerte"
+ },
+ {
+  "lang": "es",
+  "text": "La profesora es muy ___."
+ },
+ {
+  "lang": "es",
+  "text": "tímida"
+ },
+ {
+  "lang": "es",
+  "text": "Mi hermano es muy ___."
+ },
+ {
+  "lang": "es",
+  "text": "Mi padre es nervioso"
+ },
+ {
+  "lang": "es",
+  "text": "Mi madre es tranquila"
+ },
+ {
+  "lang": "es",
+  "text": "¿Quieres estudiar conmigo?"
+ },
+ {
+  "lang": "es",
+  "text": "Yo soy fuerte."
+ },
+ {
+  "lang": "es",
+  "text": "Mi padre es tranquilo y amable. Mi hermano es fuerte y no está nervioso."
+ },
+ {
+  "lang": "es",
+  "text": "saber"
+ },
+ {
+  "lang": "es",
+  "text": "Creo que tienes razón"
+ },
+ {
+  "lang": "es",
+  "text": "La familia es importante"
+ },
+ {
+  "lang": "es",
+  "text": "El niño es ___: no habla mucho."
+ },
+ {
+  "lang": "es",
+  "text": "Tienes ___."
+ },
+ {
+  "lang": "es",
+  "text": "razón"
+ },
+ {
+  "lang": "es",
+  "text": "Tienes razón"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo razón"
+ },
+ {
+  "lang": "es",
+  "text": "Tienes razones"
+ },
+ {
+  "lang": "es",
+  "text": "tener razón"
+ },
+ {
+  "lang": "es",
+  "text": "Mi amigo es tímido pero amable. Creo que la familia es muy importante."
+ },
+ {
+  "lang": "es",
+  "text": "Creo que el español es importante"
+ },
+ {
+  "lang": "es",
+  "text": "Pienso que el español es importante"
+ },
+ {
+  "lang": "es",
+  "text": "Estoy nervioso por el examen, pero feliz"
+ },
+ {
+  "lang": "es",
+  "text": "Estoy nervioso por el examen pero feliz"
+ },
+ {
+  "lang": "es",
+  "text": "Estoy nervioso, pero feliz"
+ },
+ {
+  "lang": "es",
+  "text": "Estoy nervioso pero feliz"
+ },
+ {
+  "lang": "es",
+  "text": "Creo que ___ razón."
+ },
+ {
+  "lang": "es",
+  "text": "Creo que la familia es importante."
+ },
+ {
+  "lang": "es",
+  "text": "Mi profesor es ___ y amable."
+ },
+ {
+  "lang": "es",
+  "text": "La familia es muy importante"
+ },
+ {
+  "lang": "es",
+  "text": "El examen es muy importante"
+ },
+ {
+  "lang": "es",
+  "text": "La familia es muy difícil"
+ },
+ {
+  "lang": "es",
+  "text": "Creo que el examen es fácil."
+ },
+ {
+  "lang": "es",
+  "text": "Yo creo que es difícil."
+ },
+ {
+  "lang": "es",
+  "text": "Yo estudio español."
+ },
+ {
+  "lang": "es",
+  "text": "Hoy estoy feliz y tranquilo. Creo que tienes razón: la música es muy importante."
+ },
+ {
+  "lang": "es",
+  "text": "Quisiera una mesa para dos"
+ },
+ {
+  "lang": "es",
+  "text": "Me gustaría una mesa para dos"
+ },
+ {
+  "lang": "es",
+  "text": "Me gustaría un té"
+ },
+ {
+  "lang": "es",
+  "text": "Quisiera un té"
+ },
+ {
+  "lang": "es",
+  "text": "¿Está ___ esta mesa?"
+ },
+ {
+  "lang": "es",
+  "text": "Quisiera un café, por favor."
+ },
+ {
+  "lang": "es",
+  "text": "El ___ trae el menú."
+ },
+ {
+  "lang": "es",
+  "text": "camarero"
+ },
+ {
+  "lang": "es",
+  "text": "mesa"
+ },
+ {
+  "lang": "es",
+  "text": "teléfono"
+ },
+ {
+  "lang": "es",
+  "text": "Quisiera una mesa para tres"
+ },
+ {
+  "lang": "es",
+  "text": "Quise una mesa para tres"
+ },
+ {
+  "lang": "es",
+  "text": "Buenas tardes. Quisiera una mesa, por favor."
+ },
+ {
+  "lang": "es",
+  "text": "¿Para cuántas personas?"
+ },
+ {
+  "lang": "es",
+  "text": "La comida está rica."
+ },
+ {
+  "lang": "es",
+  "text": "Estoy en un restaurante. Digo: «Quisiera una mesa para dos» y el camarero me da una mesa libre."
+ },
+ {
+  "lang": "es",
+  "text": "puedo"
+ },
+ {
+  "lang": "es",
+  "text": "Quiero reservar una mesa para mañana"
+ },
+ {
+  "lang": "es",
+  "text": "Quiero reservar una mesa mañana"
+ },
+ {
+  "lang": "es",
+  "text": "Voy a llamar a mi madre"
+ },
+ {
+  "lang": "es",
+  "text": "Llamo a mi madre"
+ },
+ {
+  "lang": "es",
+  "text": "Quiero reservar una mesa"
+ },
+ {
+  "lang": "es",
+  "text": "¿Podría ___ la cuenta?"
+ },
+ {
+  "lang": "es",
+  "text": "traigo"
+ },
+ {
+  "lang": "es",
+  "text": "trae"
+ },
+ {
+  "lang": "es",
+  "text": "Voy a ___ a mi amigo."
+ },
+ {
+  "lang": "es",
+  "text": "llamo"
+ },
+ {
+  "lang": "es",
+  "text": "Voy a llamar a mi padre"
+ },
+ {
+  "lang": "es",
+  "text": "Voy a llamar mi madre"
+ },
+ {
+  "lang": "es",
+  "text": "¿Restaurante La Luna, buenos días?"
+ },
+ {
+  "lang": "es",
+  "text": "Quisiera reservar una mesa, por favor."
+ },
+ {
+  "lang": "es",
+  "text": "Me gusta la luna."
+ },
+ {
+  "lang": "es",
+  "text": "Estoy en la escuela."
+ },
+ {
+  "lang": "es",
+  "text": "Llamo al restaurante por teléfono. Quiero reservar una mesa para mañana. La señora dice: «¿Podría decirme su nombre?»."
+ },
+ {
+  "lang": "es",
+  "text": "¿Podría traer la cuenta?"
+ },
+ {
+  "lang": "es",
+  "text": "Podría traer la cuenta"
+ },
+ {
+  "lang": "es",
+  "text": "Te ayudo con gusto"
+ },
+ {
+  "lang": "es",
+  "text": "Con gusto te ayudo"
+ },
+ {
+  "lang": "es",
+  "text": "Dejo una ___ en la mesa."
+ },
+ {
+  "lang": "es",
+  "text": "propina"
+ },
+ {
+  "lang": "es",
+  "text": "cuenta"
+ },
+ {
+  "lang": "es",
+  "text": "maleta"
+ },
+ {
+  "lang": "es",
+  "text": "¿Está libre esta ___?"
+ },
+ {
+  "lang": "es",
+  "text": "gusto"
+ },
+ {
+  "lang": "es",
+  "text": "Te ayudo con la propina"
+ },
+ {
+  "lang": "es",
+  "text": "Me ayudo con gusto"
+ },
+ {
+  "lang": "es",
+  "text": "¿Me puede traer más agua, por favor?"
+ },
+ {
+  "lang": "es",
+  "text": "Con gusto, traigo más agua."
+ },
+ {
+  "lang": "es",
+  "text": "El agua es fría."
+ },
+ {
+  "lang": "es",
+  "text": "Yo no soy el camarero."
+ },
+ {
+  "lang": "es",
+  "text": "La comida está rica. Dejo una propina en la mesa y digo gracias. El camarero dice: «Con gusto»."
+ },
+ {
+  "lang": "es",
+  "text": "repetir"
+ },
+ {
+  "lang": "es",
+  "text": "Quisiera una mesa cerca de la ventana"
+ },
+ {
+  "lang": "es",
+  "text": "Me gustaría una mesa cerca de la ventana"
+ },
+ {
+  "lang": "es",
+  "text": "Voy a reservar por teléfono"
+ },
+ {
+  "lang": "es",
+  "text": "Reservo por teléfono"
+ },
+ {
+  "lang": "es",
+  "text": "Quisiera reservar una mesa"
+ },
+ {
+  "lang": "es",
+  "text": "¿Podría ___ una mesa para dos?"
+ },
+ {
+  "lang": "es",
+  "text": "reservo"
+ },
+ {
+  "lang": "es",
+  "text": "Quisiera una mesa para dos, por favor."
+ },
+ {
+  "lang": "es",
+  "text": "Me gustaría un té, ___ favor."
+ },
+ {
+  "lang": "es",
+  "text": "por"
+ },
+ {
+  "lang": "es",
+  "text": "con"
+ },
+ {
+  "lang": "es",
+  "text": "de"
+ },
+ {
+  "lang": "es",
+  "text": "Quisiera reservar una mesa para dos"
+ },
+ {
+  "lang": "es",
+  "text": "Quisiera reservar una mesa para tres"
+ },
+ {
+  "lang": "es",
+  "text": "Quise reservar una mesa para dos"
+ },
+ {
+  "lang": "es",
+  "text": "¿Qué te gustaría tomar?"
+ },
+ {
+  "lang": "es",
+  "text": "Me gustaría un té, por favor."
+ },
+ {
+  "lang": "es",
+  "text": "La mesa es bonita."
+ },
+ {
+  "lang": "es",
+  "text": "Voy a un restaurante con mi amigo. Quisiera una mesa libre. El camarero trae dos cafés y la cuenta."
+ },
+ {
   "lang": "fr",
   "text": "bonjour"
  },
@@ -14226,6 +16762,770 @@
  {
   "lang": "fr",
   "text": "J'aime voyager."
+ },
+ {
+  "lang": "fr",
+  "text": "hier"
+ },
+ {
+  "lang": "fr",
+  "text": "Qu'est-ce que tu as fait hier ?"
+ },
+ {
+  "lang": "fr",
+  "text": "faire"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai fait mes devoirs."
+ },
+ {
+  "lang": "fr",
+  "text": "dormir"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai bien dormi."
+ },
+ {
+  "lang": "fr",
+  "text": "voir"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai vu un film."
+ },
+ {
+  "lang": "fr",
+  "text": "prendre"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai pris un café."
+ },
+ {
+  "lang": "fr",
+  "text": "regarder"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai regardé un film."
+ },
+ {
+  "lang": "fr",
+  "text": "visiter"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai visité Paris."
+ },
+ {
+  "lang": "fr",
+  "text": "avec"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai mangé avec mon ami."
+ },
+ {
+  "lang": "fr",
+  "text": "hier soir"
+ },
+ {
+  "lang": "fr",
+  "text": "Hier soir j'ai travaillé."
+ },
+ {
+  "lang": "fr",
+  "text": "ensemble"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous avons mangé ensemble."
+ },
+ {
+  "lang": "fr",
+  "text": "le petit déjeuner"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai pris le petit déjeuner à huit heures."
+ },
+ {
+  "lang": "fr",
+  "text": "le soir"
+ },
+ {
+  "lang": "fr",
+  "text": "Le soir je lis un livre."
+ },
+ {
+  "lang": "fr",
+  "text": "la maison"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma maison est grande."
+ },
+ {
+  "lang": "fr",
+  "text": "la chambre"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma chambre est propre."
+ },
+ {
+  "lang": "fr",
+  "text": "la cuisine"
+ },
+ {
+  "lang": "fr",
+  "text": "La cuisine est petite."
+ },
+ {
+  "lang": "fr",
+  "text": "le lit"
+ },
+ {
+  "lang": "fr",
+  "text": "Je dors dans mon lit."
+ },
+ {
+  "lang": "fr",
+  "text": "la table"
+ },
+ {
+  "lang": "fr",
+  "text": "La table est dans la cuisine."
+ },
+ {
+  "lang": "fr",
+  "text": "faire le ménage"
+ },
+ {
+  "lang": "fr",
+  "text": "Le samedi je fais le ménage."
+ },
+ {
+  "lang": "fr",
+  "text": "laver"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma mère lave le linge."
+ },
+ {
+  "lang": "fr",
+  "text": "ranger"
+ },
+ {
+  "lang": "fr",
+  "text": "Je range ma chambre."
+ },
+ {
+  "lang": "fr",
+  "text": "la vaisselle"
+ },
+ {
+  "lang": "fr",
+  "text": "Je fais la vaisselle."
+ },
+ {
+  "lang": "fr",
+  "text": "le linge"
+ },
+ {
+  "lang": "fr",
+  "text": "Le linge est propre."
+ },
+ {
+  "lang": "fr",
+  "text": "propre"
+ },
+ {
+  "lang": "fr",
+  "text": "La maison est propre."
+ },
+ {
+  "lang": "fr",
+  "text": "sale"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma chambre est sale."
+ },
+ {
+  "lang": "fr",
+  "text": "malade"
+ },
+ {
+  "lang": "fr",
+  "text": "Je suis malade."
+ },
+ {
+  "lang": "fr",
+  "text": "la tête"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai mal à la tête."
+ },
+ {
+  "lang": "fr",
+  "text": "le ventre"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai mal au ventre."
+ },
+ {
+  "lang": "fr",
+  "text": "les dents"
+ },
+ {
+  "lang": "fr",
+  "text": "Je me brosse les dents."
+ },
+ {
+  "lang": "fr",
+  "text": "avoir mal"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai mal aux dents."
+ },
+ {
+  "lang": "fr",
+  "text": "le médecin"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais chez le médecin."
+ },
+ {
+  "lang": "fr",
+  "text": "le rhume"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai un rhume."
+ },
+ {
+  "lang": "fr",
+  "text": "la fièvre"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai de la fièvre."
+ },
+ {
+  "lang": "fr",
+  "text": "tousser"
+ },
+ {
+  "lang": "fr",
+  "text": "Je tousse beaucoup."
+ },
+ {
+  "lang": "fr",
+  "text": "se reposer"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu dois te reposer."
+ },
+ {
+  "lang": "fr",
+  "text": "le médicament"
+ },
+ {
+  "lang": "fr",
+  "text": "Je prends un médicament."
+ },
+ {
+  "lang": "fr",
+  "text": "mieux"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais mieux."
+ },
+ {
+  "lang": "fr",
+  "text": "le métro"
+ },
+ {
+  "lang": "fr",
+  "text": "Je prends le métro."
+ },
+ {
+  "lang": "fr",
+  "text": "la station"
+ },
+ {
+  "lang": "fr",
+  "text": "Je descends à la station."
+ },
+ {
+  "lang": "fr",
+  "text": "l'arrêt"
+ },
+ {
+  "lang": "fr",
+  "text": "Je descends à cet arrêt."
+ },
+ {
+  "lang": "fr",
+  "text": "tout droit"
+ },
+ {
+  "lang": "fr",
+  "text": "Allez tout droit."
+ },
+ {
+  "lang": "fr",
+  "text": "traverser"
+ },
+ {
+  "lang": "fr",
+  "text": "Traversez la rue."
+ },
+ {
+  "lang": "fr",
+  "text": "descendre"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous descendons du bus."
+ },
+ {
+  "lang": "fr",
+  "text": "continuer"
+ },
+ {
+  "lang": "fr",
+  "text": "Continuez tout droit."
+ },
+ {
+  "lang": "fr",
+  "text": "jusqu'à"
+ },
+ {
+  "lang": "fr",
+  "text": "Marchez jusqu'au pont."
+ },
+ {
+  "lang": "fr",
+  "text": "le coin"
+ },
+ {
+  "lang": "fr",
+  "text": "Le restaurant est au coin."
+ },
+ {
+  "lang": "fr",
+  "text": "le pont"
+ },
+ {
+  "lang": "fr",
+  "text": "Le pont est sur la rivière."
+ },
+ {
+  "lang": "fr",
+  "text": "tourner"
+ },
+ {
+  "lang": "fr",
+  "text": "le trottoir"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous marchons sur le trottoir."
+ },
+ {
+  "lang": "fr",
+  "text": "les vacances"
+ },
+ {
+  "lang": "fr",
+  "text": "Les vacances commencent en juillet."
+ },
+ {
+  "lang": "fr",
+  "text": "la plage"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous allons à la plage."
+ },
+ {
+  "lang": "fr",
+  "text": "la mer"
+ },
+ {
+  "lang": "fr",
+  "text": "Je nage dans la mer."
+ },
+ {
+  "lang": "fr",
+  "text": "réserver"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais réserver une chambre."
+ },
+ {
+  "lang": "fr",
+  "text": "prévoir"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous prévoyons un voyage."
+ },
+ {
+  "lang": "fr",
+  "text": "cet été"
+ },
+ {
+  "lang": "fr",
+  "text": "Cet été je vais voyager."
+ },
+ {
+  "lang": "fr",
+  "text": "le mois"
+ },
+ {
+  "lang": "fr",
+  "text": "Le mois prochain je pars."
+ },
+ {
+  "lang": "fr",
+  "text": "le voyage"
+ },
+ {
+  "lang": "fr",
+  "text": "Le voyage est long."
+ },
+ {
+  "lang": "fr",
+  "text": "partir"
+ },
+ {
+  "lang": "fr",
+  "text": "Je pars demain."
+ },
+ {
+  "lang": "fr",
+  "text": "bientôt"
+ },
+ {
+  "lang": "fr",
+  "text": "Bientôt ce sont les vacances."
+ },
+ {
+  "lang": "fr",
+  "text": "le pays"
+ },
+ {
+  "lang": "fr",
+  "text": "J'aime mon pays."
+ },
+ {
+  "lang": "fr",
+  "text": "prochain"
+ },
+ {
+  "lang": "fr",
+  "text": "Le week-end prochain je voyage."
+ },
+ {
+  "lang": "fr",
+  "text": "plus"
+ },
+ {
+  "lang": "fr",
+  "text": "Le train est plus rapide."
+ },
+ {
+  "lang": "fr",
+  "text": "moins"
+ },
+ {
+  "lang": "fr",
+  "text": "Ce film est moins cher."
+ },
+ {
+  "lang": "fr",
+  "text": "meilleur"
+ },
+ {
+  "lang": "fr",
+  "text": "Ce restaurant est meilleur."
+ },
+ {
+  "lang": "fr",
+  "text": "pire"
+ },
+ {
+  "lang": "fr",
+  "text": "Ce temps est le pire."
+ },
+ {
+  "lang": "fr",
+  "text": "que"
+ },
+ {
+  "lang": "fr",
+  "text": "Le train est plus rapide que le bus."
+ },
+ {
+  "lang": "fr",
+  "text": "rapide"
+ },
+ {
+  "lang": "fr",
+  "text": "Le métro est rapide."
+ },
+ {
+  "lang": "fr",
+  "text": "lent"
+ },
+ {
+  "lang": "fr",
+  "text": "Le bus est lent."
+ },
+ {
+  "lang": "fr",
+  "text": "fort"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon père est fort."
+ },
+ {
+  "lang": "fr",
+  "text": "facile"
+ },
+ {
+  "lang": "fr",
+  "text": "L'exercice est facile."
+ },
+ {
+  "lang": "fr",
+  "text": "difficile"
+ },
+ {
+  "lang": "fr",
+  "text": "L'exercice est difficile."
+ },
+ {
+  "lang": "fr",
+  "text": "tranquille"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon quartier est tranquille."
+ },
+ {
+  "lang": "fr",
+  "text": "vite"
+ },
+ {
+  "lang": "fr",
+  "text": "Il parle vite."
+ },
+ {
+  "lang": "fr",
+  "text": "content"
+ },
+ {
+  "lang": "fr",
+  "text": "Je suis content."
+ },
+ {
+  "lang": "fr",
+  "text": "triste"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma sœur est triste."
+ },
+ {
+  "lang": "fr",
+  "text": "fatigué"
+ },
+ {
+  "lang": "fr",
+  "text": "Après le sport, je suis fatigué."
+ },
+ {
+  "lang": "fr",
+  "text": "gentil"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon grand-père est gentil."
+ },
+ {
+  "lang": "fr",
+  "text": "drôle"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon professeur est drôle."
+ },
+ {
+  "lang": "fr",
+  "text": "timide"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma sœur est timide."
+ },
+ {
+  "lang": "fr",
+  "text": "curieux"
+ },
+ {
+  "lang": "fr",
+  "text": "Les enfants sont curieux."
+ },
+ {
+  "lang": "fr",
+  "text": "penser"
+ },
+ {
+  "lang": "fr",
+  "text": "Je pense que oui."
+ },
+ {
+  "lang": "fr",
+  "text": "croire"
+ },
+ {
+  "lang": "fr",
+  "text": "Je crois que tu as raison."
+ },
+ {
+  "lang": "fr",
+  "text": "trouver"
+ },
+ {
+  "lang": "fr",
+  "text": "Je trouve que ce film est bon."
+ },
+ {
+  "lang": "fr",
+  "text": "d'accord"
+ },
+ {
+  "lang": "fr",
+  "text": "Je suis d'accord."
+ },
+ {
+  "lang": "fr",
+  "text": "l'avis"
+ },
+ {
+  "lang": "fr",
+  "text": "À mon avis, le bleu est plus joli."
+ },
+ {
+  "lang": "fr",
+  "text": "vouloir"
+ },
+ {
+  "lang": "fr",
+  "text": "Je veux un café."
+ },
+ {
+  "lang": "fr",
+  "text": "je voudrais"
+ },
+ {
+  "lang": "fr",
+  "text": "Je voudrais un café."
+ },
+ {
+  "lang": "fr",
+  "text": "j'aimerais"
+ },
+ {
+  "lang": "fr",
+  "text": "J'aimerais un thé."
+ },
+ {
+  "lang": "fr",
+  "text": "pouvoir"
+ },
+ {
+  "lang": "fr",
+  "text": "Je peux parler français."
+ },
+ {
+  "lang": "fr",
+  "text": "vous pourriez"
+ },
+ {
+  "lang": "fr",
+  "text": "Vous pourriez répéter ?"
+ },
+ {
+  "lang": "fr",
+  "text": "rappeler"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais rappeler demain."
+ },
+ {
+  "lang": "fr",
+  "text": "commander"
+ },
+ {
+  "lang": "fr",
+  "text": "Je voudrais commander."
+ },
+ {
+  "lang": "fr",
+  "text": "la réservation"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai une réservation."
+ },
+ {
+  "lang": "fr",
+  "text": "le rendez-vous"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai rendez-vous chez le médecin."
+ },
+ {
+  "lang": "fr",
+  "text": "la ligne"
+ },
+ {
+  "lang": "fr",
+  "text": "La ligne est occupée."
+ },
+ {
+  "lang": "fr",
+  "text": "le menu"
+ },
+ {
+  "lang": "fr",
+  "text": "Le menu est sur la table."
+ },
+ {
+  "lang": "fr",
+  "text": "servir"
+ },
+ {
+  "lang": "fr",
+  "text": "On sert le dîner à huit heures."
  },
  {
   "lang": "fr",
@@ -15528,6 +18828,2554 @@
   "text": "\"la guitare\" ne demek?"
  },
  {
+  "lang": "fr",
+  "text": "Hier j'ai fait mes devoirs"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai fait mes devoirs hier"
+ },
+ {
+  "lang": "fr",
+  "text": "Hier soir j'ai vu un film"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai vu un film hier soir"
+ },
+ {
+  "lang": "fr",
+  "text": "Qu'est-ce que tu as fait hier"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai dormi huit heures"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai dormi huit heure"
+ },
+ {
+  "lang": "fr",
+  "text": "Je dors huit heures"
+ },
+ {
+  "lang": "fr",
+  "text": "___ soir, j'ai regardé un film."
+ },
+ {
+  "lang": "fr",
+  "text": "Hier"
+ },
+ {
+  "lang": "fr",
+  "text": "Demain"
+ },
+ {
+  "lang": "fr",
+  "text": "Aujourd'hui"
+ },
+ {
+  "lang": "fr",
+  "text": "J'___ bien dormi hier."
+ },
+ {
+  "lang": "fr",
+  "text": "Hier j'ai fait mes devoirs."
+ },
+ {
+  "lang": "fr",
+  "text": "Salut ! Qu'est-ce que tu as fait hier ?"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai visité ma grand-mère."
+ },
+ {
+  "lang": "fr",
+  "text": "Je visite ma grand-mère."
+ },
+ {
+  "lang": "fr",
+  "text": "Demain je visite ma grand-mère."
+ },
+ {
+  "lang": "fr",
+  "text": "Hier j'ai joué au football avec mon ami. Ensuite, nous avons mangé une pizza."
+ },
+ {
+  "lang": "fr",
+  "text": "rendre"
+ },
+ {
+  "lang": "fr",
+  "text": "\"regarder\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai pris un café ce matin"
+ },
+ {
+  "lang": "fr",
+  "text": "Ce matin j'ai pris un café"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai regardé un film avec ma mère"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai visité Paris avec ma famille"
+ },
+ {
+  "lang": "fr",
+  "text": "J ai visité Paris avec ma famille"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous avons mangé ensemble"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous mangeons ensemble"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous avons mangé hier"
+ },
+ {
+  "lang": "fr",
+  "text": "J'___ un café ce matin."
+ },
+ {
+  "lang": "fr",
+  "text": "pris"
+ },
+ {
+  "lang": "fr",
+  "text": "prend"
+ },
+ {
+  "lang": "fr",
+  "text": "prends"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous ___ visité le musée."
+ },
+ {
+  "lang": "fr",
+  "text": "avez"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai visité la tour Eiffel avec ma famille."
+ },
+ {
+  "lang": "fr",
+  "text": "Tu as regardé le film hier soir ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Oui !"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu as aimé le film ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Oui, j'ai beaucoup aimé !"
+ },
+ {
+  "lang": "fr",
+  "text": "Non, je regarde le film."
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais dormir maintenant."
+ },
+ {
+  "lang": "fr",
+  "text": "Le week-end dernier, j'ai visité Lyon. J'ai pris beaucoup de photos avec mon frère."
+ },
+ {
+  "lang": "fr",
+  "text": "ce matin"
+ },
+ {
+  "lang": "fr",
+  "text": "demain matin"
+ },
+ {
+  "lang": "fr",
+  "text": "ce soir"
+ },
+ {
+  "lang": "fr",
+  "text": "Hier soir nous avons mangé une pizza"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous avons mangé une pizza hier soir"
+ },
+ {
+  "lang": "fr",
+  "text": "Qu'est-ce que tu as pris au petit déjeuner"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu as pris quoi au petit déjeuner"
+ },
+ {
+  "lang": "fr",
+  "text": "Hier soir j'ai travaillé"
+ },
+ {
+  "lang": "fr",
+  "text": "Hier soir j ai travaillé"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous avons dansé ensemble"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous avons chanté ensemble"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous dansons ensemble"
+ },
+ {
+  "lang": "fr",
+  "text": "___ soir je dîne avec ma famille."
+ },
+ {
+  "lang": "fr",
+  "text": "Le"
+ },
+ {
+  "lang": "fr",
+  "text": "La"
+ },
+ {
+  "lang": "fr",
+  "text": "Les"
+ },
+ {
+  "lang": "fr",
+  "text": "Hier soir, il ___ un match de football."
+ },
+ {
+  "lang": "fr",
+  "text": "a regardé"
+ },
+ {
+  "lang": "fr",
+  "text": "Hier soir nous avons dansé ensemble."
+ },
+ {
+  "lang": "fr",
+  "text": "Qu'est-ce que tu fais le soir ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Le soir je lis ou je regarde un film."
+ },
+ {
+  "lang": "fr",
+  "text": "Le matin je prends le petit déjeuner."
+ },
+ {
+  "lang": "fr",
+  "text": "Hier j'ai dormi toute la journée."
+ },
+ {
+  "lang": "fr",
+  "text": "'j'ai fait' ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "j'ai fait"
+ },
+ {
+  "lang": "fr",
+  "text": "j'ai dormi"
+ },
+ {
+  "lang": "fr",
+  "text": "j'ai vu"
+ },
+ {
+  "lang": "fr",
+  "text": "Hier j'ai très bien dormi"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai très bien dormi hier"
+ },
+ {
+  "lang": "fr",
+  "text": "Hier j'ai dormi très bien"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai dormi très bien hier"
+ },
+ {
+  "lang": "fr",
+  "text": "Hier nous avons visité notre grand-mère"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous avons visité notre grand-mère hier"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu as bien dormi"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu as bien dormi ?"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai pris le métro"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai pris le bus"
+ },
+ {
+  "lang": "fr",
+  "text": "Je prends le métro"
+ },
+ {
+  "lang": "fr",
+  "text": "___ as-tu fait hier ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Qu'"
+ },
+ {
+  "lang": "fr",
+  "text": "Que"
+ },
+ {
+  "lang": "fr",
+  "text": "Quoi"
+ },
+ {
+  "lang": "fr",
+  "text": "Elle ___ un livre hier."
+ },
+ {
+  "lang": "fr",
+  "text": "a lu"
+ },
+ {
+  "lang": "fr",
+  "text": "lit"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai vu un film avec mon ami."
+ },
+ {
+  "lang": "fr",
+  "text": "Hier il a plu toute la journée. Je suis resté à la maison et j'ai lu un livre."
+ },
+ {
+  "lang": "fr",
+  "text": "Alors, tu as aimé le film ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je regarde le film demain."
+ },
+ {
+  "lang": "fr",
+  "text": "Le film est long."
+ },
+ {
+  "lang": "fr",
+  "text": "Ta maison est grande"
+ },
+ {
+  "lang": "fr",
+  "text": "La cuisine est à côté de la maison"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma chambre est propre"
+ },
+ {
+  "lang": "fr",
+  "text": "La maison a trois chambres"
+ },
+ {
+  "lang": "fr",
+  "text": "La maison a trois cuisines"
+ },
+ {
+  "lang": "fr",
+  "text": "La chambre a trois maisons"
+ },
+ {
+  "lang": "fr",
+  "text": "Je dors dans mon ___."
+ },
+ {
+  "lang": "fr",
+  "text": "cuisine"
+ },
+ {
+  "lang": "fr",
+  "text": "maison"
+ },
+ {
+  "lang": "fr",
+  "text": "Je fais la cuisine dans la ___."
+ },
+ {
+  "lang": "fr",
+  "text": "chambre"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma maison est grande et jolie."
+ },
+ {
+  "lang": "fr",
+  "text": "Ma maison a trois chambres et une grande cuisine. Mon lit est dans la chambre bleue."
+ },
+ {
+  "lang": "fr",
+  "text": "la porte"
+ },
+ {
+  "lang": "fr",
+  "text": "laver le linge"
+ },
+ {
+  "lang": "fr",
+  "text": "ranger la chambre"
+ },
+ {
+  "lang": "fr",
+  "text": "la lessive"
+ },
+ {
+  "lang": "fr",
+  "text": "la poussière"
+ },
+ {
+  "lang": "fr",
+  "text": "Le samedi je fais le ménage"
+ },
+ {
+  "lang": "fr",
+  "text": "Je fais le ménage le samedi"
+ },
+ {
+  "lang": "fr",
+  "text": "Je fais la vaisselle tous les jours"
+ },
+ {
+  "lang": "fr",
+  "text": "Je range ma chambre"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu laves le linge"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu laves la vaisselle"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu ranges le linge"
+ },
+ {
+  "lang": "fr",
+  "text": "Le samedi, je fais le ___."
+ },
+ {
+  "lang": "fr",
+  "text": "ménage"
+ },
+ {
+  "lang": "fr",
+  "text": "vaisselle"
+ },
+ {
+  "lang": "fr",
+  "text": "linge"
+ },
+ {
+  "lang": "fr",
+  "text": "Elle range sa ___ le dimanche."
+ },
+ {
+  "lang": "fr",
+  "text": "Le dimanche je fais la vaisselle."
+ },
+ {
+  "lang": "fr",
+  "text": "Qu'est-ce que tu fais le samedi ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Le dimanche je vais au cinéma."
+ },
+ {
+  "lang": "fr",
+  "text": "Hier j'ai mangé une pizza."
+ },
+ {
+  "lang": "fr",
+  "text": "Ma sœur fait la vaisselle et mon frère lave le linge. Moi, je range ma chambre."
+ },
+ {
+  "lang": "fr",
+  "text": "le ménage"
+ },
+ {
+  "lang": "fr",
+  "text": "\"propre\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma mère lave le linge"
+ },
+ {
+  "lang": "fr",
+  "text": "Les chambres ne sont pas propres"
+ },
+ {
+  "lang": "fr",
+  "text": "Le linge est propre"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma chambre est sale"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma chambre est grande"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma cuisine est sale"
+ },
+ {
+  "lang": "fr",
+  "text": "Le linge est ___."
+ },
+ {
+  "lang": "fr",
+  "text": "sont"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous ___ la chambre le samedi."
+ },
+ {
+  "lang": "fr",
+  "text": "rangeons"
+ },
+ {
+  "lang": "fr",
+  "text": "lavons"
+ },
+ {
+  "lang": "fr",
+  "text": "La cuisine est propre et jolie."
+ },
+ {
+  "lang": "fr",
+  "text": "Ta chambre est propre ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Non..."
+ },
+ {
+  "lang": "fr",
+  "text": "Bon, range ta chambre !"
+ },
+ {
+  "lang": "fr",
+  "text": "Merci, elle est propre !"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma chambre est jolie."
+ },
+ {
+  "lang": "fr",
+  "text": "le savon"
+ },
+ {
+  "lang": "fr",
+  "text": "\"sale\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "Aujourd'hui je dois faire le ménage"
+ },
+ {
+  "lang": "fr",
+  "text": "Je dois faire le ménage aujourd'hui"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai lavé le linge"
+ },
+ {
+  "lang": "fr",
+  "text": "Ta chambre est propre ou sale"
+ },
+ {
+  "lang": "fr",
+  "text": "Ta chambre est propre ou sale ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous faisons la vaisselle"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous faisons le ménage"
+ },
+ {
+  "lang": "fr",
+  "text": "Vous faites la vaisselle"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu ___ le linge le samedi."
+ },
+ {
+  "lang": "fr",
+  "text": "laves"
+ },
+ {
+  "lang": "fr",
+  "text": "ranges"
+ },
+ {
+  "lang": "fr",
+  "text": "fais"
+ },
+ {
+  "lang": "fr",
+  "text": "La maison est très ___."
+ },
+ {
+  "lang": "fr",
+  "text": "lave"
+ },
+ {
+  "lang": "fr",
+  "text": "Je fais le ménage le samedi."
+ },
+ {
+  "lang": "fr",
+  "text": "Le dimanche, mon père fait le ménage et ma mère lave le linge. Moi, je fais la vaisselle."
+ },
+ {
+  "lang": "fr",
+  "text": "Qui fait la vaisselle chez toi ?"
+ },
+ {
+  "lang": "fr",
+  "text": "C'est toujours moi !"
+ },
+ {
+  "lang": "fr",
+  "text": "La vaisselle est propre."
+ },
+ {
+  "lang": "fr",
+  "text": "Je lave le linge."
+ },
+ {
+  "lang": "fr",
+  "text": "Je suis malade, je vais chez le médecin"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai mal à la tête"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai mal au ventre"
+ },
+ {
+  "lang": "fr",
+  "text": "J ai mal au ventre"
+ },
+ {
+  "lang": "fr",
+  "text": "Elle a mal aux dents"
+ },
+ {
+  "lang": "fr",
+  "text": "Elle a mal à la tête"
+ },
+ {
+  "lang": "fr",
+  "text": "Il a mal aux dents"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai mal ___ tête."
+ },
+ {
+  "lang": "fr",
+  "text": "à la"
+ },
+ {
+  "lang": "fr",
+  "text": "au"
+ },
+ {
+  "lang": "fr",
+  "text": "aux"
+ },
+ {
+  "lang": "fr",
+  "text": "Les ___ sont propres."
+ },
+ {
+  "lang": "fr",
+  "text": "dents"
+ },
+ {
+  "lang": "fr",
+  "text": "ventre"
+ },
+ {
+  "lang": "fr",
+  "text": "Aujourd'hui je suis malade. J'ai mal à la tête et au ventre."
+ },
+ {
+  "lang": "fr",
+  "text": "les oreilles"
+ },
+ {
+  "lang": "fr",
+  "text": "les yeux"
+ },
+ {
+  "lang": "fr",
+  "text": "le pied"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai de la fièvre"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais chez le médecin"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais chez le médecin demain"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai un gros rhume"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai une grosse fièvre"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu as un gros rhume"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai mal ___ jambe."
+ },
+ {
+  "lang": "fr",
+  "text": "Il ___ chez le médecin."
+ },
+ {
+  "lang": "fr",
+  "text": "va"
+ },
+ {
+  "lang": "fr",
+  "text": "vais"
+ },
+ {
+  "lang": "fr",
+  "text": "mal"
+ },
+ {
+  "lang": "fr",
+  "text": "Qu'est-ce que tu as ?"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai un rhume et j'ai mal à la tête."
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai un médecin."
+ },
+ {
+  "lang": "fr",
+  "text": "Mon frère a un rhume. Il tousse beaucoup et il a de la fièvre."
+ },
+ {
+  "lang": "fr",
+  "text": "Je tousse et j'ai de la fièvre"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai de la fièvre et je tousse"
+ },
+ {
+  "lang": "fr",
+  "text": "Je dois prendre un médicament"
+ },
+ {
+  "lang": "fr",
+  "text": "Le médecin me dit de me reposer"
+ },
+ {
+  "lang": "fr",
+  "text": "Le médecin me dit de me reposer."
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais mieux aujourd'hui"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais mal aujourd'hui"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu vas mieux aujourd'hui"
+ },
+ {
+  "lang": "fr",
+  "text": "Il ___ beaucoup la nuit."
+ },
+ {
+  "lang": "fr",
+  "text": "tousse"
+ },
+ {
+  "lang": "fr",
+  "text": "tousses"
+ },
+ {
+  "lang": "fr",
+  "text": "repose"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu dois ___ un médicament."
+ },
+ {
+  "lang": "fr",
+  "text": "Je tousse et je suis fatigué."
+ },
+ {
+  "lang": "fr",
+  "text": "Hier j'étais malade. Aujourd'hui je vais mieux, mais je tousse encore."
+ },
+ {
+  "lang": "fr",
+  "text": "Tu as pris ton médicament ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Oui, ce matin."
+ },
+ {
+  "lang": "fr",
+  "text": "Et tu te reposes maintenant ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je suis le médecin."
+ },
+ {
+  "lang": "fr",
+  "text": "Le médicament est sur la table."
+ },
+ {
+  "lang": "fr",
+  "text": "très"
+ },
+ {
+  "lang": "fr",
+  "text": "\"avoir mal\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai pris un médicament pour le ventre"
+ },
+ {
+  "lang": "fr",
+  "text": "Pour le ventre j'ai pris un médicament"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu dois te reposer"
+ },
+ {
+  "lang": "fr",
+  "text": "Elle va mieux mais elle tousse"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai mal aux dents"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu as mal aux dents"
+ },
+ {
+  "lang": "fr",
+  "text": "Après le médicament, il va ___."
+ },
+ {
+  "lang": "fr",
+  "text": "beaucoup"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous ___ chez le médecin vendredi."
+ },
+ {
+  "lang": "fr",
+  "text": "allons"
+ },
+ {
+  "lang": "fr",
+  "text": "Elle doit se reposer."
+ },
+ {
+  "lang": "fr",
+  "text": "Le médecin dit : « Tu as un rhume. Tu dois te reposer et prendre un médicament. »"
+ },
+ {
+  "lang": "fr",
+  "text": "Je tousse beaucoup et j'ai mal à la tête."
+ },
+ {
+  "lang": "fr",
+  "text": "Tu dois aller chez le médecin !"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais à la piscine demain."
+ },
+ {
+  "lang": "fr",
+  "text": "La tête est sur les épaules."
+ },
+ {
+  "lang": "fr",
+  "text": "Allez tout droit"
+ },
+ {
+  "lang": "fr",
+  "text": "Continuez tout droit"
+ },
+ {
+  "lang": "fr",
+  "text": "Où est la station de métro"
+ },
+ {
+  "lang": "fr",
+  "text": "Où est la station de métro ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je descends à la station Victor Hugo"
+ },
+ {
+  "lang": "fr",
+  "text": "Je descends à la gare Victor Hugo"
+ },
+ {
+  "lang": "fr",
+  "text": "Je monte à la station Victor Hugo"
+ },
+ {
+  "lang": "fr",
+  "text": "Le métro est ___ l'arrêt."
+ },
+ {
+  "lang": "fr",
+  "text": "à côté de"
+ },
+ {
+  "lang": "fr",
+  "text": "___ tout droit jusqu'au feu."
+ },
+ {
+  "lang": "fr",
+  "text": "Allez"
+ },
+ {
+  "lang": "fr",
+  "text": "Aller"
+ },
+ {
+  "lang": "fr",
+  "text": "Vas"
+ },
+ {
+  "lang": "fr",
+  "text": "Je prends le métro tous les jours."
+ },
+ {
+  "lang": "fr",
+  "text": "Pour aller à l'école, je prends le métro. Je descends à la station République et je vais tout droit."
+ },
+ {
+  "lang": "fr",
+  "text": "Excusez-moi, où est la station de métro ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Allez tout droit, c'est à gauche."
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais au cinéma ce soir."
+ },
+ {
+  "lang": "fr",
+  "text": "à côté"
+ },
+ {
+  "lang": "fr",
+  "text": "Traversez la rue"
+ },
+ {
+  "lang": "fr",
+  "text": "Marchez jusqu'au pont"
+ },
+ {
+  "lang": "fr",
+  "text": "Continuez jusqu'au bout de la rue"
+ },
+ {
+  "lang": "fr",
+  "text": "Continuez jusqu au bout de la rue"
+ },
+ {
+  "lang": "fr",
+  "text": "Descendez à l'arrêt numéro trois"
+ },
+ {
+  "lang": "fr",
+  "text": "Descendez à l'arrêt numéro deux"
+ },
+ {
+  "lang": "fr",
+  "text": "Montez à l'arrêt numéro trois"
+ },
+ {
+  "lang": "fr",
+  "text": "___ le pont et continuez tout droit."
+ },
+ {
+  "lang": "fr",
+  "text": "Traversez"
+ },
+ {
+  "lang": "fr",
+  "text": "Tournez"
+ },
+ {
+  "lang": "fr",
+  "text": "Descendez"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous descendons ___ la station."
+ },
+ {
+  "lang": "fr",
+  "text": "à"
+ },
+ {
+  "lang": "fr",
+  "text": "Continuez tout droit jusqu'au pont."
+ },
+ {
+  "lang": "fr",
+  "text": "Allez tout droit, traversez la rue et continuez jusqu'au pont. L'école est à droite."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est loin d'ici ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Non, pas loin."
+ },
+ {
+  "lang": "fr",
+  "text": "Allez jusqu'au coin, puis à droite."
+ },
+ {
+  "lang": "fr",
+  "text": "Oui, c'est très loin d'ici."
+ },
+ {
+  "lang": "fr",
+  "text": "Loin, c'est joli."
+ },
+ {
+  "lang": "fr",
+  "text": "Tournez au coin"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous marchons sur le trottoir"
+ },
+ {
+  "lang": "fr",
+  "text": "Le pont est après la station"
+ },
+ {
+  "lang": "fr",
+  "text": "Tournez à gauche au coin"
+ },
+ {
+  "lang": "fr",
+  "text": "Tournez à droite au coin"
+ },
+ {
+  "lang": "fr",
+  "text": "Tournez à gauche au pont"
+ },
+ {
+  "lang": "fr",
+  "text": "___ à droite au prochain feu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le pont est ___ la rivière."
+ },
+ {
+  "lang": "fr",
+  "text": "sur"
+ },
+ {
+  "lang": "fr",
+  "text": "Le trottoir est large."
+ },
+ {
+  "lang": "fr",
+  "text": "Le restaurant est au coin de la rue. Traversez le pont et allez tout droit."
+ },
+ {
+  "lang": "fr",
+  "text": "monter"
+ },
+ {
+  "lang": "fr",
+  "text": "\"tout droit\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je descends à cet arrêt"
+ },
+ {
+  "lang": "fr",
+  "text": "Continuez tout droit, puis tournez à droite"
+ },
+ {
+  "lang": "fr",
+  "text": "Où est le pont"
+ },
+ {
+  "lang": "fr",
+  "text": "Où est le pont ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Elle traverse la rue avec moi"
+ },
+ {
+  "lang": "fr",
+  "text": "Elle traverse la rue sans moi"
+ },
+ {
+  "lang": "fr",
+  "text": "Il traverse la rue avec moi"
+ },
+ {
+  "lang": "fr",
+  "text": "Pour aller à la gare, prenez le ___."
+ },
+ {
+  "lang": "fr",
+  "text": "métro"
+ },
+ {
+  "lang": "fr",
+  "text": "pont"
+ },
+ {
+  "lang": "fr",
+  "text": "coin"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous ___ à la station République."
+ },
+ {
+  "lang": "fr",
+  "text": "descendons"
+ },
+ {
+  "lang": "fr",
+  "text": "descend"
+ },
+ {
+  "lang": "fr",
+  "text": "Tournez au coin et traversez la rue."
+ },
+ {
+  "lang": "fr",
+  "text": "Pour aller au musée, prenez le métro. Descendez à la station Arts et allez tout droit jusqu'au coin."
+ },
+ {
+  "lang": "fr",
+  "text": "Pardon, je cherche la gare."
+ },
+ {
+  "lang": "fr",
+  "text": "La gare ? C'est simple."
+ },
+ {
+  "lang": "fr",
+  "text": "Prenez le métro et descendez à la station Gare."
+ },
+ {
+  "lang": "fr",
+  "text": "La gare est fermée."
+ },
+ {
+  "lang": "fr",
+  "text": "Le métro est bleu."
+ },
+ {
+  "lang": "fr",
+  "text": "Cet été je vais aller à la mer"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais aller à la mer cet été"
+ },
+ {
+  "lang": "fr",
+  "text": "Pendant les vacances je vais lire un livre"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais lire un livre pendant les vacances"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous allons à la plage demain"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais réserver une chambre"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais réserver une table"
+ },
+ {
+  "lang": "fr",
+  "text": "Je réserve une chambre"
+ },
+ {
+  "lang": "fr",
+  "text": "___ été je vais voyager."
+ },
+ {
+  "lang": "fr",
+  "text": "Cet"
+ },
+ {
+  "lang": "fr",
+  "text": "Ce"
+ },
+ {
+  "lang": "fr",
+  "text": "Cette"
+ },
+ {
+  "lang": "fr",
+  "text": "La ___ est bleue."
+ },
+ {
+  "lang": "fr",
+  "text": "mer"
+ },
+ {
+  "lang": "fr",
+  "text": "plage"
+ },
+ {
+  "lang": "fr",
+  "text": "montagne"
+ },
+ {
+  "lang": "fr",
+  "text": "Cet été je vais aller à la plage."
+ },
+ {
+  "lang": "fr",
+  "text": "Les vacances commencent en juillet. Ma famille va à la mer et moi, je vais visiter un autre pays."
+ },
+ {
+  "lang": "fr",
+  "text": "Tu vas où cet été ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais aller à la mer avec ma famille."
+ },
+ {
+  "lang": "fr",
+  "text": "J'aime la mer."
+ },
+ {
+  "lang": "fr",
+  "text": "L'été est chaud."
+ },
+ {
+  "lang": "fr",
+  "text": "l'an"
+ },
+ {
+  "lang": "fr",
+  "text": "Cet été nous prévoyons un voyage"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous prévoyons un voyage cet été"
+ },
+ {
+  "lang": "fr",
+  "text": "Le mois prochain je vais retourner à l'école"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais retourner à l'école le mois prochain"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous prévoyons un voyage en août"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous prévoyons un voyage en aout"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais partir en vacances bientôt"
+ },
+ {
+  "lang": "fr",
+  "text": "Je pars en vacances bientôt"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais partir au travail bientôt"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais ___ cet été."
+ },
+ {
+  "lang": "fr",
+  "text": "nagé"
+ },
+ {
+  "lang": "fr",
+  "text": "nage"
+ },
+ {
+  "lang": "fr",
+  "text": "Le mois prochain, nous ___ en France."
+ },
+ {
+  "lang": "fr",
+  "text": "allé"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais visiter deux pays cet été."
+ },
+ {
+  "lang": "fr",
+  "text": "En juin je vais partir en vacances. Je vais visiter la France et l'Espagne."
+ },
+ {
+  "lang": "fr",
+  "text": "Tu prévois quoi pour les vacances ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais visiter la France avec mes parents."
+ },
+ {
+  "lang": "fr",
+  "text": "Les vacances sont longues."
+ },
+ {
+  "lang": "fr",
+  "text": "Je préfère le café."
+ },
+ {
+  "lang": "fr",
+  "text": "rester"
+ },
+ {
+  "lang": "fr",
+  "text": "rentrer"
+ },
+ {
+  "lang": "fr",
+  "text": "après"
+ },
+ {
+  "lang": "fr",
+  "text": "Je pars demain"
+ },
+ {
+  "lang": "fr",
+  "text": "Demain je pars"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais partir demain"
+ },
+ {
+  "lang": "fr",
+  "text": "Demain je vais partir"
+ },
+ {
+  "lang": "fr",
+  "text": "Le week-end prochain nous allons à la plage"
+ },
+ {
+  "lang": "fr",
+  "text": "Bientôt ce sont les vacances"
+ },
+ {
+  "lang": "fr",
+  "text": "Elle va partir dans un autre pays"
+ },
+ {
+  "lang": "fr",
+  "text": "Elle va partir dans un autre plage"
+ },
+ {
+  "lang": "fr",
+  "text": "Il va partir dans un autre pays"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais ___ la semaine prochaine."
+ },
+ {
+  "lang": "fr",
+  "text": "parti"
+ },
+ {
+  "lang": "fr",
+  "text": "pars"
+ },
+ {
+  "lang": "fr",
+  "text": "Le prochain ___ je vais à Paris."
+ },
+ {
+  "lang": "fr",
+  "text": "mois"
+ },
+ {
+  "lang": "fr",
+  "text": "pays"
+ },
+ {
+  "lang": "fr",
+  "text": "Je pars en vacances bientôt."
+ },
+ {
+  "lang": "fr",
+  "text": "Paul va partir en Italie la semaine prochaine. Il va réserver son hôtel bientôt."
+ },
+ {
+  "lang": "fr",
+  "text": "Tu pars quand en vacances ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je pars la semaine prochaine."
+ },
+ {
+  "lang": "fr",
+  "text": "Les vacances sont en août."
+ },
+ {
+  "lang": "fr",
+  "text": "Je pars avec ma sœur."
+ },
+ {
+  "lang": "fr",
+  "text": "\"le pays\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais réserver la chambre aujourd'hui"
+ },
+ {
+  "lang": "fr",
+  "text": "Aujourd'hui je vais réserver la chambre"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous allons réserver un hôtel près de la mer"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais voyager avec mes amis"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais voyager avec mes ami"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous partons bientôt à la mer"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous partons bientôt à la montagne"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous partez bientôt à la mer"
+ },
+ {
+  "lang": "fr",
+  "text": "Il va ___ son billet demain."
+ },
+ {
+  "lang": "fr",
+  "text": "réserve"
+ },
+ {
+  "lang": "fr",
+  "text": "réservé"
+ },
+ {
+  "lang": "fr",
+  "text": "___ prochain je vais chez ma grand-mère."
+ },
+ {
+  "lang": "fr",
+  "text": "Le mois"
+ },
+ {
+  "lang": "fr",
+  "text": "La mer"
+ },
+ {
+  "lang": "fr",
+  "text": "Le pays"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous allons réserver un hôtel près de la mer."
+ },
+ {
+  "lang": "fr",
+  "text": "Cet été, Léa va partir au Canada. Elle va voyager avec son frère et réserver un hôtel près de la mer."
+ },
+ {
+  "lang": "fr",
+  "text": "la montagne"
+ },
+ {
+  "lang": "fr",
+  "text": "la ville"
+ },
+ {
+  "lang": "fr",
+  "text": "Le train est plus rapide que le bus"
+ },
+ {
+  "lang": "fr",
+  "text": "Le train est moins lent que le bus"
+ },
+ {
+  "lang": "fr",
+  "text": "Cette robe est moins chère"
+ },
+ {
+  "lang": "fr",
+  "text": "Le métro est plus rapide que le bus"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma sœur est plus grande que moi"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma sœur est moins grande que moi"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon frère est plus grand que moi"
+ },
+ {
+  "lang": "fr",
+  "text": "Le train est ___ rapide que le bus."
+ },
+ {
+  "lang": "fr",
+  "text": "Cette robe est moins ___ que l'autre."
+ },
+ {
+  "lang": "fr",
+  "text": "chère"
+ },
+ {
+  "lang": "fr",
+  "text": "meilleure"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon frère est plus grand que moi."
+ },
+ {
+  "lang": "fr",
+  "text": "Le bus est lent et le métro est rapide. Le train est le plus rapide."
+ },
+ {
+  "lang": "fr",
+  "text": "Quel transport est plus rapide ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Le métro est plus rapide que le bus."
+ },
+ {
+  "lang": "fr",
+  "text": "Le bus est jaune."
+ },
+ {
+  "lang": "fr",
+  "text": "Ce film est meilleur"
+ },
+ {
+  "lang": "fr",
+  "text": "Le bus est plus lent"
+ },
+ {
+  "lang": "fr",
+  "text": "Le bus est moins rapide"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon grand-père est plus fort que moi"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon grand père est plus fort que moi"
+ },
+ {
+  "lang": "fr",
+  "text": "Cette pizza est la meilleure"
+ },
+ {
+  "lang": "fr",
+  "text": "Cette pizza est la meilleur"
+ },
+ {
+  "lang": "fr",
+  "text": "Cette pizzeria est la meilleure"
+ },
+ {
+  "lang": "fr",
+  "text": "La pizza est ___ que le riz."
+ },
+ {
+  "lang": "fr",
+  "text": "Le métro est rapide, le bus est ___."
+ },
+ {
+  "lang": "fr",
+  "text": "Ma mère cuisine mieux que moi."
+ },
+ {
+  "lang": "fr",
+  "text": "Dans la famille, mon père est le plus fort et ma sœur est la plus rapide. Moi, je suis le plus lent !"
+ },
+ {
+  "lang": "fr",
+  "text": "Qui est le plus fort dans ta famille ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon père est le plus fort."
+ },
+ {
+  "lang": "fr",
+  "text": "Oui, il est très fort."
+ },
+ {
+  "lang": "fr",
+  "text": "Non, pas fort."
+ },
+ {
+  "lang": "fr",
+  "text": "calme"
+ },
+ {
+  "lang": "fr",
+  "text": "Le français est plus facile que l'allemand"
+ },
+ {
+  "lang": "fr",
+  "text": "Le français est moins difficile que l'allemand"
+ },
+ {
+  "lang": "fr",
+  "text": "Ce quartier est tranquille et joli"
+ },
+ {
+  "lang": "fr",
+  "text": "Il parle très vite"
+ },
+ {
+  "lang": "fr",
+  "text": "Cet exercice est trop difficile"
+ },
+ {
+  "lang": "fr",
+  "text": "Cet exercice est trop facile"
+ },
+ {
+  "lang": "fr",
+  "text": "Cette exercice est trop difficile"
+ },
+ {
+  "lang": "fr",
+  "text": "Le test est ___ que le devoir."
+ },
+ {
+  "lang": "fr",
+  "text": "plus facile"
+ },
+ {
+  "lang": "fr",
+  "text": "le plus facile"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon quartier est calme et ___."
+ },
+ {
+  "lang": "fr",
+  "text": "Cette leçon est plus facile."
+ },
+ {
+  "lang": "fr",
+  "text": "Mon quartier est tranquille et joli. Le centre-ville est plus bruyant mais plus intéressant."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est difficile, le français ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Non, c'est plus facile que tu penses !"
+ },
+ {
+  "lang": "fr",
+  "text": "Le français est une langue."
+ },
+ {
+  "lang": "fr",
+  "text": "J'aime les difficultés."
+ },
+ {
+  "lang": "fr",
+  "text": "le meilleur"
+ },
+ {
+  "lang": "fr",
+  "text": "le pire"
+ },
+ {
+  "lang": "fr",
+  "text": "le plus"
+ },
+ {
+  "lang": "fr",
+  "text": "\"le pire\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "le moins"
+ },
+ {
+  "lang": "fr",
+  "text": "plus ... que"
+ },
+ {
+  "lang": "fr",
+  "text": "Ce restaurant est le meilleur de la ville"
+ },
+ {
+  "lang": "fr",
+  "text": "Ce temps est le pire"
+ },
+ {
+  "lang": "fr",
+  "text": "C'est le meilleur film du monde"
+ },
+ {
+  "lang": "fr",
+  "text": "Cest le meilleur film du monde"
+ },
+ {
+  "lang": "fr",
+  "text": "Le bleu est la meilleure couleur"
+ },
+ {
+  "lang": "fr",
+  "text": "Le bleu est la meilleur couleur"
+ },
+ {
+  "lang": "fr",
+  "text": "Le rouge est la meilleure couleur"
+ },
+ {
+  "lang": "fr",
+  "text": "C'est ___ leçon de toutes."
+ },
+ {
+  "lang": "fr",
+  "text": "la meilleure"
+ },
+ {
+  "lang": "fr",
+  "text": "la pire"
+ },
+ {
+  "lang": "fr",
+  "text": "Le bus est le ___ rapide de tous."
+ },
+ {
+  "lang": "fr",
+  "text": "Ce restaurant est le meilleur de la ville."
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai trois professeurs. Madame Dubois est la plus gentille et monsieur Renard est le plus drôle."
+ },
+ {
+  "lang": "fr",
+  "text": "Quel est le meilleur restaurant ici ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Le Petit Bistrot, c'est le meilleur !"
+ },
+ {
+  "lang": "fr",
+  "text": "Les restaurants sont chers."
+ },
+ {
+  "lang": "fr",
+  "text": "Le meilleur est fermé."
+ },
+ {
+  "lang": "fr",
+  "text": "Aujourd'hui je suis très content"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma sœur est triste"
+ },
+ {
+  "lang": "fr",
+  "text": "Je suis fatigué après le travail"
+ },
+ {
+  "lang": "fr",
+  "text": "Je suis fatigué après le travail."
+ },
+ {
+  "lang": "fr",
+  "text": "Elle est contente aujourd'hui"
+ },
+ {
+  "lang": "fr",
+  "text": "Elle est content aujourd'hui"
+ },
+ {
+  "lang": "fr",
+  "text": "Il est content aujourd'hui"
+ },
+ {
+  "lang": "fr",
+  "text": "Marie est ___, elle pleure."
+ },
+ {
+  "lang": "fr",
+  "text": "contente"
+ },
+ {
+  "lang": "fr",
+  "text": "gentille"
+ },
+ {
+  "lang": "fr",
+  "text": "Après le sport, je suis ___."
+ },
+ {
+  "lang": "fr",
+  "text": "Aujourd'hui je suis très content !"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma sœur est triste parce que son chat est malade. Moi, je suis content parce que je vais au parc."
+ },
+ {
+  "lang": "fr",
+  "text": "Pourquoi tu es content aujourd'hui ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Parce que je vais au parc avec mes amis !"
+ },
+ {
+  "lang": "fr",
+  "text": "Parce que je suis triste."
+ },
+ {
+  "lang": "fr",
+  "text": "Parce que le parc est vert."
+ },
+ {
+  "lang": "fr",
+  "text": "Mon professeur est très drôle"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon frère est timide"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma petite sœur est curieuse"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma petite sœur est curieuse."
+ },
+ {
+  "lang": "fr",
+  "text": "Ton ami est très gentil"
+ },
+ {
+  "lang": "fr",
+  "text": "Ton ami est très drôle"
+ },
+ {
+  "lang": "fr",
+  "text": "Ta amie est très gentille"
+ },
+ {
+  "lang": "fr",
+  "text": "Les enfants sont ___, ils demandent tout."
+ },
+ {
+  "lang": "fr",
+  "text": "timides"
+ },
+ {
+  "lang": "fr",
+  "text": "gentils"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon grand-père est très ___."
+ },
+ {
+  "lang": "fr",
+  "text": "Ma sœur est timide mais très gentille."
+ },
+ {
+  "lang": "fr",
+  "text": "Dans ma classe, Léo est le plus drôle et Emma est la plus timide. Moi, je suis curieux."
+ },
+ {
+  "lang": "fr",
+  "text": "Comment est ton nouveau professeur ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Il est gentil et très drôle !"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon professeur est nouveau."
+ },
+ {
+  "lang": "fr",
+  "text": "Le professeur travaille à l'école."
+ },
+ {
+  "lang": "fr",
+  "text": "Je pense que le français est facile"
+ },
+ {
+  "lang": "fr",
+  "text": "Je crois que le français est facile"
+ },
+ {
+  "lang": "fr",
+  "text": "Je trouve que le français est facile"
+ },
+ {
+  "lang": "fr",
+  "text": "Je crois que tu aimes ce film"
+ },
+ {
+  "lang": "fr",
+  "text": "Je pense que tu aimes ce film"
+ },
+ {
+  "lang": "fr",
+  "text": "Je trouve que tu aimes ce film"
+ },
+ {
+  "lang": "fr",
+  "text": "Je trouve que ce restaurant est cher"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu es d'accord avec moi"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu es d'accord avec toi"
+ },
+ {
+  "lang": "fr",
+  "text": "Vous êtes d'accord avec moi"
+ },
+ {
+  "lang": "fr",
+  "text": "Je ___ que le français est beau."
+ },
+ {
+  "lang": "fr",
+  "text": "pense"
+ },
+ {
+  "lang": "fr",
+  "text": "Je suis ___, allons au cinéma !"
+ },
+ {
+  "lang": "fr",
+  "text": "Je pense que le français est facile."
+ },
+ {
+  "lang": "fr",
+  "text": "Mon ami pense que le football est le meilleur sport. Je ne suis pas d'accord : je préfère la natation."
+ },
+ {
+  "lang": "fr",
+  "text": "Tu trouves que le film est bien ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Oui, je trouve qu'il est super !"
+ },
+ {
+  "lang": "fr",
+  "text": "Le film est au cinéma."
+ },
+ {
+  "lang": "fr",
+  "text": "Je regarde le film."
+ },
+ {
+  "lang": "fr",
+  "text": "\"je trouve\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je trouve que ce restaurant est très bon"
+ },
+ {
+  "lang": "fr",
+  "text": "Je crois que ce restaurant est très bon"
+ },
+ {
+  "lang": "fr",
+  "text": "Je pense que ce restaurant est très bon"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu crois que j'ai raison"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu penses que j'ai raison"
+ },
+ {
+  "lang": "fr",
+  "text": "À mon avis, le bleu est plus joli"
+ },
+ {
+  "lang": "fr",
+  "text": "A mon avis, le bleu est plus joli"
+ },
+ {
+  "lang": "fr",
+  "text": "Je crois que oui"
+ },
+ {
+  "lang": "fr",
+  "text": "Je crois que non"
+ },
+ {
+  "lang": "fr",
+  "text": "Je crois qu'oui"
+ },
+ {
+  "lang": "fr",
+  "text": "___ mon avis, le train est mieux."
+ },
+ {
+  "lang": "fr",
+  "text": "À"
+ },
+ {
+  "lang": "fr",
+  "text": "De"
+ },
+ {
+  "lang": "fr",
+  "text": "Sur"
+ },
+ {
+  "lang": "fr",
+  "text": "Elle pense ___ le français est facile."
+ },
+ {
+  "lang": "fr",
+  "text": "qui"
+ },
+ {
+  "lang": "fr",
+  "text": "quoi"
+ },
+ {
+  "lang": "fr",
+  "text": "À mon avis, le métro est mieux."
+ },
+ {
+  "lang": "fr",
+  "text": "Dans ma famille, tout le monde pense que le chat est drôle. À mon avis, il est pénible !"
+ },
+ {
+  "lang": "fr",
+  "text": "À ton avis, c'est une bonne idée ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Oui, bien sûr !"
+ },
+ {
+  "lang": "fr",
+  "text": "Moi aussi, je trouve que c'est une bonne idée !"
+ },
+ {
+  "lang": "fr",
+  "text": "Non, c'est une mauvaise idée !"
+ },
+ {
+  "lang": "fr",
+  "text": "Les idées sont importantes."
+ },
+ {
+  "lang": "fr",
+  "text": "je veux"
+ },
+ {
+  "lang": "fr",
+  "text": "j'aime"
+ },
+ {
+  "lang": "fr",
+  "text": "Je voudrais un café"
+ },
+ {
+  "lang": "fr",
+  "text": "J'aimerais un café"
+ },
+ {
+  "lang": "fr",
+  "text": "Je voudrais commander"
+ },
+ {
+  "lang": "fr",
+  "text": "Je voudrais une table pour deux"
+ },
+ {
+  "lang": "fr",
+  "text": "Je voudrais une table pour deux personnes"
+ },
+ {
+  "lang": "fr",
+  "text": "J'aimerais un thé, s'il vous plaît"
+ },
+ {
+  "lang": "fr",
+  "text": "J'aimerais un café, s'il vous plaît"
+ },
+ {
+  "lang": "fr",
+  "text": "Je voudrais un thé, s'il vous plaît"
+ },
+ {
+  "lang": "fr",
+  "text": "Je ___ un café, s'il vous plaît."
+ },
+ {
+  "lang": "fr",
+  "text": "voudrais"
+ },
+ {
+  "lang": "fr",
+  "text": "commande"
+ },
+ {
+  "lang": "fr",
+  "text": "___ voudriez-vous ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Qui"
+ },
+ {
+  "lang": "fr",
+  "text": "Je voudrais commander, s'il vous plaît."
+ },
+ {
+  "lang": "fr",
+  "text": "Au restaurant, le client dit : « Je voudrais une table pour deux. » Le serveur répond : « Très bien, suivez-moi. »"
+ },
+ {
+  "lang": "fr",
+  "text": "Bonjour, je voudrais commander."
+ },
+ {
+  "lang": "fr",
+  "text": "Bien sûr !"
+ },
+ {
+  "lang": "fr",
+  "text": "Je voudrais une pizza et un thé, s'il vous plaît."
+ },
+ {
+  "lang": "fr",
+  "text": "La commande est sur la table."
+ },
+ {
+  "lang": "fr",
+  "text": "Je commande chaque jour."
+ },
+ {
+  "lang": "fr",
+  "text": "téléphoner"
+ },
+ {
+  "lang": "fr",
+  "text": "Vous pourriez nous donner une table près de la fenêtre"
+ },
+ {
+  "lang": "fr",
+  "text": "Vous pouvez nous donner une table près de la fenêtre"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais rappeler demain"
+ },
+ {
+  "lang": "fr",
+  "text": "La ligne est occupée"
+ },
+ {
+  "lang": "fr",
+  "text": "Pourriez-vous répéter, s'il vous plaît"
+ },
+ {
+  "lang": "fr",
+  "text": "Pourriez-vous parler, s'il vous plaît"
+ },
+ {
+  "lang": "fr",
+  "text": "Pouvez-vous répéter, s'il vous plaît"
+ },
+ {
+  "lang": "fr",
+  "text": "___ je peux parler à Madame Martin ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Est-ce qu'"
+ },
+ {
+  "lang": "fr",
+  "text": "Est-ce"
+ },
+ {
+  "lang": "fr",
+  "text": "Pouvez"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais ___ demain matin."
+ },
+ {
+  "lang": "fr",
+  "text": "rappelle"
+ },
+ {
+  "lang": "fr",
+  "text": "rappelez"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais rappeler demain matin."
+ },
+ {
+  "lang": "fr",
+  "text": "Au téléphone : « Allô ? La ligne est occupée. Je vais rappeler plus tard. »"
+ },
+ {
+  "lang": "fr",
+  "text": "Allô, je voudrais parler à monsieur Dubois."
+ },
+ {
+  "lang": "fr",
+  "text": "Il n'est pas là."
+ },
+ {
+  "lang": "fr",
+  "text": "Pourriez-vous lui dire de me rappeler ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je parle à monsieur Dubois."
+ },
+ {
+  "lang": "fr",
+  "text": "Monsieur Dubois est là."
+ },
+ {
+  "lang": "fr",
+  "text": "Je voudrais réserver une table pour ce soir"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai rendez-vous chez le médecin"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai réservé une table au restaurant"
+ },
+ {
+  "lang": "fr",
+  "text": "J ai réservé une table au restaurant"
+ },
+ {
+  "lang": "fr",
+  "text": "Le menu est sur la table"
+ },
+ {
+  "lang": "fr",
+  "text": "Le menu est sous la table"
+ },
+ {
+  "lang": "fr",
+  "text": "La réservation est sur la table"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai ___ chez le dentiste à trois heures."
+ },
+ {
+  "lang": "fr",
+  "text": "rendez-vous"
+ },
+ {
+  "lang": "fr",
+  "text": "réservation"
+ },
+ {
+  "lang": "fr",
+  "text": "menu"
+ },
+ {
+  "lang": "fr",
+  "text": "On ___ le dîner à huit heures."
+ },
+ {
+  "lang": "fr",
+  "text": "sert"
+ },
+ {
+  "lang": "fr",
+  "text": "serve"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai réservé une table pour ce soir."
+ },
+ {
+  "lang": "fr",
+  "text": "Hier soir, j'ai téléphoné au restaurant. J'ai réservé une table pour quatre personnes."
+ },
+ {
+  "lang": "fr",
+  "text": "Bonsoir, je voudrais réserver une table."
+ },
+ {
+  "lang": "fr",
+  "text": "Pour combien de personnes ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Pour quatre personnes, s'il vous plaît."
+ },
+ {
+  "lang": "fr",
+  "text": "La table est près de la fenêtre."
+ },
+ {
+  "lang": "fr",
+  "text": "J'aime ce restaurant."
+ },
+ {
+  "lang": "fr",
+  "text": "\"vous pourriez\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "Vous pourriez répéter, s'il vous plaît"
+ },
+ {
+  "lang": "fr",
+  "text": "Vous pouvez répéter, s'il vous plaît"
+ },
+ {
+  "lang": "fr",
+  "text": "Pourriez-vous parler plus lentement"
+ },
+ {
+  "lang": "fr",
+  "text": "Vous pouvez parler plus lentement"
+ },
+ {
+  "lang": "fr",
+  "text": "Le dîner est servi"
+ },
+ {
+  "lang": "fr",
+  "text": "Le dîner est servi."
+ },
+ {
+  "lang": "fr",
+  "text": "Je voudrais parler au directeur"
+ },
+ {
+  "lang": "fr",
+  "text": "Je voudrais parler au docteur"
+ },
+ {
+  "lang": "fr",
+  "text": "Je veux parler au directeur"
+ },
+ {
+  "lang": "fr",
+  "text": "___ voudrais l'addition, s'il vous plaît."
+ },
+ {
+  "lang": "fr",
+  "text": "Il"
+ },
+ {
+  "lang": "fr",
+  "text": "Le serveur ___ le dîner à huit heures."
+ },
+ {
+  "lang": "fr",
+  "text": "servons"
+ },
+ {
+  "lang": "fr",
+  "text": "Pourriez-vous parler plus lentement ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Au restaurant, le serveur demande : « Vous avez choisi ? » Le client répond : « Je voudrais le menu, s'il vous plaît. »"
+ },
+ {
+  "lang": "fr",
+  "text": "Excusez-moi, je voudrais l'addition."
+ },
+ {
+  "lang": "fr",
+  "text": "Tout de suite, monsieur !"
+ },
+ {
+  "lang": "fr",
+  "text": "Merci beaucoup !"
+ },
+ {
+  "lang": "fr",
+  "text": "L'addition est sur la table."
+ },
+ {
+  "lang": "fr",
+  "text": "J'ajoute le dîner."
+ },
+ {
   "lang": "it",
   "text": "ciao"
  },
@@ -16142,6 +21990,790 @@
  {
   "lang": "it",
   "text": "viaggiare"
+ },
+ {
+  "lang": "it",
+  "text": "ieri"
+ },
+ {
+  "lang": "it",
+  "text": "Ieri sono andato al parco."
+ },
+ {
+  "lang": "it",
+  "text": "ieri sera"
+ },
+ {
+  "lang": "it",
+  "text": "Ieri sera ho visto un film."
+ },
+ {
+  "lang": "it",
+  "text": "stamattina"
+ },
+ {
+  "lang": "it",
+  "text": "Stamattina ho dormito bene."
+ },
+ {
+  "lang": "it",
+  "text": "poi"
+ },
+ {
+  "lang": "it",
+  "text": "Pranzo e poi esco."
+ },
+ {
+  "lang": "it",
+  "text": "fare"
+ },
+ {
+  "lang": "it",
+  "text": "Ho fatto i compiti ieri."
+ },
+ {
+  "lang": "it",
+  "text": "andare"
+ },
+ {
+  "lang": "it",
+  "text": "Ieri sono andata a scuola."
+ },
+ {
+  "lang": "it",
+  "text": "vedere"
+ },
+ {
+  "lang": "it",
+  "text": "Ho visto un bel film."
+ },
+ {
+  "lang": "it",
+  "text": "dormire"
+ },
+ {
+  "lang": "it",
+  "text": "Ho dormito otto ore."
+ },
+ {
+  "lang": "it",
+  "text": "pranzo"
+ },
+ {
+  "lang": "it",
+  "text": "A pranzo ho mangiato il pesce."
+ },
+ {
+  "lang": "it",
+  "text": "letto"
+ },
+ {
+  "lang": "it",
+  "text": "Ieri sera sono andato a letto presto."
+ },
+ {
+  "lang": "it",
+  "text": "stanco"
+ },
+ {
+  "lang": "it",
+  "text": "Dopo il viaggio sono stanco."
+ },
+ {
+  "lang": "it",
+  "text": "divertente"
+ },
+ {
+  "lang": "it",
+  "text": "La festa è stata divertente."
+ },
+ {
+  "lang": "it",
+  "text": "casa"
+ },
+ {
+  "lang": "it",
+  "text": "La mia casa è piccola ma pulita."
+ },
+ {
+  "lang": "it",
+  "text": "cucina"
+ },
+ {
+  "lang": "it",
+  "text": "La cucina è grande."
+ },
+ {
+  "lang": "it",
+  "text": "bagno"
+ },
+ {
+  "lang": "it",
+  "text": "Il bagno è pulito."
+ },
+ {
+  "lang": "it",
+  "text": "camera"
+ },
+ {
+  "lang": "it",
+  "text": "La mia camera ha un balcone."
+ },
+ {
+  "lang": "it",
+  "text": "soggiorno"
+ },
+ {
+  "lang": "it",
+  "text": "Il soggiorno è luminoso."
+ },
+ {
+  "lang": "it",
+  "text": "stanza"
+ },
+ {
+  "lang": "it",
+  "text": "La casa ha tre stanze."
+ },
+ {
+  "lang": "it",
+  "text": "balcone"
+ },
+ {
+  "lang": "it",
+  "text": "Il balcone è piccolo."
+ },
+ {
+  "lang": "it",
+  "text": "giardino"
+ },
+ {
+  "lang": "it",
+  "text": "Il giardino è verde."
+ },
+ {
+  "lang": "it",
+  "text": "pulire"
+ },
+ {
+  "lang": "it",
+  "text": "Pulisco la cucina ogni giorno."
+ },
+ {
+  "lang": "it",
+  "text": "lavare"
+ },
+ {
+  "lang": "it",
+  "text": "Lavo i piatti dopo cena."
+ },
+ {
+  "lang": "it",
+  "text": "piatti"
+ },
+ {
+  "lang": "it",
+  "text": "Lavo i piatti."
+ },
+ {
+  "lang": "it",
+  "text": "doccia"
+ },
+ {
+  "lang": "it",
+  "text": "La mattina faccio la doccia."
+ },
+ {
+  "lang": "it",
+  "text": "pulito"
+ },
+ {
+  "lang": "it",
+  "text": "La casa è pulita."
+ },
+ {
+  "lang": "it",
+  "text": "testa"
+ },
+ {
+  "lang": "it",
+  "text": "Mi fa male la testa."
+ },
+ {
+  "lang": "it",
+  "text": "gola"
+ },
+ {
+  "lang": "it",
+  "text": "Mi fa male la gola."
+ },
+ {
+  "lang": "it",
+  "text": "dente"
+ },
+ {
+  "lang": "it",
+  "text": "Mi fa male un dente."
+ },
+ {
+  "lang": "it",
+  "text": "naso"
+ },
+ {
+  "lang": "it",
+  "text": "Mi fa male il naso."
+ },
+ {
+  "lang": "it",
+  "text": "mano"
+ },
+ {
+  "lang": "it",
+  "text": "Mi fa male la mano."
+ },
+ {
+  "lang": "it",
+  "text": "piede"
+ },
+ {
+  "lang": "it",
+  "text": "Mi fa male il piede."
+ },
+ {
+  "lang": "it",
+  "text": "malato"
+ },
+ {
+  "lang": "it",
+  "text": "Oggi sono malato."
+ },
+ {
+  "lang": "it",
+  "text": "sano"
+ },
+ {
+  "lang": "it",
+  "text": "Mangio sano e dormo bene."
+ },
+ {
+  "lang": "it",
+  "text": "febbre"
+ },
+ {
+  "lang": "it",
+  "text": "Ho la febbre."
+ },
+ {
+  "lang": "it",
+  "text": "medicina"
+ },
+ {
+  "lang": "it",
+  "text": "Prendo la medicina."
+ },
+ {
+  "lang": "it",
+  "text": "riposo"
+ },
+ {
+  "lang": "it",
+  "text": "Ho bisogno di riposo."
+ },
+ {
+  "lang": "it",
+  "text": "mal di testa"
+ },
+ {
+  "lang": "it",
+  "text": "Ho mal di testa."
+ },
+ {
+  "lang": "it",
+  "text": "fermata"
+ },
+ {
+  "lang": "it",
+  "text": "La fermata dell'autobus è qui."
+ },
+ {
+  "lang": "it",
+  "text": "metro"
+ },
+ {
+  "lang": "it",
+  "text": "Prendo la metro per andare al centro."
+ },
+ {
+  "lang": "it",
+  "text": "strada"
+ },
+ {
+  "lang": "it",
+  "text": "Attraverso la strada."
+ },
+ {
+  "lang": "it",
+  "text": "incrocio"
+ },
+ {
+  "lang": "it",
+  "text": "Gira a sinistra all'incrocio."
+ },
+ {
+  "lang": "it",
+  "text": "semaforo"
+ },
+ {
+  "lang": "it",
+  "text": "Il semaforo è rosso."
+ },
+ {
+  "lang": "it",
+  "text": "angolo"
+ },
+ {
+  "lang": "it",
+  "text": "Il negozio è all'angolo."
+ },
+ {
+  "lang": "it",
+  "text": "dritto"
+ },
+ {
+  "lang": "it",
+  "text": "Vai dritto e poi gira a destra."
+ },
+ {
+  "lang": "it",
+  "text": "girare"
+ },
+ {
+  "lang": "it",
+  "text": "Gira a destra all'incrocio."
+ },
+ {
+  "lang": "it",
+  "text": "davanti"
+ },
+ {
+  "lang": "it",
+  "text": "La banca è davanti alla scuola."
+ },
+ {
+  "lang": "it",
+  "text": "dietro"
+ },
+ {
+  "lang": "it",
+  "text": "L'albergo è dietro la stazione."
+ },
+ {
+  "lang": "it",
+  "text": "tra"
+ },
+ {
+  "lang": "it",
+  "text": "Il bar è tra la scuola e la banca."
+ },
+ {
+  "lang": "it",
+  "text": "attraversare"
+ },
+ {
+  "lang": "it",
+  "text": "Attraverso la strada qui."
+ },
+ {
+  "lang": "it",
+  "text": "vacanza"
+ },
+ {
+  "lang": "it",
+  "text": "Le vacanze al mare sono belle."
+ },
+ {
+  "lang": "it",
+  "text": "mare"
+ },
+ {
+  "lang": "it",
+  "text": "D'estate vado al mare."
+ },
+ {
+  "lang": "it",
+  "text": "spiaggia"
+ },
+ {
+  "lang": "it",
+  "text": "La spiaggia è vicina."
+ },
+ {
+  "lang": "it",
+  "text": "valigia"
+ },
+ {
+  "lang": "it",
+  "text": "Stasera faccio la valigia."
+ },
+ {
+  "lang": "it",
+  "text": "partire"
+ },
+ {
+  "lang": "it",
+  "text": "Parto domani mattina."
+ },
+ {
+  "lang": "it",
+  "text": "tornare"
+ },
+ {
+  "lang": "it",
+  "text": "Torno domenica sera."
+ },
+ {
+  "lang": "it",
+  "text": "prenotare"
+ },
+ {
+  "lang": "it",
+  "text": "Prenoto l'albergo."
+ },
+ {
+  "lang": "it",
+  "text": "prossimo"
+ },
+ {
+  "lang": "it",
+  "text": "La settimana prossima vado a Roma."
+ },
+ {
+  "lang": "it",
+  "text": "piscina"
+ },
+ {
+  "lang": "it",
+  "text": "D'estate vado in piscina."
+ },
+ {
+  "lang": "it",
+  "text": "viaggio"
+ },
+ {
+  "lang": "it",
+  "text": "Il viaggio è lungo."
+ },
+ {
+  "lang": "it",
+  "text": "insieme"
+ },
+ {
+  "lang": "it",
+  "text": "Andiamo insieme al mare."
+ },
+ {
+  "lang": "it",
+  "text": "programma"
+ },
+ {
+  "lang": "it",
+  "text": "Qual è il programma di domani?"
+ },
+ {
+  "lang": "it",
+  "text": "più"
+ },
+ {
+  "lang": "it",
+  "text": "Il treno è più veloce dell'autobus."
+ },
+ {
+  "lang": "it",
+  "text": "meno"
+ },
+ {
+  "lang": "it",
+  "text": "Questo libro è meno caro."
+ },
+ {
+  "lang": "it",
+  "text": "migliore"
+ },
+ {
+  "lang": "it",
+  "text": "La pizza qui è migliore."
+ },
+ {
+  "lang": "it",
+  "text": "peggiore"
+ },
+ {
+  "lang": "it",
+  "text": "Questo film è peggiore."
+ },
+ {
+  "lang": "it",
+  "text": "il più"
+ },
+ {
+  "lang": "it",
+  "text": "Questo è il più grande."
+ },
+ {
+  "lang": "it",
+  "text": "veloce"
+ },
+ {
+  "lang": "it",
+  "text": "Il treno è veloce."
+ },
+ {
+  "lang": "it",
+  "text": "lento"
+ },
+ {
+  "lang": "it",
+  "text": "L'autobus è lento."
+ },
+ {
+  "lang": "it",
+  "text": "vecchio"
+ },
+ {
+  "lang": "it",
+  "text": "Questa macchina è vecchia."
+ },
+ {
+  "lang": "it",
+  "text": "nuovo"
+ },
+ {
+  "lang": "it",
+  "text": "Ho una macchina nuova."
+ },
+ {
+  "lang": "it",
+  "text": "alto"
+ },
+ {
+  "lang": "it",
+  "text": "Mio fratello è alto."
+ },
+ {
+  "lang": "it",
+  "text": "basso"
+ },
+ {
+  "lang": "it",
+  "text": "Mia sorella è bassa."
+ },
+ {
+  "lang": "it",
+  "text": "forte"
+ },
+ {
+  "lang": "it",
+  "text": "Luca è forte."
+ },
+ {
+  "lang": "it",
+  "text": "debole"
+ },
+ {
+  "lang": "it",
+  "text": "Dopo la febbre sono debole."
+ },
+ {
+  "lang": "it",
+  "text": "felice"
+ },
+ {
+  "lang": "it",
+  "text": "Sono felice oggi."
+ },
+ {
+  "lang": "it",
+  "text": "triste"
+ },
+ {
+  "lang": "it",
+  "text": "Perché sei triste?"
+ },
+ {
+  "lang": "it",
+  "text": "arrabbiato"
+ },
+ {
+  "lang": "it",
+  "text": "Sono arrabbiato."
+ },
+ {
+  "lang": "it",
+  "text": "contento"
+ },
+ {
+  "lang": "it",
+  "text": "Sono molto contento."
+ },
+ {
+  "lang": "it",
+  "text": "gentile"
+ },
+ {
+  "lang": "it",
+  "text": "Sei molto gentile."
+ },
+ {
+  "lang": "it",
+  "text": "simpatico"
+ },
+ {
+  "lang": "it",
+  "text": "Marco è simpatico."
+ },
+ {
+  "lang": "it",
+  "text": "timido"
+ },
+ {
+  "lang": "it",
+  "text": "Mia sorella è timida."
+ },
+ {
+  "lang": "it",
+  "text": "coraggioso"
+ },
+ {
+  "lang": "it",
+  "text": "Il mio cane è coraggioso."
+ },
+ {
+  "lang": "it",
+  "text": "nervoso"
+ },
+ {
+  "lang": "it",
+  "text": "Prima dell'esame sono nervoso."
+ },
+ {
+  "lang": "it",
+  "text": "annoiato"
+ },
+ {
+  "lang": "it",
+  "text": "Il film è lungo: sono annoiato."
+ },
+ {
+  "lang": "it",
+  "text": "emozionato"
+ },
+ {
+  "lang": "it",
+  "text": "Prima del viaggio sono emozionato."
+ },
+ {
+  "lang": "it",
+  "text": "secondo me"
+ },
+ {
+  "lang": "it",
+  "text": "Secondo me è giusto."
+ },
+ {
+  "lang": "it",
+  "text": "vorrei"
+ },
+ {
+  "lang": "it",
+  "text": "Vorrei un caffè, per favore."
+ },
+ {
+  "lang": "it",
+  "text": "potrebbe"
+ },
+ {
+  "lang": "it",
+  "text": "Potrebbe aiutarmi?"
+ },
+ {
+  "lang": "it",
+  "text": "tavolo"
+ },
+ {
+  "lang": "it",
+  "text": "Un tavolo per due, per favore."
+ },
+ {
+  "lang": "it",
+  "text": "posto"
+ },
+ {
+  "lang": "it",
+  "text": "C'è un posto libero?"
+ },
+ {
+  "lang": "it",
+  "text": "occupato"
+ },
+ {
+  "lang": "it",
+  "text": "Il tavolo è occupato."
+ },
+ {
+  "lang": "it",
+  "text": "prenotazione"
+ },
+ {
+  "lang": "it",
+  "text": "Ho una prenotazione a nome Luca."
+ },
+ {
+  "lang": "it",
+  "text": "aspettare"
+ },
+ {
+  "lang": "it",
+  "text": "Aspetto cinque minuti."
+ },
+ {
+  "lang": "it",
+  "text": "minuto"
+ },
+ {
+  "lang": "it",
+  "text": "Aspetta un minuto."
+ },
+ {
+  "lang": "it",
+  "text": "qualcos'altro"
+ },
+ {
+  "lang": "it",
+  "text": "Desidera qualcos'altro?"
+ },
+ {
+  "lang": "it",
+  "text": "desidera"
+ },
+ {
+  "lang": "it",
+  "text": "Desidera il conto?"
+ },
+ {
+  "lang": "it",
+  "text": "informazione"
+ },
+ {
+  "lang": "it",
+  "text": "Vorrei un'informazione."
+ },
+ {
+  "lang": "it",
+  "text": "libero"
+ },
+ {
+  "lang": "it",
+  "text": "Il posto è libero."
  },
  {
   "lang": "it",
@@ -17249,14 +23881,6 @@
  },
  {
   "lang": "it",
-  "text": "cucina"
- },
- {
-  "lang": "it",
-  "text": "viaggio"
- },
- {
-  "lang": "it",
   "text": "Cucino la cena."
  },
  {
@@ -17302,6 +23926,1654 @@
  {
   "lang": "it",
   "text": "\"chitarra\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "stasera"
+ },
+ {
+  "lang": "it",
+  "text": "Ieri sono andato al parco"
+ },
+ {
+  "lang": "it",
+  "text": "Ieri sono andata al parco"
+ },
+ {
+  "lang": "it",
+  "text": "Ieri sera ho visto un film"
+ },
+ {
+  "lang": "it",
+  "text": "Stamattina ___ molto stanco."
+ },
+ {
+  "lang": "it",
+  "text": "fa"
+ },
+ {
+  "lang": "it",
+  "text": "Pranzo e ___ esco."
+ },
+ {
+  "lang": "it",
+  "text": "\"stanco\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Ciao! Com'è stata la festa ieri?"
+ },
+ {
+  "lang": "it",
+  "text": "È stata molto divertente!"
+ },
+ {
+  "lang": "it",
+  "text": "La festa è ieri sera."
+ },
+ {
+  "lang": "it",
+  "text": "Io sono la festa."
+ },
+ {
+  "lang": "it",
+  "text": "Ieri Marco è andato al parco. Ha visto due gatti e poi è tornato a casa."
+ },
+ {
+  "lang": "it",
+  "text": "il pranzo"
+ },
+ {
+  "lang": "it",
+  "text": "Ieri ho fatto i compiti"
+ },
+ {
+  "lang": "it",
+  "text": "Stamattina ho dormito bene"
+ },
+ {
+  "lang": "it",
+  "text": "Ho dormito bene stamattina"
+ },
+ {
+  "lang": "it",
+  "text": "Ho visto un bel film"
+ },
+ {
+  "lang": "it",
+  "text": "A ___ ho mangiato il pesce."
+ },
+ {
+  "lang": "it",
+  "text": "notte"
+ },
+ {
+  "lang": "it",
+  "text": "Ho dormito bene."
+ },
+ {
+  "lang": "it",
+  "text": "Ieri ho ___ un bel film."
+ },
+ {
+  "lang": "it",
+  "text": "visto"
+ },
+ {
+  "lang": "it",
+  "text": "mangiato"
+ },
+ {
+  "lang": "it",
+  "text": "dormito"
+ },
+ {
+  "lang": "it",
+  "text": "\"dormire\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Ieri ho fatto le compiti"
+ },
+ {
+  "lang": "it",
+  "text": "Oggi ho fatto i compiti"
+ },
+ {
+  "lang": "it",
+  "text": "Sara ieri ha lavorato molto. La sera è andata a letto alle dieci."
+ },
+ {
+  "lang": "it",
+  "text": "prima"
+ },
+ {
+  "lang": "it",
+  "text": "il letto"
+ },
+ {
+  "lang": "it",
+  "text": "Ieri sera sono andato a letto presto"
+ },
+ {
+  "lang": "it",
+  "text": "Ieri sera sono andata a letto presto"
+ },
+ {
+  "lang": "it",
+  "text": "Ieri sono stato molto stanco"
+ },
+ {
+  "lang": "it",
+  "text": "Ieri sono stata molto stanca"
+ },
+ {
+  "lang": "it",
+  "text": "La festa è stata divertente"
+ },
+ {
+  "lang": "it",
+  "text": "Ieri ___ andata al parco."
+ },
+ {
+  "lang": "it",
+  "text": "Ieri sera sono andata a letto presto."
+ },
+ {
+  "lang": "it",
+  "text": "Prima pranzo, ___ vado al parco."
+ },
+ {
+  "lang": "it",
+  "text": "\"andare\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "festa"
+ },
+ {
+  "lang": "it",
+  "text": "Luca ieri ha giocato a calcio. Poi è andato a casa ed è andato a letto."
+ },
+ {
+  "lang": "it",
+  "text": "oggi pomeriggio"
+ },
+ {
+  "lang": "it",
+  "text": "Cosa hai fatto ieri sera"
+ },
+ {
+  "lang": "it",
+  "text": "Stamattina ho bevuto il caffè e poi sono andato al parco"
+ },
+ {
+  "lang": "it",
+  "text": "Stamattina ho bevuto il caffè e poi sono andata al parco"
+ },
+ {
+  "lang": "it",
+  "text": "Cosa hai fatto ieri"
+ },
+ {
+  "lang": "it",
+  "text": "Ieri sera ___ visto un film."
+ },
+ {
+  "lang": "it",
+  "text": "Cosa hai fatto ieri sera?"
+ },
+ {
+  "lang": "it",
+  "text": "Ho dormito ___ otto ore."
+ },
+ {
+  "lang": "it",
+  "text": "per"
+ },
+ {
+  "lang": "it",
+  "text": "a"
+ },
+ {
+  "lang": "it",
+  "text": "\"ieri sera\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Ah sì? Com'è stato?"
+ },
+ {
+  "lang": "it",
+  "text": "È stato molto bello!"
+ },
+ {
+  "lang": "it",
+  "text": "Io sono un film."
+ },
+ {
+  "lang": "it",
+  "text": "Ieri sera dormo."
+ },
+ {
+  "lang": "it",
+  "text": "Stamattina ho fatto colazione con latte e pane. Poi ho letto un libro."
+ },
+ {
+  "lang": "it",
+  "text": "La mia casa è piccola ma pulita"
+ },
+ {
+  "lang": "it",
+  "text": "La casa ha tre stanze"
+ },
+ {
+  "lang": "it",
+  "text": "La cucina è grande"
+ },
+ {
+  "lang": "it",
+  "text": "Il ___ è pulito."
+ },
+ {
+  "lang": "it",
+  "text": "La mia casa è pulita."
+ },
+ {
+  "lang": "it",
+  "text": "Il soggiorno e la ___ sono grandi."
+ },
+ {
+  "lang": "it",
+  "text": "\"stanza\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "La casa di Marco ha tre stanze. La cucina è grande e il bagno è piccolo."
+ },
+ {
+  "lang": "it",
+  "text": "Il balcone è piccolo"
+ },
+ {
+  "lang": "it",
+  "text": "Pulisco la cucina ogni giorno"
+ },
+ {
+  "lang": "it",
+  "text": "Lavo i piatti"
+ },
+ {
+  "lang": "it",
+  "text": "Dopo cena ___ i piatti."
+ },
+ {
+  "lang": "it",
+  "text": "lavo"
+ },
+ {
+  "lang": "it",
+  "text": "pulisco"
+ },
+ {
+  "lang": "it",
+  "text": "Pulisco la casa ogni settimana."
+ },
+ {
+  "lang": "it",
+  "text": "Il giardino è molto ___."
+ },
+ {
+  "lang": "it",
+  "text": "verde"
+ },
+ {
+  "lang": "it",
+  "text": "piatto"
+ },
+ {
+  "lang": "it",
+  "text": "\"lavare\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Lavo i piatti dopo cena"
+ },
+ {
+  "lang": "it",
+  "text": "Lavo i piatti dopo colazione"
+ },
+ {
+  "lang": "it",
+  "text": "Bevo i piatti dopo cena"
+ },
+ {
+  "lang": "it",
+  "text": "Sara lava i piatti dopo cena. Poi pulisce la cucina."
+ },
+ {
+  "lang": "it",
+  "text": "sporco"
+ },
+ {
+  "lang": "it",
+  "text": "la doccia"
+ },
+ {
+  "lang": "it",
+  "text": "la camera"
+ },
+ {
+  "lang": "it",
+  "text": "il bagno"
+ },
+ {
+  "lang": "it",
+  "text": "La mattina faccio la doccia"
+ },
+ {
+  "lang": "it",
+  "text": "Faccio la doccia la mattina"
+ },
+ {
+  "lang": "it",
+  "text": "La mia camera ha un balcone"
+ },
+ {
+  "lang": "it",
+  "text": "Il bagno è molto ___."
+ },
+ {
+  "lang": "it",
+  "text": "La ___ ha un letto grande."
+ },
+ {
+  "lang": "it",
+  "text": "\"pulito\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Ciao! La tua casa è molto bella!"
+ },
+ {
+  "lang": "it",
+  "text": "Grazie! Anche la tua è carina."
+ },
+ {
+  "lang": "it",
+  "text": "Sì, io sono una casa."
+ },
+ {
+  "lang": "it",
+  "text": "La casa lava i piatti."
+ },
+ {
+  "lang": "it",
+  "text": "Ogni sabato pulisco la casa. Prima la cucina, poi il bagno."
+ },
+ {
+  "lang": "it",
+  "text": "Nel soggiorno guardiamo la televisione"
+ },
+ {
+  "lang": "it",
+  "text": "Lavo i panni"
+ },
+ {
+  "lang": "it",
+  "text": "La casa ha un giardino"
+ },
+ {
+  "lang": "it",
+  "text": "Guardiamo la televisione nel ___."
+ },
+ {
+  "lang": "it",
+  "text": "Il ___ è verde in primavera."
+ },
+ {
+  "lang": "it",
+  "text": "\"soggiorno\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "La casa ha un giardino e due balconi. Il soggiorno è grande e luminoso."
+ },
+ {
+  "lang": "it",
+  "text": "Mi fa male la testa"
+ },
+ {
+  "lang": "it",
+  "text": "Ho la febbre"
+ },
+ {
+  "lang": "it",
+  "text": "Mi fa male la gola"
+ },
+ {
+  "lang": "it",
+  "text": "Oggi sono ___."
+ },
+ {
+  "lang": "it",
+  "text": "Ho ___ di testa."
+ },
+ {
+  "lang": "it",
+  "text": "mal"
+ },
+ {
+  "lang": "it",
+  "text": "\"la febbre\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Buongiorno, dottore. Non sto bene."
+ },
+ {
+  "lang": "it",
+  "text": "Cosa c'ha?"
+ },
+ {
+  "lang": "it",
+  "text": "Sto bene, grazie!"
+ },
+ {
+  "lang": "it",
+  "text": "Il dottore è una medicina."
+ },
+ {
+  "lang": "it",
+  "text": "Marco ha mal di testa e febbre. Il dottore dice: devi riposare."
+ },
+ {
+  "lang": "it",
+  "text": "Mi fa male la mano"
+ },
+ {
+  "lang": "it",
+  "text": "Prendo la medicina"
+ },
+ {
+  "lang": "it",
+  "text": "Mi fa male il piede"
+ },
+ {
+  "lang": "it",
+  "text": "Ho bisogno di ___."
+ },
+ {
+  "lang": "it",
+  "text": "Mio fratello è malato, ma io sono ___."
+ },
+ {
+  "lang": "it",
+  "text": "\"il riposo\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Ayşe ha mal di gola. Non prende la medicina e non riposa."
+ },
+ {
+  "lang": "it",
+  "text": "la medicina"
+ },
+ {
+  "lang": "it",
+  "text": "il riposo"
+ },
+ {
+  "lang": "it",
+  "text": "Vado dal dottore perché sono malato"
+ },
+ {
+  "lang": "it",
+  "text": "Vado dal dottore perché sono malata"
+ },
+ {
+  "lang": "it",
+  "text": "Mi fa male la gola, voglio la medicina"
+ },
+ {
+  "lang": "it",
+  "text": "Devo riposare"
+ },
+ {
+  "lang": "it",
+  "text": "Se sei malato, devi ___."
+ },
+ {
+  "lang": "it",
+  "text": "riposare"
+ },
+ {
+  "lang": "it",
+  "text": "Prendo la ___ dopo colazione."
+ },
+ {
+  "lang": "it",
+  "text": "\"malato\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Devo prendere la medicina"
+ },
+ {
+  "lang": "it",
+  "text": "Devo prendere la medicna"
+ },
+ {
+  "lang": "it",
+  "text": "Vuoi prendere la medicina"
+ },
+ {
+  "lang": "it",
+  "text": "Il dottore guarda la mia gola. Dice: prendi la medicina e riposa due giorni."
+ },
+ {
+  "lang": "it",
+  "text": "mal di gola"
+ },
+ {
+  "lang": "it",
+  "text": "Mi fa male un dente"
+ },
+ {
+  "lang": "it",
+  "text": "Mi fa male il dente"
+ },
+ {
+  "lang": "it",
+  "text": "Ho la febbre e mal di testa"
+ },
+ {
+  "lang": "it",
+  "text": "Mi fa male il naso"
+ },
+ {
+  "lang": "it",
+  "text": "Mi fa male la ___ destra."
+ },
+ {
+  "lang": "it",
+  "text": "Ho mal di ___ e mal di gola."
+ },
+ {
+  "lang": "it",
+  "text": "\"il dente\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Ho mal di testa da due giorni. Domani vado dal dottore."
+ },
+ {
+  "lang": "it",
+  "text": "Dottore, ho mal di testa e febbre."
+ },
+ {
+  "lang": "it",
+  "text": "Devi riposare e prendere la medicina."
+ },
+ {
+  "lang": "it",
+  "text": "La testa è una medicina."
+ },
+ {
+  "lang": "it",
+  "text": "Io ho il dottore."
+ },
+ {
+  "lang": "it",
+  "text": "La fermata dell'autobus è qui"
+ },
+ {
+  "lang": "it",
+  "text": "Attraverso la strada"
+ },
+ {
+  "lang": "it",
+  "text": "Il semaforo è rosso"
+ },
+ {
+  "lang": "it",
+  "text": "Prendo la ___ per andare al centro."
+ },
+ {
+  "lang": "it",
+  "text": "All'___ gira a destra."
+ },
+ {
+  "lang": "it",
+  "text": "\"attraversare\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Il semaforo è rosso. Aspettiamo e poi attraversiamo la strada."
+ },
+ {
+  "lang": "it",
+  "text": "Vai dritto e poi gira a destra"
+ },
+ {
+  "lang": "it",
+  "text": "Davanti alla scuola c'è una banca"
+ },
+ {
+  "lang": "it",
+  "text": "C'è una banca davanti alla scuola"
+ },
+ {
+  "lang": "it",
+  "text": "Gira a destra all'incrocio"
+ },
+ {
+  "lang": "it",
+  "text": "Il bar è all'___ della strada."
+ },
+ {
+  "lang": "it",
+  "text": "Vai dritto, poi gira a sinistra."
+ },
+ {
+  "lang": "it",
+  "text": "L'albergo è ___ alla stazione."
+ },
+ {
+  "lang": "it",
+  "text": "gira"
+ },
+ {
+  "lang": "it",
+  "text": "\"dietro\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Vai dritto e poi gira a sinistra"
+ },
+ {
+  "lang": "it",
+  "text": "Vai dritto e poi vai a sinistra"
+ },
+ {
+  "lang": "it",
+  "text": "All'incrocio gira a sinistra. Poi vai dritto: la banca è davanti a te."
+ },
+ {
+  "lang": "it",
+  "text": "Il bar è tra la scuola e la banca"
+ },
+ {
+  "lang": "it",
+  "text": "La fermata è davanti alla scuola"
+ },
+ {
+  "lang": "it",
+  "text": "Il negozio è tra la banca e il bar"
+ },
+ {
+  "lang": "it",
+  "text": "Aspetta il bus alla ___."
+ },
+ {
+  "lang": "it",
+  "text": "L'albergo è dietro ___."
+ },
+ {
+  "lang": "it",
+  "text": "la stazione"
+ },
+ {
+  "lang": "it",
+  "text": "\"tra\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Scusi, dov'è la fermata dell'autobus?"
+ },
+ {
+  "lang": "it",
+  "text": "È davanti alla scuola."
+ },
+ {
+  "lang": "it",
+  "text": "Io sono la fermata."
+ },
+ {
+  "lang": "it",
+  "text": "L'autobus è una scuola."
+ },
+ {
+  "lang": "it",
+  "text": "Vado al centro con la metro. Scendo alla fermata e vado dritto."
+ },
+ {
+  "lang": "it",
+  "text": "la metro"
+ },
+ {
+  "lang": "it",
+  "text": "Il semaforo è verde: attraversiamo la strada"
+ },
+ {
+  "lang": "it",
+  "text": "Gira a sinistra all'incrocio"
+ },
+ {
+  "lang": "it",
+  "text": "All'incrocio gira a sinistra"
+ },
+ {
+  "lang": "it",
+  "text": "Vai dritto per cinque minuti"
+ },
+ {
+  "lang": "it",
+  "text": "Il semaforo è ___. Aspetta!"
+ },
+ {
+  "lang": "it",
+  "text": "La metro è ___ la scuola e la banca."
+ },
+ {
+  "lang": "it",
+  "text": "\"il semaforo\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Per andare al museo, vai dritto e gira a sinistra. Il museo è tra il bar e la farmacia."
+ },
+ {
+  "lang": "it",
+  "text": "Scusi, il museo è lontano?"
+ },
+ {
+  "lang": "it",
+  "text": "No, è vicino: vai dritto e gira a destra."
+ },
+ {
+  "lang": "it",
+  "text": "Sì, il museo è una metro."
+ },
+ {
+  "lang": "it",
+  "text": "Io sono lontano, sì."
+ },
+ {
+  "lang": "it",
+  "text": "La settimana prossima vado in vacanza"
+ },
+ {
+  "lang": "it",
+  "text": "Vado in vacanza la settimana prossima"
+ },
+ {
+  "lang": "it",
+  "text": "Parto domani mattina"
+ },
+ {
+  "lang": "it",
+  "text": "Vado al mare in vacanza"
+ },
+ {
+  "lang": "it",
+  "text": "La settimana prossima vado in vacanza."
+ },
+ {
+  "lang": "it",
+  "text": "Il ___ in treno è lungo."
+ },
+ {
+  "lang": "it",
+  "text": "\"la spiaggia\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Domani parto per il mare. Il viaggio è lungo ma la spiaggia è bellissima."
+ },
+ {
+  "lang": "it",
+  "text": "Stasera faccio la valigia"
+ },
+ {
+  "lang": "it",
+  "text": "Faccio la valigia stasera"
+ },
+ {
+  "lang": "it",
+  "text": "Prenoto l'albergo"
+ },
+ {
+  "lang": "it",
+  "text": "Torno domenica sera"
+ },
+ {
+  "lang": "it",
+  "text": "Andiamo al mare ___."
+ },
+ {
+  "lang": "it",
+  "text": "Domenica ___ a casa."
+ },
+ {
+  "lang": "it",
+  "text": "torno"
+ },
+ {
+  "lang": "it",
+  "text": "parto"
+ },
+ {
+  "lang": "it",
+  "text": "prenoto"
+ },
+ {
+  "lang": "it",
+  "text": "\"prenotare\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Prenoto l'albergo per la vacanza"
+ },
+ {
+  "lang": "it",
+  "text": "Prenoto l'albergo per la cena"
+ },
+ {
+  "lang": "it",
+  "text": "Prenoto il viaggio per la vacanza"
+ },
+ {
+  "lang": "it",
+  "text": "Sabato partiamo per il mare. Prenotiamo l'albergo e facciamo le valigie."
+ },
+ {
+  "lang": "it",
+  "text": "il viaggio"
+ },
+ {
+  "lang": "it",
+  "text": "il programma"
+ },
+ {
+  "lang": "it",
+  "text": "Qual è il programma di domani"
+ },
+ {
+  "lang": "it",
+  "text": "Andiamo in vacanza insieme"
+ },
+ {
+  "lang": "it",
+  "text": "Insieme andiamo in vacanza"
+ },
+ {
+  "lang": "it",
+  "text": "Il viaggio inizia domani"
+ },
+ {
+  "lang": "it",
+  "text": "La settimana ___ vado a Roma."
+ },
+ {
+  "lang": "it",
+  "text": "prossima"
+ },
+ {
+  "lang": "it",
+  "text": "Il treno ___ alle nove."
+ },
+ {
+  "lang": "it",
+  "text": "parte"
+ },
+ {
+  "lang": "it",
+  "text": "torna"
+ },
+ {
+  "lang": "it",
+  "text": "viaggia"
+ },
+ {
+  "lang": "it",
+  "text": "\"il programma\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Ciao! Domani parto per il mare!"
+ },
+ {
+  "lang": "it",
+  "text": "Che bello! Buon viaggio!"
+ },
+ {
+  "lang": "it",
+  "text": "Il mare parte domani."
+ },
+ {
+  "lang": "it",
+  "text": "Io sono una valigia."
+ },
+ {
+  "lang": "it",
+  "text": "Il programma di domenica: al mare, poi la piscina. La sera torniamo a casa."
+ },
+ {
+  "lang": "it",
+  "text": "la valigia"
+ },
+ {
+  "lang": "it",
+  "text": "la piscina"
+ },
+ {
+  "lang": "it",
+  "text": "In vacanza vado in piscina"
+ },
+ {
+  "lang": "it",
+  "text": "Vado in piscina in vacanza"
+ },
+ {
+  "lang": "it",
+  "text": "La spiaggia è molto bella"
+ },
+ {
+  "lang": "it",
+  "text": "Le vacanze iniziano domani"
+ },
+ {
+  "lang": "it",
+  "text": "D'estate vado al ___ con la famiglia."
+ },
+ {
+  "lang": "it",
+  "text": "In vacanza vado in piscina."
+ },
+ {
+  "lang": "it",
+  "text": "Devo ___ il biglietto per il treno."
+ },
+ {
+  "lang": "it",
+  "text": "\"le vacanze\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Quando prenoti l'albergo?"
+ },
+ {
+  "lang": "it",
+  "text": "Stasera prenoto l'albergo."
+ },
+ {
+  "lang": "it",
+  "text": "L'albergo è una vacanza."
+ },
+ {
+  "lang": "it",
+  "text": "Prenoto il mare, sì."
+ },
+ {
+  "lang": "it",
+  "text": "Facciamo le valigie stasera. Domani partiamo e domenica torniamo."
+ },
+ {
+  "lang": "it",
+  "text": "molto"
+ },
+ {
+  "lang": "it",
+  "text": "maggiore"
+ },
+ {
+  "lang": "it",
+  "text": "Il treno è più veloce dell'autobus"
+ },
+ {
+  "lang": "it",
+  "text": "Questo è migliore"
+ },
+ {
+  "lang": "it",
+  "text": "Il treno è più veloce"
+ },
+ {
+  "lang": "it",
+  "text": "La metro è ___ dell'autobus: è più veloce!"
+ },
+ {
+  "lang": "it",
+  "text": "lenta"
+ },
+ {
+  "lang": "it",
+  "text": "L'autobus vecchio è molto ___."
+ },
+ {
+  "lang": "it",
+  "text": "\"più\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Questo ristorante è migliore"
+ },
+ {
+  "lang": "it",
+  "text": "Questo ristorante è peggiore"
+ },
+ {
+  "lang": "it",
+  "text": "Questo ristorante è molto"
+ },
+ {
+  "lang": "it",
+  "text": "La metro è veloce, l'autobus è lento. Per me la metro è migliore."
+ },
+ {
+  "lang": "it",
+  "text": "minore"
+ },
+ {
+  "lang": "it",
+  "text": "La mia macchina è vecchia"
+ },
+ {
+  "lang": "it",
+  "text": "Mio fratello è alto"
+ },
+ {
+  "lang": "it",
+  "text": "Questa strada è la più lunga"
+ },
+ {
+  "lang": "it",
+  "text": "Ho una bicicletta ___: ha dieci anni!"
+ },
+ {
+  "lang": "it",
+  "text": "vecchia"
+ },
+ {
+  "lang": "it",
+  "text": "nuova"
+ },
+ {
+  "lang": "it",
+  "text": "bassa"
+ },
+ {
+  "lang": "it",
+  "text": "Mio fratello è più alto di me."
+ },
+ {
+  "lang": "it",
+  "text": "Marco vince tutte le gare: è ___ forte della classe."
+ },
+ {
+  "lang": "it",
+  "text": "il meno"
+ },
+ {
+  "lang": "it",
+  "text": "\"basso\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Il mio nuovo telefono è bellissimo!"
+ },
+ {
+  "lang": "it",
+  "text": "Sì, è molto bello! Il mio è vecchio."
+ },
+ {
+  "lang": "it",
+  "text": "Il telefono mangia la pizza."
+ },
+ {
+  "lang": "it",
+  "text": "Io sono un telefono nuovo."
+ },
+ {
+  "lang": "it",
+  "text": "Luca è alto, il suo amico Marco è basso. Marco è più forte, ma Luca è più veloce."
+ },
+ {
+  "lang": "it",
+  "text": "Il cane è piccolo ma forte"
+ },
+ {
+  "lang": "it",
+  "text": "Mio padre è più alto di me"
+ },
+ {
+  "lang": "it",
+  "text": "Sono forte perché nuoto ogni giorno"
+ },
+ {
+  "lang": "it",
+  "text": "Dopo la febbre mi sento ___."
+ },
+ {
+  "lang": "it",
+  "text": "Mio padre è più alto di me."
+ },
+ {
+  "lang": "it",
+  "text": "Vinco tutte le gare: sono più ___ degli altri."
+ },
+ {
+  "lang": "it",
+  "text": "deboli"
+ },
+ {
+  "lang": "it",
+  "text": "lenti"
+ },
+ {
+  "lang": "it",
+  "text": "\"forte\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Anna è bassa ma forte. Nuota ogni giorno e vince tutte le gare."
+ },
+ {
+  "lang": "it",
+  "text": "Chi è più alto: tu o tuo fratello?"
+ },
+ {
+  "lang": "it",
+  "text": "Io sono alto e fratello."
+ },
+ {
+  "lang": "it",
+  "text": "Il fratello mangia l'alto."
+ },
+ {
+  "lang": "it",
+  "text": "il migliore"
+ },
+ {
+  "lang": "it",
+  "text": "più buono"
+ },
+ {
+  "lang": "it",
+  "text": "il peggiore"
+ },
+ {
+  "lang": "it",
+  "text": "Questa è la pizza migliore della città"
+ },
+ {
+  "lang": "it",
+  "text": "Sono il più alto della classe"
+ },
+ {
+  "lang": "it",
+  "text": "Questo è il ristorante peggiore"
+ },
+ {
+  "lang": "it",
+  "text": "Questo film è ___ della settimana: è il peggiore!"
+ },
+ {
+  "lang": "it",
+  "text": "il più brutto"
+ },
+ {
+  "lang": "it",
+  "text": "il più bello"
+ },
+ {
+  "lang": "it",
+  "text": "Sono il più alto della classe."
+ },
+ {
+  "lang": "it",
+  "text": "La tua idea è buona, ma la mia è ___: è la migliore!"
+ },
+ {
+  "lang": "it",
+  "text": "\"il peggiore\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "È il giorno più bello dell'anno"
+ },
+ {
+  "lang": "it",
+  "text": "È il giorno più brutto dell'anno"
+ },
+ {
+  "lang": "it",
+  "text": "È il giorno più alto dell'anno"
+ },
+ {
+  "lang": "it",
+  "text": "Ho tre biciclette: una vecchia, una nuova e una rossa. La nuova è la migliore, la vecchia è la peggiore."
+ },
+ {
+  "lang": "it",
+  "text": "Oggi sono molto felice"
+ },
+ {
+  "lang": "it",
+  "text": "Prima dell'esame sono emozionato"
+ },
+ {
+  "lang": "it",
+  "text": "Prima dell'esame sono emozionata"
+ },
+ {
+  "lang": "it",
+  "text": "Il regalo è bellissimo: sono molto ___."
+ },
+ {
+  "lang": "it",
+  "text": "Oggi sono molto felice."
+ },
+ {
+  "lang": "it",
+  "text": "Quando perdo sono ___."
+ },
+ {
+  "lang": "it",
+  "text": "\"emozionato\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Domani ho il mio primo esame di italiano!"
+ },
+ {
+  "lang": "it",
+  "text": "Sono emozionato anch'io per te!"
+ },
+ {
+  "lang": "it",
+  "text": "L'esame è domani felice."
+ },
+ {
+  "lang": "it",
+  "text": "Io sono un esame italiano."
+ },
+ {
+  "lang": "it",
+  "text": "Mia sorella è felice perché domani parte per il mare. Io sono triste perché resto a casa."
+ },
+ {
+  "lang": "it",
+  "text": "Il mio vicino è molto gentile"
+ },
+ {
+  "lang": "it",
+  "text": "Secondo me questo è giusto"
+ },
+ {
+  "lang": "it",
+  "text": "Secondo me è giusto"
+ },
+ {
+  "lang": "it",
+  "text": "Mia sorella è timida"
+ },
+ {
+  "lang": "it",
+  "text": "Il cane salva il gatto: è molto ___."
+ },
+ {
+  "lang": "it",
+  "text": "Questo film è noioso: sono ___."
+ },
+ {
+  "lang": "it",
+  "text": "\"simpatico\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Il mia vicino è molto gentile"
+ },
+ {
+  "lang": "it",
+  "text": "Il mio vicino è molto timido"
+ },
+ {
+  "lang": "it",
+  "text": "Marco è timido ma simpatico. Secondo me è anche molto gentile."
+ },
+ {
+  "lang": "it",
+  "text": "Secondo me imparare l'italiano è facile"
+ },
+ {
+  "lang": "it",
+  "text": "Mia madre è nervosa perché sono in ritardo"
+ },
+ {
+  "lang": "it",
+  "text": "Secondo me è facile"
+ },
+ {
+  "lang": "it",
+  "text": "Il bambino salta dal letto: è ___."
+ },
+ {
+  "lang": "it",
+  "text": "Secondo me è facile."
+ },
+ {
+  "lang": "it",
+  "text": "Perdere la partita non è un problema: non essere ___."
+ },
+ {
+  "lang": "it",
+  "text": "\"nervoso\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Che ne pensi di questo film?"
+ },
+ {
+  "lang": "it",
+  "text": "Secondo me è bellissimo!"
+ },
+ {
+  "lang": "it",
+  "text": "Il film pensa il cinema."
+ },
+ {
+  "lang": "it",
+  "text": "Questo penso un film."
+ },
+ {
+  "lang": "it",
+  "text": "Giulia è nervosa prima dell'esame. Dopo l'esame è felice."
+ },
+ {
+  "lang": "it",
+  "text": "Quando la squadra perde sono arrabbiato"
+ },
+ {
+  "lang": "it",
+  "text": "Quando la squadra perde sono arrabbiata"
+ },
+ {
+  "lang": "it",
+  "text": "Questo film mi annoia"
+ },
+ {
+  "lang": "it",
+  "text": "Sono emozionato per il viaggio"
+ },
+ {
+  "lang": "it",
+  "text": "La lezione è lunga e noiosa: sono ___."
+ },
+ {
+  "lang": "it",
+  "text": "Quando perdo sono arrabbiato."
+ },
+ {
+  "lang": "it",
+  "text": "Il mio nuovo amico è molto ___."
+ },
+ {
+  "lang": "it",
+  "text": "\"timido\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Davide è timido: non parla molto. Ma è simpatico e tutti lo amano."
+ },
+ {
+  "lang": "it",
+  "text": "Perché sei triste oggi?"
+ },
+ {
+  "lang": "it",
+  "text": "Perché la mia squadra ha perso."
+ },
+ {
+  "lang": "it",
+  "text": "Il triste è una squadra."
+ },
+ {
+  "lang": "it",
+  "text": "Oggi sono felice, sì."
+ },
+ {
+  "lang": "it",
+  "text": "voglio"
+ },
+ {
+  "lang": "it",
+  "text": "posso"
+ },
+ {
+  "lang": "it",
+  "text": "conto"
+ },
+ {
+  "lang": "it",
+  "text": "il tavolo"
+ },
+ {
+  "lang": "it",
+  "text": "il posto"
+ },
+ {
+  "lang": "it",
+  "text": "Vorrei un caffè"
+ },
+ {
+  "lang": "it",
+  "text": "Potrebbe aiutarmi"
+ },
+ {
+  "lang": "it",
+  "text": "Vorrei un tavolo per due"
+ },
+ {
+  "lang": "it",
+  "text": "C'è un posto ___?"
+ },
+ {
+  "lang": "it",
+  "text": "Ho una ___ a nome Marco."
+ },
+ {
+  "lang": "it",
+  "text": "occupazione"
+ },
+ {
+  "lang": "it",
+  "text": "\"libero\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Buonasera! Avete un tavolo per due?"
+ },
+ {
+  "lang": "it",
+  "text": "Sì, certo! Da questa parte."
+ },
+ {
+  "lang": "it",
+  "text": "No, il tavolo mangia due."
+ },
+ {
+  "lang": "it",
+  "text": "Il tavolo è buonasera."
+ },
+ {
+  "lang": "it",
+  "text": "Entriamo nel ristorante e chiediamo un tavolo per due. Il posto vicino alla finestra è libero."
+ },
+ {
+  "lang": "it",
+  "text": "il minuto"
+ },
+ {
+  "lang": "it",
+  "text": "Potrebbe aspettare dieci minuti"
+ },
+ {
+  "lang": "it",
+  "text": "Desidera qualcos'altro"
+ },
+ {
+  "lang": "it",
+  "text": "Aspetto solo cinque minuti"
+ },
+ {
+  "lang": "it",
+  "text": "Il tavolo è ___. Cerchiamo un altro posto."
+ },
+ {
+  "lang": "it",
+  "text": "vuoto"
+ },
+ {
+  "lang": "it",
+  "text": "Vorrei un'___: il museo è aperto oggi?"
+ },
+ {
+  "lang": "it",
+  "text": "\"qualcos'altro\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Desidera il conto"
+ },
+ {
+  "lang": "it",
+  "text": "Desidera il cibo"
+ },
+ {
+  "lang": "it",
+  "text": "Desidera la conto"
+ },
+ {
+  "lang": "it",
+  "text": "Chiediamo un'informazione alla reception. Dobbiamo aspettare dieci minuti."
+ },
+ {
+  "lang": "it",
+  "text": "Ho una prenotazione"
+ },
+ {
+  "lang": "it",
+  "text": "Potrei usare il telefono"
+ },
+ {
+  "lang": "it",
+  "text": "Aspetto il mio amico davanti al bar"
+ },
+ {
+  "lang": "it",
+  "text": "Il dottore è impegnato: ___ dieci minuti."
+ },
+ {
+  "lang": "it",
+  "text": "aspetto"
+ },
+ {
+  "lang": "it",
+  "text": "esco"
+ },
+ {
+  "lang": "it",
+  "text": "pago"
+ },
+ {
+  "lang": "it",
+  "text": "Ho una prenotazione a nome Marco."
+ },
+ {
+  "lang": "it",
+  "text": "Questo posto è ___: puoi sederti."
+ },
+ {
+  "lang": "it",
+  "text": "chiuso"
+ },
+ {
+  "lang": "it",
+  "text": "\"potrebbe\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Pronto, vorrei parlare con il dottore."
+ },
+ {
+  "lang": "it",
+  "text": "Un momento, per favore. Lo chiamo."
+ },
+ {
+  "lang": "it",
+  "text": "Il dottore è un momento."
+ },
+ {
+  "lang": "it",
+  "text": "Pronto è il dottore parlare."
+ },
+ {
+  "lang": "it",
+  "text": "Telefoniamo al ristorante per una prenotazione. Chiediamo un tavolo libero per stasera."
+ },
+ {
+  "lang": "it",
+  "text": "ogni cosa"
+ },
+ {
+  "lang": "it",
+  "text": "una cosa"
+ },
+ {
+  "lang": "it",
+  "text": "lezione"
+ },
+ {
+  "lang": "it",
+  "text": "Questo tavolo è occupato"
+ },
+ {
+  "lang": "it",
+  "text": "Il ___ è occupato, scegliamo un altro posto."
+ },
+ {
+  "lang": "it",
+  "text": "Questo tavolo è occupato."
+ },
+ {
+  "lang": "it",
+  "text": "Scusi, un'___, per favore: dov'è la stazione?"
+ },
+ {
+  "lang": "it",
+  "text": "\"il posto\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Grazie mille, arrivederci!"
+ },
+ {
+  "lang": "it",
+  "text": "Prego! Buona giornata!"
+ },
+ {
+  "lang": "it",
+  "text": "Arrivederci è grazie."
+ },
+ {
+  "lang": "it",
+  "text": "Prego il conto."
+ },
+ {
+  "lang": "it",
+  "text": "Il cameriere chiede: desidera qualcos'altro? No, grazie, solo il conto."
  },
  {
   "lang": "en",
@@ -19152,6 +27424,310 @@
   "text": "¡Vale! Os espero a las cinco. ¡Hasta el sábado!"
  },
  {
+  "lang": "es",
+  "text": "¡Hola, Deniz! ¿Qué hiciste ayer?"
+ },
+ {
+  "lang": "es",
+  "text": "Ayer fui al parque con mi hermano."
+ },
+ {
+  "lang": "es",
+  "text": "¿Y anoche? ¿Dormiste bien?"
+ },
+ {
+  "lang": "es",
+  "text": "Anoche dormí muy bien, ocho horas."
+ },
+ {
+  "lang": "es",
+  "text": "Yo trabajé ocho horas ayer. Estoy muy cansada."
+ },
+ {
+  "lang": "es",
+  "text": "¿Y qué hiciste después?"
+ },
+ {
+  "lang": "es",
+  "text": "Hice la tarea y vi una película."
+ },
+ {
+  "lang": "es",
+  "text": "Entonces no dormiste mucho."
+ },
+ {
+  "lang": "es",
+  "text": "Sí... pero hoy estudio español y estoy contenta."
+ },
+ {
+  "lang": "es",
+  "text": "Buenos días, İpek. ¿Qué haces hoy?"
+ },
+ {
+  "lang": "es",
+  "text": "Normalmente limpio los sábados. ¿Y tú?"
+ },
+ {
+  "lang": "es",
+  "text": "Yo lavo la ropa los sábados."
+ },
+ {
+  "lang": "es",
+  "text": "Perfecto. Yo limpio el baño y la cocina."
+ },
+ {
+  "lang": "es",
+  "text": "¿Está sucia la cocina?"
+ },
+ {
+  "lang": "es",
+  "text": "Sí, y el suelo está sucio también."
+ },
+ {
+  "lang": "es",
+  "text": "Entonces limpio el suelo y hago la cama."
+ },
+ {
+  "lang": "es",
+  "text": "¡Gracias! Tu dormitorio es muy ordenado."
+ },
+ {
+  "lang": "es",
+  "text": "Y tu casa siempre está limpia."
+ },
+ {
+  "lang": "es",
+  "text": "Buenos días. ¿Qué te pasa?"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo un resfriado y me duele la cabeza."
+ },
+ {
+  "lang": "es",
+  "text": "¿Tienes fiebre?"
+ },
+ {
+  "lang": "es",
+  "text": "Sí, tengo un poco de fiebre."
+ },
+ {
+  "lang": "es",
+  "text": "¿Te duele el cuerpo también?"
+ },
+ {
+  "lang": "es",
+  "text": "Sí, y me duele el brazo derecho."
+ },
+ {
+  "lang": "es",
+  "text": "No es grave. Toma la medicina y descansa."
+ },
+ {
+  "lang": "es",
+  "text": "¿Dónde está la farmacia?"
+ },
+ {
+  "lang": "es",
+  "text": "Está enfrente del hospital."
+ },
+ {
+  "lang": "es",
+  "text": "Muchas gracias, doctora."
+ },
+ {
+  "lang": "es",
+  "text": "Perdón, ¿dónde está la estación de metro?"
+ },
+ {
+  "lang": "es",
+  "text": "Está cerca. Mira el mapa."
+ },
+ {
+  "lang": "es",
+  "text": "No entiendo el mapa."
+ },
+ {
+  "lang": "es",
+  "text": "No pasa nada. Sigue recto dos calles."
+ },
+ {
+  "lang": "es",
+  "text": "¿Dos calles? ¿Y luego?"
+ },
+ {
+  "lang": "es",
+  "text": "Luego cruza la calle y gira a la derecha en la esquina."
+ },
+ {
+  "lang": "es",
+  "text": "¿Está enfrente del banco?"
+ },
+ {
+  "lang": "es",
+  "text": "Sí, la parada está enfrente del banco."
+ },
+ {
+  "lang": "es",
+  "text": "¡Muchas gracias! El metro es más rápido que el autobús."
+ },
+ {
+  "lang": "es",
+  "text": "Sí, y no está lejos. ¡Buen viaje!"
+ },
+ {
+  "lang": "es",
+  "text": "¡Hola, Kaan! ¿Qué piensas hacer este verano?"
+ },
+ {
+  "lang": "es",
+  "text": "Pienso visitar a mis abuelos en el pueblo."
+ },
+ {
+  "lang": "es",
+  "text": "Yo voy a la playa con mi familia en julio."
+ },
+ {
+  "lang": "es",
+  "text": "El mar está frío en julio, ¿no?"
+ },
+ {
+  "lang": "es",
+  "text": "Un poco, pero me gusta nadar."
+ },
+ {
+  "lang": "es",
+  "text": "¿Llevas una maleta grande?"
+ },
+ {
+  "lang": "es",
+  "text": "Sí, llevo dos maletas."
+ },
+ {
+  "lang": "es",
+  "text": "Yo llevo solo una mochila."
+ },
+ {
+  "lang": "es",
+  "text": "¿Vamos juntos a la montaña el próximo mes?"
+ },
+ {
+  "lang": "es",
+  "text": "¡Vale! Nos vemos pronto."
+ },
+ {
+  "lang": "es",
+  "text": "El autobús es lento, ¿verdad?"
+ },
+ {
+  "lang": "es",
+  "text": "Sí. El metro es más rápido que el autobús."
+ },
+ {
+  "lang": "es",
+  "text": "Y mi coche es más rápido que el metro."
+ },
+ {
+  "lang": "es",
+  "text": "Pero el avión es el más rápido de todos."
+ },
+ {
+  "lang": "es",
+  "text": "Es verdad. ¿Y qué es más barato?"
+ },
+ {
+  "lang": "es",
+  "text": "El autobús es el más barato."
+ },
+ {
+  "lang": "es",
+  "text": "Tienes razón. Tu examen de español es mañana, ¿no?"
+ },
+ {
+  "lang": "es",
+  "text": "Sí, y estoy un poco nerviosa."
+ },
+ {
+  "lang": "es",
+  "text": "No es tan difícil como piensas. ¡Buena suerte!"
+ },
+ {
+  "lang": "es",
+  "text": "Hola, soy Elena. ¿Y tú?"
+ },
+ {
+  "lang": "es",
+  "text": "Soy Zeynep. Soy un poco tímida."
+ },
+ {
+  "lang": "es",
+  "text": "¡No pasa nada! Nuestro profesor es muy amable."
+ },
+ {
+  "lang": "es",
+  "text": "Sí, y parece tranquilo."
+ },
+ {
+  "lang": "es",
+  "text": "Yo estoy contenta hoy. ¿Y tú, Tomás?"
+ },
+ {
+  "lang": "es",
+  "text": "Yo estoy nervioso por el examen de mañana."
+ },
+ {
+  "lang": "es",
+  "text": "Creo que no es tan difícil."
+ },
+ {
+  "lang": "es",
+  "text": "¿Tú crees?"
+ },
+ {
+  "lang": "es",
+  "text": "Sí. La familia es importante, y los amigos también."
+ },
+ {
+  "lang": "es",
+  "text": "¡Estoy de acuerdo! Creo que vamos a ser buenos amigos."
+ },
+ {
+  "lang": "es",
+  "text": "¿Restaurante El Sol, buenos días?"
+ },
+ {
+  "lang": "es",
+  "text": "Buenos días. Quisiera reservar una mesa para mañana."
+ },
+ {
+  "lang": "es",
+  "text": "Para cuatro, por favor."
+ },
+ {
+  "lang": "es",
+  "text": "¿A qué hora?"
+ },
+ {
+  "lang": "es",
+  "text": "A las ocho de la noche."
+ },
+ {
+  "lang": "es",
+  "text": "Muy bien. ¿A nombre de quién?"
+ },
+ {
+  "lang": "es",
+  "text": "A nombre de Mert. ¿Podría traer una silla para niños?"
+ },
+ {
+  "lang": "es",
+  "text": "Con gusto, señor. ¡Hasta mañana!"
+ },
+ {
+  "lang": "es",
+  "text": "¡Gracias! Hasta mañana."
+ },
+ {
   "lang": "fr",
   "text": "Bonjour ! Je suis Elif. Je suis étudiante."
  },
@@ -19526,6 +28102,350 @@
  {
   "lang": "fr",
   "text": "Super ! Nous jouons au football le week-end !"
+ },
+ {
+  "lang": "fr",
+  "text": "Salut Selim ! Qu'est-ce que tu as fait hier ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Hier j'ai dormi jusqu'à midi !"
+ },
+ {
+  "lang": "fr",
+  "text": "Jusqu'à midi ? Et après ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Après, j'ai fait mes devoirs."
+ },
+ {
+  "lang": "fr",
+  "text": "Moi, j'ai joué au football avec mon frère."
+ },
+ {
+  "lang": "fr",
+  "text": "Et hier soir ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Hier soir, j'ai regardé un film avec ma sœur."
+ },
+ {
+  "lang": "fr",
+  "text": "C'était bien ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Moi, hier soir j'ai pris le petit déjeuner... avec ma grand-mère !"
+ },
+ {
+  "lang": "fr",
+  "text": "Le petit déjeuner le soir ? Drôle d'idée !"
+ },
+ {
+  "lang": "fr",
+  "text": "Oui, mais c'était délicieux !"
+ },
+ {
+  "lang": "fr",
+  "text": "Hugo, c'est samedi ! On aide maman aujourd'hui."
+ },
+ {
+  "lang": "fr",
+  "text": "D'accord. Je fais quoi ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Toi, tu fais la vaisselle."
+ },
+ {
+  "lang": "fr",
+  "text": "Encore la vaisselle ?!"
+ },
+ {
+  "lang": "fr",
+  "text": "Oui ! Moi, je lave le linge."
+ },
+ {
+  "lang": "fr",
+  "text": "Et papa, il fait le ménage ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Non, il range sa chambre."
+ },
+ {
+  "lang": "fr",
+  "text": "Ta chambre est propre, Léa ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Euh... pas vraiment. Elle est un peu sale."
+ },
+ {
+  "lang": "fr",
+  "text": "Ha ha ! Alors, range ta chambre !"
+ },
+ {
+  "lang": "fr",
+  "text": "D'accord, d'accord... après le linge !"
+ },
+ {
+  "lang": "fr",
+  "text": "Bonjour, docteur. Je suis malade."
+ },
+ {
+  "lang": "fr",
+  "text": "Qu'est-ce que vous avez ?"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai mal à la tête et au ventre."
+ },
+ {
+  "lang": "fr",
+  "text": "Vous avez de la fièvre ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Oui, un peu. Et je tousse beaucoup."
+ },
+ {
+  "lang": "fr",
+  "text": "Ah... vous avez un rhume."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est grave, docteur ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Non, non. Vous devez vous reposer."
+ },
+ {
+  "lang": "fr",
+  "text": "Et prenez ce médicament trois fois par jour."
+ },
+ {
+  "lang": "fr",
+  "text": "D'accord. Merci, docteur !"
+ },
+ {
+  "lang": "fr",
+  "text": "Revenez si vous n'allez pas mieux."
+ },
+ {
+  "lang": "fr",
+  "text": "Excusez-moi, je cherche le musée d'Orsay."
+ },
+ {
+  "lang": "fr",
+  "text": "Le musée ? Ce n'est pas loin d'ici."
+ },
+ {
+  "lang": "fr",
+  "text": "Je prends le métro ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Non, c'est plus simple à pied."
+ },
+ {
+  "lang": "fr",
+  "text": "Allez tout droit jusqu'au pont."
+ },
+ {
+  "lang": "fr",
+  "text": "Jusqu'au pont, d'accord."
+ },
+ {
+  "lang": "fr",
+  "text": "Puis traversez la rue et tournez à gauche."
+ },
+ {
+  "lang": "fr",
+  "text": "Traverser la rue, tourner à gauche..."
+ },
+ {
+  "lang": "fr",
+  "text": "Le musée est au coin, à droite."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est clair ! Merci beaucoup !"
+ },
+ {
+  "lang": "fr",
+  "text": "Avec plaisir. Bonne visite !"
+ },
+ {
+  "lang": "fr",
+  "text": "Kerem, tu prévois quoi pour les vacances ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Cet été je vais aller à la mer avec ma famille."
+ },
+ {
+  "lang": "fr",
+  "text": "Sympa ! Tu vas réserver un hôtel ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Oui, près de la plage."
+ },
+ {
+  "lang": "fr",
+  "text": "Moi, je vais visiter deux pays."
+ },
+ {
+  "lang": "fr",
+  "text": "Deux pays ! Lesquels ?"
+ },
+ {
+  "lang": "fr",
+  "text": "L'Espagne et le Portugal. Je pars le mois prochain."
+ },
+ {
+  "lang": "fr",
+  "text": "Le mois prochain ? Mais c'est bientôt !"
+ },
+ {
+  "lang": "fr",
+  "text": "Oui ! Je vais réserver mon billet demain."
+ },
+ {
+  "lang": "fr",
+  "text": "Bonne chance ! Et bon voyage !"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu cours vite, Eda !"
+ },
+ {
+  "lang": "fr",
+  "text": "Merci ! Mais le bus est plus lent que moi !"
+ },
+ {
+  "lang": "fr",
+  "text": "C'est vrai, le bus est très lent."
+ },
+ {
+  "lang": "fr",
+  "text": "Et le métro est plus rapide que le bus."
+ },
+ {
+  "lang": "fr",
+  "text": "Mais toi, tu es la plus rapide de tous !"
+ },
+ {
+  "lang": "fr",
+  "text": "Ha ha ! Et qui est le plus fort ici ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon grand-père ! Il est plus fort que mon père."
+ },
+ {
+  "lang": "fr",
+  "text": "Et le restaurant près du parc ?"
+ },
+ {
+  "lang": "fr",
+  "text": "C'est le meilleur de la ville !"
+ },
+ {
+  "lang": "fr",
+  "text": "Mais c'est le plus cher aussi !"
+ },
+ {
+  "lang": "fr",
+  "text": "Oui... le meilleur et le plus cher !"
+ },
+ {
+  "lang": "fr",
+  "text": "Alors, ton premier jour, comment ça va ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Bien ! Mais je suis un peu timide."
+ },
+ {
+  "lang": "fr",
+  "text": "Ne t'inquiète pas. Tu vas voir, tout le monde est gentil."
+ },
+ {
+  "lang": "fr",
+  "text": "Et les professeurs ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Madame Ricci est drôle, et monsieur Bernard est calme."
+ },
+ {
+  "lang": "fr",
+  "text": "Tu aimes quel professeur ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je pense que madame Ricci est la meilleure."
+ },
+ {
+  "lang": "fr",
+  "text": "Tu crois ? Moi, je la trouve un peu pénible."
+ },
+ {
+  "lang": "fr",
+  "text": "Ah bon ? Je ne suis pas d'accord !"
+ },
+ {
+  "lang": "fr",
+  "text": "À mon avis, monsieur Bernard est plus intéressant."
+ },
+ {
+  "lang": "fr",
+  "text": "D'accord, d'accord... chacun son avis !"
+ },
+ {
+  "lang": "fr",
+  "text": "Bonsoir ! J'ai une réservation pour quatre personnes."
+ },
+ {
+  "lang": "fr",
+  "text": "À quel nom ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Deniz Yılmaz."
+ },
+ {
+  "lang": "fr",
+  "text": "Ah oui ! Suivez-moi, votre table est près de la fenêtre."
+ },
+ {
+  "lang": "fr",
+  "text": "Parfait. Je voudrais le menu, s'il vous plaît."
+ },
+ {
+  "lang": "fr",
+  "text": "Tout de suite, monsieur."
+ },
+ {
+  "lang": "fr",
+  "text": "Pourriez-vous aussi apporter une chaise pour mon petit frère ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Bien sûr ! Vous avez choisi ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous voudrions deux pizzas et deux salades, s'il vous plaît."
+ },
+ {
+  "lang": "fr",
+  "text": "Très bien. Le dîner est servi vers huit heures."
  },
  {
   "lang": "it",
@@ -19932,6 +28852,382 @@
   "text": "E io cucino per tutti!"
  },
  {
+  "lang": "it",
+  "text": "Ciao Ece! Come stai?"
+ },
+ {
+  "lang": "it",
+  "text": "Ciao! Sto bene, ma sono stanca. Ieri ho lavorato molto."
+ },
+ {
+  "lang": "it",
+  "text": "Che cosa hai fatto ieri sera?"
+ },
+ {
+  "lang": "it",
+  "text": "Ieri sera sono andata a una festa. È stata molto divertente!"
+ },
+ {
+  "lang": "it",
+  "text": "Una festa! Io invece ho dormito tutta la sera."
+ },
+ {
+  "lang": "it",
+  "text": "Hai dormito tutta la sera?!"
+ },
+ {
+  "lang": "it",
+  "text": "Sì! Stamattina ho fatto colazione e poi ho letto un libro."
+ },
+ {
+  "lang": "it",
+  "text": "Hai letto un libro? Che bello! Io ho visto un film."
+ },
+ {
+  "lang": "it",
+  "text": "Un film? Com'è stato?"
+ },
+ {
+  "lang": "it",
+  "text": "Molto bello! Poi sono andata a letto presto."
+ },
+ {
+  "lang": "it",
+  "text": "Allora oggi non sei stanca!"
+ },
+ {
+  "lang": "it",
+  "text": "No, sono stanca perché ieri sera ho dormito solo sei ore!"
+ },
+ {
+  "lang": "it",
+  "text": "Can, oggi puliamo la casa, sì?"
+ },
+ {
+  "lang": "it",
+  "text": "Va bene! Io pulisco il soggiorno."
+ },
+ {
+  "lang": "it",
+  "text": "E io pulisco la cucina. È molto sporca!"
+ },
+ {
+  "lang": "it",
+  "text": "La mia camera è piccola ma pulita."
+ },
+ {
+  "lang": "it",
+  "text": "La mia camera ha un balcone. È bellissimo!"
+ },
+ {
+  "lang": "it",
+  "text": "Dopo pranzo lavo i piatti."
+ },
+ {
+  "lang": "it",
+  "text": "E io faccio la doccia. Poi aiuto te!"
+ },
+ {
+  "lang": "it",
+  "text": "Il giardino è grande: puliamo anche il giardino?"
+ },
+ {
+  "lang": "it",
+  "text": "No, il giardino è di papà!"
+ },
+ {
+  "lang": "it",
+  "text": "Allora finiamo la casa!"
+ },
+ {
+  "lang": "it",
+  "text": "Bene! La casa è pulita in un'ora!"
+ },
+ {
+  "lang": "it",
+  "text": "Brava, Rosa! Sei una sorella fortissima!"
+ },
+ {
+  "lang": "it",
+  "text": "Cosa c'ha? Dov'è il problema?"
+ },
+ {
+  "lang": "it",
+  "text": "Mi fa male la testa e ho mal di gola."
+ },
+ {
+  "lang": "it",
+  "text": "Ha la febbre?"
+ },
+ {
+  "lang": "it",
+  "text": "Sì, ieri avevo trentotto gradi."
+ },
+ {
+  "lang": "it",
+  "text": "Per quanti giorni devo riposare?"
+ },
+ {
+  "lang": "it",
+  "text": "Due o tre giorni. Niente scuola!"
+ },
+ {
+  "lang": "it",
+  "text": "E il naso? Mi fa male anche il naso!"
+ },
+ {
+  "lang": "it",
+  "text": "Il naso va bene. Bevi molta acqua."
+ },
+ {
+  "lang": "it",
+  "text": "Grazie, dottore. A presto!"
+ },
+ {
+  "lang": "it",
+  "text": "Arrivederci! Guarisci presto!"
+ },
+ {
+  "lang": "it",
+  "text": "Scusi, dov'è la scuola? Sono nuova qui."
+ },
+ {
+  "lang": "it",
+  "text": "La scuola? È vicina! Vai dritto."
+ },
+ {
+  "lang": "it",
+  "text": "Vado dritto... e poi?"
+ },
+ {
+  "lang": "it",
+  "text": "Poi gira a destra all'incrocio."
+ },
+ {
+  "lang": "it",
+  "text": "A destra all'incrocio. Va bene."
+ },
+ {
+  "lang": "it",
+  "text": "Il semaforo è rosso: aspetta qui!"
+ },
+ {
+  "lang": "it",
+  "text": "Aspetto... e adesso attraverso la strada."
+ },
+ {
+  "lang": "it",
+  "text": "Sì! Vedi la banca? La scuola è tra la banca e il bar."
+ },
+ {
+  "lang": "it",
+  "text": "Tra la banca e il bar... eccola! Grazie!"
+ },
+ {
+  "lang": "it",
+  "text": "Prego! E per tornare, prendi la metro qui."
+ },
+ {
+  "lang": "it",
+  "text": "La fermata della metro è lontana?"
+ },
+ {
+  "lang": "it",
+  "text": "No, è dietro la scuola!"
+ },
+ {
+  "lang": "it",
+  "text": "Ciao Selin! Domani partiamo per il mare!"
+ },
+ {
+  "lang": "it",
+  "text": "Sì! Non vedo l'ora!"
+ },
+ {
+  "lang": "it",
+  "text": "Hai fatto la valigia?"
+ },
+ {
+  "lang": "it",
+  "text": "Non ancora. Stasera faccio la valigia."
+ },
+ {
+  "lang": "it",
+  "text": "Io prenoto l'albergo stasera."
+ },
+ {
+  "lang": "it",
+  "text": "L'albergo è vicino alla spiaggia?"
+ },
+ {
+  "lang": "it",
+  "text": "Sì, e ha anche la piscina!"
+ },
+ {
+  "lang": "it",
+  "text": "Perfetto! Il viaggio in treno è lungo?"
+ },
+ {
+  "lang": "it",
+  "text": "Due ore. Ma poi siamo al mare!"
+ },
+ {
+  "lang": "it",
+  "text": "Andiamo insieme alla stazione?"
+ },
+ {
+  "lang": "it",
+  "text": "Certo! Il treno parte alle otto."
+ },
+ {
+  "lang": "it",
+  "text": "Bene! Torno a casa: devo preparare tutto!"
+ },
+ {
+  "lang": "it",
+  "text": "Che bella bicicletta! Ma è cara..."
+ },
+ {
+  "lang": "it",
+  "text": "Questa è più economica."
+ },
+ {
+  "lang": "it",
+  "text": "Sì, ma quella è più veloce."
+ },
+ {
+  "lang": "it",
+  "text": "E questa vecchia bicicletta è la più economica?"
+ },
+ {
+  "lang": "it",
+  "text": "Sì, è la meno cara di tutte."
+ },
+ {
+  "lang": "it",
+  "text": "Ma è anche la più lenta!"
+ },
+ {
+  "lang": "it",
+  "text": "Secondo me questa rossa è la migliore."
+ },
+ {
+  "lang": "it",
+  "text": "Perché?"
+ },
+ {
+  "lang": "it",
+  "text": "È nuova, è veloce e non è cara!"
+ },
+ {
+  "lang": "it",
+  "text": "Sì, è la migliore. E quella vecchia è la peggiore."
+ },
+ {
+  "lang": "it",
+  "text": "Allora compriamo quella rossa?"
+ },
+ {
+  "lang": "it",
+  "text": "Sì! La più bella e la migliore!"
+ },
+ {
+  "lang": "it",
+  "text": "Ciao! Tu sei nuovo, vero? Io sono Giulia."
+ },
+ {
+  "lang": "it",
+  "text": "Ciao... sì, sono Deniz. Scusa, sono un po' timido."
+ },
+ {
+  "lang": "it",
+  "text": "Non essere timido! Sei molto simpatico."
+ },
+ {
+  "lang": "it",
+  "text": "Grazie... oggi sono anche nervoso."
+ },
+ {
+  "lang": "it",
+  "text": "Perché? Il primo giorno è speciale!"
+ },
+ {
+  "lang": "it",
+  "text": "Sì, sono emozionato anche io!"
+ },
+ {
+  "lang": "it",
+  "text": "Secondo me l'italiano è facile per te."
+ },
+ {
+  "lang": "it",
+  "text": "Spero di sì! La tua classe è grande."
+ },
+ {
+  "lang": "it",
+  "text": "Sì, e i miei compagni sono gentili."
+ },
+ {
+  "lang": "it",
+  "text": "Bene! Allora sono felice di essere qui."
+ },
+ {
+  "lang": "it",
+  "text": "Bravo, Deniz! Dopo la scuola andiamo al parco?"
+ },
+ {
+  "lang": "it",
+  "text": "Volentieri! Oggi non sono più triste né nervoso!"
+ },
+ {
+  "lang": "it",
+  "text": "Buonasera! Vorrei un tavolo per due, per favore."
+ },
+ {
+  "lang": "it",
+  "text": "Certo! Un momento... ecco un posto libero vicino alla finestra."
+ },
+ {
+  "lang": "it",
+  "text": "Grazie! Potrebbe portarmi il menù?"
+ },
+ {
+  "lang": "it",
+  "text": "Ecco il menù! Desidera qualcos'altro?"
+ },
+ {
+  "lang": "it",
+  "text": "No, grazie. Però vorrei un'informazione."
+ },
+ {
+  "lang": "it",
+  "text": "Prego, dica!"
+ },
+ {
+  "lang": "it",
+  "text": "Questo tavolo è occupato stasera? Devo telefonare a un'amica."
+ },
+ {
+  "lang": "it",
+  "text": "No, è libero. Può aspettare qui."
+ },
+ {
+  "lang": "it",
+  "text": "Perfetto. Potrei avere il conto, per favore?"
+ },
+ {
+  "lang": "it",
+  "text": "Subito! Sono venti euro."
+ },
+ {
+  "lang": "it",
+  "text": "Ecco a Lei. Grazie mille, è stato tutto buonissimo!"
+ },
+ {
+  "lang": "it",
+  "text": "Grazie a Lei! Buona serata e arrivederci!"
+ },
+ {
   "lang": "en",
   "text": "She is my sister."
  },
@@ -20252,6 +29548,114 @@
   "text": "Toco la guitarra el fin de semana."
  },
  {
+  "lang": "es",
+  "text": "Ayer compré un vestido."
+ },
+ {
+  "lang": "es",
+  "text": "Anoche comí pescado."
+ },
+ {
+  "lang": "es",
+  "text": "Mi dormitorio es grande."
+ },
+ {
+  "lang": "es",
+  "text": "Estoy enfermo, tomo la medicina."
+ },
+ {
+  "lang": "es",
+  "text": "Sigue recto dos calles."
+ },
+ {
+  "lang": "es",
+  "text": "El parque está enfrente del hotel."
+ },
+ {
+  "lang": "es",
+  "text": "El próximo mes voy a España."
+ },
+ {
+  "lang": "es",
+  "text": "Voy a llevar una maleta."
+ },
+ {
+  "lang": "es",
+  "text": "Vamos juntos a la playa."
+ },
+ {
+  "lang": "es",
+  "text": "¿Qué piensas hacer este verano?"
+ },
+ {
+  "lang": "es",
+  "text": "Pienso visitar la montaña."
+ },
+ {
+  "lang": "es",
+  "text": "En verano voy a la playa."
+ },
+ {
+  "lang": "es",
+  "text": "El autobús es menos rápido que el coche."
+ },
+ {
+  "lang": "es",
+  "text": "El café es más caro que el té."
+ },
+ {
+  "lang": "es",
+  "text": "Mi equipo es mejor que tu equipo."
+ },
+ {
+  "lang": "es",
+  "text": "Este examen no es tan difícil como piensas."
+ },
+ {
+  "lang": "es",
+  "text": "El avión es el más rápido de todos."
+ },
+ {
+  "lang": "es",
+  "text": "Este examen es más fácil."
+ },
+ {
+  "lang": "es",
+  "text": "Hoy estoy muy feliz."
+ },
+ {
+  "lang": "es",
+  "text": "No estoy triste, estoy contento."
+ },
+ {
+  "lang": "es",
+  "text": "Mi padre es tranquilo y amable."
+ },
+ {
+  "lang": "es",
+  "text": "El profesor es muy amable."
+ },
+ {
+  "lang": "es",
+  "text": "Creo que tienes razón."
+ },
+ {
+  "lang": "es",
+  "text": "La familia es muy importante."
+ },
+ {
+  "lang": "es",
+  "text": "¿Podría reservar una mesa?"
+ },
+ {
+  "lang": "es",
+  "text": "Voy a llamar al restaurante."
+ },
+ {
+  "lang": "es",
+  "text": "Dejo una propina en la mesa."
+ },
+ {
   "lang": "fr",
   "text": "Je suis une femme."
  },
@@ -20330,6 +29734,138 @@
  {
   "lang": "fr",
   "text": "Je cuisine le week-end."
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai pris un café ce matin."
+ },
+ {
+  "lang": "fr",
+  "text": "Elle a lu un livre."
+ },
+ {
+  "lang": "fr",
+  "text": "Je n'ai pas bien dormi."
+ },
+ {
+  "lang": "fr",
+  "text": "Je fais la vaisselle tous les jours."
+ },
+ {
+  "lang": "fr",
+  "text": "La cuisine est propre."
+ },
+ {
+  "lang": "fr",
+  "text": "Les chambres ne sont pas propres."
+ },
+ {
+  "lang": "fr",
+  "text": "Elle a mal aux dents."
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai un gros rhume."
+ },
+ {
+  "lang": "fr",
+  "text": "Il tousse beaucoup la nuit."
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais chez le médecin demain."
+ },
+ {
+  "lang": "fr",
+  "text": "Aujourd'hui je vais mieux."
+ },
+ {
+  "lang": "fr",
+  "text": "Tournez à gauche au coin."
+ },
+ {
+  "lang": "fr",
+  "text": "Continuez jusqu'au bout de la rue."
+ },
+ {
+  "lang": "fr",
+  "text": "Descendez à l'arrêt numéro trois."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est loin d'ici ? — Non, pas loin."
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais aller à la mer cet été."
+ },
+ {
+  "lang": "fr",
+  "text": "Nous allons réserver un hôtel."
+ },
+ {
+  "lang": "fr",
+  "text": "Le mois prochain nous allons en France."
+ },
+ {
+  "lang": "fr",
+  "text": "Cette robe est moins chère."
+ },
+ {
+  "lang": "fr",
+  "text": "Le français est plus facile que l'allemand."
+ },
+ {
+  "lang": "fr",
+  "text": "Cette pizza est la meilleure."
+ },
+ {
+  "lang": "fr",
+  "text": "Le bus est le moins rapide de tous."
+ },
+ {
+  "lang": "fr",
+  "text": "Ma sœur est plus grande que moi."
+ },
+ {
+  "lang": "fr",
+  "text": "Le bleu est la meilleure couleur."
+ },
+ {
+  "lang": "fr",
+  "text": "Aujourd'hui je suis très content."
+ },
+ {
+  "lang": "fr",
+  "text": "Ma sœur est triste parce que son chat est malade."
+ },
+ {
+  "lang": "fr",
+  "text": "Je ne suis pas d'accord."
+ },
+ {
+  "lang": "fr",
+  "text": "Je voudrais un café, s'il vous plaît."
+ },
+ {
+  "lang": "fr",
+  "text": "J'aimerais une table pour deux."
+ },
+ {
+  "lang": "fr",
+  "text": "Pourriez-vous répéter, s'il vous plaît ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Est-ce que je peux parler à Madame Martin ?"
+ },
+ {
+  "lang": "fr",
+  "text": "La ligne est occupée, je vais rappeler plus tard."
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai réservé une table pour quatre personnes."
  },
  {
   "lang": "it",
@@ -20542,5 +30078,57 @@
  {
   "lang": "it",
   "text": "Io nuoto nel mare."
+ },
+ {
+  "lang": "it",
+  "text": "Ieri ho fatto i compiti."
+ },
+ {
+  "lang": "it",
+  "text": "Ho dormito per otto ore."
+ },
+ {
+  "lang": "it",
+  "text": "Nel soggiorno guardiamo la televisione."
+ },
+ {
+  "lang": "it",
+  "text": "Se sei malato, devi riposare."
+ },
+ {
+  "lang": "it",
+  "text": "Vai dritto per cinque minuti."
+ },
+ {
+  "lang": "it",
+  "text": "Davanti alla scuola c'è una banca."
+ },
+ {
+  "lang": "it",
+  "text": "Domani parto per il mare."
+ },
+ {
+  "lang": "it",
+  "text": "Per me la metro è migliore."
+ },
+ {
+  "lang": "it",
+  "text": "Questa è la pizza migliore della città."
+ },
+ {
+  "lang": "it",
+  "text": "Secondo me imparare l'italiano è facile."
+ },
+ {
+  "lang": "it",
+  "text": "Vorrei un tavolo per due."
+ },
+ {
+  "lang": "it",
+  "text": "Potrei avere il conto?"
+ },
+ {
+  "lang": "it",
+  "text": "Potrei usare il telefono?"
  }
 ]
