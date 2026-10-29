@@ -1,13 +1,15 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Platform, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { router, useFocusEffect } from 'expo-router';
 
 import { ACHIEVEMENTS, FREEZE_EVERY_DAYS, MAX_HEARTS, MAX_STREAK_FREEZES, getAchievement, msUntilNextHeart, regenerate } from '@/domain';
+import { levelStart, nextLevelName, proficiencyScore } from '@/domain/proficiency';
 import { authErrorMessage, isSupabaseConfigured } from '@/data';
 import { isAnonymousSession } from '@/data/remote/classes';
 import { AddEmailForm, AnonymousAccountNote } from '@/features/classes/AddEmailForm';
 import { useClassStore } from '@/features/classes/classStore';
+import { OfflineAudioCard } from '@/features/offline';
 import { speak } from '@/speech';
 import { cancelReminder, isSupported as remindersSupported, requestPermission, scheduleDailyReminder } from '@/features/notifications';
 import { useAppStore } from '@/features/store';
@@ -152,6 +154,7 @@ export default function ProfileScreen() {
   const voice = useSettingsStore((s) => s.voice);
   const setVoice = useSettingsStore((s) => s.setVoice);
   const rawStats = useAppStore((s) => s.stats);
+  const progress = useAppStore((s) => s.progress);
   const user = useAppStore((s) => s.user);
   const course = useAppStore((s) => s.course);
   const syncing = useAppStore((s) => s.syncing);
@@ -233,6 +236,11 @@ export default function ProfileScreen() {
 
   const now = useNow();
   const stats = regenerate(rawStats, now);
+  const proficiency = useMemo(() => proficiencyScore(course, progress), [course, progress]);
+  const nextName = nextLevelName(proficiency.level);
+  const levelGap = nextName ? proficiency.nextLevelAt - proficiency.score : 0;
+  const levelSpan = Math.max(1, proficiency.nextLevelAt - levelStart(proficiency.level));
+  const levelProgress = Math.max(0, Math.min(1, (proficiency.score - levelStart(proficiency.level)) / levelSpan));
   const nextHeartMin = stats.hearts < MAX_HEARTS ? Math.ceil(msUntilNextHeart(stats, now) / 60000) : 0;
   const cloud = isSupabaseConfigured();
 
@@ -250,6 +258,18 @@ export default function ProfileScreen() {
         {nextHeartMin > 0 && <Caption color={colors.textMuted}>Sonraki kalp ~{nextHeartMin} dk sonra</Caption>}
         <Body>❄️ Seri dondurma: {stats.streakFreezes}/{MAX_STREAK_FREEZES}</Body>
         <Caption color={colors.textMuted}>Bir gün kaçırırsan serini korur. Her {FREEZE_EVERY_DAYS} günlük seride bir tane kazanırsın.</Caption>
+
+        <View style={[styles.scoreCard, { borderColor: colors.border, backgroundColor: colors.surface }]}>
+          <View style={styles.row}>
+            <Body>Love-Vox puanı</Body>
+            <Heading>{proficiency.score} · {proficiency.level}</Heading>
+          </View>
+          <ProgressBar progress={levelProgress} color={colors.primary} />
+          <Caption color={colors.textMuted}>
+            {nextName ? `${nextName === 'A2' ? "A2'ye" : "B1'e"} ${levelGap} puan kaldı` : 'Ölçeğin en üst seviyesi 🏆'}
+          </Caption>
+          <Caption color={colors.textMuted}>{proficiency.unitsDone} ünite tamamlandı</Caption>
+        </View>
 
         <Heading>Günlük hedef</Heading>
         <ProgressBar progress={Math.min(1, stats.xpToday / stats.dailyGoalXp)} color={colors.warning} />
@@ -365,6 +385,14 @@ export default function ProfileScreen() {
         </View>
         <Caption color={colors.textMuted}>Doğal ses internet ister; bağlantı yoksa cihaz sesi kullanılır.</Caption>
 
+        {Platform.OS === 'web' && (
+          <>
+            <Heading>Çevrimdışı</Heading>
+            <OfflineAudioCard course={course} />
+            <Caption color={colors.textMuted}>Ses paketi bu cihazın önbelleğinde tutulur; kurs değişince yeniden indir.</Caption>
+          </>
+        )}
+
         <Heading>Kurs</Heading>
         <Body>{course.title}</Body>
         <Button title="Kurs değiştir" variant="outline" onPress={() => router.push('/courses')} />
@@ -478,6 +506,7 @@ const styles = StyleSheet.create({
   classCard: { gap: spacing.sm },
   classInfo: { gap: 2 },
   stat: { flex: 1, borderWidth: 1, borderRadius: 10, padding: spacing.md, alignItems: 'center' },
+  scoreCard: { borderWidth: 1, borderRadius: 10, padding: spacing.md, gap: spacing.sm },
   goals: { flexDirection: 'row', gap: spacing.sm },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', minHeight: 44 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },

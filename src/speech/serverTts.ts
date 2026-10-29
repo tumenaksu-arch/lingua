@@ -132,6 +132,16 @@ function ttsBaseUrl(): string {
   return (process.env.EXPO_PUBLIC_SUPABASE_URL ?? '').replace(/\/+$/, '');
 }
 
+/**
+ * Build the TTS endpoint URL exactly as speakServer requests it. Exported for the
+ * offline voice pack (src/features/offline): the pack must prefetch byte-identical
+ * URLs so the service-worker's cache lookup hits. Throws nothing — with no base
+ * configured the relative URL is still returned, matching speakServer's behaviour.
+ */
+export function ttsUrl(text: string, lang: LangCode, speed: number): string {
+  return `${ttsBaseUrl()}/tts/v1/speak?lang=${lang}&text=${encodeURIComponent(text)}&speed=${snapSpeed(speed)}`;
+}
+
 /** Play one URL to the end. Resolves on 'ended'; rejects on 'error' or first-byte timeout. */
 function playUrl(url: string): Promise<void> {
   return new Promise<void>((resolve, reject) => {
@@ -192,14 +202,12 @@ function playUrl(url: string): Promise<void> {
 export async function speakServer(text: string, lang: LangCode, speed: number): Promise<void> {
   const base = ttsBaseUrl();
   if (!base) throw new Error('Doğal ses sunucusu yapılandırılmamış.');
-  const s = snapSpeed(speed);
   stopServerAudio(); // drop any previous playback — double taps never overlap
   const generation = stopGeneration;
   for (const chunk of chunkText(text)) {
     // A stop() between chunks (interrupt already cleared by the previous 'ended')
     // must not let the next chunk start.
     if (generation !== stopGeneration) throw abortError();
-    const url = `${base}/tts/v1/speak?lang=${lang}&text=${encodeURIComponent(chunk)}&speed=${s}`;
-    await playUrl(url);
+    await playUrl(ttsUrl(chunk, lang, speed));
   }
 }
