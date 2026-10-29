@@ -1,7 +1,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { ParsedMessage } from "@anthropic-ai/sdk/lib/parser";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
-import { ChatReplySchema, type ChatReply } from "./schema.js";
+import type { ZodType } from "zod/v4";
+import { ChatReplySchema, ExplainOutputSchema, type ChatReply, type ExplainOutput } from "./schema.js";
 
 export interface ClaudeConfig {
   apiKey: string;
@@ -25,12 +26,13 @@ export function createClaudeClient(apiKey: string): Anthropic {
  *
  * Sıcaklık/top-p/top-k ASLA gönderilmez (model ailesi bunları reddeder).
  */
-export async function chatOnce(
+async function parseOnce<T>(
   client: Anthropic,
   cfg: ClaudeConfig,
+  schema: ZodType<T>,
   system: Anthropic.TextBlockParam[],
   messages: Anthropic.MessageParam[],
-): Promise<ParsedMessage<ChatReply>> {
+): Promise<ParsedMessage<T>> {
   return client.messages.parse({
     model: cfg.model,
     max_tokens: 2000,
@@ -38,7 +40,25 @@ export async function chatOnce(
     messages,
     output_config: {
       effort: cfg.effort,
-      format: zodOutputFormat(ChatReplySchema),
+      format: zodOutputFormat(schema),
     },
   });
+}
+
+export async function chatOnce(
+  client: Anthropic,
+  cfg: ClaudeConfig,
+  system: Anthropic.TextBlockParam[],
+  messages: Anthropic.MessageParam[],
+): Promise<ParsedMessage<ChatReply>> {
+  return parseOnce(client, cfg, ChatReplySchema, system, messages);
+}
+
+export async function explainOnce(
+  client: Anthropic,
+  cfg: ClaudeConfig,
+  system: Anthropic.TextBlockParam[],
+  messages: Anthropic.MessageParam[],
+): Promise<ParsedMessage<ExplainOutput>> {
+  return parseOnce(client, cfg, ExplainOutputSchema, system, messages);
 }

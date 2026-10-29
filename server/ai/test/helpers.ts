@@ -62,6 +62,19 @@ export const parsedReply = {
   done: false,
 };
 
+export const explainBody = {
+  courseId: "tr-en",
+  exerciseType: "select_translation",
+  prompt: "'Elma' nasıl söylenir?",
+  userAnswer: "aple",
+  correctAnswer: "apple",
+};
+
+export const parsedExplain = {
+  explanation: "'Aple' yazımında bir hata var: İngilizcede 'apple' çift p ile yazılır.",
+  tip: "İngilizcede kısa sesli harflerden sonra çift ünsüz sık görülür.",
+};
+
 /** Yeni sözleşme: ai_usage_take tek satırlık bir dizi döner: [{ used, day }]. */
 export const TAKE_DAY = "2026-10-26";
 

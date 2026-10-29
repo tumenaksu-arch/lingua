@@ -18,12 +18,16 @@ Konteyner içinde taban yol `/`dır; nginx şu eşlemeyi yapar:
 | `GET /v1/status` | isteğe bağlı Bearer | `{ enabled, limit, remaining \| null }` |
 | `GET /v1/scenarios?courseId=tr-en` | — | `{ scenarios: Scenario[] }` |
 | `POST /v1/chat` | **zorunlu** Bearer | 200 `{ reply, replyTr, correction, done, remaining }` |
+| `POST /v1/explain` | **zorunlu** Bearer | 200 `{ explanation, tip \| null, remaining }` |
 
 - `Scenario = { id, titleTr, descriptionTr, level: 'A1'\|'A2'\|'B1', goalTr, opener }`;
   8 senaryo × 5 kurs (`tr-en`, `tr-de`, `tr-es`, `tr-fr`, `tr-it`); `opener`
   asistanın hedef dildeki ilk cümlesidir.
 - `POST /v1/chat` gövdesi: `{ courseId, scenarioId, history: { role, text }[]
   (≤ 20, öğe ≤ 600 kr), message (1–500 kr) }`.
+- `POST /v1/explain` gövdesi: `{ courseId, exerciseType, prompt (1–400 kr),
+  userAnswer (1–400 kr), correctAnswer (1–400 kr) }` — yanlış cevaba kişiye özel
+  Türkçe açıklama; açıklama da günlük sınırda 1 mesaj sayılır.
 - Hatalar (Türkçe `message` ile): `400 bad_request`, `401 auth`,
   `429 limit` (yanında `remaining: 0`), `503 not_configured`, `502 upstream`
   (Claude hatası/red/zaman aşımı — rezerve edilen mesaj iade edilir).
