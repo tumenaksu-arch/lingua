@@ -884,6 +884,8 @@ export const useAppStore = create<AppState>((set, get) => ({
     }
     void get().sync();
     return { xpEarned };
+  },
+
   async completeUnitsByPlacement(unitIds) {
     const r = requireRepos();
     const { db } = get();

@@ -121,7 +121,11 @@ function promptText(e: (typeof firstLesson.exercises)[number]): string {
     : e.type === 'fill_blank' ? e.sentence
     : e.type === 'speak' ? e.sentence
     : e.type === 'listen_type' ? e.audioText
-    : e.pairs[0]!.left;
+    : e.type === 'match_pairs' ? e.pairs[0]!.left
+    : e.type === 'listen_select' ? e.audioText
+    : e.type === 'picture_select' ? e.prompt
+    : e.type === 'complete_chat' ? e.lines[0]!.text
+    : e.question;
 }
 
 /** Answer the currently visible exercise: true = the correct option, false = a wrong one. */

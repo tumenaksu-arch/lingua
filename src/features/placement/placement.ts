@@ -21,7 +21,7 @@ export const PLACEMENT_MAX_UNITS = 8;
 export const PLACEMENT_MAX_QUESTIONS = PLACEMENT_QUESTIONS_PER_UNIT * PLACEMENT_MAX_UNITS;
 
 /** Exercise types excluded from placement (no microphone, no audio needed). */
-const EXCLUDED_TYPES: Exercise['type'][] = ['speak', 'listen_type'];
+const EXCLUDED_TYPES: Exercise['type'][] = ['speak', 'listen_type', 'listen_select'];
 
 /**
  * A unit's question list for one exam run, seeded by the unit id and `attempt`
