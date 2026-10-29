@@ -574,7 +574,7 @@ export const trEnStories: CourseStories = {
         explanation: 'Kerem “I can sweep the floor in the kitchen” diyor.',
       },
       {
-        prompt: 'Derya öğleden sonra ne yapacak?',
+        prompt: 'Derya hangi işi yapacak?',
         options: ['Çamaşır yıkayacak', 'Bulaşık yıkayacak', 'Oda toplayacak'],
         correctIndex: 0,
         explanation: 'Derya “I will do the laundry” diyor; çamaşırı o yıkayacak.',
@@ -644,7 +644,7 @@ export const trEnStories: CourseStories = {
       { speaker: 'Onur', text: 'Then turn left at the traffic lights and cross the street.', tr: 'Sonra trafik ışıklarında sola dönün ve sokaktan karşıya geçin.' },
       { speaker: 'Sophie', text: 'Is the post office between the bank and the pharmacy?', tr: 'Postane banka ile eczanenin arasında mı?' },
       { speaker: 'Onur', text: 'Yes, it is opposite the pharmacy, next to the bank. You can see it from the corner.', tr: 'Evet, eczanenin karşısında, bankanın bitişiğinde. Köşeden görebilirsiniz.' },
-      { speaker: 'Sophie', text: 'Is it far? I wanted to take the subway.', tr: 'Uzak mı? Metro ile gitmek istiyordum.' },
+      { speaker: 'Sophie', text: 'Is it far? I was going to take the subway.', tr: 'Uzak mı? Metro ile gidecektim.' },
       { speaker: 'Onur', text: 'No, it is only a five-minute walk. The subway station is behind the library.', tr: 'Hayır, sadece beş dakikalık yürüme mesafesi. Metro istasyonu kütüphanenin arkasında.' },
       { speaker: 'Sophie', text: 'Thank you very much! Have a nice day.', tr: 'Çok teşekkür ederim! İyi günler.' },
     ],
@@ -802,7 +802,9 @@ export const trEnStories: CourseStories = {
     lines: [
       { speaker: 'Elif', text: 'Hello! Could I make a reservation for tonight, please?', tr: 'Merhaba! Bu akşam için rezervasyon yapabilir miyim, lütfen?' },
       { speaker: 'Waiter', text: 'Certainly. A table for how many people?', tr: 'Elbette. Kaç kişilik masa?' },
-      { speaker: 'Elif', text: 'For four, please. Could you spell my surname? It is K-a-y-a.', tr: 'Dört kişilik, lütfen. Soyadımı heceleyebilir misiniz? K-a-y-a.' },
+      { speaker: 'Elif', text: 'For four, please.', tr: 'Dört kişilik, lütfen.' },
+      { speaker: 'Waiter', text: 'Could you spell your surname, please?', tr: 'Soyadınızı heceleyebilir misiniz, lütfen?' },
+      { speaker: 'Elif', text: 'It is K-a-y-a.', tr: 'K-a-y-a.' },
       { speaker: 'Waiter', text: 'Thank you, Ms Kaya. Hold on, please... Yes, we have a table for four at eight.', tr: 'Teşekkürler, Kaya Hanım. Hatta bekleyin, lütfen... Evet, saat sekiz için dört kişilik masamız var.' },
       { speaker: 'Elif', text: 'Perfect. See you tonight!', tr: 'Mükemmel. Bu akşam görüşürüz!' },
       { speaker: 'Elif', text: 'Good evening! We have a reservation for four. My name is Elif Kaya.', tr: 'İyi akşamlar! Dört kişilik rezervasyonumuz var. Benim adım Elif Kaya.' },
@@ -821,7 +823,7 @@ export const trEnStories: CourseStories = {
         prompt: 'Telefonda Elif’ten ne isteniyor?',
         options: ['Soyadının hecelenmesi', 'Adresinin tekrarlanması', 'Kredi kart numarası'],
         correctIndex: 0,
-        explanation: 'Elif “Could you spell my surname?” diyor ve soyadını harf harf söylüyor.',
+        explanation: 'Garson “Could you spell your surname, please?” diyor; Elif soyadını harf harf söylüyor.',
       },
       {
         prompt: 'Elif garsondan nelerini istiyor?',
