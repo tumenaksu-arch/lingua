@@ -35,6 +35,19 @@ export default function OnboardingScreen() {
     }
   };
 
+  // "Seviyemi bul": onboarding is completed first (course + goal are stored),
+  // then the placement exam decides where the path starts.
+  const finishWithPlacement = async () => {
+    if (!courseId) return;
+    setBusy(true);
+    try {
+      await completeOnboarding(courseId, goal);
+      router.replace('/placement');
+    } finally {
+      setBusy(false);
+    }
+  };
+
   return (
     <Screen>
       <ProgressBar progress={step === 0 ? 0.5 : 1} accessibilityLabel={`Adım ${step + 1} / 2`} />
@@ -75,9 +88,13 @@ export default function OnboardingScreen() {
       {step === 0 ? (
         <Button title="Devam" disabled={!courseId} onPress={() => setStep(1)} />
       ) : (
-        <View style={styles.actions}>
-          <Button title="Geri" variant="outline" block={false} onPress={() => setStep(0)} />
-          <Button title="Başla" loading={busy} onPress={finish} style={{ flex: 1 }} />
+        <View style={styles.footer}>
+          <View style={styles.actions}>
+            <Button title="Geri" variant="outline" block={false} onPress={() => setStep(0)} />
+            <Button title="Sıfırdan başla" loading={busy} onPress={finish} style={{ flex: 1 }} />
+          </View>
+          <Caption center color={colors.textMuted}>Biraz biliyor musun? Kısa bir sınavla seviyeni bulalım.</Caption>
+          <Button title="Seviyemi bul" variant="outline" loading={busy} onPress={finishWithPlacement} />
         </View>
       )}
     </Screen>
@@ -87,5 +104,6 @@ export default function OnboardingScreen() {
 const styles = StyleSheet.create({
   body: { flex: 1, paddingTop: spacing.xl, gap: spacing.sm },
   list: { gap: spacing.md, marginVertical: spacing.lg },
+  footer: { gap: spacing.md },
   actions: { flexDirection: 'row', gap: spacing.md },
 });
