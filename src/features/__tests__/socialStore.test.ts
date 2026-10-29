@@ -4,7 +4,9 @@ import { useSocialStore } from '../social/socialStore';
 import {
   addFriend,
   getProfile,
+  listFriendStreaks,
   listFriends,
+  markActivityToday,
   resolveInvite,
   saveProfile,
   topEntries,
@@ -15,7 +17,9 @@ jest.mock('@/data/remote/social', () => ({
   addFriend: jest.fn(async () => true),
   entriesFor: jest.fn(async () => []),
   getProfile: jest.fn(async () => null),
+  listFriendStreaks: jest.fn(async () => []),
   listFriends: jest.fn(async () => []),
+  markActivityToday: jest.fn(async () => true),
   randomInviteCode: jest.fn(() => 'ABC234'),
   removeFriend: jest.fn(async () => true),
   resolveInvite: jest.fn(async () => null),
@@ -29,7 +33,9 @@ jest.mock('@/data/remote/social', () => ({
 const mocked = {
   addFriend: jest.mocked(addFriend),
   getProfile: jest.mocked(getProfile),
+  listFriendStreaks: jest.mocked(listFriendStreaks),
   listFriends: jest.mocked(listFriends),
+  markActivityToday: jest.mocked(markActivityToday),
   resolveInvite: jest.mocked(resolveInvite),
   saveProfile: jest.mocked(saveProfile),
   topEntries: jest.mocked(topEntries),
@@ -51,7 +57,7 @@ function xpDb(xpValues: number[]): Database {
 beforeEach(() => {
   jest.clearAllMocks();
   useAppStore.setState({ user: null, userId: LOCAL_USER_ID, db: null, stats: { ...DEFAULT_STATS } });
-  useSocialStore.setState({ profile: null, top: [], friends: [], loading: false, error: null });
+  useSocialStore.setState({ profile: null, top: [], friends: [], friendStreaks: [], loading: false, error: null });
 });
 
 describe('publishMyXp', () => {

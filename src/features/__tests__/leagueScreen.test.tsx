@@ -3,7 +3,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Share } from 'react-native';
 
 import { DEFAULT_STATS, LOCAL_USER_ID } from '@/data';
-import { entriesFor, getProfile, listFriends, saveProfile, topEntries } from '@/data/remote/social';
+import { entriesFor, getProfile, listFriendStreaks, listFriends, saveProfile, topEntries } from '@/data/remote/social';
 import { useAppStore } from '@/features/store';
 import { useSocialStore } from '@/features/social/socialStore';
 
@@ -21,7 +21,9 @@ jest.mock('@/data/remote/social', () => ({
   addFriend: jest.fn(async () => true),
   entriesFor: jest.fn(async () => []),
   getProfile: jest.fn(async () => null),
+  listFriendStreaks: jest.fn(async () => []),
   listFriends: jest.fn(async () => []),
+  markActivityToday: jest.fn(async () => true),
   randomInviteCode: jest.fn(() => 'ABC234'),
   removeFriend: jest.fn(async () => true),
   resolveInvite: jest.fn(async () => null),
@@ -35,6 +37,7 @@ jest.mock('@/data/remote/social', () => ({
 const mocked = {
   entriesFor: jest.mocked(entriesFor),
   getProfile: jest.mocked(getProfile),
+  listFriendStreaks: jest.mocked(listFriendStreaks),
   listFriends: jest.mocked(listFriends),
   saveProfile: jest.mocked(saveProfile),
   topEntries: jest.mocked(topEntries),
@@ -49,7 +52,7 @@ beforeEach(() => {
   delete process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID;
   delete process.env.EXPO_PUBLIC_FIREBASE_APP_ID;
   useAppStore.setState({ user: null, userId: LOCAL_USER_ID, db: null, stats: { ...DEFAULT_STATS } });
-  useSocialStore.setState({ profile: null, top: [], friends: [], loading: false, error: null });
+  useSocialStore.setState({ profile: null, top: [], friends: [], friendStreaks: [], loading: false, error: null });
 });
 
 async function renderLeague() {
@@ -163,4 +166,46 @@ it('falls back to the share sheet when the clipboard write rejects', async () =>
     shareSpy.mockRestore();
     if (navDescriptor) Object.defineProperty(globalThis, 'navigator', navDescriptor);
   }
+});
+
+it('friends tab shows streak badges, today status and the longest-streak card', async () => {
+  useAppStore.setState({ user: SIGNED_IN, userId: 'u1' });
+  mocked.getProfile.mockResolvedValue(PROFILE);
+  mocked.topEntries.mockResolvedValue([
+    { uid: 'u1', nickname: 'YıldızKedi', xp: 30, updated_at: '2026-10-25T00:00:00.000Z' },
+  ]);
+  mocked.listFriends.mockResolvedValue([
+    { friend_uid: 'u2', nickname: 'Bob', added_at: '2026-10-20T00:00:00.000Z' },
+    { friend_uid: 'u3', nickname: 'Carol', added_at: '2026-10-20T00:00:00.000Z' },
+  ]);
+  mocked.entriesFor.mockResolvedValue([
+    { uid: 'u2', nickname: 'Bob', xp: 10, updated_at: '2026-10-25T00:00:00.000Z' },
+    { uid: 'u3', nickname: 'Carol', xp: 20, updated_at: '2026-10-25T00:00:00.000Z' },
+  ]);
+  mocked.listFriendStreaks.mockResolvedValue([
+    { friend_uid: 'u2', streak: 5, me_today: true, friend_today: true },
+    { friend_uid: 'u3', streak: 9, me_today: true, friend_today: false },
+  ]);
+  await renderLeague();
+
+  await fireEvent.press(screen.getByRole('tab', { name: 'Arkadaşlar' }));
+  // Sıra başına rozet + bugün durumu metni.
+  expect(await screen.findByLabelText('🔥 5 gün birlikte, İkiniz de bugün çalıştınız ✅')).toBeTruthy();
+  expect(screen.getByLabelText('🔥 9 gün birlikte, Arkadaşın bekliyor')).toBeTruthy();
+  // Ortak serisi en yüksek arkadaşın kartı.
+  expect(screen.getByLabelText('Birlikte en uzun seri: Carol, 9 gün')).toBeTruthy();
+});
+
+it('no friends → no longest-streak card', async () => {
+  useAppStore.setState({ user: SIGNED_IN, userId: 'u1' });
+  mocked.getProfile.mockResolvedValue(PROFILE);
+  mocked.topEntries.mockResolvedValue([
+    { uid: 'u1', nickname: 'YıldızKedi', xp: 30, updated_at: '2026-10-25T00:00:00.000Z' },
+  ]);
+  mocked.listFriends.mockResolvedValue([]);
+  await renderLeague();
+
+  await fireEvent.press(screen.getByRole('tab', { name: 'Arkadaşlar' }));
+  await screen.findByText('Henüz arkadaşın yok. Kodunu paylaş, birlikte yarışın!');
+  expect(screen.queryByLabelText(/Birlikte en uzun seri/)).toBeNull();
 });

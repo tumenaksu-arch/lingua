@@ -6,6 +6,7 @@ import { useAppStore } from '@/features/store';
 import { isAnonymousSession } from '@/data/remote/classes';
 import { useClassStore } from '@/features/classes/classStore';
 import { useSocialStore, type FriendWithXp } from '@/features/social/socialStore';
+import { bestFriendStreak, streakBadgeText, streakTodayLabel } from '@/features/social/friendStreak';
 import { NICKNAME_PATTERN } from '@/data/remote/social';
 import {
   Body,
@@ -171,6 +172,7 @@ function FriendsTab() {
   const profile = useSocialStore((s) => s.profile);
   const top = useSocialStore((s) => s.top);
   const friends = useSocialStore((s) => s.friends);
+  const streaks = useSocialStore((s) => s.friendStreaks);
   const addFriendByCode = useSocialStore((s) => s.addFriendByCode);
   const removeFriend = useSocialStore((s) => s.removeFriend);
   const load = useSocialStore((s) => s.load);
@@ -187,6 +189,10 @@ function FriendsTab() {
     ...friends.map((f) => ({ uid: f.friend_uid, nickname: f.nickname, xp: f.xp, isMe: false, friend: f })),
     { uid: userId, nickname: profile.nickname, xp: ownXp, isMe: true },
   ].sort((a, b) => b.xp - a.xp);
+  // Mutual friend streaks come from the friend_streaks RPC (only mutual
+  // friends appear there); the card honours the highest shared streak.
+  const streakByUid = new Map(streaks.map((s) => [s.friend_uid, s]));
+  const best = bestFriendStreak(friends, streaks);
 
   const submit = async () => {
     setBusy(true);
@@ -227,6 +233,17 @@ function FriendsTab() {
       </View>
       {error && <Caption color={colors.dangerText}>{error}</Caption>}
 
+      {best && (
+        <View
+          style={[styles.streakCard, { borderColor: colors.primary, backgroundColor: colors.primaryTint }]}
+          accessibilityLabel={`Birlikte en uzun seri: ${best.nickname}, ${best.streak} gün`}
+        >
+          <Caption color={colors.textMuted}>Birlikte en uzun seri</Caption>
+          <Text style={[styles.streakCardNumber, { color: colors.primaryText }]}>🔥 {best.streak}</Text>
+          <Body color={colors.text}>{best.nickname} ile {best.streak} gündür birlikte çalışıyorsunuz</Body>
+        </View>
+      )}
+
       <View style={styles.listHeader}>
         <Heading>Arkadaşların</Heading>
         <Button title="Yenile" variant="outline" block={false} onPress={() => void load()} />
@@ -234,20 +251,35 @@ function FriendsTab() {
       {rows.length <= 1 && friends.length === 0 ? (
         <Caption color={colors.textMuted}>Henüz arkadaşın yok. Kodunu paylaş, birlikte yarışın!</Caption>
       ) : (
-        rows.map((r, i) => (
-          <View key={r.uid} style={styles.friendRowWrap}>
-            <EntryRow rank={i + 1} nickname={r.nickname} xp={r.xp} isMe={r.isMe} />
-            {r.friend && (
-              <Button
-                title="Kaldır"
-                variant="danger"
-                block={false}
-                onPress={() => confirmRemove(r.friend!)}
-                style={styles.removeBtn}
-              />
-            )}
-          </View>
-        ))
+        rows.map((r, i) => {
+          const streak = r.friend ? streakByUid.get(r.friend.friend_uid) : undefined;
+          return (
+            <View key={r.uid} style={styles.friendRowWrap}>
+              <View style={styles.friendRowMain}>
+                <EntryRow rank={i + 1} nickname={r.nickname} xp={r.xp} isMe={r.isMe} />
+                {r.friend && (
+                  <Button
+                    title="Kaldır"
+                    variant="danger"
+                    block={false}
+                    onPress={() => confirmRemove(r.friend!)}
+                    style={styles.removeBtn}
+                  />
+                )}
+              </View>
+              {streak && (
+                <Caption
+                  color={colors.textMuted}
+                  style={styles.streakLine}
+                  accessibilityLabel={`${streakBadgeText(streak.streak)}, ${streakTodayLabel(streak)}`}
+                >
+                  {streak.streak > 0 ? `${streakBadgeText(streak.streak)} · ` : ''}
+                  {streakTodayLabel(streak)}
+                </Caption>
+              )}
+            </View>
+          );
+        })
       )}
     </View>
   );
@@ -388,6 +420,10 @@ const styles = StyleSheet.create({
   listHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.sm },
   codeCard: { borderWidth: 1, borderRadius: radii.md, padding: spacing.md, alignItems: 'center', gap: spacing.sm },
   code: { fontFamily: fonts.mono, fontSize: 32, letterSpacing: 8 },
-  friendRowWrap: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  friendRowWrap: { gap: 2 },
+  friendRowMain: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   removeBtn: { paddingHorizontal: spacing.sm },
+  streakLine: { marginLeft: spacing.md },
+  streakCard: { borderWidth: 1, borderRadius: radii.md, padding: spacing.md, alignItems: 'center', gap: spacing.sm },
+  streakCardNumber: { fontFamily: fonts.mono, fontSize: 32, letterSpacing: 2 },
 });

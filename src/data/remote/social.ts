@@ -1,5 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 
+import { localDateString } from '@/domain/streak';
+import type { FriendStreak } from '@/features/social/friendStreak';
 import { isoWeekId } from '@/features/social/week';
 
 import { getSupabase } from './supabase';
@@ -286,5 +288,44 @@ export async function removeFriend(uid: string, friendUid: string): Promise<bool
     return true;
   } catch (e) {
     throw toTurkishError(e);
+  }
+}
+
+/**
+ * Bugünü (cihazın yerel günü) kullanıcının etkinlik günü olarak işaretler.
+ * PK (user_id, day) ile günde birden fazla çağrı güvenlidir; başarısızlıkta
+ * (çevrimdışı, oturum yok) false döner ve çağıran sonraki fırsatta tekrar dener.
+ */
+export async function markActivityToday(uid: string): Promise<boolean> {
+  const sb = getSupabase();
+  if (!sb || !(await hasSession(sb))) return false;
+  try {
+    const { error } = await sb
+      .from('activity_days')
+      .upsert({ user_id: uid, day: localDateString(new Date()) }, { onConflict: 'user_id,day' });
+    if (error) return false;
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/** Arkadaşlarla ortak seriler (friend_streaks RPC); hata/oturumsuzluk → []. */
+export async function listFriendStreaks(): Promise<FriendStreak[]> {
+  const sb = getSupabase();
+  if (!sb) return [];
+  try {
+    const { data, error } = await sb.rpc('friend_streaks');
+    if (error) return [];
+    return (
+      (data as { friend_id: string; streak: number; me_today: boolean; friend_today: boolean }[] | null) ?? []
+    ).map((row) => ({
+      friend_uid: row.friend_id,
+      streak: Number(row.streak),
+      me_today: Boolean(row.me_today),
+      friend_today: Boolean(row.friend_today),
+    }));
+  } catch {
+    return [];
   }
 }
