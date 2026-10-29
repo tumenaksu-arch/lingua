@@ -1,4 +1,4 @@
-import { build, course, fill, lesson, listen, match, sel, speak, unit } from './builder';
+import { build, chat, course, fill, lesson, listen, listenSel, match, pic, read, sel, speak, unit } from './builder';
 
 /** Türkçe → Almanca. */
 export const trDe = course(
@@ -199,6 +199,15 @@ export const trDe = course(
         fill('Ich habe ___ Brüder.', ['zwei', 'eins', 'der'], 0),
         speak('Eins, zwei, drei.'),
         sel('"der Lehrer" ne demek?', ['öğrenci', 'öğretmen', 'arkadaş'], 1, 'to'),
+        listenSel('Du bist mein Freund', ['Du bist mein Lehrer', 'Du bist mein Freund', 'Ich bin dein Freund'], 1),
+        pic('"Freund" hangisi?', [
+          { emoji: '1️⃣', label: 'eins' },
+          { emoji: '🧑‍🏫', label: 'der Lehrer' },
+          { emoji: '🤝', label: 'der Freund' },
+          { emoji: '🧑‍🎓', label: 'der Schüler' },
+        ], 2),
+        chat([['a', 'Bist du ein Schüler?']], ['Ja, ich bin ein Schüler.', 'Nein, ich bin der Lehrer.', 'Du bist mein Freund.'], 0),
+        read('Ich bin ein Schüler. Du bist mein Freund.', 'Wer sind die Personen im Text?', ['Ein Schüler und ein Freund', 'Ein Schüler und ein Lehrer', 'Drei Freunde'], 0),
       ]),
     ]),
     unit('tr-de.u2', 2, 'Yemek', 'Yiyecek ve içecekleri öğren.', [

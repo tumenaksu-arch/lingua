@@ -3,9 +3,13 @@ import { useEffect } from 'react';
 import type { Exercise, LangCode } from '@/domain';
 import { speak, stopSpeaking } from '@/speech';
 
+import { CompleteChat } from './exercises/CompleteChat';
 import { FillBlank } from './exercises/FillBlank';
+import { ListenSelect } from './exercises/ListenSelect';
 import { ListenType } from './exercises/ListenType';
 import { MatchPairs } from './exercises/MatchPairs';
+import { PictureSelect } from './exercises/PictureSelect';
+import { ReadAnswer } from './exercises/ReadAnswer';
 import { SelectTranslation } from './exercises/SelectTranslation';
 import { Speak } from './exercises/Speak';
 import { TranslateBuild } from './exercises/TranslateBuild';
@@ -40,5 +44,13 @@ export function ExerciseView({ exercise, targetLang, disabled, onAnswer }: Exerc
       return <Speak key={exercise.id} exercise={exercise} {...common} />;
     case 'fill_blank':
       return <FillBlank key={exercise.id} exercise={exercise} {...common} />;
+    case 'listen_select':
+      return <ListenSelect key={exercise.id} exercise={exercise} {...common} />;
+    case 'picture_select':
+      return <PictureSelect key={exercise.id} exercise={exercise} {...common} />;
+    case 'complete_chat':
+      return <CompleteChat key={exercise.id} exercise={exercise} {...common} />;
+    case 'read_answer':
+      return <ReadAnswer key={exercise.id} exercise={exercise} {...common} />;
   }
 }

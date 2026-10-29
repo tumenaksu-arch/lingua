@@ -1,4 +1,4 @@
-import { build, course, fill, lesson, listen, match, sel, speak, unit } from './builder';
+import { build, chat, course, fill, lesson, listen, listenSel, match, pic, read, sel, speak, unit } from './builder';
 
 /** Türkçe → İspanyolca. */
 export const trEs = course(
@@ -196,6 +196,15 @@ export const trEs = course(
         fill('Tengo ___ amigos.', ['dos', 'bien', 'grande'], 0),
         speak('Uno, dos, tres.'),
         sel('"profesor" ne demek?', ['öğrenci', 'öğretmen', 'arkadaş'], 1, 'to'),
+        listenSel('Tú eres mi amigo', ['Tú eres mi profesor', 'Tú eres mi amigo', 'Yo soy tu amigo'], 1),
+        pic('"amigo" hangisi?', [
+          { emoji: '1️⃣', label: 'uno' },
+          { emoji: '🧑‍🏫', label: 'el profesor' },
+          { emoji: '🤝', label: 'el amigo' },
+          { emoji: '🧑‍🎓', label: 'el estudiante' },
+        ], 2),
+        chat([['a', '¿Eres estudiante?']], ['Sí, soy estudiante.', 'No, soy el profesor.', 'Eres mi amigo.'], 0),
+        read('Yo soy estudiante. Tú eres mi amigo.', '¿Quiénes son las personas del texto?', ['Un estudiante y un amigo', 'Un estudiante y un profesor', 'Tres amigos'], 0),
       ]),
     ]),
     unit('tr-es.u2', 2, 'Yemek', 'Yiyecek ve içecekleri öğren.', [

@@ -1,12 +1,26 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
 import { speak } from '@/speech';
-import type { FillBlankExercise, MatchPairsExercise, ListenTypeExercise, SelectTranslationExercise, TranslateBuildExercise } from '@/domain';
+import type {
+  CompleteChatExercise,
+  FillBlankExercise,
+  ListenSelectExercise,
+  MatchPairsExercise,
+  ListenTypeExercise,
+  PictureSelectExercise,
+  ReadAnswerExercise,
+  SelectTranslationExercise,
+  TranslateBuildExercise,
+} from '@/domain';
 import { useSettingsStore } from '@/ui';
 
+import { CompleteChat } from '../exercises/CompleteChat';
 import { FillBlank } from '../exercises/FillBlank';
+import { ListenSelect } from '../exercises/ListenSelect';
 import { ListenType } from '../exercises/ListenType';
 import { MatchPairs } from '../exercises/MatchPairs';
+import { PictureSelect } from '../exercises/PictureSelect';
+import { ReadAnswer } from '../exercises/ReadAnswer';
 import { SelectTranslation } from '../exercises/SelectTranslation';
 import { TranslateBuild } from '../exercises/TranslateBuild';
 
@@ -185,5 +199,184 @@ describe('MatchPairs', () => {
     expect(onAnswer).toHaveBeenCalledTimes(1);
     expect(onAnswer).toHaveBeenCalledWith(true);
     expect(screen.getAllByRole('radio', { name: /, doğru$/ })).toHaveLength(6);
+  });
+});
+
+
+describe('ListenSelect', () => {
+  const exercise: ListenSelectExercise = {
+    id: 'ls1',
+    type: 'listen_select',
+    promptLang: 'en',
+    audioText: 'You are my friend',
+    audioLang: 'en',
+    options: ['You are my teacher', 'You are my friend', 'I am your friend'],
+    correctIndex: 1,
+  };
+
+  it('speaks the slow turtle button at the stored slowRate', async () => {
+    useSettingsStore.setState({ slowRate: 0.4 });
+    await render(<ListenSelect exercise={exercise} onAnswer={jest.fn()} {...common} />);
+    jest.mocked(speak).mockClear();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Yavaş dinle' }));
+
+    expect(speak).toHaveBeenCalledTimes(1);
+    expect(speak).toHaveBeenCalledWith(exercise.audioText, 'en', { rate: 0.4 });
+  });
+
+  it('reports the selected option once', async () => {
+    const onAnswer = jest.fn();
+    await render(<ListenSelect exercise={exercise} onAnswer={onAnswer} {...common} />);
+
+    await press(/^You are my friend/);
+    await press('Kontrol et', 'button');
+
+    expect(onAnswer).toHaveBeenCalledTimes(1);
+    expect(onAnswer).toHaveBeenCalledWith(true, 'You are my friend');
+    // locked after checking
+    await press('Kontrol et', 'button');
+    expect(onAnswer).toHaveBeenCalledTimes(1);
+  });
+
+  it('ignores taps while disabled', async () => {
+    const onAnswer = jest.fn();
+    await render(<ListenSelect exercise={exercise} onAnswer={onAnswer} {...common} disabled />);
+
+    expect(screen.getByRole('button', { name: 'Kontrol et' })).toBeDisabled();
+    await press(/^You are my friend/);
+    await press('Kontrol et', 'button');
+    expect(onAnswer).not.toHaveBeenCalled();
+  });
+});
+
+describe('PictureSelect', () => {
+  const exercise: PictureSelectExercise = {
+    id: 'ps1',
+    type: 'picture_select',
+    promptLang: 'tr',
+    prompt: '"arkadaş" hangisi?',
+    options: [
+      { emoji: '1️⃣', label: 'one' },
+      { emoji: '🧑‍🏫', label: 'teacher' },
+      { emoji: '🤝', label: 'friend' },
+    ],
+    correctIndex: 2,
+  };
+
+  it('grades the picked card by its label', async () => {
+    const onAnswer = jest.fn();
+    await render(<PictureSelect exercise={exercise} onAnswer={onAnswer} {...common} />);
+
+    await press(/^friend/);
+    await press('Kontrol et', 'button');
+
+    expect(onAnswer).toHaveBeenCalledWith(true, 'friend');
+  });
+
+  it('grades a wrong card and reveals the correct one', async () => {
+    const onAnswer = jest.fn();
+    await render(<PictureSelect exercise={exercise} onAnswer={onAnswer} {...common} />);
+
+    await press(/^teacher/);
+    await press('Kontrol et', 'button');
+
+    expect(onAnswer).toHaveBeenCalledWith(false, 'teacher');
+    expect(screen.getByRole('radio', { name: 'friend, doğru' })).toBeTruthy();
+    expect(screen.getByRole('radio', { name: 'teacher, yanlış' })).toBeTruthy();
+  });
+
+  it('ignores taps while disabled', async () => {
+    const onAnswer = jest.fn();
+    await render(<PictureSelect exercise={exercise} onAnswer={onAnswer} {...common} disabled />);
+
+    await press(/^friend/);
+    await press('Kontrol et', 'button');
+    expect(onAnswer).not.toHaveBeenCalled();
+  });
+});
+
+describe('CompleteChat', () => {
+  const exercise: CompleteChatExercise = {
+    id: 'cc1',
+    type: 'complete_chat',
+    promptLang: 'en',
+    lines: [{ speaker: 'a', text: 'Are you a student?' }],
+    options: ['Yes, I am a student.', 'No, I am a teacher.', 'I am your friend.'],
+    correctIndex: 0,
+  };
+
+  it('speaks a chat line when its bubble is tapped', async () => {
+    await render(<CompleteChat exercise={exercise} onAnswer={jest.fn()} {...common} />);
+    jest.mocked(speak).mockClear();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Are you a student?, dinle' }));
+
+    expect(speak).toHaveBeenCalledWith('Are you a student?', 'en');
+  });
+
+  it('grades the chosen reply and locks after checking', async () => {
+    const onAnswer = jest.fn();
+    await render(<CompleteChat exercise={exercise} onAnswer={onAnswer} {...common} />);
+
+    await press(/^Yes, I am a student/);
+    await press('Kontrol et', 'button');
+
+    expect(onAnswer).toHaveBeenCalledTimes(1);
+    expect(onAnswer).toHaveBeenCalledWith(true, 'Yes, I am a student.');
+    // locked after checking
+    await press(/^No, I am a teacher/);
+    await press('Kontrol et', 'button');
+    expect(onAnswer).toHaveBeenCalledTimes(1);
+  });
+
+  it('ignores taps while disabled', async () => {
+    const onAnswer = jest.fn();
+    await render(<CompleteChat exercise={exercise} onAnswer={onAnswer} {...common} disabled />);
+
+    await press(/^Yes, I am a student/);
+    await press('Kontrol et', 'button');
+    expect(onAnswer).not.toHaveBeenCalled();
+  });
+});
+
+describe('ReadAnswer', () => {
+  const exercise: ReadAnswerExercise = {
+    id: 'ra1',
+    type: 'read_answer',
+    promptLang: 'en',
+    passage: 'I am a student. You are my friend.',
+    question: 'Metindeki kişiler kim?',
+    options: ['Bir öğrenci ve bir arkadaş', 'Bir öğrenci ve bir öğretmen'],
+    correctIndex: 0,
+  };
+
+  it('speaks the passage from the speaker button', async () => {
+    await render(<ReadAnswer exercise={exercise} onAnswer={jest.fn()} {...common} />);
+    jest.mocked(speak).mockClear();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Dinle' }));
+
+    expect(speak).toHaveBeenCalledWith(exercise.passage, 'en', { rate: undefined });
+  });
+
+  it('grades the chosen option', async () => {
+    const onAnswer = jest.fn();
+    await render(<ReadAnswer exercise={exercise} onAnswer={onAnswer} {...common} />);
+
+    await press(/^Bir öğrenci ve bir öğretmen/);
+    await press('Kontrol et', 'button');
+
+    expect(onAnswer).toHaveBeenCalledWith(false, 'Bir öğrenci ve bir öğretmen');
+    expect(screen.getByRole('radio', { name: 'Bir öğrenci ve bir arkadaş, doğru' })).toBeTruthy();
+  });
+
+  it('ignores taps while disabled', async () => {
+    const onAnswer = jest.fn();
+    await render(<ReadAnswer exercise={exercise} onAnswer={onAnswer} {...common} disabled />);
+
+    await press(/^Bir öğrenci ve bir arkadaş/);
+    await press('Kontrol et', 'button');
+    expect(onAnswer).not.toHaveBeenCalled();
   });
 });

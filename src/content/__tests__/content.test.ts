@@ -1,4 +1,5 @@
 import type { Course, Exercise } from '@/domain/types';
+import { normalize } from '@/domain/grading';
 import { courses, getCourse, getVocab, tokenize } from '..';
 
 const ALL_TYPES: Exercise['type'][] = [
@@ -9,6 +10,9 @@ const ALL_TYPES: Exercise['type'][] = [
   'speak',
   'fill_blank',
 ];
+
+/** Types introduced on top of the original six; lessons containing them may run longer. */
+const NEW_TYPES: Exercise['type'][] = ['listen_select', 'picture_select', 'complete_chat', 'read_answer'];
 
 function allExercises(course: Course) {
   return course.units.flatMap((u) => u.lessons.flatMap((l) => l.exercises.map((e) => ({ lesson: l, e }))));
@@ -33,11 +37,12 @@ describe.each(courses.map((c) => [c.id, c] as const))('course %s', (_id, course)
     }
   });
 
-  test('every lesson has 8–10 exercises and at least one vocab id', () => {
+  test('every lesson has 8–10 exercises (up to 14 with new types) and at least one vocab id', () => {
     for (const u of course.units)
       for (const l of u.lessons) {
+        const hasNewType = l.exercises.some((e) => NEW_TYPES.includes(e.type));
         expect(l.exercises.length).toBeGreaterThanOrEqual(8);
-        expect(l.exercises.length).toBeLessThanOrEqual(10);
+        expect(l.exercises.length).toBeLessThanOrEqual(hasNewType ? 14 : 10);
         expect(l.vocabIds.length).toBeGreaterThan(0);
       }
   });
@@ -52,13 +57,39 @@ describe.each(courses.map((c) => [c.id, c] as const))('course %s', (_id, course)
 
   test('choice exercises have correctIndex in range and ≥2 distinct options', () => {
     for (const { e } of allExercises(course)) {
-      if (e.type === 'select_translation' || e.type === 'fill_blank') {
+      if (
+        e.type === 'select_translation' ||
+        e.type === 'fill_blank' ||
+        e.type === 'listen_select' ||
+        e.type === 'complete_chat' ||
+        e.type === 'read_answer'
+      ) {
         expect(e.options.length).toBeGreaterThanOrEqual(2);
         expect(new Set(e.options).size).toBe(e.options.length);
         expect(e.correctIndex).toBeGreaterThanOrEqual(0);
         expect(e.correctIndex).toBeLessThan(e.options.length);
       }
       if (e.type === 'fill_blank') expect(e.sentence).toContain('___');
+      if (e.type === 'listen_select') {
+        expect(e.audioText.trim().length).toBeGreaterThan(0);
+        expect(e.audioLang).toBe(course.toLang);
+      }
+      if (e.type === 'picture_select') {
+        expect(e.options.length).toBeGreaterThanOrEqual(3);
+        for (const o of e.options) expect(o.emoji.trim().length).toBeGreaterThan(0);
+        const labels = e.options.map((o) => normalize(o.label));
+        expect(new Set(labels).size).toBe(labels.length);
+        expect(e.correctIndex).toBeGreaterThanOrEqual(0);
+        expect(e.correctIndex).toBeLessThan(e.options.length);
+      }
+      if (e.type === 'complete_chat') {
+        expect(e.lines.length).toBeGreaterThan(0);
+        for (const line of e.lines) expect(line.text.trim().length).toBeGreaterThan(0);
+      }
+      if (e.type === 'read_answer') {
+        expect(e.passage.trim().length).toBeGreaterThan(0);
+        expect(e.question.trim().length).toBeGreaterThan(0);
+      }
     }
   });
 
@@ -132,10 +163,16 @@ function promptText(e: Exercise): string | null {
     case 'fill_blank':
       return e.sentence;
     case 'listen_type':
+    case 'listen_select':
       return e.audioText;
     case 'speak':
       return e.sentence;
+    case 'picture_select':
+      return e.prompt;
+    case 'read_answer':
+      return e.passage;
     case 'match_pairs':
+    case 'complete_chat':
       return null;
   }
 }
@@ -148,6 +185,14 @@ test('no two exercises in a lesson share the same prompt text', () => {
         const dupes = prompts.filter((p, i) => prompts.indexOf(p) !== i);
         expect({ lesson: l.id, dupes }).toEqual({ lesson: l.id, dupes: [] });
       }
+});
+
+test('every course introduces the four new exercise types in unit 1’s last lesson', () => {
+  for (const c of courses) {
+    const last = c.units[0]!.lessons.at(-1)!;
+    const types = new Set(last.exercises.map((e) => e.type));
+    for (const t of NEW_TYPES) expect({ course: c.id, lesson: last.id, has: t, ok: types.has(t) }).toEqual({ course: c.id, lesson: last.id, has: t, ok: true });
+  }
 });
 
 test('lookup helpers', () => {

@@ -65,6 +65,35 @@ export const fill =
   (sentence: string, options: string[], correctIndex: number): ExerciseDraft =>
   (id, _from, to) => ({ id, type: 'fill_blank', promptLang: to, sentence, options, correctIndex });
 
+/** "Touch what you hear" — audio in target language, written look-alike options. */
+export const listenSel =
+  (audioText: string, options: string[], correctIndex: number): ExerciseDraft =>
+  (id, _from, to) => ({ id, type: 'listen_select', promptLang: to, audioText, audioLang: to, options, correctIndex });
+
+export type PictureOption = { emoji: string; label: string };
+
+/** Picture-word choice: source-language prompt, emoji cards labelled in the target language. */
+export const pic =
+  (prompt: string, options: PictureOption[], correctIndex: number): ExerciseDraft =>
+  (id, from) => ({ id, type: 'picture_select', promptLang: from, prompt, options, correctIndex });
+
+/** Complete the chat: visible lines in target language, the reply is chosen from options. */
+export const chat =
+  (lines: ['a' | 'b', string][], options: string[], correctIndex: number): ExerciseDraft =>
+  (id, _from, to) => ({
+    id,
+    type: 'complete_chat',
+    promptLang: to,
+    lines: lines.map(([speaker, text]) => ({ speaker, text })),
+    options,
+    correctIndex,
+  });
+
+/** Read the passage (target language) and answer the source-language question. */
+export const read =
+  (passage: string, question: string, options: string[], correctIndex: number): ExerciseDraft =>
+  (id, _from, to) => ({ id, type: 'read_answer', promptLang: to, passage, question, options, correctIndex });
+
 export function lesson(id: string, order: number, vocabIds: string[], drafts: ExerciseDraft[]) {
   return { id, order, vocabIds, drafts };
 }

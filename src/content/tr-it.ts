@@ -1,4 +1,4 @@
-import { build, course, fill, lesson, listen, match, sel, speak, unit } from './builder';
+import { build, chat, course, fill, lesson, listen, listenSel, match, pic, read, sel, speak, unit } from './builder';
 
 /** Türkçe → İtalyanca. Themes mirror the English course, adapted to Italian. */
 export const trIt = course(
@@ -220,6 +220,15 @@ export const trIt = course(
         fill('Ho ___ amici.', ['due', 'insegnante', 'studente'], 0),
         speak('Uno, due, tre.'),
         sel('"insegnante" ne demek?', ['öğrenci', 'öğretmen', 'arkadaş'], 1, 'to'),
+        listenSel('Tu sei il mio amico', ['Tu sei il mio insegnante', 'Tu sei il mio amico', 'Io sono il tuo amico'], 1),
+        pic('"amico" hangisi?', [
+          { emoji: '1️⃣', label: 'uno' },
+          { emoji: '🧑‍🏫', label: 'insegnante' },
+          { emoji: '🤝', label: 'amico' },
+          { emoji: '🧑‍🎓', label: 'studente' },
+        ], 2),
+        chat([['a', 'Sei uno studente?']], ['Sì, sono uno studente.', 'No, sono l\'insegnante.', 'Sei il mio amico.'], 0),
+        read('Io sono uno studente. Tu sei il mio amico.', 'Chi sono le persone del testo?', ['Uno studente e un amico', 'Uno studente e un insegnante', 'Tre amici'], 0),
       ]),
     ]),
     unit('tr-it.u2', 2, 'Yemek', 'Yiyecek içecek sipariş et ve sevdiklerini anlat.', [
