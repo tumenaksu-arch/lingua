@@ -196,6 +196,15 @@ export interface AppState {
    * already skipped never pays out twice.
    */
   finishSkipTest: (unitId: string, correct: number, total: number, opts?: { quit?: boolean }) => Promise<{ passed: boolean; xpEarned: number }>;
+  /**
+   * Placement ("Seviyemi bul") completion: marks every lesson of the given
+   * units completed through the same progress repo as skip tests and logs the
+   * same `unit_skipped` event with `xp: 0` (plus a `placement: true` marker).
+   * Placement is a level check, not a reward: stats/XP never move. Idempotent
+   * via the fixed `${unitId}:skipped` event id and the per-lesson completed
+   * check; units with nothing left to complete log no event.
+   */
+  completeUnitsByPlacement: (unitIds: string[]) => Promise<void>;
 }
 
 function reposFor(db: Database, userId: string): Repos {
@@ -795,6 +804,40 @@ export const useAppStore = create<AppState>((set, get) => ({
     } finally {
       finishingSkip.delete(unitId);
     }
+  },
+
+  async completeUnitsByPlacement(unitIds) {
+    const r = requireRepos();
+    const { db } = get();
+    const now = Date.now();
+    const updates: Record<string, LessonProgress> = {};
+    let changed = false;
+    for (const unitId of unitIds) {
+      const unit = get().course.units.find((u) => u.id === unitId);
+      if (!unit) continue;
+      const completedNow: string[] = [];
+      for (const lesson of unit.lessons) {
+        if (get().progress[lesson.id]?.completedAt) continue;
+        const lp = await r.progress.completeLesson(lesson.id, now);
+        updates[lp.lessonId] = lp;
+        completedNow.push(lesson.id);
+        changed = true;
+      }
+      // Nothing new completed: no event, mirroring the skip test's no-op pass.
+      if (completedNow.length === 0) continue;
+      // Same data path as finishSkipTest's pass: fixed id → INSERT OR IGNORE
+      // keeps a re-run (retry after a crash, second call) from duplicating.
+      await r.progress.logEvent(
+        `${unitId}:skipped`,
+        'unit_skipped',
+        { unitId, lessons: completedNow, xp: 0, placement: true },
+        now,
+      );
+    }
+    if (changed) set((s) => ({ progress: { ...s.progress, ...updates } }));
+    await get().refreshQuests();
+    if (db) await unlockAchievements(db, get, set);
+    void get().sync();
   },
 
   async claimQuest(questId) {
