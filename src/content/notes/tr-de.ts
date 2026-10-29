@@ -580,7 +580,7 @@ export const trDeNotes: CourseNotes = {
         heading: 'mehr: daha fazla',
         body: [
           "viel (çok) kelimesinin karşılaştırması düzensizdir: mehr (daha fazla). 'Daha fazla zamanım var' = Ich habe mehr Zeit. viel ile karşılaştırma yapamazsın: vieler yanlıştır.",
-          'Karşılaştırma yaparken iki nesnenin de aynı olduğundan emin ol: Der Bus ist langsamer als der Zug (otobüs trenden yavaş). Zıt sıfatları (schnell/langsam) karıştırma.',
+          'Karşılaştırmada iki nesneyi doğru seç: Der Bus ist langsamer als der Zug (otobüs trenden yavaş). Zıt sıfatları (schnell/langsam) karıştırma.',
         ],
         examples: [
           { target: 'Ich brauche mehr Zeit.', tr: 'Daha fazla zamana ihtiyacım var.' },
@@ -640,7 +640,7 @@ export const trDeNotes: CourseNotes = {
         heading: "Restoranda: ich möchte",
         body: [
           "Türkçede 'istiyorum' günlük dilde normaldir; Almancada ise will yerine daha kibar olan möchte kullanılır: Ich möchte ein Getränk bestellen (bir içecek sipariş etmek istiyorum). Restoranda will kullanmak kulağa kabaca gelir.",
-          'bestellen sipariş vermek, die Vorspeise başlangıç yemeği, der Nachtisch tatlı, das Getränk içecektir. die Bedienung ise servis/garson demektir ve die Rechnung yerine burada yemek akışı öğrenilir.',
+          'bestellen sipariş vermek, die Vorspeise başlangıç yemeği, der Nachtisch tatlı, das Getränk içecektir. die Bedienung ise servis/garson demektir; bu ünitede hesap (die Rechnung) yerine sipariş akışı öğrenilir.',
         ],
         examples: [
           { target: 'Ich möchte ein Getränk bestellen.', tr: 'Bir içecek sipariş etmek istiyorum.' },
