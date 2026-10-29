@@ -475,12 +475,12 @@ export const trItStories: CourseStories = {
     ],
     lines: [
       { speaker: 'Deniz', text: 'Buongiorno, dottore. Non sto bene.', tr: 'Günaydın doktor. İyi hissetmiyorum.' },
-      { speaker: 'Marco', text: 'Che cosa ha? Dov\'è il problema?', tr: 'Neyiniz var? Sorun nerede?' },
+      { speaker: 'Marco', text: "Cosa c'ha? Dov'è il problema?", tr: 'Neyiniz var? Sorun nerede?' },
       { speaker: 'Deniz', text: 'Mi fa male la testa e ho mal di gola.', tr: 'Başım ağrıyor ve boğazım ağrıyor.' },
       { speaker: 'Marco', text: 'Ha la febbre?', tr: 'Ateşiniz var mı?' },
       { speaker: 'Deniz', text: 'Sì, ieri avevo trentotto gradi.', tr: 'Evet, dün otuz sekiz dereceydim.' },
       { speaker: 'Marco', text: 'Devi riposare e prendere la medicina.', tr: 'Dinlenmelisin ve ilaç almalısın.' },
-      { speaker: 'Deniz', text: 'Devo riposare quanti giorni?', tr: 'Kaç gün dinlenmeliyim?' },
+      { speaker: 'Deniz', text: 'Per quanti giorni devo riposare?', tr: 'Kaç gün dinlenmeliyim?' },
       { speaker: 'Marco', text: 'Due o tre giorni. Niente scuola!', tr: 'İki ya da üç gün. Okul yok!' },
       { speaker: 'Deniz', text: 'E il naso? Mi fa male anche il naso!', tr: 'Ya burun? Burnum da ağrıyor!' },
       { speaker: 'Marco', text: 'Il naso va bene. Bevi molta acqua.', tr: 'Burun iyi. Bol su iç.' },
@@ -512,7 +512,7 @@ export const trItStories: CourseStories = {
     id: 'tr-it.u12.story',
     unitId: 'tr-it.u12',
     title: 'Yol Tarifi',
-    setting: 'Yeni taşınan bir öğrenci okula giden yolu kaybedince bir yöreden yardım istiyor.',
+    setting: 'Yeni taşınan bir öğrenci okula giden yolu kaybedince yoldan geçen birinden yardım istiyor.',
     characters: [
       { name: 'Zeynep', gender: 'f' },
       { name: 'Paolo', gender: 'm' },
@@ -533,7 +533,7 @@ export const trItStories: CourseStories = {
     ],
     questions: [
       {
-        prompt: 'Zeynep önce ne yapması gerekiyor?',
+        prompt: 'Zeynep önce ne yapmalı?',
         options: ['Düz gitmesi', 'Sola dönmesi', 'Otobüs beklemesi'],
         correctIndex: 0,
         explanation: "Paolo «È vicina! Vai dritto.» diyerek önce düz gitmesini söyler.",
@@ -563,7 +563,7 @@ export const trItStories: CourseStories = {
     ],
     lines: [
       { speaker: 'Davide', text: 'Ciao Selin! Domani partiamo per il mare!', tr: 'Selam Selin! Yarın denize yola çıkıyoruz!' },
-      { speaker: 'Selin', text: 'Sì! La settimana prossima sono in vacanza!', tr: 'Evet! Gelecek hafta tatildeyim!' },
+      { speaker: 'Selin', text: 'Sì! Non vedo l\'ora!', tr: 'Evet! Sabırsızlanıyorum!' },
       { speaker: 'Davide', text: 'Hai fatto la valigia?', tr: 'Bavulunu hazırladın mı?' },
       { speaker: 'Selin', text: 'Non ancora. Stasera faccio la valigia.', tr: 'Henüz değil. Bu akşam bavul hazırlayacağım.' },
       { speaker: 'Davide', text: 'Io prenoto l\'albergo stasera.', tr: 'Ben bu akşam otel rezervasyonu yapacağım.' },

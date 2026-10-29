@@ -552,7 +552,7 @@ export const trItNotes: CourseNotes = {
       {
         heading: 'Più ve meno: daha',
         body: [
-          'Karşılaştırma "più" (daha fazla) ve "meno" (daha az) ile kurulur: "più veloce" (daha hızlı), "meno caro" (daha az pahalı). Edat olarak "di" kullanılır: "più alto di me" (benden daha uzun).',
+          'Karşılaştırma "più" (daha fazla) ve "meno" (daha az) ile kurulur: "più veloce" (daha hızlı), "meno caro" (daha ucuz). Edat olarak "di" kullanılır: "più alto di me" (benden daha uzun).',
           'Sıfat cinsiyete ve tekil/çoğula uyar: "il treno è più veloce" (tren daha hızlı), "le scarpe sono più grandi" (ayakkabılar daha büyük).',
         ],
         examples: [
@@ -606,7 +606,7 @@ export const trItNotes: CourseNotes = {
       {
         heading: 'Kişilik sıfatları ve cinsiyet uyumu',
         body: [
-          'Kişilik sıfatları da -o/-a eki alır: "gentile" (kibar - iki cinsiyette de aynı), "timido/timida" (utangaç), "coraggioso/coraggioso" (cesur), "simpatico/simpatica" (sevimli).',
+          'Kişilik sıfatları da -o/-a eki alır: "gentile" (kibar - iki cinsiyette de aynı), "timido/timida" (utangaç), "coraggioso/coraggiosa" (cesur), "simpatico/simpatica" (sevimli).',
           'Nitelenen kişinin cinsiyetine göre sıfatı seçmek gerekir: "Marco è simpatico" (Marco sevimli), "Anna è simpatica" (Anna sevimli).',
         ],
         examples: [
