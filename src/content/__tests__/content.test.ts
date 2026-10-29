@@ -137,10 +137,11 @@ test('tr-en lessons each use all six exercise types', () => {
   for (const u of trEn.units) expect(u.lessons).toHaveLength(4);
 });
 
-test('tr-de, tr-es, tr-fr and tr-it have 8 units × 4 lessons; course order', () => {
+test('tr-fr has 16 units (A1+A2), tr-de, tr-es and tr-it have 8 units × 4 lessons; course order', () => {
+  const unitCounts: Record<string, number> = { 'tr-de': 8, 'tr-es': 8, 'tr-fr': 16, 'tr-it': 8 };
   for (const id of ['tr-de', 'tr-es', 'tr-fr', 'tr-it']) {
     const c = getCourse(id)!;
-    expect({ id, units: c.units.length }).toEqual({ id, units: 8 });
+    expect({ id, units: c.units.length }).toEqual({ id, units: unitCounts[id] });
     for (const u of c.units) expect({ unit: u.id, lessons: u.lessons.length }).toEqual({ unit: u.id, lessons: 4 });
   }
   expect(courses.map((c) => c.id)).toEqual(['tr-en', 'tr-de', 'tr-es', 'tr-fr', 'tr-it']);
