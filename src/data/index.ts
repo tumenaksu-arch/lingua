@@ -4,6 +4,7 @@ export * from './local/outbox';
 export { DEFAULT_STATS, LOCAL_USER_ID, createStatsRepo, statsToServerRow, type StatsRepo } from './local/repos/statsRepo';
 export { cardToServerRow, createSrsRepo, type SrsRepo } from './local/repos/srsRepo';
 export { createProgressRepo, progressToServerRow, type LessonProgress, type ProgressRepo } from './local/repos/progressRepo';
+export { createMistakesRepo, type MistakeEntry, type MistakesRepo } from './local/repos/mistakesRepo';
 export { createContentRepo, type ContentRepo } from './local/repos/contentRepo';
 export { getSupabase, isSupabaseConfigured, resetSupabaseForTests, supabaseConfig } from './remote/supabase';
 export {

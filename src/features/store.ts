@@ -21,6 +21,7 @@ import {
   DEFAULT_STATS,
   LOCAL_USER_ID,
   clearLegacyAccount,
+  createMistakesRepo,
   createProgressRepo,
   createSrsRepo,
   createStatsRepo,
@@ -47,6 +48,7 @@ import {
   type Database,
   type LegacyAccount,
   type LessonProgress,
+  type MistakeEntry,
 } from '@/data';
 import {
   QUEST_REWARD_XP,
@@ -56,6 +58,7 @@ import {
   type QuestStatus,
 } from '@/features/quests';
 import { SKIP_TEST_XP, skipPassed } from '@/features/skipTest';
+import { practiceXp, type PracticeMode } from '@/features/practice/session';
 
 const COURSE_KEY = 'selected_course';
 const ONBOARDED_KEY = 'onboarded';
@@ -88,6 +91,7 @@ interface Repos {
   stats: ReturnType<typeof createStatsRepo>;
   srs: ReturnType<typeof createSrsRepo>;
   progress: ReturnType<typeof createProgressRepo>;
+  mistakes: ReturnType<typeof createMistakesRepo>;
 }
 
 export interface AppState {
@@ -196,6 +200,21 @@ export interface AppState {
    * already skipped never pays out twice.
    */
   finishSkipTest: (unitId: string, correct: number, total: number, opts?: { quit?: boolean }) => Promise<{ passed: boolean; xpEarned: number }>;
+  /** Number of stored mistake exercises for the active course (Practice Hub "Hatalarım"). */
+  mistakeCount: () => Promise<number>;
+  /** Mistake entries of the active course, most-wrong first (session builder input). */
+  mistakeEntries: (limit?: number) => Promise<MistakeEntry[]>;
+  /** Weakest SRS cards of the active course (lowest ease first), at most `limit`. */
+  weakWordCards: (limit?: number) => Promise<SrsCard[]>;
+  /**
+   * Called by the practice screen when a session ends. Replays the outcomes
+   * (mistakes mode: wrong ids re-bump the wrong count, correct ids build the
+   * 2-in-a-row clear streak) and pays the session XP: 10 at ≥ 50% accuracy,
+   * 0 below — through the same stats pipeline as lessons (daily goal, streak,
+   * events). Logs `practice_completed`; the server treats unknown event types
+   * as plain rows (xp_event_types only gates the teacher leaderboard).
+   */
+  finishPractice: (mode: PracticeMode, correct: number, total: number, wrongIds?: string[], correctIds?: string[]) => Promise<{ xpEarned: number }>;
 }
 
 function reposFor(db: Database, userId: string): Repos {
@@ -203,6 +222,7 @@ function reposFor(db: Database, userId: string): Repos {
     stats: createStatsRepo(db, userId),
     srs: createSrsRepo(db, userId),
     progress: createProgressRepo(db, userId),
+    mistakes: createMistakesRepo(db, userId),
   };
 }
 
@@ -504,6 +524,15 @@ export const useAppStore = create<AppState>((set, get) => ({
     );
     if (reviewed.length) await r.srs.saveMany(reviewed, now);
 
+    // Practice Hub "Hatalarım": wrong exercises re-bump the wrong count, the
+    // rest count as one correct answer toward the 2-in-a-row clear streak.
+    const lesson = get().course.units.flatMap((u) => u.lessons).find((l) => l.id === result.lessonId);
+    if (lesson) {
+      const wrongSet = new Set(result.mistakes);
+      const correctIds = lesson.exercises.map((e) => e.id).filter((id) => !wrongSet.has(id));
+      await r.mistakes.record(get().course.id, result.mistakes, correctIds, now);
+    }
+
     set((s) => ({
       stats: outcome.stats,
       progress: { ...s.progress, [lp.lessonId]: lp },
@@ -611,6 +640,24 @@ export const useAppStore = create<AppState>((set, get) => ({
     return requireRepos().srs.due(Date.now(), limit, `${get().course.id}.`);
   },
 
+  async mistakeCount() {
+    return requireRepos().mistakes.count(get().course.id);
+  },
+
+  async mistakeEntries(limit = 10) {
+    return requireRepos().mistakes.list(get().course.id, limit);
+  },
+
+  async weakWordCards(limit = 20) {
+    const prefix = `${get().course.id}.`;
+    const cards = await requireRepos().srs.all();
+    // lowest ease first (ties: fewer reps) so the slice holds the genuinely weakest words
+    return cards
+      .filter((c) => c.vocabId.startsWith(prefix))
+      .sort((a, b) => a.ease - b.ease || a.reps - b.reps)
+      .slice(0, limit);
+  },
+
   async reviewCard(card, correct, responseMs) {
     const r = requireRepos();
     const now = Date.now();
@@ -648,9 +695,9 @@ export const useAppStore = create<AppState>((set, get) => ({
     todayStart.setHours(0, 0, 0, 0);
     const from = todayStart.getTime() - 6 * dayMs;
     const rows = await db.getAll<{ payload: string; created_at: number }>(
-      // Lessons, stories, conversations, skip tests and quest rewards all log their XP under the `xp` payload field.
-      "SELECT payload, created_at FROM events WHERE user_id = ? AND type IN (?, ?, ?, ?, ?) AND created_at > ?",
-      [userId, 'lesson_completed', 'story_completed', 'conversation_completed', 'quest_claimed', 'unit_skipped', from - 1],
+      // Lessons, stories, conversations, practice sessions, skip tests and quest rewards all log their XP under the `xp` payload field.
+      "SELECT payload, created_at FROM events WHERE user_id = ? AND type IN (?, ?, ?, ?, ?, ?) AND created_at > ?",
+      [userId, 'lesson_completed', 'story_completed', 'conversation_completed', 'practice_completed', 'quest_claimed', 'unit_skipped', from - 1],
     );
     const buckets = [0, 0, 0, 0, 0, 0, 0];
     for (const r of rows) {
@@ -795,6 +842,39 @@ export const useAppStore = create<AppState>((set, get) => ({
     } finally {
       finishingSkip.delete(unitId);
     }
+  },
+
+  async finishPractice(mode, correct, total, wrongIds = [], correctIds = []) {
+    const r = requireRepos();
+    const { db } = get();
+    const now = Date.now();
+    if (mode === 'mistakes') {
+      await r.mistakes.record(get().course.id, wrongIds, correctIds, now);
+    }
+    const xpEarned = practiceXp(correct, total);
+    const localDate = localDateString(new Date());
+    // Same stats pipeline as lessons/stories: total + today XP, streak activity.
+    const prev = get().stats;
+    const newDay = prev.lastActiveDate !== localDate;
+    const xpBefore = newDay ? 0 : prev.xpToday;
+    const xpToday = xpBefore + xpEarned;
+    let next: UserStats = { ...prev, xp: prev.xp + xpEarned, xpToday };
+    next = applyActivity(next, localDate);
+    await r.stats.save(next, now);
+    // Unique id even for same-millisecond sessions (events are INSERT OR IGNORE).
+    await r.progress.logEvent(`practice:${mode}:${now}:${Math.random().toString(36).slice(2, 8)}`, 'practice_completed', { xp: xpEarned, mode, correct, total }, now);
+
+    set({ stats: next });
+    await get().refreshQuests();
+    if (db) {
+      if (xpToday >= next.dailyGoalXp && xpBefore < next.dailyGoalXp) {
+        const goal = advanceGoalStreak(await getGoalStreak(db), localDate);
+        await setMeta(db, GOAL_STREAK_KEY, JSON.stringify(goal));
+      }
+      await unlockAchievements(db, get, set);
+    }
+    void get().sync();
+    return { xpEarned };
   },
 
   async claimQuest(questId) {
