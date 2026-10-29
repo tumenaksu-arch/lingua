@@ -396,4 +396,420 @@ export const trEsExplanations: CourseExplanations = {
     "'la guitarra' gitar demektir; 'la música' müzik, 'la película' film anlamına gelir.",
   'tr-es.u8.l4.e9':
     "'juego al fútbol' futbol oynarım demektir; 'con mi amigo' arkadaşımla kalıbı cümle sonuna gelir.",
+  // ---- tr-es.u9.l1 ----
+  'tr-es.u9.l1.e1':
+    "'ayer' dün, 'anoche' dün gece demektir; 'hoy' ise bugün. Geçmişten bahsederken 'ayer' fiili geçmişe çeker.",
+  'tr-es.u9.l1.e2':
+    "'anoche' dün gece demektir ve geçmiş zamanla kullanılır; 'ahora' şimdi, 'ayer' dün anlamına gelir.",
+  'tr-es.u9.l1.e4':
+    "'fui' gitmek fiilinin düzensiz geçmiş biçimidir (gittim); 'fui al parque' parka gittim demektir. Zaman zarfı cümle başında ya da sonunda olabilir.",
+  'tr-es.u9.l1.e5':
+    "'dormí' uyumak fiilinin geçmiş biçimidir (uyudum); 'dormí bien' iyi uyudum demektir.",
+  'tr-es.u9.l1.e7':
+    "Cümle dün gece bir film izledim demek; 'vi' görmek/izlemek fiilinin geçmişidir. 'voy' şimdiki zamandır, uymaz.",
+  'tr-es.u9.l1.e9':
+    "Cümle bugün çok yorgunum demek; 'cansado' yorgun sıfatıdır ve 'estoy' ile birlikte durum bildirir. 'ayer' ve 'anoche' zaman zarflarıdır.",
+  // ---- tr-es.u9.l2 ----
+  'tr-es.u9.l2.e1':
+    "'hacer' yapmak, 'ver' izlemek/görmek, 'ir' gitmek demektir.",
+  'tr-es.u9.l2.e2':
+    "'ver' izlemek/görmek demektir; 'dormir' uyumak, 'hacer' yapmak anlamına gelir.",
+  'tr-es.u9.l2.e4':
+    "'hice' yapmak fiilinin düzensiz geçmiş biçimidir (yaptım); 'hice la tarea' ödevimi yaptım demektir.",
+  'tr-es.u9.l2.e5':
+    "'vi' izlemek fiilinin düzensiz geçmiş biçimidir (izledim); 'una película' bir film demektir.",
+  'tr-es.u9.l2.e7':
+    "Cümle dün parka gittim demek; 'fui' gitmek fiilinin geçmişidir. 'voy' şimdiki zamandır, 'hice' yaptım demektir.",
+  'tr-es.u9.l2.e9':
+    "Cümle bugün ödevi yapıyorum demek; 'hago' yapmak fiilinin şimdiki biçimidir, 'hice' ise geçmiştir.",
+  // ---- tr-es.u9.l3 ----
+  'tr-es.u9.l3.e1':
+    "'trabajar' çalışmak, 'estudiar' ders çalışmak demektir; 'dormir' uyumak anlamına gelir.",
+  'tr-es.u9.l3.e2':
+    "'dormir' uyumak demektir; 'salir' dışarı çıkmak, 'trabajar' çalışmak anlamına gelir.",
+  'tr-es.u9.l3.e4':
+    "'trabajé' çalışmak fiilinin geçmiş biçimidir (çalıştım); '-ar' fiillerinde geçmiş -é ekiyle kurulur.",
+  'tr-es.u9.l3.e5':
+    "'estudié' ders çalışmak fiilinin geçmiş biçimidir; 'español' İspanyolca demektir.",
+  'tr-es.u9.l3.e7':
+    "Cümle dün gece sekiz saat uyudum demek; 'dormí' uyudum demektir. 'comí' yedim, 'bebo' içerim anlamına gelir.",
+  'tr-es.u9.l3.e9':
+    "Cümle dün arkadaşlarımla dışarı çıktım demek; 'salí' çıktım demektir ve 'con mis amigos' ile birlikte kullanılır.",
+  // ---- tr-es.u9.l4 ----
+  'tr-es.u9.l4.e1':
+    "'entonces' o zaman demektir; 'anoche' dün gece, 'ayer' dün anlamına gelir.",
+  'tr-es.u9.l4.e2':
+    "'cansado' yorgun demektir; 'ocupado' meşgul, 'caro' pahalı anlamına gelir.",
+  'tr-es.u9.l4.e4':
+    "'entonces' o zaman demektir ve olayların sırasını gösterir; 'fui a casa' eve gittim demektir.",
+  'tr-es.u9.l4.e5':
+    "'estoy muy cansado' çok yorgunum demektir; 'cansado' sıfatı 'estoy' ile birlikte geçici durum bildirir.",
+  'tr-es.u9.l4.e7':
+    "Cümle dün çalıştım, o yüzden bugün yorgunum demek; 'entonces' sonuç bildirirken o zaman/o yüzden anlamına gelir.",
+  'tr-es.u9.l4.e9':
+    "Cümle dün gece arkadaşlarımla dışarı çıktım demek; 'salí' dışarı çıktım demektir, 'estudié' ve 'dormí' anlamca uymaz.",
+  // ---- tr-es.u10.l1 ----
+  'tr-es.u10.l1.e1':
+    "'la casa' ev demektir; 'la cocina' mutfak, 'el dormitorio' yatak odası anlamına gelir.",
+  'tr-es.u10.l1.e2':
+    "'el baño' banyo demektir; 'la cama' yatak, 'la cocina' mutfak anlamına gelir.",
+  'tr-es.u10.l1.e4':
+    "'mi casa' evim demektir; iyelik için 'mi' kullanılır. 'es pequeña' küçüktür demektir, 'casa' dişil olduğu için 'pequeña' olur.",
+  'tr-es.u10.l1.e5':
+    "'la cocina' mutfak demektir; 'está sucia' kirli durumda demektir, değişebilir durumlar 'está' ile kurulur.",
+  'tr-es.u10.l1.e7':
+    "Cümle yatak odam büyük ve düzenli demek; 'ordenado' sıfatı eril isim 'dormitorio' ile uyumludur, 'cama' ve 'ropa' dişildir.",
+  'tr-es.u10.l1.e9':
+    "Cümle banyo temiz demek; 'está limpio' temiz durumda demektir. 'cama' ve 'ropa' dişil olduğu için 'el' ile kullanılmaz.",
+  // ---- tr-es.u10.l2 ----
+  'tr-es.u10.l2.e1':
+    "'la cama' yatak demektir; 'la ropa' çamaşır/kıyafet, 'el suelo' yer anlamına gelir.",
+  'tr-es.u10.l2.e2':
+    "'lavar' yıkamak, 'limpiar' temizlemek demektir; 'cocinar' yemek pişirmek anlamına gelir.",
+  'tr-es.u10.l2.e4':
+    "'hacer la cama' yatağı toplamak demektir; kalıp bir ifadedir, 'hago' yaparım anlamındadır.",
+  'tr-es.u10.l2.e5':
+    "'lavo la ropa' çamaşır yıkarım demektir; 'los sábados' cumartesi günleri zaman zarfıdır.",
+  'tr-es.u10.l2.e7':
+    "Cümle dün banyoyu temizledim demek; 'limpié' temizledim demektir, 'ayer' geçmiş zaman gerektirir.",
+  'tr-es.u10.l2.e9':
+    "Cümle çamaşırlar kirli demek; 'ropa' dişil olduğu için 'sucia' sıfatı dişil çekimlidir.",
+  // ---- tr-es.u10.l3 ----
+  'tr-es.u10.l3.e1':
+    "'sucio' kirli demektir; 'limpio' temiz, 'ordenado' düzenli anlamına gelir.",
+  'tr-es.u10.l3.e2':
+    "'normalmente' genellikle demektir; 'ahora' şimdi, 'ayer' dün anlamına gelir.",
+  'tr-es.u10.l3.e4':
+    "'el suelo' yer/zemin demektir; 'está sucio' kirli durumda demektir.",
+  'tr-es.u10.l3.e5':
+    "'normalmente' genellikle demektir ve alışkanlık bildirir; 'limpio los sábados' cumartesileri temizlerim anlamındadır.",
+  'tr-es.u10.l3.e7':
+    "Cümle yatak odam çok düzenli ve temiz demek; 'ordenado' düzenli demektir ve 'limpio' ile birbirini destekler.",
+  'tr-es.u10.l3.e9':
+    "Cümle mutfak çok kirli demek; 'cocina' dişil olduğu için 'sucia' kullanılır, 'sucio' erildir.",
+  // ---- tr-es.u10.l4 ----
+  'tr-es.u10.l4.e1':
+    "'limpiar' temizlemek demektir; 'lavar' yıkamak, 'cocinar' yemek pişirmek anlamına gelir.",
+  'tr-es.u10.l4.e2':
+    "'el dormitorio' yatak odası demektir; 'el baño' banyo, 'la cocina' mutfak anlamına gelir.",
+  'tr-es.u10.l4.e4':
+    "'mi casa es grande y bonita' evim büyük ve güzel demektir; 'y' bağlacı iki sıfatı birleştirir.",
+  'tr-es.u10.l4.e5':
+    "'limpié el baño' banyoyu temizledim demektir; 'ayer' yüzünden fiil geçmiştedir.",
+  'tr-es.u10.l4.e7':
+    "Cümle her gün yatağımı toplarım demek; 'la cama' dişil olduğu için 'la' kullanılır.",
+  'tr-es.u10.l4.e9':
+    "Cümle cumartesileri çamaşır yıkarım demek; 'lavo la ropa' kalıp ifadedir, 'duermo' uyurum anlamına gelir.",
+  // ---- tr-es.u11.l1 ----
+  'tr-es.u11.l1.e1':
+    "'la cabeza' baş demektir; 'la mano' el, 'la pierna' bacak anlamına gelir.",
+  'tr-es.u11.l1.e2':
+    "'el brazo' kol demektir; 'el cuerpo' vücut, 'la cabeza' baş anlamına gelir.",
+  'tr-es.u11.l1.e4':
+    "'me duele la cabeza' başım ağrıyor demektir; ağrıyan şey asıl özne olduğu için 'duele' kullanılır.",
+  'tr-es.u11.l1.e5':
+    "'me duele el brazo' kolum ağrıyor demektir; 'el brazo' eril olduğu için 'el' alır.",
+  'tr-es.u11.l1.e7':
+    "Cümle kolum ağrıyor demek; 'el' eril artikel olduğu için sadece eril isim 'brazo' uyar, 'cabeza' ve 'mano' dişildir.",
+  'tr-es.u11.l1.e9':
+    "Cümle ... çok ağrıyor demek ve sadece bir vücut parçası uyar: 'brazo'. 'resfriado' ve 'fiebre' 'tener' ile söylenir.",
+  // ---- tr-es.u11.l2 ----
+  'tr-es.u11.l2.e1':
+    "'el resfriado' soğuk algınlığı demektir; 'la fiebre' ateş, 'la medicina' ilaç anlamına gelir.",
+  'tr-es.u11.l2.e2':
+    "'la fiebre' ateş demektir; 'la farmacia' eczane, 'el hospital' hastane anlamına gelir.",
+  'tr-es.u11.l2.e4':
+    "'me duele la mano' elim ağrıyor demektir; 'la mano' dişil olduğu için 'la' alır.",
+  'tr-es.u11.l2.e5':
+    "'tengo fiebre' ateşim var demektir; hastalık ve belirti bildirirken 'tener' kullanılır.",
+  'tr-es.u11.l2.e7':
+    "Cümle soğuk algınlığım var demek; 'tengo un resfriado' kalıbında 'un' kullanılır, 'fiebre' ve 'brazo' bu kalıpla kullanılmaz.",
+  'tr-es.u11.l2.e9':
+    "Cümle başım ağrıyor demek; özne 'la cabeza' tekil olduğu için 'duele' gelir, 'duelen' çoğuldur.",
+  // ---- tr-es.u11.l3 ----
+  'tr-es.u11.l3.e1':
+    "'la medicina' ilaç demektir; 'la fiebre' ateş, 'el resfriado' soğuk algınlığı anlamına gelir.",
+  'tr-es.u11.l3.e2':
+    "'el hospital' hastane demektir; 'la farmacia' eczane, 'el médico' doktor anlamına gelir.",
+  'tr-es.u11.l3.e4':
+    "'tomo la medicina' ilacı alıyorum demektir; ilaç almak için 'tomar' fiili kullanılır.",
+  'tr-es.u11.l3.e5':
+    "'la farmacia' eczane demektir; 'está cerca' yakında demektir, yer bildiren 'está' kalıbı kullanılır.",
+  'tr-es.u11.l3.e7':
+    "Cümle okula gidemiyorum çünkü hastayım demek; 'enfermo' hasta demektir, bağlamda tek doğru seçenek.",
+  'tr-es.u11.l3.e9':
+    "Cümle ilacı alıyorum demek; 'la medicina' belirli olduğu için 'la' kullanılır, 'un' belirsizdir.",
+  // ---- tr-es.u11.l4 ----
+  'tr-es.u11.l4.e1':
+    "'el cuerpo' vücut demektir; 'la cabeza' baş, 'el brazo' kol anlamına gelir.",
+  'tr-es.u11.l4.e2':
+    "'doler' ağrımak demektir; 'beber' içmek, 'dormir' uyumak anlamına gelir.",
+  'tr-es.u11.l4.e4':
+    "'estoy enfermo' hastayım demek; 'y' bağlacı iki cümleyi birleştirir: hastayım ve başım ağrıyor.",
+  'tr-es.u11.l4.e5':
+    "'está cerca del hospital' hastanenin yakınında demektir; 'cerca de' kalıbında 'de + el' birleşip 'del' olur.",
+  'tr-es.u11.l4.e7':
+    "Cümle başım ağrıyor ve ateşim var demek; 'duele' tekil özne 'la cabeza' ile kullanılır.",
+  'tr-es.u11.l4.e9':
+    "Cümle doktor hastanede çalışır demek; 'el médico' hastanede çalışır, 'playa' plaj ve 'cama' yatak anlamına gelir.",
+  // ---- tr-es.u12.l1 ----
+  'tr-es.u12.l1.e1':
+    "'el autobús' otobüs demektir; 'el metro' metro, 'la parada' durak anlamına gelir.",
+  'tr-es.u12.l1.e2':
+    "'la parada' durak demektir; 'el mapa' harita, 'la calle' sokak anlamına gelir.",
+  'tr-es.u12.l1.e4':
+    "'el autobús' eril olduğu için 'el' alır; 'está en la parada' durakta demektir.",
+  'tr-es.u12.l1.e5':
+    "'el metro' metro demektir; 'es rápido' hızlıdır demektir, kalıcı nitelik için 'es' kullanılır.",
+  'tr-es.u12.l1.e7':
+    "Cümle otobüs durakta demek; 'la parada' dişil olduğu için 'la' kullanılır.",
+  'tr-es.u12.l1.e9':
+    "Cümle haritaya bakıyorum demek; 'miro el mapa' kalıp ifadedir, 'mapa' erildir.",
+  // ---- tr-es.u12.l2 ----
+  'tr-es.u12.l2.e1':
+    "'recto' düz demektir; 'cruzar' karşıya geçmek, 'girar' dönmek anlamına gelir.",
+  'tr-es.u12.l2.e2':
+    "'la esquina' köşe demektir; 'la calle' sokak, 'la parada' durak anlamına gelir.",
+  'tr-es.u12.l2.e4':
+    "'sigue recto' düz devam et demektir; 'sigue' 'seguir' fiilinin emir kipidir.",
+  'tr-es.u12.l2.e5':
+    "'gira a la izquierda en la esquina' köşeden sola dön demektir; 'gira' emir kipidir.",
+  'tr-es.u12.l2.e7':
+    "Cümle köşeden sağa dön demek; 'gira' dönmek emri, 'sigue recto' düz devam anlamında farklı yöndür.",
+  'tr-es.u12.l2.e9':
+    "Cümle iki sokak düz devam et demek; 'sigue recto' kalıbından sonra mesafe gelir.",
+  // ---- tr-es.u12.l3 ----
+  'tr-es.u12.l3.e1':
+    "'cruzar' karşıya geçmek demektir; 'llegar' varmak, 'seguir' devam etmek anlamına gelir.",
+  'tr-es.u12.l3.e2':
+    "'enfrente' karşısında demektir; 'cerca' yakın, 'lejos' uzak anlamına gelir.",
+  'tr-es.u12.l3.e4':
+    "'cruza la calle' sokağı karşıya geç demektir; 'cruza' 'cruzar' fiilinin emir kipidir.",
+  'tr-es.u12.l3.e5':
+    "'¿cómo llego a la estación?' istasyona nasıl varırım demektir; 'llegar' varmak fiilidir, soru '¿' ile başlar.",
+  'tr-es.u12.l3.e7':
+    "Cümle banka eczanenin karşısında demek; 'enfrente de' karşısında kalıbı kullanılır.",
+  'tr-es.u12.l3.e9':
+    "Cümle sokağı geç ve sağa dön demek; 'cruza' geç emri, 'sigue' devam et ve 'llega' varır anlamına gelir.",
+  // ---- tr-es.u12.l4 ----
+  'tr-es.u12.l4.e1':
+    "'la calle' sokak demektir; 'la esquina' köşe, 'el mapa' harita anlamına gelir.",
+  'tr-es.u12.l4.e2':
+    "'girar' dönmek demektir; 'seguir' devam etmek, 'llegar' varmak anlamına gelir.",
+  'tr-es.u12.l4.e4':
+    "'la estación está enfrente' istasyon karşıda demektir; 'enfrente' tek başına karşıda anlamına gelir.",
+  'tr-es.u12.l4.e5':
+    "'gira a la izquierda en la esquina' köşeden sola dön demektir; emir kipinde 'gira' kullanılır.",
+  'tr-es.u12.l4.e7':
+    "Cümle düz devam et, sonra sokağı geç demek; 'sigue recto' kalıbı yön tarifinin başlangıcıdır.",
+  'tr-es.u12.l4.e9':
+    "Cümle okula varmak için düz devam et demek; 'para + mastar' amaç bildirir: 'para llegar' varmak için.",
+  // ---- tr-es.u13.l1 ----
+  'tr-es.u13.l1.e1':
+    "'la playa' plaj demektir; 'la montaña' dağ, 'el mar' deniz anlamına gelir.",
+  'tr-es.u13.l1.e2':
+    "'el verano' yaz demektir; 'el mes' ay, 'las vacaciones' tatil anlamına gelir.",
+  'tr-es.u13.l1.e4':
+    "'en verano' yazın demektir; 'voy a la playa' plaja gideceğim demektir, 'ir a + yer' kalıbı kullanılır.",
+  'tr-es.u13.l1.e5':
+    "'me gusta el mar' denizi seviyorum demektir; 'gustar' kalıbında beğenilen şey öznedir.",
+  'tr-es.u13.l1.e7':
+    "Cümle yazın plaja gideceğim demek; 'playa' dişil olduğu için 'a la playa' denir, 'verano' ve 'mes' erildir.",
+  'tr-es.u13.l1.e9':
+    "Cümle tatil ağustosta demek; 'las vacaciones' daima çoğul kullanılır.",
+  // ---- tr-es.u13.l2 ----
+  'tr-es.u13.l2.e1':
+    "'la montaña' dağ demektir; 'la playa' plaj, 'el mar' deniz anlamına gelir.",
+  'tr-es.u13.l2.e2':
+    "'próximo' gelecek/sonraki demektir; 'juntos' birlikte, 'pronto' yakında anlamına gelir.",
+  'tr-es.u13.l2.e4':
+    "'el próximo mes' gelecek ay demektir; 'voy a España' İspanya'ya gideceğim demektir.",
+  'tr-es.u13.l2.e5':
+    "'pienso viajar' seyahat etmeyi düşünüyorum demektir; 'pensar + mastar' niyet bildirir.",
+  'tr-es.u13.l2.e7':
+    "Cümle Madrid'i ziyaret etmeyi düşünüyorum demek; 'pensar' dan sonra mastar gelir: 'visitar'.",
+  'tr-es.u13.l2.e9':
+    "Cümle gelecek ay temmuz demek; 'el próximo mes' kalıbında 'próximo' isimden önce gelir.",
+  // ---- tr-es.u13.l3 ----
+  'tr-es.u13.l3.e1':
+    "'visitar' ziyaret etmek demektir; 'llevar' götürmek, 'llegar' varmak anlamına gelir.",
+  'tr-es.u13.l3.e2':
+    "'juntos' birlikte demektir; 'pronto' yakında, 'próximo' gelecek anlamına gelir.",
+  'tr-es.u13.l3.e4':
+    "'nos vemos pronto' yakında görüşürüz demektir; vedalaşma kalıbıdır.",
+  'tr-es.u13.l3.e5':
+    "'voy a llevar una maleta' bir bavul götüreceğim demektir; 'ir a + mastar' gelecek kalıbıdır.",
+  'tr-es.u13.l3.e7':
+    "Cümle Madrid'i ziyaret etmek istiyorum demek; 'querer' dan sonra mastar gelir: 'visitar'.",
+  'tr-es.u13.l3.e9':
+    "Cümle bir bavul götürüyorum demek; 'maleta' dişil olduğu için 'una' kullanılır.",
+  // ---- tr-es.u13.l4 ----
+  'tr-es.u13.l4.e1':
+    "'las vacaciones' tatil demektir; 'el verano' yaz, 'el mes' ay anlamına gelir.",
+  'tr-es.u13.l4.e2':
+    "'pensar' düşünmek/niyet etmek demektir; 'visitar' ziyaret etmek, 'llevar' götürmek anlamına gelir.",
+  'tr-es.u13.l4.e4':
+    "'en las vacaciones de verano' yaz tatilinde demektir; 'voy al mar' denize gideceğim demektir.",
+  'tr-es.u13.l4.e5':
+    "'voy a llevar un libro' yanıma bir kitap alacağım demektir; 'ir a + mastar' gelecek zaman kalıbıdır.",
+  'tr-es.u13.l4.e7':
+    "Cümle bu yaz ne yapmayı düşünüyorsun demek; 'pensar' dan sonra mastar gelir: 'hacer'.",
+  'tr-es.u13.l4.e9':
+    "Cümle gelecek ay dağı ziyaret edeceğim demek; 'voy a + mastar' gelecek bildirir, 'visitar' mastar olduğu için doğrudur.",
+  // ---- tr-es.u14.l1 ----
+  'tr-es.u14.l1.e1':
+    "'más' daha demektir, karşılaştırmada sıfattan önce gelir; 'menos' daha az, 'mejor' daha iyi demektir.",
+  'tr-es.u14.l1.e2':
+    "'mejor' daha iyi/en iyi demektir; düzensiz karşılaştırmadır, 'más bueno' denmez. 'peor' daha kötü anlamına gelir.",
+  'tr-es.u14.l1.e4':
+    "'el tren es más rápido' tren daha hızlıdır demektir; 'más + sıfat' karşılaştırma kalıbıdır.",
+  'tr-es.u14.l1.e5':
+    "'estoy peor' daha kötüyüm demektir; 'peor' kötü sıfatının düzensiz karşılaştırma biçimidir.",
+  'tr-es.u14.l1.e7':
+    "Cümle kahve çaydan daha pahalı demek; 'más ... que' karşılaştırma kalıbı kullanılır.",
+  'tr-es.u14.l1.e9':
+    "Cümle bugün daha iyiyim demek; 'mejor' iyi sıfatının karşılaştırma biçimidir, 'estoy' ile birlikte kullanılır.",
+  // ---- tr-es.u14.l2 ----
+  'tr-es.u14.l2.e1':
+    "'mayor' yaşça daha büyük demektir; 'menor' daha küçük, 'mejor' daha iyi anlamına gelir.",
+  'tr-es.u14.l2.e2':
+    "'tan' (o) kadar demektir; 'tan ... como' kalıbında eşit karşılaştırma yapar.",
+  'tr-es.u14.l2.e4':
+    "'mi hermana es menor' kız kardeşim daha küçük demektir; yaş karşılaştırmasında 'menor' kullanılır.",
+  'tr-es.u14.l2.e5':
+    "'no es tan difícil' o kadar zor değil demektir; 'tan ... como' kalıbının olumsuz kullanımıdır.",
+  'tr-es.u14.l2.e7':
+    "Cümle erkek kardeşim benden yaşça büyük demek; 'mayor que' yaşça büyük kalıbıdır.",
+  'tr-es.u14.l2.e9':
+    "Cümle bu sınav o kadar zor değil demek; 'tan + sıfat' kalıbında sıfat 'difícil' gelir.",
+  // ---- tr-es.u14.l3 ----
+  'tr-es.u14.l3.e1':
+    "'el examen' sınav demektir; 'el equipo' takım, 'el tren' tren anlamına gelir.",
+  'tr-es.u14.l3.e2':
+    "'fácil' kolay demektir; 'difícil' zor anlamına gelir, ikisi de cinsiyetsizdir.",
+  'tr-es.u14.l3.e4':
+    "'el examen es difícil' sınav zor demektir; kalıcı değerlendirme için 'es' kullanılır.",
+  'tr-es.u14.l3.e5':
+    "'mi equipo es el mejor' takımım en iyisi demektir; 'mejor' üstünlük biçimidir ve 'el' ile kullanılır.",
+  'tr-es.u14.l3.e7':
+    "Cümle sınav kolay değil, zor demek; 'no es fácil' ifadesi 'es difícil' ile açıklanır.",
+  'tr-es.u14.l3.e9':
+    "Cümle takımım iyi demek; 'equipo' eril olduğu için 'mi equipo' denir, 'es bueno' iyi demektir.",
+  // ---- tr-es.u14.l4 ----
+  'tr-es.u14.l4.e1':
+    "'rápido' hızlı demektir; 'difícil' zor, 'mayor' daha büyük anlamına gelir.",
+  'tr-es.u14.l4.e2':
+    "'difícil' zor demektir; 'fácil' kolay, 'menor' daha küçük anlamına gelir.",
+  'tr-es.u14.l4.e4':
+    "'este examen es más fácil' bu sınav daha kolay demektir; 'más + sıfat' karşılaştırma kalıbıdır.",
+  'tr-es.u14.l4.e5':
+    "'mi equipo es mejor que tu equipo' takımım seninkinden daha iyi demektir; 'mejor' düzensiz karşılaştırmadır.",
+  'tr-es.u14.l4.e7':
+    "Cümle tren otobüsten daha hızlı demek; 'más rápido que' karşılaştırma kalıbı kullanılır.",
+  'tr-es.u14.l4.e9':
+    "Cümle bu sınav hepsinin en iyisi demek; 'el mejor de todos' üstünlük kalıbıdır, 'mejor' 'más iyi' şeklinde kurulmaz.",
+  // ---- tr-es.u15.l1 ----
+  'tr-es.u15.l1.e1':
+    "'feliz' mutlu demektir; 'triste' üzgün, 'nervioso' gergin anlamına gelir.",
+  'tr-es.u15.l1.e2':
+    "'genial' harika demektir; tek başına ünlem olarak da kullanılır.",
+  'tr-es.u15.l1.e4':
+    "'estoy feliz' mutluyum demektir; duygular geçici durum olduğu için 'estoy' kullanılır.",
+  'tr-es.u15.l1.e5':
+    "'no estoy triste' üzgün değilim demektir; olumsuzluk 'no' ile fiilden önce yapılır.",
+  'tr-es.u15.l1.e7':
+    "Cümle üzgün değilim, memnunum demek; 'no ... triste' olumsuzu 'contento' ile olumlu tamamlanır.",
+  'tr-es.u15.l1.e9':
+    "Cümle plaja gidiyoruz sözüne sevinçle cevap vermek; '¡genial!' harika demektir, 'triste' ve 'nervioso' ünlem olarak uymaz.",
+  // ---- tr-es.u15.l2 ----
+  'tr-es.u15.l2.e1':
+    "'nervioso' gergin demektir; 'tranquilo' sakin, 'fuerte' güçlü anlamına gelir.",
+  'tr-es.u15.l2.e2':
+    "'amable' nazik demektir; 'tímido' utangaç, 'fuerte' güçlü anlamına gelir.",
+  'tr-es.u15.l2.e4':
+    "'estoy nervioso por el examen' sınav yüzünden gerginim demektir; sebep bildiren 'por' edatı kullanılır.",
+  'tr-es.u15.l2.e5':
+    "'mi padre es tranquilo' babam sakindir demektir; kişilik kalıcı olduğu için 'es' kullanılır.",
+  'tr-es.u15.l2.e7':
+    "Cümle öğretmen çok nazik demek; 'la profesora' kadın öğretmen, 'amable' ise nazik demektir.",
+  'tr-es.u15.l2.e9':
+    "Cümle erkek kardeşim çok güçlü demek; 'fuerte' güçlü sıfatı 'es muy' kalıbıyla birlikte kullanılır.",
+  // ---- tr-es.u15.l3 ----
+  'tr-es.u15.l3.e1':
+    "'tímido' utangaç demektir; 'amable' nazik, 'fuerte' güçlü anlamına gelir.",
+  'tr-es.u15.l3.e2':
+    "'creer' sanmak/inanmak demektir; 'creo que' kalıbıyla fikir bildirir.",
+  'tr-es.u15.l3.e4':
+    "'creo que tienes razón' bence haklısın demektir; 'tener razón' haklı olmak kalıbıdır.",
+  'tr-es.u15.l3.e5':
+    "'la familia es importante' aile önemlidir demektir; 'importante' cinsiyetsiz sıfattır.",
+  'tr-es.u15.l3.e7':
+    "Cümle çocuk utangaç, çok konuşmuyor demek; bağlam utangaçlığı ima eder ve 'tímido' tek doğru seçenektir.",
+  'tr-es.u15.l3.e9':
+    "Cümle haklısın demek; 'tener razón' kalıbında 'tú' için 'tienes' kullanılır.",
+  // ---- tr-es.u15.l4 ----
+  'tr-es.u15.l4.e1':
+    "'tranquilo' sakin demektir; 'nervioso' gergin, 'fuerte' güçlü anlamına gelir.",
+  'tr-es.u15.l4.e2':
+    "'importante' önemli demektir; 'genial' harika, 'contento' memnun anlamına gelir.",
+  'tr-es.u15.l4.e4':
+    "'creo que el español es importante' bence İspanyolca önemli demektir; 'creo que' fikir bildirir.",
+  'tr-es.u15.l4.e5':
+    "'estoy nervioso por el examen, pero feliz' sınav yüzünden gerginim ama mutluyum demektir; 'pero' ama bağlacı zıt duyguları birleştirir.",
+  'tr-es.u15.l4.e7':
+    "Cümle bence sen haklısın demek; 'creo que tienes razón' kalıbında 'tienes' (sen) kullanılır.",
+  'tr-es.u15.l4.e9':
+    "Cümle öğretmenim sakin ve nazik demek; 'tranquilo' sakin sıfatı 'es' ile birlikte kişilik bildirir.",
+  // ---- tr-es.u16.l1 ----
+  'tr-es.u16.l1.e1':
+    "'quisiera' isterdim demektir ve 'quiero' dan daha kibar bir istek bildirir.",
+  'tr-es.u16.l1.e2':
+    "'el camarero' garson demektir; 'la mesa' masa, 'el teléfono' telefon anlamına gelir.",
+  'tr-es.u16.l1.e4':
+    "'quisiera una mesa para dos' iki kişilik bir masa isterdim demektir; 'para + sayı' kişi sayısını belirtir.",
+  'tr-es.u16.l1.e5':
+    "'me gustaría un té' bir çay isterim demektir; kibar istek kalıbıdır, 'quisiera un té' de aynı anlamdadır.",
+  'tr-es.u16.l1.e7':
+    "Cümle bu masa boş mu demek; 'libre' boş/müsait demektir ve 'está' ile birlikte kullanılır.",
+  'tr-es.u16.l1.e9':
+    "Cümle garson menüyü getirir demek; 'el camarero' garson, 'trae' getirir demektir.",
+  // ---- tr-es.u16.l2 ----
+  'tr-es.u16.l2.e1':
+    "'podría' yapabilir miyim/yapabilir misiniz demektir, kibar sorularda kullanılır; 'puedo' dan daha naziktir.",
+  'tr-es.u16.l2.e2':
+    "'el teléfono' telefon demektir; 'la mesa' masa, 'el camarero' garson anlamına gelir.",
+  'tr-es.u16.l2.e4':
+    "'quiero reservar una mesa' masa rezerve etmek istiyorum demektir; 'para mañana' yarın için demektir.",
+  'tr-es.u16.l2.e5':
+    "'voy a llamar a mi madre' annemi arayacağım demektir; 'llamar a + kişi' kalıbında 'a' edatı unutulmamalıdır.",
+  'tr-es.u16.l2.e7':
+    "Cümle hesabı getirebilir misiniz demek; 'podría + mastar' kibar istek kalıbıdır, 'traer' mastar gelir.",
+  'tr-es.u16.l2.e9':
+    "Cümle arkadaşımı arayacağım demek; 'voy a + mastar' gelecek kalıbında 'llamar' gelir.",
+  // ---- tr-es.u16.l3 ----
+  'tr-es.u16.l3.e1':
+    "'traer' getirmek demektir; 'reservar' rezervasyon yapmak, 'llamar' aramak anlamına gelir.",
+  'tr-es.u16.l3.e2':
+    "'la propina' bahşiş demektir; 'la cuenta' hesap, 'la mesa' masa anlamına gelir.",
+  'tr-es.u16.l3.e4':
+    "'¿podría traer la cuenta?' hesabı getirebilir misiniz demektir; kibar soru kalıbıdır.",
+  'tr-es.u16.l3.e5':
+    "'te ayudo con gusto' memnuniyetle yardım ederim demektir; 'con gusto' memnuniyetle kalıbıdır.",
+  'tr-es.u16.l3.e7':
+    "Cümle masada bahşiş bırakıyorum demek; 'dejo una propina' bahşiş bırakırım demektir.",
+  'tr-es.u16.l3.e9':
+    "Cümle bu masa boş mu demek; 'libre' boş/müsait demektir ve 'esta mesa' ile birlikte kullanılır.",
+  // ---- tr-es.u16.l4 ----
+  'tr-es.u16.l4.e1':
+    "'reservar' rezervasyon yapmak demektir; 'repetir' tekrar etmek, 'llamar' aramak anlamına gelir.",
+  'tr-es.u16.l4.e2':
+    "'con gusto' memnuniyetle demektir; 'por favor' lütfen, 'hoy' bugün anlamına gelir.",
+  'tr-es.u16.l4.e4':
+    "'quisiera una mesa cerca de la ventana' pencere yanında bir masa isterdim demektir; 'cerca de' yakınında kalıbıdır.",
+  'tr-es.u16.l4.e5':
+    "'voy a reservar por teléfono' telefonla rezervasyon yapacağım demektir; 'por teléfono' telefonla demektir.",
+  'tr-es.u16.l4.e7':
+    "Cümle iki kişilik masa rezerve edebilir miyim demek; 'podría + mastar' kibar istek kalıbıdır, 'reservar' gelir.",
+  'tr-es.u16.l4.e9':
+    "Cümle bir çay isterim lütfen demek; 'por favor' lütfen kalıbıdır ve cümle sonuna gelir.",
 };
