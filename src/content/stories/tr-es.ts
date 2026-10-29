@@ -601,7 +601,7 @@ export const trEsStories: CourseStories = {
       },
       {
         prompt: 'Gelecek ay için plan ne?',
-        options: ['Birlikte dağa gitmek', 'Birlikte plaja gitmek', 'Sinema gitmek'],
+        options: ['Birlikte dağa gitmek', 'Birlikte plaja gitmek', 'Sinemaya gitmek'],
         correctIndex: 0,
         explanation: 'Nuria «¿Vamos juntos a la montaña el próximo mes?» diye teklif ediyor ve Kaan kabul ediyor.',
       },
@@ -695,7 +695,7 @@ export const trEsStories: CourseStories = {
     id: 'tr-es.u16.story',
     unitId: 'tr-es.u16',
     title: 'Telefonla rezervasyon',
-    setting: 'Doğum günü yemeği için restorana telefon eden Genç, rezervasyon yapar.',
+    setting: 'Doğum günü yemeği için restorana telefon eden genç bir müşteri rezervasyon yapar.',
     characters: [
       { name: 'Mert', gender: 'm' },
       { name: 'Sra. López', gender: 'f' },
