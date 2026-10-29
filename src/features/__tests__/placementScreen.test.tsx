@@ -127,3 +127,12 @@ test('"Bitir" before any unit passed touches neither the store nor progress', as
   expect(screen.getByText('Hiç ünite geçilemedi; ilk üniteden başlayacaksın.')).toBeTruthy();
   expect(useAppStore.getState().progress).toEqual({});
 });
+
+test('the question counter advances after a wrong answer too (it counts asked questions)', async () => {
+  await renderExam();
+  expect(screen.getByText('Ünite 1 · Soru 1 / 3')).toBeTruthy();
+  await answerCurrent('b');
+  expect(screen.getByText('Ünite 1 · Soru 2 / 3')).toBeTruthy();
+  await answerCurrent('a');
+  expect(screen.getByText('Ünite 1 · Soru 3 / 3')).toBeTruthy();
+});

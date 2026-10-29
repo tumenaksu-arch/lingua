@@ -215,7 +215,7 @@ function PlacementUnitSession({
     );
   }
 
-  const questionNo = Math.min(total, state.completed.length + 1);
+  const questionNo = Math.min(total, state.answered + 1);
   return (
     <Screen padding={0}>
       <View style={[styles.topBar, { borderBottomColor: colors.border }]}>

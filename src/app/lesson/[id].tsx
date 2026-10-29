@@ -335,7 +335,9 @@ const styles = StyleSheet.create({
   chest: { borderWidth: 2, borderRadius: radii.lg, padding: spacing.lg, gap: spacing.sm, alignItems: 'center', marginBottom: spacing.lg },
   voxWrap: { alignItems: 'center', gap: spacing.md },
   voxBubble: { borderRadius: radii.lg, paddingHorizontal: spacing.lg, paddingVertical: spacing.sm },
-  statsRow: { flexDirection: 'row', gap: spacing.md, justifyContent: 'center' },
+  // alignSelf stretch: the end screen centres its children (alignItems: 'center'), which shrank
+  // the stat boxes until 'DOĞRULUK' no longer fit.
+  statsRow: { flexDirection: 'row', gap: spacing.md, justifyContent: 'center', alignSelf: 'stretch' },
   // sm padding: three stats + 'DOĞRULUK' fit one line at 390px (md split it as 'Doğru/luk')
   stat: { flex: 1, borderWidth: 1, borderRadius: 10, paddingVertical: spacing.md, paddingHorizontal: spacing.xs, gap: spacing.xs },
   actions: { gap: spacing.md },
