@@ -25,7 +25,9 @@ Kararlar (kullanıcı, 2026-10-26):
 7. Öğrenci isterse sonradan e-posta ekleyip hesabını kalıcı yapabilir. Eklemezse cihaz verisi silinince hesap kaybolur; öğretmen aynı kodla yeniden ekleyebilir.
 8. Anonim öğrenciler genel Lig'de ve arkadaş sisteminde görünmez; yalnızca sınıf liginde yer alır (en az veri).
 
-**EduPilot:** Panelde bir "Love-Vox Sınıflarım" kartı olur ve `https://ankaxai.ai/lovevox/ogretmen` adresini açar. EduPilot veritabanına dokunulmaz; değişiklik ankaokul deposunun kurallarıyla (feat dalı, kapılar, deploy.sh) yapılır.
+> **Güncelleme 2026-10-31:** Bu kart kullanıcı kararıyla EduPilot ekranından kaldırıldı; öğretmen paneline yalnız Love-Vox içinden (`/ogretmen`) girilir.
+
+**EduPilot (ilk tasarım):** Panelde bir "Love-Vox Sınıflarım" kartı olur ve `https://ankaxai.ai/lovevox/ogretmen` adresini açar. EduPilot veritabanına dokunulmaz; değişiklik ankaokul deposunun kurallarıyla (feat dalı, kapılar, deploy.sh) yapılır.
 
 ## 2. Veri (Supabase, `supabase/migrations/0002_siniflar.sql`)
 Tablolar:

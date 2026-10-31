@@ -33,7 +33,7 @@ Değişmez kurallar: yayınlanmış içerik yalnız BÜYÜR (`src/content/__test
 - Kabul: sınav rastgele ama tekrarlanabilir; başarısızlıkta ilerleme değişmez.
 
 ## 5. Öğretmen / sınıf ✅ (2026-10-26, canlı)
-- Tasarım: `docs/tasarim/madde5-ogretmen-sinif.md` (kullanıcı onaylı). Panel Love-Vox içinde (`/ogretmen`), EduPilot panelinde "Love-Vox Sınıflarım" kısayol kartı.
+- Tasarım: `docs/tasarim/madde5-ogretmen-sinif.md` (kullanıcı onaylı). Panel Love-Vox içinde (`/ogretmen`). EduPilot panelindeki "Love-Vox Sınıflarım" kısayol kartı 2026-10-31'de kullanıcı kararıyla KALDIRILDI (ankaokul @78c5a83d4).
 - Öğrenci sınıf koduyla takma adla, e-postasız (anonim hesap) katılır; öğretmen özet görür: ilerleme, ödevler, tek yönlü duyurular, zorlanılanlar, sınıf ligi.
 - Şema/RLS: `supabase/migrations/0002_siniflar.sql`, `0003_sinif_duyurulari.sql`; testler `supabase/tests/classes.test.mjs`.
 - Sonraya bırakılan: EduPilot Sınıf Defteri bağlantısı (ödev aktarma; öğrenciler takma adlı olduğundan sınıf düzeyinde), sınıfı olmayan eski anonim hesapların temizliği.
