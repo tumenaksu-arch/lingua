@@ -25,6 +25,8 @@ export { WordChip } from './WordChip';
 export type { WordChipProps, WordChipState } from './WordChip';
 export { FeedbackSheet } from './FeedbackSheet';
 export type { FeedbackSheetProps } from './FeedbackSheet';
+export { Icon } from './Icon';
+export type { IconName, IconProps } from './Icon';
 export { Vox } from './Vox';
 export type { VoxMood, VoxProps } from './Vox';
 export { VOX_LINES, voxLineForLesson } from './voxLines';
