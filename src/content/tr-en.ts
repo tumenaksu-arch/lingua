@@ -876,7 +876,7 @@ export const trEn = course(
         sel('"guitar" ne demek?', ['müzik', 'gitar', 'film'], 1, 'to'),
       ]),
     ]),
-    unit('tr-en.u9', 9, 'Geçmiş Zaman', 'Geçen hafta sonunu ve geçmişte yaptıklarından bahset.', [
+    unit('tr-en.u9', 9, 'Geçmiş Zaman I', 'Hafta sonunu ve geçmişte yaptıklarını -ed ve temel düzensiz fiillerle anlat; did soruları ve ago.', [
       lesson('tr-en.u9.l1', 1, ['yesterday', 'lastweek', 'weekend', 'visited', 'went', 'saw'], [
         sel('"dün" hangisi?', ['yesterday', 'today', 'tomorrow'], 0),
         sel('"geçen hafta" hangisi?', ['last week', 'next week', 'this week'], 0),
@@ -942,7 +942,7 @@ export const trEn = course(
         fill('___ night I watched a movie.', ['Last', 'Next', 'Ago'], 0),
       ]),
     ]),
-    unit('tr-en.u10', 10, 'Gelecek Planları', 'Gelecek için plan yap, tahminlerde bulun ve davet et.', [
+    unit('tr-en.u10', 10, 'Gelecek Planları', 'Günlük hayatta gelecek için plan yap: going to ile niyet, will ile tahmin ve nazik davetler.', [
       lesson('tr-en.u10.l1', 1, ['goingto', 'tonight', 'nextweek', 'movie', 'weekend', 'play'], [
         sel('"bu akşam" hangisi?', ['tonight', 'today', 'tomorrow'], 0),
         sel('"gelecek hafta" hangisi?', ['last week', 'next week', 'this week'], 1),
@@ -1008,7 +1008,7 @@ export const trEn = course(
         fill("I ___ wait for the party!", ['can\'t', 'am', 'is'], 0),
       ]),
     ]),
-    unit('tr-en.u11', 11, 'Sağlık', 'Vücudunu tanıt, şikâyetlerini söyle ve tavsiye al.', [
+    unit('tr-en.u11', 11, 'Sağlık', 'Şikâyetlerini ve belirtilerini anlat: ağrı, ateş, grip; should ile tavsiye al.', [
       lesson('tr-en.u11.l1', 1, ['head', 'stomach', 'back', 'tooth', 'pain', 'doctor'], [
         sel('"kafa" hangisi?', ['head', 'hand', 'heart'], 0),
         sel('"diş" hangisi?', ['tooth', 'mouth', 'foot'], 0),
@@ -1140,7 +1140,7 @@ export const trEn = course(
         fill('Our ___ works very hard.', ['manager', 'manage', 'management'], 0),
       ]),
     ]),
-    unit('tr-en.u13', 13, 'Geçmiş Zaman', 'Dün ne yaptığını anlat: geçmişteki günlük rutinler ve etkinlikler.', [
+    unit('tr-en.u13', 13, 'Geçmiş Zaman II', 'Geçmişteki günlük rutinleri anlat: did ile sorular, didn\'t ile olumsuzlar ve yeni düzensiz fiiller.', [
       lesson('tr-en.u13.l1', 1, ['didwhat', 'cleaned', 'washed', 'didnt', 'gotup', 'woke'], [
         sel('"yıkadı" hangisi?', ['washed', 'watched', 'walked'], 0),
         match([
@@ -1302,7 +1302,7 @@ export const trEn = course(
         read('My sister and I share the chores. She does the laundry and I wash the dishes.', 'Konuşmacı hangi işi yapıyor?', ['Bulaşık yıkamayı', 'Çamaşır yıkamayı', 'Oda toplamayı'], 0),
       ]),
     ]),
-    unit('tr-en.u15', 15, 'Doktorda', 'Vücut bölümlerini söyle, doktorda ve hastanede konuş.', [
+    unit('tr-en.u15', 15, 'Doktorda', 'Doktorda ve hastanede konuş: vücut bölümleri, muayene ve yıllık sağlık kontrolü.', [
       lesson('tr-en.u15.l1', 1, ['arm', 'leg', 'eye', 'ear', 'matter', 'nurse'], [
         sel('"kol" hangisi?', ['arm', 'leg', 'ear'], 0),
         match([
@@ -1455,7 +1455,7 @@ export const trEn = course(
         chat([['a', 'Is the museum far from here?']], ['No, go straight and turn left at the corner.', 'Yes, it is very big.', 'The museum is closed.'], 0),
       ]),
     ]),
-    unit('tr-en.u17', 17, 'Tatil Planları', 'Gelecek tatil planlarını anlat ve seyahat için hazırlan.', [
+    unit('tr-en.u17', 17, 'Tatil Planları', 'Tatile çıkmadan hazırlan: bavul, uçuş ve otel rezervasyonu için gelecek planları kur.', [
       lesson('tr-en.u17.l1', 1, ['holiday', 'suitcase', 'pack', 'ready', 'beach', 'plans'], [
         sel('"tatil" hangisi?', ['holiday', 'holyday', 'weekday'], 0),
         match([

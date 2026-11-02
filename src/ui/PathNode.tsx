@@ -17,8 +17,15 @@ import { useTheme } from './useTheme';
 
 export type PathNodeState = 'locked' | 'active' | 'completed';
 
+/** Node kind — same 44×44 geometry, the glyph reflects what the node opens. */
+export type PathNodeKind = 'lesson' | 'story' | 'notes' | 'skip';
+
+/** Short letter glyphs for non-lesson kinds (G4 will replace these with icons). */
+const KIND_GLYPH: Record<Exclude<PathNodeKind, 'lesson'>, string> = { story: 'H', notes: 'N', skip: 'A' };
+
 export type PathNodeProps = {
   state: PathNodeState;
+  kind?: PathNodeKind;
   /** 0..5 crowns earned for this lesson. */
   crowns?: number;
   /** Optional numeral rendered inside the node (e.g. the lesson number in a vertical list). */
@@ -49,6 +56,7 @@ const STATE_LABEL: Record<PathNodeState, string> = { locked: 'kilitli', active: 
 
 export function PathNode({
   state,
+  kind = 'lesson',
   crowns = 0,
   label,
   tooltip,
@@ -66,7 +74,7 @@ export function PathNode({
   const node = nodeColors(state, colors);
 
   useEffect(() => {
-    if (!isActive || reduceMotion) {
+    if (!isActive || reduceMotion || kind === 'notes' || kind === 'skip') {
       cancelAnimation(bounce);
       bounce.value = 0;
       return;
@@ -80,13 +88,16 @@ export function PathNode({
       false,
     );
     return () => cancelAnimation(bounce);
-  }, [isActive, reduceMotion, bounce]);
+  }, [isActive, reduceMotion, kind, bounce]);
 
   const tooltipStyle = useAnimatedStyle(() => ({ transform: [{ translateY: bounce.value }] }));
 
-  // Numbered node: an explicit label (lesson number) wins; otherwise completed shows ✓,
-  // and a crowned active step falls back to its crown count.
-  const glyph = state === 'locked' ? '🔒' : (label ?? (state === 'completed' ? '✓' : crowns > 0 ? String(crowns) : '•'));
+  // Glyph: an explicit label wins; locked always shows the lock. Otherwise the
+  // kind letter (H/N/A) or the lesson state glyph (✓, crown count, •).
+  const glyph =
+    state === 'locked'
+      ? '🔒'
+      : (label ?? (kind !== 'lesson' ? KIND_GLYPH[kind] : state === 'completed' ? '✓' : crowns > 0 ? String(crowns) : '•'));
   const a11yLabel = `${accessibilityLabel ?? 'Ders'}, ${STATE_LABEL[state]}${crowns ? `, ${crowns} taç` : ''}`;
 
   return (

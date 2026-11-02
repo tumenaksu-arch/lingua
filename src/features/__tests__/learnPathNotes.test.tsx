@@ -38,7 +38,7 @@ it('shows a "… notları" chip per unit and navigates to the notes route', asyn
     </SafeAreaProvider>,
   );
 
-  const chip = screen.getByRole('button', { name: 'Temeller notları' });
+  const chip = screen.getByRole('button', { name: 'Temeller notları, başlanabilir' });
   expect(chip).toBeTruthy();
 
   await fireEvent.press(chip);
@@ -58,9 +58,9 @@ it('renders no notes chip for a unit without a note', async () => {
     </SafeAreaProvider>,
   );
 
-  expect(screen.queryByRole('button', { name: 'Notsuz bölüm notları' })).toBeNull();
+  expect(screen.queryByRole('button', { name: 'Notsuz bölüm notları, başlanabilir' })).toBeNull();
   // positive check: only the replaced unit lost its chip — the rest still have one
-  expect(screen.queryAllByRole('button', { name: /notları$/ })).toHaveLength(trEn.units.length - 1);
+  expect(screen.queryAllByRole('button', { name: /notları, başlanabilir$/ })).toHaveLength(trEn.units.length - 1);
   // the real units still show their chips
-  expect(screen.getByRole('button', { name: 'Yemek notları' })).toBeTruthy();
+  expect(screen.getByRole('button', { name: 'Yemek notları, başlanabilir' })).toBeTruthy();
 });
