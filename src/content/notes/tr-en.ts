@@ -295,7 +295,7 @@ export const trEnNotes: CourseNotes = {
   },
   'tr-en.u9': {
     unitId: 'tr-en.u9',
-    title: 'Geçmiş zaman',
+    title: 'Geçmiş zaman I',
     sections: [
       {
         heading: 'Simple past: -ed',
