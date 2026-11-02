@@ -594,14 +594,14 @@ export const trDe = course(
         fill('Das Flugzeug ist ___.', ['spät', 'Tasche', 'wo'], 0),
         speak('Wo ist der Flughafen?'),
         sel('"früh" ne demek?', ['geç', 'erken', 'uzak'], 1, 'to'),
-        listenSel('Das Flugzeug ist spät', ['Das Flugzeug ist früh', 'Der Zug ist spät', 'Das Flugzeug ist spät'], 2),
+        listenSel('Das Flugzeug kommt spät', ['Das Flugzeug kommt früh', 'Der Zug kommt spät', 'Das Flugzeug kommt spät'], 2),
         pic('"das Flugzeug" hangisi?', [
           { emoji: '✈️', label: 'das Flugzeug' },
           { emoji: '🚗', label: 'das Auto' },
           { emoji: '🚉', label: 'der Bahnhof' },
           { emoji: '👜', label: 'die Tasche' },
         ], 0),
-        read('Meine Tasche ist im Auto. Das Flugzeug ist früh.', 'Çanta nerede?', ['Arabada', 'Uçakta', 'Havalimanında'], 0),
+        read('Meine Tasche ist im Auto. Das Flugzeug kommt früh.', 'Çanta nerede?', ['Arabada', 'Uçakta', 'Havalimanında'], 0),
       ]),
     ]),
     unit('tr-de.u5', 5, 'Alışveriş', 'Fiyat sor, renk söyle, alışveriş yap.', [
@@ -620,7 +620,7 @@ export const trDe = course(
         fill('Der ___ ist zehn Euro.', ['Preis', 'Laden', 'Geld'], 0),
         speak('Wie viel kostet das?'),
         sel('"billig" ne demek?', ['pahalı', 'ucuz', 'fiyat'], 1, 'to'),
-        chat([['a', 'Wie viel kostet das?']], ['Das Kleid ist teuer.', 'Zehn Euro.', 'Ich kaufe ein Kleid.'], 1),
+        chat([['a', 'Wie viel kostet das?']], ['Das Kleid ist blau.', 'Zehn Euro.', 'Ich kaufe ein Kleid.'], 1),
         pic('"das Geld" hangisi?', [
           { emoji: '💶', label: 'das Geld' },
           { emoji: '🏪', label: 'der Laden' },
@@ -693,8 +693,8 @@ export const trDe = course(
         sel('"wie viel" ne demek?', ['nerede', 'ne kadar', 'ne zaman'], 1, 'to'),
         build('Bu çok ucuz.', ['Das ist sehr billig'], ['teuer', 'kaufen', 'Geld']),
         listenSel('Ich habe kein Geld', ['Ich habe kein Geld', 'Ich habe kein Kleid', 'Du hast kein Geld'], 0),
-        chat([['a', 'Wie viel kostet das Kleid?']], ['Zehn Euro.', 'Das Kleid ist teuer.', 'Ich kaufe das Kleid.'], 0),
-        read('Der Laden ist billig. Ich kaufe ein Kleid.', 'Yazar neden elbise alıyor?', ['Elbise çok pahalı olduğu için', 'Çok parası olduğu için', 'Dükkânda fiyatlar ucuz olduğu için'], 2),
+        chat([['a', 'Wie viel kostet das Kleid?']], ['Zehn Euro.', 'Das Kleid ist blau.', 'Ich kaufe das Kleid.'], 0),
+        read('Der Laden ist billig. Ich kaufe ein Kleid.', 'Metindeki dükkân nasıl?', ['Ucuz', 'Pahalı', 'Büyük'], 0),
       ]),
     ]),
     unit('tr-de.u6', 6, 'İş ve Okul', 'Mesleğini söyle, okul ve işten bahset.', [
@@ -846,7 +846,7 @@ export const trDe = course(
         fill('Der Zug ist ___.', ['spät', 'Uhr', 'Woche'], 0),
         listenSel('Es ist drei Uhr', ['Es ist drei Uhr', 'Es ist zwei Uhr', 'Ist es drei Uhr'], 0),
         chat([['a', 'Wie spät ist es?']], ['Es ist jetzt.', 'Es ist drei Uhr.', 'Die Besprechung ist heute.'], 1),
-        read('Der Zug ist spät. Es ist drei Uhr.', 'Saat kaç?', ['Üç', 'İki', 'On'], 0),
+        read('Der Zug kommt spät. Es ist drei Uhr.', 'Saat kaç?', ['Üç', 'İki', 'On'], 0),
       ]),
       lesson('tr-de.u7.l4', 4, ['wetter', 'woche', 'sonntag', 'heiss', 'kalt', 'morgen'], [
         sel('"hava" hangisi?', ['die Woche', 'das Wetter', 'die Stunde'], 1),
@@ -865,7 +865,7 @@ export const trDe = course(
         fill('Heute ist ___.', ['Sonntag', 'Woche', 'Wetter'], 0),
         listenSel('Morgen ist es kalt', ['Morgen ist es kalt', 'Morgen ist es heiß', 'Heute ist es kalt'], 0),
         chat([['a', 'Wie ist das Wetter morgen?']], ['Morgen ist es kalt.', 'Morgen ist Sonntag.', 'Die Woche ist lang.'], 0),
-        read('Am Sonntag ist es heiß. In der Woche ist es kalt.', 'Pazar günü hava nasıl?', ['Soğuk', 'Yağmurlu', 'Sıcak'], 2),
+        read('Am Sonntag ist es heiß. Am Montag ist es kalt.', 'Pazar günü hava nasıl?', ['Soğuk', 'Yağmurlu', 'Sıcak'], 2),
       ]),
     ]),
     unit('tr-de.u8', 8, 'Hobiler', 'Sevdiğin şeylerden ve hafta sonundan bahset.', [
@@ -890,7 +890,7 @@ export const trDe = course(
           { emoji: '🎸', label: 'die Gitarre' },
           { emoji: '🎬', label: 'der Film' },
         ], 0),
-        chat([['a', 'Magst du Fußball?']], ['Nein, ich spiele Fußball.', 'Ja, ich spiele Fußball.', 'Der Film ist gut.'], 1),
+        chat([['a', 'Magst du Fußball?']], ['Nein, ich mag Fußball nicht.', 'Ja, ich mag Fußball.', 'Der Film ist gut.'], 1),
         read('Ich spiele Fußball. Mein Bruder spielt Gitarre.', 'Yazarın kardeşi ne çalıyor?', ['Gitar', 'Futbol', 'Müzik'], 0),
       ]),
       lesson('tr-de.u8.l2', 2, ['schwimmen', 'laufen', 'tanzen', 'park', 'wochenende', 'mogen'], [
