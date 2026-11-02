@@ -1,4 +1,6 @@
-# Lingua
+# Love-Vox
+
+> Eski adı: **Lingua**.
 
 Duolingo esinli, çoklu dil öğrenme mobil uygulaması (Expo SDK 57 · React Native 0.86 · TypeScript).
 

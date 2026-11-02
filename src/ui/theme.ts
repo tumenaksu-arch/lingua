@@ -42,6 +42,8 @@ export const palette = {
   coralDeeper: '#93352c',
   coralPale: '#2e1716',
   coralLight: '#f08f85',
+  /** Brighter coral for danger text on the fixed dark landing surfaces. */
+  coralBright: '#ff8080',
   coralInk: '#a03a31',
   // amber warning / streak / xp
   amber: '#e0a24a',

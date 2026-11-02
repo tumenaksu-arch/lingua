@@ -36,7 +36,7 @@ Yerelden aynı şey: `npx eas-cli@latest build --profile <profil> --platform and
 - `android.versionCode` / `ios.buildNumber`: `cli.appVersionSource: "remote"` olduğu için EAS sunucuda tutar ve `production` profilinde her derlemede otomatik artırır; `app.json`'daki `1` yalnızca başlangıç değeridir. Play Console her yüklemede daha büyük `versionCode` ister.
 
 ## 4. Google Play Console kontrol listesi
-1. https://play.google.com/console → geliştirici hesabı (tek seferlik ücret) → **Uygulama oluştur** (ad: Lingua, varsayılan dil: Türkçe, ücretsiz).
+1. https://play.google.com/console → geliştirici hesabı (tek seferlik ücret) → **Uygulama oluştur** (ad: Love-Vox, varsayılan dil: Türkçe, ücretsiz).
 2. **Uygulama içeriği** bölümü (yayın engelleyiciler):
    - **Gizlilik politikası URL'si** zorunlu — uygulama hesap (e‑posta) ve öğrenme verisi topluyor. Basit bir sayfa yeterli (ör. GitHub Pages).
    - **Veri güvenliği** formu: e‑posta adresi (hesap yönetimi), uygulama etkinliği (ilerleme) toplandığını, kendi sunucumuzdaki (ankaxai.ai) Supabase'e şifreli iletildiğini ve kullanıcının hesabını silerek kaldırabileceğini beyan edin.

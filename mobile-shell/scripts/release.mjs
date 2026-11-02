@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Builds a signed release APK of the Lingua web shell.
+ * Builds a signed release APK of the Love-Vox web shell.
  *
  *   npm run release -- 0.1.1
  *

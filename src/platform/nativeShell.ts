@@ -8,7 +8,7 @@ import { Platform } from 'react-native';
  * Outside the shell (browser, Expo/EAS builds) every getter returns null and the app keeps
  * its normal code paths.
  *
- * Plugin surfaces below are the subsets Lingua uses, checked against the shell's installed
+ * Plugin surfaces below are the subsets Love-Vox uses, checked against the shell's installed
  * definitions: @capacitor-community/text-to-speech 6.1, @capacitor-community/speech-recognition
  * 7.0, @capacitor/local-notifications 7.0, @capacitor/app 7.0.
  */
@@ -68,7 +68,7 @@ interface CapacitorGlobal {
   Plugins?: Partial<ShellPlugins>;
 }
 
-/** True when the web build runs inside the native Lingua shell. */
+/** True when the web build runs inside the native Love-Vox shell. */
 export function isNativeShell(): boolean {
   if (Platform.OS !== 'web') return false;
   const cap = (globalThis as { Capacitor?: CapacitorGlobal }).Capacitor;

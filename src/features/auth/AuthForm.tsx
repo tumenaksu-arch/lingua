@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { authErrorMessage } from '@/data';
 import { useAppStore } from '@/features/store';
-import { Body, Button, Caption, radii, spacing, upperTr, useTheme } from '@/ui';
+import { Body, Button, Caption, palette, radii, spacing, upperTr, useTheme } from '@/ui';
 import { EmailCodeForm } from './EmailCodeForm';
 
 export type AuthMode = 'in' | 'up';
@@ -19,17 +19,17 @@ export type AuthFormProps = {
   appearance?: 'app' | 'landing';
 };
 
-/** EduPilot landing palette — fixed, independent of the app theme. */
+/** EduPilot landing palette — fixed, independent of the app theme (never useTheme; dark constants only). */
 const ep = {
-  text: '#e8eaf2',
-  dim: '#8e97b5',
-  accent: '#d18b63',
+  text: palette.cloud,
+  dim: palette.mist,
+  accent: palette.apricot,
   accentDisabled: 'rgba(209,139,99,0.35)',
-  onAccent: '#0e1220',
+  onAccent: palette.navy,
   inputBorder: 'rgba(232,234,242,0.18)',
   inputBg: 'rgba(14,18,32,0.45)',
   hairline: 'rgba(232,234,242,0.10)',
-  danger: '#ff8080',
+  danger: palette.coralBright,
 };
 
 /**
