@@ -524,7 +524,7 @@ export const trEn = course(
         speak('My ticket is for the bus.'),
         listenSel('Where is the train?', ['Where is the train?', 'Where is the bus?', 'Where is the hotel?'], 0),
         chat([['a', 'Excuse me, where is the hotel?']], ['It is near the airport.', 'The train is the hotel.', 'Yes, it is a ticket.'], 0),
-        read('The train is late. I have a ticket for the bus.', 'Konuşmacının bileti ne içinmiş?', ['Otobüs', 'Tren', 'Uçak'], 0),
+        read('The train is late. I have a ticket for the bus.', 'Konuşmacının bileti hangi araç için?', ['Otobüs', 'Tren', 'Uçak'], 0),
       ]),
       lesson('tr-en.u3.l2', 2, ['left', 'right', 'street', 'far', 'near', 'map'], [
         sel('"sol" hangisi?', ['right', 'left', 'near'], 1),
@@ -704,7 +704,7 @@ export const trEn = course(
         speak('How much is it?'),
         sel('"cheap" ne demek?', ['pahalı', 'ucuz', 'fiyat'], 1, 'to'),
         speak('This shop is cheap.'),
-        listenSel('How much is this?', ['How much is this?', 'How much is it?', 'How much are these?'], 0),
+        listenSel('How much is this?', ['How much is this?', 'How old is this?', 'Where is this?'], 0),
         chat([['a', 'This car is very expensive!']], ['Yes, and it is not cheap.', 'Yes, it is very cheap.', 'The shop is a price.'], 0),
         read('I have no money today. This shop is very expensive.', 'Dükkân nasılmış?', ['Çok pahalıymış', 'Çok ucuzmuş', 'Kapalıymış'], 0),
       ]),
@@ -1027,7 +1027,7 @@ export const trEn = course(
         sel('"went" ne demek?', ['gitti', 'gider', 'gidecek'], 0, 'to'),
         listenSel('I visited my mother last week', ['I visited my mother last week', 'I visited my father last week', 'I visit my mother last week'], 0),
         chat([['a', 'Where did you go yesterday?']], ['I went to the park.', 'Yes, I went yesterday.', 'I go to the park every day.'], 0),
-        read('I went to the park yesterday. I saw a good movie.', 'Konuşmacı dün nereye gitmiş?', ['Parka', 'Sinemaya', 'Okula'], 0),
+        read('I went to the park yesterday. I watched a good movie at home.', 'Konuşmacı dün nereye gitmiş?', ['Parka', 'Sinemaya', 'Okula'], 0),
       ]),
       lesson('tr-en.u9.l2', 2, ['watched', 'played', 'stayed', 'cooked', 'movie', 'football'], [
         sel('"izledi" hangisi?', ['watched', 'watch', 'watches'], 0),
@@ -1065,7 +1065,7 @@ export const trEn = course(
         speak('Did you have a good weekend?'),
         listenSel('We ate dinner at eight', ['We ate dinner at eight', 'We eat dinner at eight', 'We ate breakfast at eight'], 0),
         chat([['a', 'What did you see at the cinema?']], ['I saw a very good movie.', 'Yes, I saw the cinema.', 'I see movies every day.'], 0),
-        read('I ate a delicious meal yesterday. Then I had free time.', 'Konuşmacı yemekten sonra ne yapmış?', ['Boş zamanı varmış', 'Uyumuş', 'Çalışmış'], 0),
+        read('I ate a delicious meal yesterday. Then I slept.', 'Konuşmacı yemekten sonra ne yapmış?', ['Uyumuş', 'Çalışmış', 'Koşmuş'], 0),
       ]),
       lesson('tr-en.u9.l4', 4, ['ago', 'lastnight', 'fun', 'yesterday', 'lastweek', 'weekend'], [
         sel('"iki gün önce" hangisi?', ['two days ago', 'two days after', 'two days now'], 0),
