@@ -370,7 +370,7 @@ export const trFr = course(
         speak('Tu bois du lait.'),
         sel('"le lait" ne demek?', ['elma', 'süt', 'su'], 1, 'to'),
         speak('Je mange une pomme.'),
-        listenSel('Je bois du lait', ['Je bois du lait', 'Je mange du lait', 'Tu bois du lait'], 0),
+        listenSel('Je bois du lait', ['Je bois du lait', 'Je bois du café', 'Tu bois du lait'], 0),
         pic('"süt" hangisi?', [
           { emoji: '🥛', label: 'le lait' },
           { emoji: '🍎', label: 'la pomme' },
@@ -413,7 +413,7 @@ export const trFr = course(
         fill('Je bois mon thé avec du ___.', ['sucre', 'poisson', 'riz'], 0),
         speak('Je mange du riz.'),
         sel('"le sucre" ne demek?', ['tuz', 'şeker', 'pilav'], 1, 'to'),
-        listenSel('Tu manges une salade', ['Tu manges une salade', 'Tu bois une salade', 'Je mange une salade'], 0),
+        listenSel('Tu manges une salade', ['Tu manges une salade', 'Tu manges une pomme', 'Je mange une salade'], 0),
         pic('"tavuk" hangisi?', [
           { emoji: '🍗', label: 'le poulet' },
           { emoji: '🐟', label: 'le poisson' },
@@ -507,7 +507,7 @@ export const trFr = course(
           { emoji: '👦', label: 'le fils' },
           { emoji: '👧', label: 'la fille' },
         ], 0),
-        listenSel('Ma grand-mère boit du thé', ['Ma grand-mère boit du thé', 'Ma grand-mère mange du thé', 'Ta grand-mère boit du thé'], 0),
+        listenSel('Ma grand-mère boit du thé', ['Ma grand-mère boit du thé', 'Ma grand-mère boit du café', 'Ta grand-mère boit du thé'], 0),
         read('Ma grand-mère est petite. Mon grand-père boit du thé.', 'Büyükanne nasıl?', ['Küçük', 'Büyük', 'Genç'], 0),
       ]),
     ]),
@@ -616,7 +616,7 @@ export const trFr = course(
         speak('Combien ça coûte ?'),
         sel('"l\'argent" ne demek?', ['fiyat', 'para', 'dükkân'], 1, 'to'),
         chat([["a", 'Combien coûte ce sac ?']], ['Il coûte deux euros.', 'Le sac est grand.', "J'ai de l'argent."], 0),
-        listenSel("C'est trop cher", ["C'est trop cher", "Ce n'est pas cher", "C'est très cher"], 0),
+        listenSel("C'est trop cher", ["C'est trop cher", "Ce n'est pas cher", "C'est cher"], 0),
         read("Le prix est de deux euros. Ce n'est pas cher.", 'Fiyat nasıl?', ['Ucuz', 'Pahalı', 'Çok yüksek'], 0),
       ]),
       lesson('tr-fr.u5.l2', 2, ['acheter', 'chemise', 'chaussures', 'robe', 'grand', 'petit'], [
@@ -677,7 +677,7 @@ export const trFr = course(
         sel('"combien" ne demek?', ['nerede', 'ne kadar', 'ne zaman'], 1, 'to'),
         listenSel("Je n'ai pas d'argent", ["Je n'ai pas d'argent", "Je n'ai pas de sac", "J'ai de l'argent"], 0),
         read("Le magasin est proche. Je veux acheter une robe, mais je n'ai pas d'argent.", 'Yazar neden elbise alamıyor?', ['Parası yok', 'Dükkân uzakta', 'Elbise yok'], 0),
-        chat([["a", 'Je veux acheter cette robe.']], ['Combien ça coûte ?', 'La robe est rouge.', 'Le magasin est proche.'], 0),
+        chat([["a", 'Je veux acheter cette robe.']], ['Elle est très belle !', 'La robe est rouge.', 'Le magasin est proche.'], 0),
       ]),
     ]),
     unit('tr-fr.u6', 6, 'İş ve Okul', 'Mesleğini söyle, okul ve işten bahset.', [
@@ -893,7 +893,7 @@ export const trFr = course(
         speak('Je cuisine le soir.'),
         sel('"cuisiner" ne demek?', ['yemek pişirmek', 'seyahat etmek', 'dans etmek'], 0, 'to'),
         listenSel('Je cuisine le week-end', ['Je cuisine le week-end', 'Je voyage le week-end', 'Tu cuisines le week-end'], 0),
-        read("J'aime prendre des photos. Je cuisine le week-end.", 'Yazar hafta sonu ne yapıyor?', ['Yemek pişiriyor', 'Fotoğraf çekiyor', 'Seyahat ediyor'], 0),
+        read('Je prends des photos le samedi. Je cuisine le dimanche.', 'Yazar pazar günü ne yapıyor?', ['Yemek pişiriyor', 'Fotoğraf çekiyor', 'Seyahat ediyor'], 0),
         chat([["a", "Qu'est-ce que tu fais le week-end ?"]], ['Je cuisine et je prends des photos.', "J'aime la musique.", 'Le week-end est court.'], 0),
       ]),
       lesson('tr-fr.u8.l4', 4, ['jouer', 'aimer', 'film', 'football', 'guitare', 'weekend'], [
