@@ -73,7 +73,7 @@ describe('mistakes mode', () => {
     expect(wrongIds).toEqual([target.id]);
     expect(correctIds).toEqual([]);
     expect(correct).toBe(0); // lesson semantics: wrong at least once → not counted correct
-    expect(await screen.findByText('Pratik tamamlandı! 🎉')).toBeTruthy();
+    expect(await screen.findByText('Pratik tamamlandı!')).toBeTruthy();
     expect(router.back).toBeDefined();
   });
 

@@ -157,7 +157,7 @@ describe("ExplainButton (Cevabımı açıkla)", () => {
     expect(wrong).toBeTruthy();
     await fireEvent.press(wrong!);
     await fireEvent.press(screen.getByRole('button', { name: 'Kontrol et' }));
-    const button = await screen.findByRole('button', { name: '🤖 Cevabımı açıkla' });
+    const button = await screen.findByRole('button', { name: 'Cevabımı açıkla' });
     await fireEvent.press(button);
 
     await screen.findByText('Cevabında küçük bir yazım hatası var.');
@@ -185,7 +185,7 @@ describe("ExplainButton (Cevabımı açıkla)", () => {
     await fireEvent.press(screen.getByRole('button', { name: 'Kontrol et' }));
 
     expect(screen.getByText('Harika!')).toBeTruthy();
-    expect(screen.queryByRole('button', { name: '🤖 Cevabımı açıkla' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Cevabımı açıkla' })).toBeNull();
     expect(aiExplainMock).not.toHaveBeenCalled();
   });
 
@@ -194,7 +194,7 @@ describe("ExplainButton (Cevabımı açıkla)", () => {
     await renderLesson();
 
     await answerCurrentWrong();
-    expect(screen.queryByRole('button', { name: '🤖 Cevabımı açıkla' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Cevabımı açıkla' })).toBeNull();
     expect(aiExplainMock).not.toHaveBeenCalled();
   });
 });

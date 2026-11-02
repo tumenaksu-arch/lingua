@@ -6,7 +6,8 @@ import { useAppStore } from '@/features/store';
 import { Body, Button, Caption, ChoiceCard, Screen, Title, spacing, useTheme } from '@/ui';
 
 const LANG_NAME: Record<string, string> = { en: 'İngilizce', de: 'Almanca', es: 'İspanyolca', fr: 'Fransızca', it: 'İtalyanca', tr: 'Türkçe' };
-const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', it: '🇮🇹', tr: '🇹🇷' };
+/** İki harfli dil kodu (bayrak emojisi yerine, tüm platformlarda tutarlı). */
+const LANG_CODE: Record<string, string> = { en: 'EN', de: 'DE', es: 'ES', fr: 'FR', it: 'IT', tr: 'TR' };
 
 export default function CoursesScreen() {
   const current = useAppStore((s) => s.course);
@@ -21,7 +22,7 @@ export default function CoursesScreen() {
         {courses.map((c) => (
           <ChoiceCard
             key={c.id}
-            label={LANG_FLAG[c.toLang] ? `${LANG_FLAG[c.toLang]}  ${LANG_NAME[c.toLang] ?? c.toLang}` : (LANG_NAME[c.toLang] ?? c.toLang)}
+            label={LANG_CODE[c.toLang] ? `${LANG_CODE[c.toLang]} · ${LANG_NAME[c.toLang] ?? c.toLang}` : (LANG_NAME[c.toLang] ?? c.toLang)}
             state={c.id === current.id ? 'selected' : 'idle'}
             onPress={async () => {
               await selectCourse(c.id);

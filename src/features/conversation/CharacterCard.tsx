@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
 
-import { Body, Caption, Heading, radii, spacing, useReduceMotion, useTheme } from '@/ui';
+import { Caption, Heading, Icon, radii, spacing, useReduceMotion, useTheme } from '@/ui';
 
 import type { ConversationCharacter } from './character';
 
@@ -29,9 +29,7 @@ export function CharacterCard({ character, speaking }: { character: Conversation
   return (
     <View style={[styles.card, { borderColor: colors.border, backgroundColor: colors.surface }]} accessible accessibilityRole="text">
       <Animated.View style={[styles.avatar, { backgroundColor: colors.primaryTint }, animatedStyle]}>
-        <Body style={styles.emoji} accessible={false}>
-          {character.emoji}
-        </Body>
+        <Icon name={character.icon} size={36} color={colors.primaryText} strokeWidth={1.75} />
       </Animated.View>
       <View style={styles.meta}>
         <Heading numberOfLines={1}>{character.name}</Heading>
@@ -53,6 +51,5 @@ const styles = StyleSheet.create({
     padding: spacing.md,
   },
   avatar: { width: 64, height: 64, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center' },
-  emoji: { fontSize: 36 },
   meta: { flex: 1, gap: 2 },
 });

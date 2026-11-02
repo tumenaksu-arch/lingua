@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import type { LangCode } from '@/domain';
 import { speak } from '@/speech';
-import { Body, Heading, MIN_TOUCH, spacing, useTheme } from '@/ui';
+import { Body, Heading, Icon, MIN_TOUCH, spacing, useTheme } from '@/ui';
 
 /** Instruction line + prompt sentence, with an optional speaker button. */
 export function Prompt({ instruction, text, speakLang }: { instruction: string; text?: string; speakLang?: LangCode }) {
@@ -31,7 +31,7 @@ export function SpeakerButton({ text, lang, rate, size = 48 }: { text: string; l
         { width: size, height: size, backgroundColor: colors.buttonSecondary, borderColor: colors.buttonSecondaryShadow, opacity: pressed ? 0.8 : 1 },
       ]}
     >
-      <Body color={colors.textOnColor} style={{ fontSize: size * 0.45 }} accessible={false}>{rate ? '🐢' : '🔊'}</Body>
+      <Icon name={rate ? 'turtle' : 'volume'} size={size * 0.45} color={colors.textOnColor} />
     </Pressable>
   );
 }

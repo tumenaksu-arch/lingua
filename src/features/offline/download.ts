@@ -114,7 +114,7 @@ export function downloadTtsUrls(urls: string[], opts: TtsDownloadOptions = {}): 
   );
 }
 
-/** Listenin kaç URL'si önbellekte hazır? (Profil kartının "İndirildi ✓" durumu.) */
+/** Listenin kaç URL'si önbellekte hazır? (Profil kartının "İndirildi" durumu.) */
 export async function countCachedTts(urls: string[]): Promise<number> {
   const cache = await caches.open(TTS_CACHE_NAME);
   let n = 0;

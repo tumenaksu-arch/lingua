@@ -190,8 +190,8 @@ it('friends tab shows streak badges, today status and the longest-streak card', 
 
   await fireEvent.press(screen.getByRole('tab', { name: 'Arkadaşlar' }));
   // Sıra başına rozet + bugün durumu metni.
-  expect(await screen.findByLabelText('🔥 5 gün birlikte, İkiniz de bugün çalıştınız ✅')).toBeTruthy();
-  expect(screen.getByLabelText('🔥 9 gün birlikte, Arkadaşın bekliyor')).toBeTruthy();
+  expect(await screen.findByLabelText('5 gün birlikte, İkiniz de bugün çalıştınız')).toBeTruthy();
+  expect(screen.getByLabelText('9 gün birlikte, Arkadaşın bekliyor')).toBeTruthy();
   // Ortak serisi en yüksek arkadaşın kartı.
   expect(screen.getByLabelText('Birlikte en uzun seri: Carol, 9 gün')).toBeTruthy();
 });

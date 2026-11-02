@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { getUnitStory } from '@/content/stories';
 import type { Course } from '@/domain/types';
-import { Body, Button, Caption, ProgressBar, showAlert, spacing, useTheme } from '@/ui';
+import { Body, Button, Caption, Icon, ProgressBar, showAlert, spacing, useTheme } from '@/ui';
 
 import { clearTtsCache, countCachedTts, courseTtsUrls, downloadTtsUrls, estimateDownloadMb } from './download';
 
@@ -82,7 +82,12 @@ export function OfflineAudioCard({ course }: { course: Course }) {
     <View style={[styles.card, { borderColor: colors.border, backgroundColor: colors.surface }]}>
       <View style={styles.row}>
         <Body>Doğal ses çevrimdışı paketi</Body>
-        {status === 'done' && <Caption color={colors.success}>İndirildi ✓</Caption>}
+        {status === 'done' && (
+          <View style={styles.doneRow} accessible={false}>
+            <Icon name="check" size={14} color={colors.success} strokeWidth={2} />
+            <Caption color={colors.success}>İndirildi</Caption>
+          </View>
+        )}
       </View>
       {status === 'checking' ? (
         <Caption color={colors.textMuted}>Boyut hesaplanıyor…</Caption>
@@ -95,7 +100,7 @@ export function OfflineAudioCard({ course }: { course: Course }) {
       ) : status === 'done' ? (
         <>
           <Caption color={colors.textMuted}>Bu kursun ders ve hikâye sesleri önbellekten anında çalınır.</Caption>
-          <Button title="İndirildi ✓ · Sil" variant="outline" onPress={() => void remove()} />
+          <Button title="İndirildi · Sil" variant="outline" onPress={() => void remove()} />
         </>
       ) : (
         <>
@@ -112,4 +117,5 @@ export function OfflineAudioCard({ course }: { course: Course }) {
 const styles = StyleSheet.create({
   card: { borderWidth: 1, borderRadius: 10, padding: spacing.md, gap: spacing.sm },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', minHeight: 32 },
+  doneRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs },
 });

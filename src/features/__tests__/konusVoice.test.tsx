@@ -14,6 +14,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { aiChat, aiScenarios, aiStatus } from '@/data/remote/ai';
 import type { AiChatResponse } from '@/data/remote/ai';
 import { useAppStore } from '@/features/store';
+import { characterFor } from '@/features/conversation/character';
 import { useSettingsStore } from '@/ui/settingsStore';
 
 import ConversationScreen from '@/app/konus/[scenarioId]';
@@ -216,9 +217,12 @@ describe('konus sesli mod', () => {
 
   it('karakter kartı senaryoya göre persona gösterir', async () => {
     await renderChat();
-    // "Kafede sipariş" senaryosunun barista personası.
+    // "Kafede sipariş" senaryosunun barista personası (kart ikonu lucide 'coffee' çizer).
     expect(screen.getByText('Lily')).toBeTruthy();
-    expect(screen.getByText('☕')).toBeTruthy();
+    expect(characterFor({ titleTr: 'Kafede sipariş', descriptionTr: 'Bir kafede sipariş veriyorsun.', goalTr: 'Sipariş vermek' })).toEqual({
+      name: 'Lily',
+      icon: 'coffee',
+    });
   });
 
   it('konuşma bitince özet kartı: mesaj/düzeltme sayısı ve yeniden başlat', async () => {

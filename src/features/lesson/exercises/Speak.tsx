@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { isSpeechCorrect, type SpeakExercise } from '@/domain';
 import { useSpeechRecognition } from '@/speech';
-import { Body, Caption, Heading, spacing, useTheme } from '@/ui';
+import { Body, Caption, Heading, Icon, spacing, useTheme } from '@/ui';
 
 import { CheckBar } from '../CheckBar';
 import { SpeakerButton } from './Prompt';
@@ -43,7 +43,7 @@ export function Speak({ exercise, onAnswer, disabled }: ExerciseProps<SpeakExerc
               pressed && { opacity: 0.8 },
             ]}
           >
-            <Body color={colors.textOnColor} style={styles.micIcon} accessible={false}>🎤</Body>
+            <Icon name="mic" size={40} color={colors.textOnColor} />
           </Pressable>
           <Caption center accessibilityLiveRegion="polite">{listening ? 'Dinliyorum…' : 'Konuşmak için dokun'}</Caption>
           <View style={[styles.box, { backgroundColor: colors.surface, borderColor: colors.border }]} accessibilityLiveRegion="polite">
@@ -87,7 +87,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: spacing.sm,
   },
-  micIcon: { fontSize: 40 },
   box: {
     marginTop: spacing.lg,
     padding: spacing.md,

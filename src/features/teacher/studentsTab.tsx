@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import type { Course } from '@/domain/types';
 import { removeMember, type ProgressRow } from '@/data/remote/classes';
 import { currentUnitLabel, lastActiveLabel } from '@/features/teacher/shared';
-import { Body, Button, Caption, fonts, radii, showAlert, spacing, useTheme } from '@/ui';
+import { Body, Button, Caption, Icon, fonts, radii, showAlert, spacing, useTheme } from '@/ui';
 
 /**
  * ÖĞRENCİLER tab: nickname-only rows sorted by weekly XP (worst data privacy,
@@ -87,11 +87,15 @@ export function StudentsTab({
             <View style={styles.rowMain}>
               <Body numberOfLines={1}>{member.takmaAd}</Body>
               <Caption color={colors.textMuted}>
-                Bu hafta <Caption style={styles.mono}>{member.weeklyXp} XP</Caption> · Toplam {member.totalXp} XP · 🔥 {member.streak}
+                Bu hafta <Caption style={styles.mono}>{member.weeklyXp} XP</Caption> · Toplam {member.totalXp} XP
               </Caption>
+              <View style={styles.streakRow} accessible={false}>
+                <Icon name="flame" size={14} color={colors.primaryText} strokeWidth={2} />
+                <Caption color={colors.textMuted}>{member.streak}</Caption>
+              </View>
               <Caption color={colors.textMuted}>
                 Son aktif: {lastActiveLabel(member.lastActiveDate, today)}
-                {unit ? ` · ${unit}` : ' · Kurs bitti 🎉'}
+                {unit ? ` · ${unit}` : ' · Kurs bitti'}
               </Caption>
             </View>
             <Button
@@ -114,6 +118,7 @@ const styles = StyleSheet.create({
   section: { gap: spacing.sm },
   row: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderRadius: radii.md, padding: spacing.md, gap: spacing.sm },
   rowMain: { flex: 1, gap: 2 },
+  streakRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   mono: { fontFamily: fonts.mono },
   removeBtn: { paddingHorizontal: spacing.sm },
   emptyCard: { borderWidth: 1, borderRadius: radii.md, padding: spacing.md, gap: spacing.sm, alignItems: 'center' },

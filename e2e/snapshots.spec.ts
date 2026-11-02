@@ -165,7 +165,7 @@ for (const tema of TEMAS) {
       await hesapsizDene(page);
       await misafirKur(page);
       await page.getByRole('tab', { name: /tekrar/i }).click();
-      await expect(page.getByText('Bugün tekrar yok ✅', { exact: true })).toBeVisible({ timeout: 15_000 });
+      await expect(page.getByText('Bugün tekrar yok', { exact: true })).toBeVisible({ timeout: 15_000 });
       await kilit(page, `tekrar-${tema}`);
     });
   });
