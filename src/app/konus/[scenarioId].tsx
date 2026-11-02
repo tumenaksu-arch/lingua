@@ -20,7 +20,7 @@ import { ChatThread } from '@/features/conversation/ChatThread';
 import { historyFor, type ConversationMessage } from '@/features/conversation/history';
 import { useAppStore } from '@/features/store';
 import { speak, stopSpeaking, useSpeechRecognition } from '@/speech';
-import { Body, Button, Caption, Heading, Icon, Screen, radii, showAlert, spacing, useSettingsStore, useTheme } from '@/ui';
+import { Body, Button, Caption, Heading, Icon, Screen, MIN_TOUCH, radii, showAlert, spacing, useSettingsStore, useTheme } from '@/ui';
 
 const MAX_MESSAGE = 500;
 const LIMIT_MESSAGE = 'Bugünlük konuşma hakkın doldu. Yarın tekrar gel!';
@@ -582,7 +582,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.sm,
     borderBottomWidth: 1,
   },
-  modeChip: { flex: 1, minHeight: 40, borderRadius: radii.pill, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  modeChip: { flex: 1, minHeight: MIN_TOUCH, borderRadius: radii.pill, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   thread: { padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xl },
   notice: { borderWidth: 1, borderRadius: radii.md, padding: spacing.md, gap: spacing.sm, alignItems: 'flex-start' },
   doneCard: { borderWidth: 1, borderRadius: radii.lg, padding: spacing.xl, gap: spacing.sm, alignItems: 'center' },

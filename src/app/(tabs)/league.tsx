@@ -14,6 +14,7 @@ import {
   Caption,
   Heading,
   Icon,
+  MIN_TOUCH,
   Screen,
   Title,
   fonts,
@@ -402,8 +403,8 @@ const styles = StyleSheet.create({
   content: { padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xxxl },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   section: { gap: spacing.sm },
-  segment: { flexDirection: 'row', borderWidth: 1, borderRadius: radii.pill, padding: 3 },
-  segmentItem: { flex: 1, minHeight: 40, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center' },
+  segment: { flexDirection: 'row', borderWidth: 1, borderRadius: radii.pill, padding: spacing.xs },
+  segmentItem: { flex: 1, minHeight: MIN_TOUCH, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center' },
   segmentText: { fontFamily: fonts.mono, fontSize: 13, letterSpacing: 1 },
   row: {
     flexDirection: 'row',
