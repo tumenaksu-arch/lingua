@@ -303,7 +303,7 @@ export const trIt = course(
           { emoji: '👧', label: 'ragazza' },
         ], 3),
         listenSel('Tu sei una ragazza', ['Tu sei una ragazza', 'Io sono una ragazza', 'Tu sei un ragazzo'], 0),
-        chat([['a', 'Ciao! Tu sei una ragazza?']], ['No, io sono un ragazzo.', 'Sì, tu sei una ragazza.', 'Io sono ragazza sì tu.'], 0),
+        chat([['a', 'Ciao! Io sono Marco. Tu sei un ragazzo?']], ['Sì, io sono un ragazzo.', 'Sì, tu sei un ragazzo.', 'Io sono ragazzo sì tu.'], 0),
       ]),
       lesson('tr-it.u1.l3', 3, ['buongiorno', 'buonanotte', 'comestai', 'bene', 'nome', 'piacere'], [
         sel('"günaydın" hangisi?', ['buonanotte', 'buongiorno', 'arrivederci'], 1),
@@ -468,7 +468,7 @@ export const trIt = course(
           { emoji: '🚌', label: 'autobus' },
           { emoji: '🚕', label: 'taxi' },
         ], 0),
-        listenSel("Dov'è il biglietto", ["Dov'è il biglietto", "Dov'è il biglieto", "Dov'è il biglietti"], 0),
+        listenSel("Dov'è il biglietto", ["Dov'è il biglietto", "Dov'è il passaporto", "Dov'è l'albergo"], 0),
         chat([['a', "Scusi, dov'è l'aeroporto?"]], ["È vicino all'albergo.", 'Il biglietto è un aeroporto.', 'Sì, tu sei aeroporto.'], 0),
       ]),
       lesson('tr-it.u3.l2', 2, ['sinistra', 'destra', 'via', 'lontano', 'vicino', 'mappa'], [
@@ -506,7 +506,7 @@ export const trIt = course(
         sel('"aiuto" ne demek?', ['yardım', 'taksi', 'otel'], 0, 'to'),
         listen("Dov'è il taxi", ["Dov'è il taxi", "Dove è il taxi"]),
         build('Otel nerede, affedersiniz?', ["Scusi, dov'è l'albergo", "Scusi dov'è l'albergo"], ['taxi', 'passaporto']),
-        chat([['a', 'Mi scusi, ho bisogno di aiuto.']], ['Certo! Come posso aiutarti?', 'Il taxi ha bisogno di aiuto.', "L'aiuto è scusi."], 0),
+        chat([['a', 'Mi scusi, ho bisogno di aiuto.']], ['Certo! Come posso aiutarla?', 'Il taxi ha bisogno di aiuto.', "L'aiuto è scusi."], 0),
         listenSel("Dov'è il passaporto", ["Dov'è il passaporto", "Dov'è il passaporti", "Dov'è il taxi"], 0),
         read("Ecco il mio passaporto. Dov'è il taxi?", 'Kişi ne arıyor?', ['Taksi', 'Pasaport', 'Otel'], 0),
       ]),
@@ -558,7 +558,7 @@ export const trIt = course(
           { emoji: '👦', label: 'fratello' },
         ], 0),
         listenSel('Ho una sorella', ['Ho una sorella', 'Ho un sorella', 'Ho una sorelle'], 0),
-        read('Ho un fratello e una sorella. Mia madre è insegnante.', 'Metindeki kişinin kardeşleri kim?', ['Bir erkek ve bir kız kardeş', 'İki erkek kardeş', 'Bir kız kardeş'], 0),
+        read('Ho un fratello e una sorella. Mia madre è insegnante.', 'Yazarın hangi kardeşleri var?', ['Bir erkek ve bir kız kardeş', 'İki erkek kardeş', 'Yalnız bir kız kardeş'], 0),
       ]),
       lesson('tr-it.u4.l2', 2, ['figlio', 'figlia', 'bambino', 'amare', 'marito', 'moglie'], [
         sel('"oğul" hangisi?', ['figlia', 'figlio', 'bambino'], 1),
@@ -619,7 +619,7 @@ export const trIt = course(
         fill('___ mio fratello.', ['Amo', 'Ho', 'Sono'], 0),
         listenSel('Ho due fratelli', ['Ho due fratelli', 'Ho due sorelle', 'Ho due famiglie'], 0),
         chat([['a', 'Quanti fratelli hai?']], ['Ho due fratelli.', 'Ho due fratelli, tu hai.', 'I fratelli sono due bambini.'], 0),
-        read('Il mio amico ha un bambino. Il bambino è piccolo.', 'Arkadaşın neyi var?', ['Bir çocuk', 'Bir kız kardeş', 'Bir köpek'], 0),
+        read('Il mio amico ha un bambino. Il bambino è piccolo.', 'Yazarın arkadaşının neyi var?', ['Bir çocuk', 'Bir kız kardeş', 'Bir köpek'], 0),
       ]),
     ]),
     unit('tr-it.u5', 5, 'Alışveriş', 'Fiyat sor, renk ve beden söyle, alışveriş yap.', [
@@ -825,7 +825,7 @@ export const trIt = course(
         sel('"settimana" ne demek?', ['gün', 'hafta', 'ay'], 1, 'to'),
         fill('___ è lunedì.', ['Oggi', 'Adesso', 'Settimana'], 0),
         listenSel('Domani è lunedì', ['Domani è lunedì', 'Domani è domenica', 'Oggi è lunedì'], 0),
-        chat([['a', 'Che giorno è domani?']], ['Domani è lunedì.', 'Domani è domenica.', 'La settimana è domani.'], 0),
+        chat([['a', 'Oggi è domenica. Che giorno è domani?']], ['Domani è lunedì.', 'Domani è domenica.', 'La settimana è domani.'], 0),
         read('Oggi è domenica. Domani è lunedì e lavoro.', 'Kişi ne zaman çalışacak?', ['Yarın', 'Bugün', 'Cumartesi'], 0),
       ]),
       lesson('tr-it.u7.l3', 3, ['cheore', 'inpunto', 'ora', 'adesso', 'tardi', 'presto'], [
@@ -905,7 +905,7 @@ export const trIt = course(
         speak('Corro ogni giorno.'),
         sel('"fine settimana" ne demek?', ['hafta', 'hafta sonu', 'pazartesi'], 1, 'to'),
         fill('Io ___ nel mare.', ['nuoto', 'ballo', 'parco'], 0),
-        chat([['a', 'Nuoti di domenica?']], ['Sì, nuoto e corro nel parco.', 'No, nuoto e corro nel parco.', 'Il parco nuota me.'], 0),
+        chat([['a', 'Nuoti di domenica?']], ['Sì, nuoto e poi corro nel parco.', 'No, nuoto e poi corro nel parco.', 'Il parco nuota me.'], 0),
         listenSel('Mi piace ballare', ['Mi piace ballare', 'Mi piace nuotare', 'Mi piacciono ballare'], 0),
         read('Il fine settimana nuoto. Poi corro nel parco.', 'Kişi hafta sonu nerede koşuyor?', ['Parkta', 'Havuzda', 'Denizde'], 0),
       ]),
@@ -948,7 +948,7 @@ export const trIt = course(
           { emoji: '🎵', label: 'musica' },
         ], 0),
         listenSel('Suono la chitarra', ['Suono la chitarra', 'Suono il chitarra', 'Suono la chitarre'], 0),
-        chat([['a', 'Ti piace il calcio?']], ['Sì, gioco ogni settimana.', 'No, gioco ogni settimana.', 'Il calcio gioca me.'], 0),
+        chat([['a', 'Giochi a calcio?']], ['Sì, gioco ogni settimana.', 'No, gioco ogni settimana.', 'Il calcio gioca me.'], 0),
       ]),
     ]),
     unit('tr-it.u9', 9, 'Geçmiş Zaman', 'Geçmişte yaptıklarını anlat: dün ne yaptın?', [
