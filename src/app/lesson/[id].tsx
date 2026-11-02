@@ -27,7 +27,7 @@ import type { AiExplainRequest } from '@/features/lesson/explainApi';
 import { playComplete, playCorrect, playWrong } from '@/features/sound';
 import { exerciseVocabMap, formatDuration, correctAnswerText } from '@/features/lesson/helpers';
 import { useAppStore } from '@/features/store';
-import { Body, Button, Caption, FeedbackSheet, Heading, Hearts, ProgressBar, Screen, Title, Vox, XpBoostChip, radii, showAlert, spacing, useSettingsStore, useTheme, voxLineForLesson } from '@/ui';
+import { Body, Button, Caption, FeedbackSheet, Heading, Hearts, Icon, ProgressBar, Screen, Title, Vox, XpBoostChip, radii, showAlert, spacing, useSettingsStore, useTheme, voxLineForLesson } from '@/ui';
 
 type Params = { id: string; mode?: 'practice' };
 
@@ -170,7 +170,10 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
     return (
       <Screen>
         <View style={styles.center} accessibilityLiveRegion="polite">
-          <Title center accessibilityRole="header">{summary?.dailyGoalJustReached ? 'Günlük hedef tamam! 🎉' : 'Ders tamamlandı! 🎉'}</Title>
+          <View style={styles.celebration}>
+            <Icon name="party" size={28} color={colors.primaryText} strokeWidth={1.75} />
+            <Title center accessibilityRole="header">{summary?.dailyGoalJustReached ? 'Günlük hedef tamam!' : 'Ders tamamlandı!'}</Title>
+          </View>
           {mascot ? (
             <View style={styles.voxWrap}>
               <Vox mood="cheer" size={110} />
@@ -206,7 +209,7 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
     <Screen padding={0}>
       <View style={[styles.topBar, { borderBottomColor: colors.border }]}>
         <Pressable accessibilityRole="button" accessibilityLabel="Dersi kapat" onPress={confirmQuit} hitSlop={12} style={styles.close}>
-          <Heading color={colors.textMuted}>✕</Heading>
+          <Icon name="x" size={22} color={colors.textMuted} strokeWidth={2} />
         </Pressable>
         <ProgressBar progress={progress(state)} style={styles.progress} accessibilityLabel="Ders ilerlemesi" />
         <Hearts hearts={state.hearts} />
@@ -242,9 +245,9 @@ function Stat({ label, value, color }: { label: string; value: string; color: st
 }
 
 function chestRewardText(reward: ChestReward): string {
-  if (reward.kind === 'gems') return `+${reward.amount} 💎`;
-  if (reward.kind === 'streakFreeze') return '1 seri dondurma 🧊';
-  return '15 dk çift XP ⚡';
+  if (reward.kind === 'gems') return `+${reward.amount} elmas`;
+  if (reward.kind === 'streakFreeze') return '1 seri dondurma';
+  return '15 dk çift XP';
 }
 
 /**
@@ -262,7 +265,7 @@ function ChestCard() {
   if (reward !== null) {
     return (
       <View style={[styles.chest, { borderColor: colors.warning, backgroundColor: colors.surface }]} accessible accessibilityLabel={`Sandık ödülü: ${chestRewardText(reward)}`}>
-        <Heading center>🎁</Heading>
+        <Icon name="gift" size={28} color={colors.primaryText} strokeWidth={1.75} />
         <Body center>Ödülün: {chestRewardText(reward)}</Body>
       </View>
     );
@@ -284,7 +287,7 @@ function ChestCard() {
       }}
       style={({ pressed }) => [styles.chest, { borderColor: colors.primary, backgroundColor: colors.surface, opacity: pressed || opening ? 0.7 : 1 }]}
     >
-      <Heading center>🎁</Heading>
+      <Icon name="gift" size={28} color={colors.primaryText} strokeWidth={1.75} />
       <Body center>Sandık kazandın! Ödülünü almak için dokun.</Body>
     </Pressable>
   );
@@ -303,7 +306,10 @@ function OutOfHearts({ lessonId }: { lessonId: string }) {
   return (
     <Screen>
       <View style={styles.center} accessibilityLiveRegion="polite">
-        <Title center accessibilityRole="header">Kalplerin bitti 💔</Title>
+        <View style={styles.celebration}>
+          <Icon name="heartCrack" size={28} color={colors.dangerText} strokeWidth={1.75} />
+          <Title center accessibilityRole="header">Kalplerin bitti</Title>
+        </View>
         <Body center>Yeni bir kalp için {formatDuration(wait)} bekle ya da kalp kaybetmeden pratik yap.</Body>
         <Caption center color={colors.textMuted}>
           Rahat modda yanlış cevaplarda kalp gitmez; tüm dersleri sırayla, beklemeden geçebilirsin.
@@ -331,6 +337,7 @@ const styles = StyleSheet.create({
   progress: { flex: 1 },
   body: { flex: 1, paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.lg },
   center: { flex: 1, justifyContent: 'center', gap: spacing.xl, alignItems: 'center' },
+  celebration: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm },
   boostChip: { alignSelf: 'center' },
   chest: { borderWidth: 2, borderRadius: radii.lg, padding: spacing.lg, gap: spacing.sm, alignItems: 'center', marginBottom: spacing.lg },
   voxWrap: { alignItems: 'center', gap: spacing.md },

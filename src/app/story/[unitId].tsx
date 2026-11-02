@@ -8,7 +8,7 @@ import { getUnitStory } from '@/content/stories';
 import type { LangCode } from '@/domain';
 import { SpeakerButton } from '@/features/lesson/exercises/Prompt';
 import { useAppStore } from '@/features/store';
-import { Body, Button, Caption, ChoiceCard, FeedbackSheet, Heading, Screen, Title, spacing, upperTr, useTheme } from '@/ui';
+import { Body, Button, Caption, ChoiceCard, FeedbackSheet, Heading, Icon, Screen, Title, spacing, upperTr, useTheme } from '@/ui';
 
 type Params = { unitId: string };
 type Phase = 'reading' | 'questions' | 'saving' | 'summary';
@@ -211,7 +211,10 @@ export default function StoryScreen() {
   return (
     <Screen>
       <View style={styles.center} accessibilityLiveRegion="polite">
-        <Title center accessibilityRole="header">Hikâye tamamlandı! 🎉</Title>
+        <View style={styles.celebration}>
+          <Icon name="party" size={28} color={colors.primaryText} strokeWidth={1.75} />
+          <Title center accessibilityRole="header">Hikâye tamamlandı!</Title>
+        </View>
         <View style={styles.statsRow}>
           <Stat label="Doğru" value={`${correctCount}/${story.questions.length}`} color={colors.primaryText} />
           <Stat label="XP" value={summary ? `+${summary.xpEarned}` : '…'} color={colors.xpText} />
@@ -243,6 +246,7 @@ const styles = StyleSheet.create({
   trToggle: { alignSelf: 'flex-start', borderWidth: 1, borderRadius: 8, paddingHorizontal: spacing.md, paddingVertical: spacing.xs },
   options: { gap: spacing.sm },
   center: { flex: 1, justifyContent: 'center', gap: spacing.xl },
+  celebration: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm },
   statsRow: { flexDirection: 'row', gap: spacing.md, justifyContent: 'center' },
   stat: { flex: 1, borderWidth: 1, borderRadius: 10, padding: spacing.md, gap: spacing.xs },
   actions: { gap: spacing.md },

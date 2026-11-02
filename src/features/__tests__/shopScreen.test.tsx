@@ -51,8 +51,8 @@ test('shows the title, the gem balance and every price', async () => {
   await renderShop();
   expect(screen.getByText('Mağaza')).toBeTruthy();
   expect(screen.getByText('50')).toBeTruthy(); // welcome gift balance
-  expect(screen.getByText('200 💎')).toBeTruthy(); // seri dondurma
-  expect(screen.getByText('100 💎')).toBeTruthy(); // çift XP
+  expect(screen.getByText('200')).toBeTruthy(); // seri dondurma
+  expect(screen.getByText('100')).toBeTruthy(); // çift XP
   // Canlar dolu olduğunda "Canları doldur" kartı pasif görünür; fiyat yok.
   expect(screen.getByText('Canların dolu')).toBeTruthy();
 });
@@ -72,7 +72,7 @@ test('an unaffordable item shows how many more gems are needed and disables the 
   // Çift XP (100) hâlâ alınabilir; 350 ve 400'lük kartlar pahalı.
   expect(screen.getByText('230 elmas daha gerekli')).toBeTruthy(); // 350 - 120
   expect(screen.getByText('280 elmas daha gerekli')).toBeTruthy(); // 400 - 120
-  const refillBtn = screen.getByRole('button', { name: '350 💎' });
+  const refillBtn = screen.getByRole('button', { name: '350' });
   expect(refillBtn.props.accessibilityState.disabled).toBe(true);
 });
 
@@ -82,18 +82,18 @@ test('a full freeze slot renders the passive "Dolu" state', async () => {
   });
   await renderShop();
   expect(screen.getByText('Dolu')).toBeTruthy();
-  expect(screen.queryByRole('button', { name: '200 💎' })).toBeNull();
+  expect(screen.queryByRole('button', { name: '200' })).toBeNull();
 });
 
 test('full hearts disable the refill card', async () => {
   await renderShop();
   expect(screen.getByText('Canların dolu')).toBeTruthy();
-  expect(screen.queryByRole('button', { name: '350 💎' })).toBeNull();
+  expect(screen.queryByRole('button', { name: '350' })).toBeNull();
 });
 
 test('streak repair card is hidden without a recently lost streak', async () => {
   await renderShop();
-  expect(screen.queryByText('400 💎')).toBeNull();
+  expect(screen.queryByText('400')).toBeNull();
   expect(screen.queryByText('Serini onar')).toBeNull();
 });
 
@@ -105,13 +105,13 @@ test('streak repair card appears for a streak lost within 2 days', async () => {
   });
   await renderShop();
   expect(screen.getByText('Serini onar')).toBeTruthy();
-  expect(screen.getByText('400 💎')).toBeTruthy();
+  expect(screen.getByText('400')).toBeTruthy();
 });
 
 test('buying an item deducts the balance and shows a success notice', async () => {
   useAppStore.setState({ stats: { ...useAppStore.getState().stats, gems: 500 } });
   await renderShop();
-  await fireEvent.press(screen.getByRole('button', { name: '200 💎' }));
+  await fireEvent.press(screen.getByRole('button', { name: '200' }));
   expect(useAppStore.getState().stats.gems).toBe(300);
   expect(useAppStore.getState().stats.streakFreezes).toBe(1);
   expect(await screen.findByText(/satın alındı/)).toBeTruthy();

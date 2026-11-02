@@ -118,7 +118,7 @@ it('lists all announcements newest first with relative timestamps and NO reply i
 it('shows each assignment with MY status: bitti ✓, devam with due label, gecikti; stale done rows vanish', async () => {
   await renderClass();
   expect(screen.getByLabelText(`Ödev: ${unit1.title}, bitti, ${unit1.lessons.length}/${unit1.lessons.length} ders`)).toBeTruthy();
-  expect(screen.getByText('bitti ✓')).toBeTruthy();
+  expect(screen.getByText('bitti')).toBeTruthy();
   expect(screen.getByLabelText(`Ödev: ${unit2.title}, devam, 0/${unit2.lessons.length} ders`)).toBeTruthy();
   expect(screen.getByText('gecikti')).toBeTruthy();
   // unit1 appears only once: the long-done duplicate row (a4) is hidden.

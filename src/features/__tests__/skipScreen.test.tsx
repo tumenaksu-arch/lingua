@@ -113,7 +113,7 @@ test('passes with 10/12, never consumes hearts, shows the skip reward', async ()
   expect(finishSkipTest).toHaveBeenCalledTimes(1);
   expect(finishSkipTest).toHaveBeenCalledWith('u2', 10, 12);
 
-  await screen.findByText('Ünite atlandı! 🎉');
+  await screen.findByText('Ünite atlandı!');
   expect(screen.getByLabelText('XP: +20')).toBeTruthy();
   expect(screen.getByLabelText('Doğruluk: %83')).toBeTruthy();
   // no hearts were consumed: the exam never writes stats

@@ -21,7 +21,7 @@ export default function CoursesScreen() {
         {courses.map((c) => (
           <ChoiceCard
             key={c.id}
-            label={`${LANG_FLAG[c.toLang] ?? '🌐'}  ${LANG_NAME[c.toLang] ?? c.toLang}`}
+            label={LANG_FLAG[c.toLang] ? `${LANG_FLAG[c.toLang]}  ${LANG_NAME[c.toLang] ?? c.toLang}` : (LANG_NAME[c.toLang] ?? c.toLang)}
             state={c.id === current.id ? 'selected' : 'idle'}
             onPress={async () => {
               await selectCourse(c.id);

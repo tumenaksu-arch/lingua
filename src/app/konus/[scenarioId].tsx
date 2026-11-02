@@ -6,7 +6,6 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
-  Text,
   TextInput,
   View,
 } from 'react-native';
@@ -21,7 +20,7 @@ import { ChatThread } from '@/features/conversation/ChatThread';
 import { historyFor, type ConversationMessage } from '@/features/conversation/history';
 import { useAppStore } from '@/features/store';
 import { speak, stopSpeaking, useSpeechRecognition } from '@/speech';
-import { Body, Button, Caption, Heading, Screen, radii, showAlert, spacing, useSettingsStore, useTheme } from '@/ui';
+import { Body, Button, Caption, Heading, Icon, Screen, radii, showAlert, spacing, useSettingsStore, useTheme } from '@/ui';
 
 const MAX_MESSAGE = 500;
 const LIMIT_MESSAGE = 'Bugünlük konuşma hakkın doldu. Yarın tekrar gel!';
@@ -306,7 +305,7 @@ export default function ConversationScreen() {
         ) : state.kind === 'disabled' ? (
           <View style={[styles.center, styles.guestBody]}>
             <View style={[styles.soonCard, { borderColor: colors.border, backgroundColor: colors.surface }]}>
-              <Body>🗣️</Body>
+              <Icon name="messages" size={28} color={colors.primaryText} strokeWidth={1.75} />
               <Heading center>Konuşma pratiği yakında</Heading>
               <Body color={colors.textMuted} center>
                 Yapay zekâ destekli konuşma alıştırmaları üzerinde çalışıyoruz. Çok yakında burada olacak!
@@ -345,7 +344,7 @@ export default function ConversationScreen() {
                 onPress={backOrHome}
                 style={({ pressed }) => [styles.close, { opacity: pressed ? 0.6 : 1 }]}
               >
-                <Text style={[styles.closeText, { color: colors.textMuted }]}>✕</Text>
+                <Icon name="x" size={20} color={colors.textMuted} strokeWidth={2} />
               </Pressable>
             </View>
 
@@ -364,7 +363,10 @@ export default function ConversationScreen() {
                   },
                 ]}
               >
-                <Caption color={!voiceMode ? colors.primaryText : colors.textMuted}>⌨️ Yazılı</Caption>
+                <View style={styles.modeChipContent}>
+                  <Icon name="keyboard" size={14} color={!voiceMode ? colors.primaryText : colors.textMuted} />
+                  <Caption color={!voiceMode ? colors.primaryText : colors.textMuted}>Yazılı</Caption>
+                </View>
               </Pressable>
               <Pressable
                 accessibilityRole="button"
@@ -380,7 +382,10 @@ export default function ConversationScreen() {
                   },
                 ]}
               >
-                <Caption color={voiceMode ? colors.primaryText : colors.textMuted}>🎙️ Sesli</Caption>
+                <View style={styles.modeChipContent}>
+                  <Icon name="mic" size={14} color={voiceMode ? colors.primaryText : colors.textMuted} />
+                  <Caption color={voiceMode ? colors.primaryText : colors.textMuted}>Sesli</Caption>
+                </View>
               </Pressable>
             </View>
 
@@ -418,9 +423,7 @@ export default function ConversationScreen() {
               {done ? (
                 voiceMode ? (
                   <View style={[styles.doneCard, { borderColor: colors.success, backgroundColor: colors.successTint }]}>
-                    <Text style={styles.doneEmoji} accessible={false}>
-                      🎉
-                    </Text>
+                    <Icon name="party" size={28} color={colors.successText} strokeWidth={1.75} />
                     <Heading center>Görev tamam!</Heading>
                     <Body color={colors.textMuted} center>
                       {userTurns} mesaj konuştun, {correctionCount} düzeltme aldın.
@@ -430,9 +433,7 @@ export default function ConversationScreen() {
                   </View>
                 ) : (
                   <View style={[styles.doneCard, { borderColor: colors.success, backgroundColor: colors.successTint }]}>
-                    <Text style={styles.doneEmoji} accessible={false}>
-                      🎉
-                    </Text>
+                    <Icon name="party" size={28} color={colors.successText} strokeWidth={1.75} />
                     <Heading center>Görev tamam!</Heading>
                     <Body color={colors.textMuted} center>
                       {xpSaved ? 'Senaryoyu başarıyla tamamladın. +10 XP kazandın!' : 'Senaryoyu başarıyla tamamladın.'}
@@ -456,9 +457,7 @@ export default function ConversationScreen() {
                         { borderColor: colors.danger, backgroundColor: colors.dangerTint, opacity: pressed ? 0.8 : 1 },
                       ]}
                     >
-                      <Text style={styles.voiceMicGlyph} accessible={false}>
-                        ⏹
-                      </Text>
+                      <Icon name="square" size={22} color={colors.dangerText} strokeWidth={2} />
                       <Caption color={colors.dangerText}>Durdur</Caption>
                     </Pressable>
                   ) : stt.status === 'listening' ? (
@@ -472,9 +471,7 @@ export default function ConversationScreen() {
                         { borderColor: colors.danger, backgroundColor: colors.dangerTint, opacity: pressed ? 0.8 : 1 },
                       ]}
                     >
-                      <Text style={styles.voiceMicGlyph} accessible={false}>
-                        🎤
-                      </Text>
+                      <Icon name="mic" size={22} color={colors.dangerText} strokeWidth={2} />
                       <Caption color={colors.dangerText}>Dinliyorum…</Caption>
                     </Pressable>
                   ) : (
@@ -489,9 +486,7 @@ export default function ConversationScreen() {
                         { borderColor: colors.borderStrong, backgroundColor: colors.surface, opacity: pressed || micDisabled ? 0.5 : 1 },
                       ]}
                     >
-                      <Text style={styles.voiceMicGlyph} accessible={false}>
-                        🎤
-                      </Text>
+                      <Icon name="mic" size={22} color={micDisabled ? colors.textMuted : colors.text} strokeWidth={2} />
                       <Caption color={micDisabled ? colors.textMuted : colors.text}>
                         {waiting ? 'Yanıt bekleniyor…' : 'Konuşmak için dokun'}
                       </Caption>
@@ -520,9 +515,7 @@ export default function ConversationScreen() {
                         },
                       ]}
                     >
-                      <Text style={styles.micGlyph} accessible={false}>
-                        {stt.status === 'listening' ? '⏹' : '🎤'}
-                      </Text>
+                      <Icon name={stt.status === 'listening' ? 'square' : 'mic'} size={20} color={stt.status === 'listening' ? colors.dangerText : colors.textMuted} strokeWidth={2} />
                     </Pressable>
                   ) : null}
                   <TextInput
@@ -547,9 +540,7 @@ export default function ConversationScreen() {
                       { backgroundColor: colors.primary, opacity: pressed || inputDisabled || !input.trim() ? 0.5 : 1 },
                     ]}
                   >
-                    <Text style={[styles.sendGlyph, { color: colors.buttonPrimaryText }]} accessible={false}>
-                      ➤
-                    </Text>
+                    <Icon name="send" size={18} color={colors.buttonPrimaryText} strokeWidth={2} />
                   </Pressable>
                 </View>
                 <Caption color={colors.textMuted} style={styles.counter}>
@@ -583,7 +574,7 @@ const styles = StyleSheet.create({
   },
   headerText: { flex: 1, gap: 2 },
   close: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
-  closeText: { fontSize: 20 },
+  modeChipContent: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs },
   modeRow: {
     flexDirection: 'row',
     gap: spacing.sm,
@@ -595,7 +586,6 @@ const styles = StyleSheet.create({
   thread: { padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xl },
   notice: { borderWidth: 1, borderRadius: radii.md, padding: spacing.md, gap: spacing.sm, alignItems: 'flex-start' },
   doneCard: { borderWidth: 1, borderRadius: radii.lg, padding: spacing.xl, gap: spacing.sm, alignItems: 'center' },
-  doneEmoji: { fontSize: 40 },
   voiceBar: { alignItems: 'center', paddingHorizontal: spacing.lg, paddingTop: spacing.sm, paddingBottom: spacing.xs, borderTopWidth: 1 },
   voiceMic: {
     minWidth: 120,
@@ -607,7 +597,6 @@ const styles = StyleSheet.create({
     gap: 2,
     paddingHorizontal: spacing.lg,
   },
-  voiceMicGlyph: { fontSize: 28 },
   inputBar: { flexDirection: 'row', alignItems: 'flex-end', gap: spacing.sm, paddingHorizontal: spacing.lg, paddingTop: spacing.sm, borderTopWidth: 1 },
   mic: {
     width: 48,
@@ -617,10 +606,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  micGlyph: { fontSize: 20 },
   input: { flex: 1, minHeight: 48, maxHeight: 120, borderWidth: 1, borderRadius: radii.md, paddingHorizontal: spacing.md, paddingTop: 12, paddingBottom: 12, fontSize: 16 },
   send: { width: 48, height: 48, borderRadius: radii.md, alignItems: 'center', justifyContent: 'center' },
-  sendGlyph: { fontSize: 20 },
   counter: { alignSelf: 'flex-end', paddingHorizontal: spacing.lg, paddingTop: 2 },
   privacy: { paddingHorizontal: spacing.lg, paddingBottom: spacing.sm },
 });

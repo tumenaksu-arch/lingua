@@ -20,7 +20,7 @@ import { correctAnswerText } from '@/features/lesson/helpers';
 import { playComplete, playCorrect, playWrong } from '@/features/sound';
 import { buildSkipTest } from '@/features/skipTest';
 import { useAppStore } from '@/features/store';
-import { Body, Button, Caption, FeedbackSheet, Heading, ProgressBar, Screen, Title, showAlert, spacing, useTheme } from '@/ui';
+import { Body, Button, Caption, FeedbackSheet, Heading, Icon, ProgressBar, Screen, Title, showAlert, spacing, useTheme } from '@/ui';
 
 type Params = { unitId: string };
 
@@ -187,7 +187,10 @@ function SkipSession({ unit, attempt, onRetry }: { unit: Unit; attempt: number; 
       return (
         <Screen>
           <View style={styles.center} accessibilityLiveRegion="polite">
-            <Title center accessibilityRole="header">Ünite atlandı! 🎉</Title>
+            <View style={styles.celebration}>
+              <Icon name="party" size={28} color={colors.primaryText} strokeWidth={1.75} />
+              <Title center accessibilityRole="header">Ünite atlandı!</Title>
+            </View>
             <View style={styles.statsRow}>
               <Stat label="XP" value={`+${outcome.xpEarned}`} color={colors.xpText} />
               <Stat label="Doğruluk" value={`%${accuracy}`} color={colors.primaryText} />
@@ -223,7 +226,7 @@ function SkipSession({ unit, attempt, onRetry }: { unit: Unit; attempt: number; 
     <Screen padding={0}>
       <View style={[styles.topBar, { borderBottomColor: colors.border }]}>
         <Pressable accessibilityRole="button" accessibilityLabel="Sınavı kapat" onPress={confirmQuit} hitSlop={12} style={styles.close}>
-          <Heading color={colors.textMuted}>✕</Heading>
+          <Icon name="x" size={22} color={colors.textMuted} strokeWidth={2} />
         </Pressable>
         <View style={styles.examMeta} accessible accessibilityRole="header" accessibilityLabel={`SINAV. Soru ${questionNo} / ${total}`}>
           <Caption center color={colors.primaryText}>SINAV</Caption>
@@ -267,6 +270,7 @@ const styles = StyleSheet.create({
   progress: { flex: 1 },
   body: { flex: 1, paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.lg },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center', gap: spacing.xl },
+  celebration: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm },
   statsRow: { flexDirection: 'row', gap: spacing.md, justifyContent: 'center', alignSelf: 'stretch' },
   // sm padding: three stats + 'DOĞRULUK' fit one line at 390px (md split it as 'Doğru/luk')
   stat: { flex: 1, borderWidth: 1, borderRadius: 10, paddingVertical: spacing.md, paddingHorizontal: spacing.xs, gap: spacing.xs },

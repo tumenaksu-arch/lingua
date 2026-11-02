@@ -8,7 +8,7 @@ import { useClassStore } from '@/features/classes/classStore';
 import { dueLabel, isAssignmentVisible, relativeTime } from '@/features/classes/classView';
 import { useAppStore } from '@/features/store';
 import { useNow } from '@/features/useNow';
-import { Body, Button, Caption, Heading, Screen, Title, spacing, upperTr, useTheme } from '@/ui';
+import { Body, Button, Caption, Heading, Icon, Screen, Title, spacing, upperTr, useTheme } from '@/ui';
 
 /**
  * The student's class screen (madde 5, wave 2b): Duyurular (all, newest first,
@@ -71,7 +71,7 @@ export default function ClassScreen() {
             <Caption color={colors.textMuted}>Takma adın: {cls.takmaAd}</Caption>
           </View>
           <Pressable onPress={() => router.back()} accessibilityRole="button" accessibilityLabel="Geri dön" style={styles.close}>
-            <Body color={colors.textMuted}>✕</Body>
+            <Icon name="x" size={18} color={colors.textMuted} strokeWidth={2} />
           </Pressable>
         </View>
 
@@ -97,7 +97,7 @@ export default function ClassScreen() {
             const unit = course?.units.find((u) => u.id === a.unitId);
             const label =
               st.status === 'bitti'
-                ? 'bitti ✓'
+                ? 'bitti'
                 : st.status === 'gecikti'
                   ? 'gecikti'
                   : dueLabel(a.sonTarih, today);
@@ -115,7 +115,10 @@ export default function ClassScreen() {
               >
                 <View style={styles.rowBetween}>
                   <Body style={styles.flex}>Ödev: {unit?.title ?? a.unitId}</Body>
-                  <Caption color={labelColor}>{label}</Caption>
+                  <View style={styles.statusRow}>
+                    {st.status === 'bitti' ? <Icon name="check" size={13} color={labelColor} strokeWidth={2} /> : null}
+                    <Caption color={labelColor}>{label}</Caption>
+                  </View>
                 </View>
                 {st.status !== 'bitti' && (
                   <Caption color={colors.textMuted}>
@@ -167,6 +170,7 @@ const styles = StyleSheet.create({
   close: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   card: { borderWidth: 1, borderRadius: 10, padding: spacing.md, gap: spacing.xs },
   rowBetween: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.sm },
+  statusRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   flex: { flexShrink: 1 },
   ligRow: {
     flexDirection: 'row',

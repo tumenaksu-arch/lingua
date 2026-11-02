@@ -29,7 +29,7 @@ import {
 } from '@/features/placement/placement';
 import { playComplete, playCorrect, playWrong } from '@/features/sound';
 import { useAppStore } from '@/features/store';
-import { Body, Button, Caption, FeedbackSheet, ProgressBar, Screen, Title, spacing, useTheme } from '@/ui';
+import { Body, Button, Caption, FeedbackSheet, Icon, ProgressBar, Screen, Title, spacing, useTheme } from '@/ui';
 
 /** Accepted only thanks to accent/ß folding → show the proper spelling ("Aksana dikkat: café"). */
 function accentNote(e: Exercise, userAnswer?: string): string | undefined {
@@ -134,7 +134,10 @@ export default function PlacementScreen() {
           <View style={styles.passedList}>
             <Caption center color={colors.textMuted}>Geçtiğin üniteler tamamlandı sayıldı:</Caption>
             {passedUnits.map((u) => (
-              <Caption key={u.id} center color={colors.primaryText}>✓ {u.title}</Caption>
+              <View key={u.id} style={styles.passedRow}>
+                <Icon name="check" size={14} color={colors.primaryText} strokeWidth={2} />
+                <Caption center color={colors.primaryText}>{u.title}</Caption>
+              </View>
             ))}
           </View>
         ) : (
@@ -255,5 +258,6 @@ const styles = StyleSheet.create({
   body: { flex: 1, paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.lg },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center', gap: spacing.xl },
   passedList: { gap: spacing.xs, alignItems: 'center' },
+  passedRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs },
   actions: { gap: spacing.md },
 });

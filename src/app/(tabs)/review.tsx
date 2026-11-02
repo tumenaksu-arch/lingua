@@ -8,7 +8,7 @@ import { PracticeCard } from '@/features/practice/PracticeCard';
 import { playCorrect, playWrong } from '@/features/sound';
 import { useAppStore } from '@/features/store';
 import { speak } from '@/speech';
-import { Body, Button, Caption, Heading, ProgressBar, Screen, Title, spacing, useTheme } from '@/ui';
+import { Body, Button, Caption, Icon, ProgressBar, Screen, Title, spacing, useTheme } from '@/ui';
 
 interface Deck { cards: SrsCard[]; vocab: Map<string, VocabItem>; }
 
@@ -75,7 +75,14 @@ export default function ReviewScreen() {
       <Screen edges={['top']}>
         {practiceCards}
         <View style={styles.center}>
-          <Title center>{deck.cards.length ? 'Tekrar bitti! 🎉' : 'Bugün tekrar yok ✅'}</Title>
+          {deck.cards.length ? (
+            <View style={styles.doneTitle}>
+              <Icon name="party" size={26} color={colors.primaryText} strokeWidth={2} />
+              <Title center>Tekrar bitti!</Title>
+            </View>
+          ) : (
+            <Title center>Bugün tekrar yok ✅</Title>
+          )}
           <Body center color={colors.textMuted}>
             {deck.cards.length
               ? `${done.right} doğru · ${done.wrong} yanlış`
@@ -119,7 +126,7 @@ export default function ReviewScreen() {
         {flipped && v.example ? <Body center color={colors.textMuted}>{v.example}</Body> : null}
         {!flipped && (
           <Pressable onPress={() => speak(v.term, course.toLang)} accessibilityRole="button" accessibilityLabel="Dinle" style={styles.speaker}>
-            <Heading accessible={false}>🔊</Heading>
+            <Icon name="volume" size={24} color={colors.secondaryText} />
           </Pressable>
         )}
       </Pressable>
@@ -138,6 +145,7 @@ export default function ReviewScreen() {
 
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: 'center', gap: spacing.lg },
+  doneTitle: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm },
   header: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, marginBottom: spacing.xl },
   practiceCards: { gap: spacing.sm, marginBottom: spacing.xl },
   card: { flex: 1, borderWidth: 1, borderRadius: 10, padding: spacing.xl, alignItems: 'center', justifyContent: 'center', gap: spacing.md, marginBottom: spacing.xl },

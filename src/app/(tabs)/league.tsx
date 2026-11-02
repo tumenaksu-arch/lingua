@@ -13,6 +13,7 @@ import {
   Button,
   Caption,
   Heading,
+  Icon,
   Screen,
   Title,
   fonts,
@@ -239,7 +240,10 @@ function FriendsTab() {
           accessibilityLabel={`Birlikte en uzun seri: ${best.nickname}, ${best.streak} gün`}
         >
           <Caption color={colors.textMuted}>Birlikte en uzun seri</Caption>
-          <Text style={[styles.streakCardNumber, { color: colors.primaryText }]}>🔥 {best.streak}</Text>
+          <View style={styles.streakCardNumberRow}>
+            <Icon name="flame" size={22} color={colors.primaryText} strokeWidth={2} />
+            <Text style={[styles.streakCardNumber, { color: colors.primaryText }]}>{best.streak}</Text>
+          </View>
           <Body color={colors.text}>{best.nickname} ile {best.streak} gündür birlikte çalışıyorsunuz</Body>
         </View>
       )}
@@ -426,4 +430,5 @@ const styles = StyleSheet.create({
   streakLine: { marginLeft: spacing.md },
   streakCard: { borderWidth: 1, borderRadius: radii.md, padding: spacing.md, alignItems: 'center', gap: spacing.sm },
   streakCardNumber: { fontFamily: fonts.mono, fontSize: 32, letterSpacing: 2 },
+  streakCardNumberRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs },
 });
