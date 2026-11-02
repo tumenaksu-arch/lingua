@@ -23,6 +23,15 @@ export const trEn = course(
     ['fine', 'fine', 'iyi', 'I am fine, thanks.'],
     ['name', 'name', 'isim', 'My name is Ali.'],
     ['nicetomeet', 'nice to meet you', 'tanıştığıma memnun oldum', 'Nice to meet you, Ali.'],
+    // Unit 1 — İ3: greetings & people
+    ['goodevening', 'good evening', 'iyi akşamlar', 'Good evening, everyone.'],
+    ['welcome', 'welcome', 'hoş geldiniz', 'Welcome to my house.'],
+    ['sorry', 'sorry', 'özür dilerim', 'I am sorry, I am late.'],
+    ['seeyou', 'see you', 'görüşürüz', 'See you on Monday.'],
+    ['he', 'he', 'o (erkek)', 'He is my brother.'],
+    ['she', 'she', 'o (kadın)', 'She is my teacher.'],
+    ['old', 'old', 'yaşlı / eski', 'My grandfather is very old.'],
+    ['young', 'young', 'genç', 'They are young students.'],
     // Unit 2 — Food
     ['water', 'water', 'su', 'I drink water every day.'],
     ['bread', 'bread', 'ekmek', 'The bread is fresh.'],
@@ -40,6 +49,15 @@ export const trEn = course(
     ['delicious', 'delicious', 'lezzetli', 'This soup is delicious.'],
     ['menu', 'menu', 'menü', 'Can I see the menu?'],
     ['bill', 'the bill', 'hesap', 'Can we have the bill?'],
+    // Unit 2 — İ3: drinks, fruit & tastes
+    ['thirsty', 'thirsty', 'susamış', 'I am thirsty, I want water.'],
+    ['juice', 'juice', 'meyve suyu', 'The child drinks orange juice.'],
+    ['glass', 'glass', 'bardak', 'She drinks a glass of milk every morning.'],
+    ['cup', 'cup', 'fincan', 'I drink a cup of tea in the morning.'],
+    ['sweet', 'sweet', 'tatlı', 'The cake is very sweet.'],
+    ['soup', 'soup', 'çorba', 'The soup is hot.'],
+    ['fruit', 'fruit', 'meyve', 'I eat fruit every day.'],
+    ['vegetables', 'vegetables', 'sebzeler', 'Vegetables are good for you.'],
     // Unit 3 — Travel
     ['airport', 'airport', 'havalimanı', 'The airport is far from here.'],
     ['ticket', 'ticket', 'bilet', 'I buy a ticket for the train.'],
@@ -57,6 +75,15 @@ export const trEn = course(
     ['near', 'near', 'yakın', 'The shop is near my house.'],
     ['help', 'help', 'yardım', 'Can you help me?'],
     ['excuse', 'excuse me', 'affedersiniz', 'Excuse me, where is the station?'],
+    // Unit 3 — İ3: transport & on board
+    ['ship', 'ship', 'gemi', 'The ship is very big.'],
+    ['boat', 'boat', 'tekne', 'We go to the island by boat.'],
+    ['bicycle', 'bicycle', 'bisiklet', 'He goes to school by bicycle.'],
+    ['road', 'road', 'yol', 'The road to the airport is long.'],
+    ['driver', 'driver', 'şoför', 'The driver is tired.'],
+    ['seat', 'seat', 'koltuk / oturacak yer', 'My seat is near the window.'],
+    ['window', 'window', 'pencere', 'Please open the window.'],
+    ['passenger', 'passenger', 'yolcu', 'Every passenger has a ticket.'],
     // Unit 1 — extra
     ['student', 'student', 'öğrenci', 'I am a student.'],
     ['teacher', 'teacher', 'öğretmen', 'The teacher is busy.'],
@@ -93,6 +120,15 @@ export const trEn = course(
     ['child', 'child', 'çocuk', 'The child is small.'],
     ['have', 'have', 'sahip olmak', 'I have a sister.'],
     ['love', 'love', 'sevmek', 'I love my family.'],
+    // Unit 4 — İ3: relatives & family life
+    ['uncle', 'uncle', 'amca / dayı', 'My uncle lives in Ankara.'],
+    ['aunt', 'aunt', 'teyze / hala', 'My aunt makes good cakes.'],
+    ['cousin', 'cousin', 'kuzen', 'My cousin is sixteen years old.'],
+    ['baby', 'baby', 'bebek', 'The baby is sleeping.'],
+    ['parents', 'parents', 'anne baba / ebeveyn', 'My parents live in İzmir.'],
+    ['yearsold', 'years old', 'yaşında', 'She is ten years old.'],
+    ['married', 'married', 'evli', 'They are married.'],
+    ['twins', 'twins', 'ikizler', 'My cousins are twins.'],
     // Unit 5 — Shopping
     ['shop', 'shop', 'dükkân', 'The shop is closed on Sunday.'],
     ['money', 'money', 'para', 'I have no money today.'],
@@ -108,6 +144,15 @@ export const trEn = course(
     ['big', 'big', 'büyük', 'I have a big family.'],
     ['small', 'small', 'küçük', 'The hotel is small.'],
     ['howmuch', 'how much', 'ne kadar', 'How much is it?'],
+    // Unit 5 — İ3: money, size & colours
+    ['lira', 'lira', 'lira', 'The ticket is two hundred liras.'],
+    ['euro', 'euro', 'euro', 'The bag costs thirty euros.'],
+    ['size', 'size', 'beden / numara', 'What size are your shoes?'],
+    ['color', 'color', 'renk', 'My favorite color is blue.'],
+    ['green', 'green', 'yeşil', 'The garden is green.'],
+    ['yellow', 'yellow', 'sarı', 'The sun is yellow.'],
+    ['white', 'white', 'beyaz', 'The snow is white.'],
+    ['black', 'black', 'siyah', 'My cat is black.'],
     // Unit 6 — Work & school
     ['work', 'work', 'çalışmak / iş', 'I work in an office.'],
     ['office', 'office', 'ofis', 'I work in an office.'],
@@ -123,6 +168,15 @@ export const trEn = course(
     ['computer', 'computer', 'bilgisayar', 'I work on my computer.'],
     ['meeting', 'meeting', 'toplantı', 'I have a meeting today.'],
     ['busy', 'busy', 'meşgul', 'I am busy on Monday.'],
+    // Unit 6 — İ3: school things & workplace
+    ['company', 'company', 'şirket', 'She works for a big company.'],
+    ['factory', 'factory', 'fabrika', 'My father works in a factory.'],
+    ['worker', 'worker', 'işçi', 'He is a good worker.'],
+    ['university', 'university', 'üniversite', 'My sister is at university.'],
+    ['notebook', 'notebook', 'defter', 'I write in my notebook.'],
+    ['paper', 'paper', 'kağıt', 'I need some paper.'],
+    ['desk', 'desk', 'sıra / çalışma masası', 'My desk is near the window.'],
+    ['board', 'board', 'tahta', 'The teacher writes on the board.'],
     // Unit 7 — Weather & time
     ['today', 'today', 'bugün', 'It is cold today.'],
     ['tomorrow', 'tomorrow', 'yarın', 'See you tomorrow.'],
@@ -138,6 +192,15 @@ export const trEn = course(
     ['hour', 'hour', 'saat (süre)', 'I sleep eight hours a night.'],
     ['whattime', 'what time', 'saat kaç', 'What time is it?'],
     ['oclock', "o'clock", 'saat ... (tam)', "It is five o'clock."],
+    // Unit 7 — İ3: weather & days
+    ['cloudy', 'cloudy', 'bulutlu', 'It is cloudy today.'],
+    ['windy', 'windy', 'rüzgârlı', 'It is windy in autumn.'],
+    ['snow', 'snow', 'kar', 'Snow is white.'],
+    ['warm', 'warm', 'ılık', 'It is warm in spring.'],
+    ['tuesday', 'Tuesday', 'salı', 'I work on Tuesday.'],
+    ['wednesday', 'Wednesday', 'çarşamba', 'The meeting is on Wednesday.'],
+    ['friday', 'Friday', 'cuma', 'We meet on Friday.'],
+    ['saturday', 'Saturday', 'cumartesi', 'The party is on Saturday.'],
     // Unit 8 — Hobbies
     ['music', 'music', 'müzik', 'I like music.'],
     ['football', 'football', 'futbol', 'We play football at the weekend.'],
@@ -153,6 +216,15 @@ export const trEn = course(
     ['cook', 'cook', 'yemek pişirmek', 'I cook dinner for my family.'],
     ['photo', 'photo', 'fotoğraf', 'This is a photo of my family.'],
     ['travel', 'travel', 'seyahat etmek', 'We travel by train.'],
+    // Unit 8 — İ3: free time
+    ['song', 'song', 'şarkı', 'She sings a beautiful song.'],
+    ['piano', 'piano', 'piyano', 'He plays the piano.'],
+    ['game', 'game', 'oyun', 'The children play a game.'],
+    ['ball', 'ball', 'top', 'The boy has a red ball.'],
+    ['walk', 'walk', 'yürümek', 'We walk in the park.'],
+    ['draw', 'draw', 'çizmek', 'I like to draw pictures.'],
+    ['painting', 'painting', 'resim / tablo', 'This painting is beautiful.'],
+    ['picnic', 'picnic', 'piknik', 'We have a picnic in the garden.'],
     // Unit 9 — Past tense
     ['yesterday', 'yesterday', 'dün', 'I visited my grandmother yesterday.'],
     ['lastweek', 'last week', 'geçen hafta', 'Last week I was in İzmir.'],
@@ -169,6 +241,15 @@ export const trEn = course(
     ['didyou', 'did you...?', '... -din mi?', 'Did you sleep well?'],
     ['fun', 'fun', 'eğlence', 'We had a lot of fun.'],
     ['lastnight', 'last night', 'dün akşam', 'I stayed home last night.'],
+    // Unit 9 — İ3: more past verbs
+    ['walked', 'walked', 'yürüdü', 'We walked to school.'],
+    ['ran', 'ran', 'koştu', 'He ran to the bus stop.'],
+    ['slept', 'slept', 'uyudu', 'I slept well last night.'],
+    ['drank', 'drank', 'içti', 'She drank a glass of water.'],
+    ['talked', 'talked', 'konuştu / sohbet etti', 'We talked on the phone.'],
+    ['listened', 'listened', 'dinledi', 'I listened to music.'],
+    ['wanted', 'wanted', 'istedi', 'I wanted to sleep.'],
+    ['helped', 'helped', 'yardım etti', 'My brother helped me.'],
     // Unit 10 — Future plans
     ['tonight', 'tonight', 'bu akşam', 'We are meeting tonight.'],
     ['nextweek', 'next week', 'gelecek hafta', 'I am going to Ankara next week.'],
@@ -184,6 +265,15 @@ export const trEn = course(
     ['birthday', 'birthday', 'doğum günü', 'Happy birthday!'],
     ['cantwait', "can't wait", 'sabırsızlanıyorum', "I can't wait for the weekend."],
     ['wouldyou', 'would you like...?', '... ister misiniz?', 'Would you like some tea?'],
+    // Unit 10 — İ3: planning & weather items
+    ['trip', 'trip', 'gezi / seyahat', 'Our trip was very nice.'],
+    ['plan', 'plan', 'plan', 'Our plan is simple.'],
+    ['arrive', 'arrive', 'varmak', 'We arrive at nine.'],
+    ['leave', 'leave', 'ayrılmak / kalkmak', 'The train leaves at six.'],
+    ['umbrella', 'umbrella', 'şemsiye', 'Take an umbrella, it will rain.'],
+    ['probably', 'probably', 'muhtemelen', 'It will probably rain.'],
+    ['bring', 'bring', 'getirmek', 'Please bring your books.'],
+    ['wear', 'wear', 'giymek', 'She wears a red dress.'],
     // Unit 11 — Health
     ['head', 'head', 'baş / kafa', 'My head hurts.'],
     ['stomach', 'stomach', 'mide / karın', 'My stomach hurts.'],
@@ -201,6 +291,15 @@ export const trEn = course(
     ['rest', 'rest', 'dinlenmek', 'I rest on Sunday.'],
     ['better', 'better', 'daha iyi', 'I feel better today.'],
     ['hurt', 'hurt', 'ağrımak / incinmek', 'My foot hurts.'],
+    // Unit 11 — İ3: body parts & wellbeing
+    ['hand', 'hand', 'el', 'I write with my right hand.'],
+    ['foot', 'foot', 'ayak', 'My foot hurts.'],
+    ['nose', 'nose', 'burun', 'Her nose is small.'],
+    ['mouth', 'mouth', 'ağız', 'The doctor looks at my mouth.'],
+    ['sleep', 'sleep', 'uyumak / uyku', 'I sleep eight hours.'],
+    ['tired', 'tired', 'yorgun', 'I am tired after work.'],
+    ['healthy', 'healthy', 'sağlıklı', 'Fruit is healthy.'],
+    ['strong', 'strong', 'güçlü', 'My grandfather is strong.'],
     // Unit 12 — Work life
     ['interview', 'interview', 'mülakat / görüşme', 'I have an interview tomorrow.'],
     ['job', 'job', 'iş (pozisyon)', 'She has a new job.'],
@@ -215,6 +314,15 @@ export const trEn = course(
     ['salary', 'salary', 'maaş', 'The salary is good.'],
     ['team', 'team', 'takım / ekip', 'Our team is very good.'],
     ['manager', 'manager', 'müdür / yönetici', 'The manager is in a meeting.'],
+    // Unit 12 — İ3: job search & office tools
+    ['boss', 'boss', 'patron', 'My boss is very kind.'],
+    ['colleague', 'colleague', 'iş arkadaşı', 'My colleague speaks English.'],
+    ['employee', 'employee', 'çalışan / işçi', 'The company has fifty employees.'],
+    ['cv', 'CV', 'özgeçmiş', 'I sent my CV to the company.'],
+    ['laptop', 'laptop', 'dizüstü bilgisayar', 'I work on my laptop.'],
+    ['printer', 'printer', 'yazıcı', 'The printer is broken.'],
+    ['file', 'file', 'dosya', 'Please send me the file.'],
+    ['online', 'online', 'çevrimiçi / internetten', 'The ticket is cheaper online.'],
     // Unit 13 — Past tense (A2)
     ['didwhat', 'What did you do?', 'Ne yaptın?', 'What did you do yesterday?'],
     ['cleaned', 'cleaned', 'temizledi', 'I cleaned my room yesterday.'],
@@ -229,6 +337,15 @@ export const trEn = course(
     ['spent', 'spent', 'harcadı / geçirdi', 'We spent the day at the park.'],
     ['homework', 'homework', 'ev ödevi', 'I did my homework in the evening.'],
     ['cake', 'cake', 'pasta (kek)', 'She made a cake for my birthday.'],
+    // Unit 13 — İ3: more irregular verbs
+    ['swam', 'swam', 'yüzdü', 'We swam in the sea.'],
+    ['flew', 'flew', 'uçtu', 'We flew to Antalya.'],
+    ['wrote', 'wrote', 'yazdı', 'She wrote a long letter.'],
+    ['began', 'began', 'başladı', 'The film began at eight.'],
+    ['found', 'found', 'buldu', 'I found my ticket.'],
+    ['gave', 'gave', 'verdi', 'She gave me a book.'],
+    ['met', 'met', 'buluştu / tanıştı', 'I met my friend at the station.'],
+    ['said', 'said', 'dedi / söyledi', 'She said thank you.'],
     // Unit 14 — Home & chores (A2)
     ['kitchen', 'kitchen', 'mutfak', 'The kitchen is next to the living room.'],
     ['bedroom', 'bedroom', 'yatak odası', 'My bedroom is small.'],
@@ -242,6 +359,15 @@ export const trEn = course(
     ['sweep', 'sweep', 'süpürmek', 'I sweep the kitchen floor.'],
     ['chores', 'chores', 'ev işleri', 'We share the chores at home.'],
     ['housework', 'housework', 'ev işi (toplam)', 'He helps with the housework.'],
+    // Unit 14 — İ3: kitchen & cleaning
+    ['balcony', 'balcony', 'balkon', 'The balcony is small.'],
+    ['fridge', 'fridge', 'buzdolabı', 'The milk is in the fridge.'],
+    ['oven', 'oven', 'fırın', 'The bread is in the oven.'],
+    ['cupboard', 'cupboard', 'dolap', 'The cups are in the cupboard.'],
+    ['garbage', 'garbage', 'çöp', 'Please take out the garbage.'],
+    ['iron', 'iron', 'ütü / ütülemek', 'I iron my shirt on Sunday.'],
+    ['mop', 'mop', 'paspas / paspas çekmek', 'I mop the kitchen floor.'],
+    ['bucket', 'bucket', 'kova', 'Fill the bucket with water.'],
     // Unit 15 — At the doctor (A2)
     ['arm', 'arm', 'kol', 'My arm hurts.'],
     ['leg', 'leg', 'bacak', 'His leg hurts.'],
@@ -255,6 +381,15 @@ export const trEn = course(
     ['checkup', 'check-up', 'kontrol (muayene)', 'I have a check-up every year.'],
     ['feel', 'feel', 'hissetmek', 'I do not feel well.'],
     ['dizzy', 'dizzy', 'baş dönmesi olan', 'I feel dizzy.'],
+    // Unit 15 — İ3: body & symptoms
+    ['finger', 'finger', 'parmak', 'I have a ring on my finger.'],
+    ['shoulder', 'shoulder', 'omuz', 'My shoulder hurts.'],
+    ['knee', 'knee', 'diz', 'I hurt my knee.'],
+    ['neck', 'neck', 'boyun', 'My neck hurts.'],
+    ['ache', 'ache', 'ağrı', 'I have a stomach ache.'],
+    ['symptom', 'symptom', 'belirti', 'A cough is a symptom of the flu.'],
+    ['allergy', 'allergy', 'alerji', 'I have an allergy to cats.'],
+    ['prescription', 'prescription', 'reçete', 'The doctor gave me a prescription.'],
     // Unit 16 — Getting around town (A2)
     ['straight', 'straight', 'düz (ileri)', 'Go straight for two blocks.'],
     ['corner', 'corner', 'köşe', 'The bank is at the corner.'],
@@ -268,6 +403,15 @@ export const trEn = course(
     ['between', 'between', 'arasında', 'The post office is between the bank and the pharmacy.'],
     ['block', 'block', 'sokak arası (blok)', 'Walk two blocks and turn left.'],
     ['platform', 'platform', 'peron', 'The train leaves from platform two.'],
+    // Unit 16 — İ3: city & public transport
+    ['bridge', 'bridge', 'köprü', 'The bridge is very old.'],
+    ['tunnel', 'tunnel', 'tünel', 'The train goes through a tunnel.'],
+    ['pavement', 'pavement', 'kaldırım', 'Walk on the pavement, not on the road.'],
+    ['crossing', 'crossing', 'yaya geçidi', 'Wait at the crossing.'],
+    ['fare', 'fare', 'ücret (bilet/ulaşım)', 'The bus fare is cheap.'],
+    ['line', 'line', 'hat / çizgi', 'Which line goes to the airport?'],
+    ['delay', 'delay', 'gecikme / rötar', 'Sorry for the delay.'],
+    ['entrance', 'entrance', 'giriş', 'Wait for me at the entrance.'],
     // Unit 17 — Future plans & holidays (A2)
     ['holiday', 'holiday', 'tatil', 'We are going on holiday in July.'],
     ['suitcase', 'suitcase', 'bavul', 'I am packing my suitcase.'],
@@ -281,6 +425,15 @@ export const trEn = course(
     ['towel', 'towel', 'havlu', 'I need a towel for the beach.'],
     ['plans', 'plans', 'planlar', 'What are your plans for the summer?'],
     ['ready', 'ready', 'hazır', 'I am ready to go.'],
+    // Unit 17 — İ3: packing & hotel
+    ['sunscreen', 'sunscreen', 'güneş kremi', 'Put on sunscreen before you go to the beach.'],
+    ['swimsuit', 'swimsuit', 'mayo', 'She buys a new swimsuit.'],
+    ['sandals', 'sandals', 'sandalet', 'I wear sandals in summer.'],
+    ['sunglasses', 'sunglasses', 'güneş gözlüğü', 'I wear sunglasses when it is sunny.'],
+    ['reception', 'reception', 'resepsiyon', 'Ask at the reception.'],
+    ['key', 'key', 'anahtar', 'I lost my key.'],
+    ['luggage', 'luggage', 'bagaj / eşyalar', 'Our luggage is heavy.'],
+    ['guest', 'guest', 'misafir', 'We have a guest tonight.'],
     // Unit 18 — Comparisons (A2)
     ['taller', 'taller', 'daha uzun', 'My brother is taller than me.'],
     ['shorter', 'shorter', 'daha kısa', 'The blue dress is shorter.'],
@@ -295,6 +448,15 @@ export const trEn = course(
     ['cheaper', 'cheaper', 'daha ucuz', 'The market is cheaper than the shop.'],
     ['colder', 'colder', 'daha soğuk', 'Winter is colder than autumn.'],
     ['older', 'older', 'daha yaşlı', 'My grandfather is older than my grandmother.'],
+    // Unit 18 — İ3: more comparisons
+    ['higher', 'higher', 'daha yüksek', 'The price is higher than last year.'],
+    ['longer', 'longer', 'daha uzun', 'Summer days are longer.'],
+    ['worse', 'worse', 'daha kötü', 'My cough is worse today.'],
+    ['warmer', 'warmer', 'daha sıcak', 'It is warmer in the south.'],
+    ['fastest', 'the fastest', 'en hızlı', 'The cheetah is the fastest animal.'],
+    ['mostexpensive', 'the most expensive', 'en pahalı', 'This is the most expensive hotel.'],
+    ['tallest', 'the tallest', 'en uzun', 'My father is the tallest in the family.'],
+    ['easiest', 'the easiest', 'en kolay', 'This is the easiest question.'],
     // Unit 19 — Feelings, personality & opinions (A2)
     ['happy', 'happy', 'mutlu', 'She is happy today.'],
     ['sad', 'sad', 'üzgün', 'He is sad because his team lost.'],
@@ -309,6 +471,15 @@ export const trEn = course(
     ['think', 'I think...', 'bence / ... diye düşünüyorum', 'I think English is useful.'],
     ['opinion', 'in my opinion', 'bence / görüşüme göre', 'In my opinion, the book is better.'],
     ['agree', 'I agree.', 'katılıyorum', 'I agree with you.'],
+    // Unit 19 — İ3: feelings & personality
+    ['surprised', 'surprised', 'şaşırmış / şaşkın', 'I was surprised by the gift.'],
+    ['worried', 'worried', 'kaygılı / endişeli', 'She is worried about her son.'],
+    ['proud', 'proud', 'gururlu', 'I am proud of my team.'],
+    ['lonely', 'lonely', 'yalnız (kendini yalnız hisseden)', 'He feels lonely without his friends.'],
+    ['clever', 'clever', 'zeki', 'The student is very clever.'],
+    ['lazy', 'lazy', 'tembel', 'My cat is lazy.'],
+    ['honest', 'honest', 'dürüst', 'It is important to be honest.'],
+    ['calm', 'calm', 'sakin', 'Stay calm and wait.'],
     // Unit 20 — Polite requests: restaurant, phone & formal situations (A2)
     ['reservation', 'reservation', 'rezervasyon', 'I have a reservation for two.'],
     ['table', 'table', 'masa', 'A table for two, please.'],
@@ -323,10 +494,19 @@ export const trEn = course(
     ['form', 'form', 'form / dilekçe', 'Please fill in this form.'],
     ['sign', 'sign', 'imzalamak', 'Please sign here.'],
     ['available', 'available', 'müsait / boş', 'Is this seat available?'],
+    // Unit 20 — İ3: tableware & formal words
+    ['tip', 'tip', 'bahşiş', 'We leave a tip for the waiter.'],
+    ['fork', 'fork', 'çatal', 'I eat salad with a fork.'],
+    ['knife', 'knife', 'bıçak', 'I need a knife.'],
+    ['spoon', 'spoon', 'kaşık', 'She eats soup with a spoon.'],
+    ['receipt', 'receipt', 'fiş', 'Please give me a receipt.'],
+    ['copy', 'copy', 'kopya', 'I made a copy of the file.'],
+    ['date', 'date', 'tarih', 'What is the date today?'],
+    ['address', 'address', 'adres', 'Write your address on the form.'],
   ],
   [
     unit('tr-en.u1', 1, 'Temeller', 'Selamlaş, kendini tanıt ve basit cümleler kur.', [
-      lesson('tr-en.u1.l1', 1, ['hello', 'goodbye', 'yes', 'no', 'thanks', 'please'], [
+      lesson('tr-en.u1.l1', 1, ['hello', 'goodbye', 'yes', 'no', 'thanks', 'please', 'goodevening', 'welcome', 'sorry', 'seeyou'], [
         sel('"merhaba" hangisi?', ['hello', 'goodbye', 'please'], 0),
         sel('"hoşça kal" hangisi?', ['yes', 'goodbye', 'no'], 1),
         match([
@@ -345,8 +525,14 @@ export const trEn = course(
         listenSel('No, thank you.', ['No, thank you.', 'Yes, thank you.', 'No, please.'], 0),
         chat([['a', 'Hello! I am Ayşe.']], ['Hello, Ayşe! I am Tom.', 'Goodbye, Ayşe!', 'No, thank you, Ayşe.'], 0),
         read('Hello, I am Ayşe. Thank you very much.', 'Konuşmacının adı ne?', ['Ayşe', 'Ali', 'Tom'], 0),
+        match([
+          ['good evening', 'iyi akşamlar'],
+          ['welcome', 'hoş geldiniz'],
+          ['sorry', 'özür dilerim'],
+          ['see you', 'görüşürüz'],
+        ]),
       ]),
-      lesson('tr-en.u1.l2', 2, ['iam', 'youare', 'man', 'woman', 'boy', 'girl'], [
+      lesson('tr-en.u1.l2', 2, ['iam', 'youare', 'man', 'woman', 'boy', 'girl', 'he', 'she', 'old', 'young'], [
         sel('"kadın" hangisi?', ['man', 'woman', 'girl'], 1),
         sel('"oğlan" hangisi?', ['boy', 'girl', 'man'], 0),
         match([
@@ -365,6 +551,12 @@ export const trEn = course(
         listenSel('You are a girl', ['You are a girl', 'You are a boy', 'I am a girl'], 0),
         chat([['a', 'I am Ayşe.']], ['Hello, Ayşe! I am Ali.', 'You are a boy, Ayşe.', 'Goodbye, I am a girl.'], 0),
         read('The boy is Tom. I am a girl.', 'Tom kim?', ['Bir oğlan', 'Bir kız', 'Bir kadın'], 0),
+        match([
+          ['he', 'o (erkek)'],
+          ['she', 'o (kadın)'],
+          ['old', 'yaşlı / eski'],
+          ['young', 'genç'],
+        ]),
       ]),
       lesson('tr-en.u1.l3', 3, ['morning', 'night', 'howareyou', 'fine', 'name', 'nicetomeet'], [
         sel('"günaydın" hangisi?', ['good night', 'good morning', 'goodbye'], 1),
@@ -414,7 +606,7 @@ export const trEn = course(
       ]),
     ]),
     unit('tr-en.u2', 2, 'Yemek', 'Yiyecek içecek sipariş et ve sevdiklerini anlat.', [
-      lesson('tr-en.u2.l1', 1, ['water', 'bread', 'tea', 'coffee', 'milk', 'eat', 'drink'], [
+      lesson('tr-en.u2.l1', 1, ['water', 'bread', 'tea', 'coffee', 'milk', 'eat', 'drink', 'thirsty', 'juice', 'glass', 'cup'], [
         sel('"su" hangisi?', ['milk', 'water', 'tea'], 1),
         sel('"ekmek" hangisi?', ['bread', 'coffee', 'egg'], 0),
         match([
@@ -438,6 +630,12 @@ export const trEn = course(
         ], 0),
         listenSel('She drinks milk', ['She drinks milk', 'She drinks tea', 'She drinks coffee'], 0),
         read('I drink tea in the morning. My brother drinks milk.', 'Erkek kardeş ne içiyormuş?', ['Süt', 'Çay', 'Kahve'], 0),
+        match([
+          ['thirsty', 'susamış'],
+          ['juice', 'meyve suyu'],
+          ['glass', 'bardak'],
+          ['cup', 'fincan'],
+        ]),
       ]),
       lesson('tr-en.u2.l2', 2, ['apple', 'cheese', 'egg', 'breakfast', 'dinner', 'hungry'], [
         sel('"elma" hangisi?', ['egg', 'cheese', 'apple'], 2),
@@ -479,7 +677,7 @@ export const trEn = course(
         chat([['a', 'Can I see the menu, please?']], ['Of course. Here you are.', 'The bill is delicious.', 'No, I am the menu.'], 0),
         read('The soup is delicious. Can we have the bill, please?', 'Yemek nasılmış?', ['Lezzetli', 'Kötü', 'Pahalı'], 0),
       ]),
-      lesson('tr-en.u2.l4', 4, ['fish', 'chicken', 'rice', 'salad', 'sugar', 'salt'], [
+      lesson('tr-en.u2.l4', 4, ['fish', 'chicken', 'rice', 'salad', 'sugar', 'salt', 'sweet', 'soup', 'fruit', 'vegetables'], [
         sel('"balık" hangisi?', ['chicken', 'fish', 'rice'], 1),
         sel('"tuz" hangisi?', ['sugar', 'salt', 'salad'], 1),
         match([
@@ -503,10 +701,16 @@ export const trEn = course(
         ], 1),
         listenSel('I like salad', ['I like salad', 'I like sugar', 'I like salt'], 0),
         read('We eat rice and fish for dinner. The fish is delicious.', 'Akşam yemeğinde ne yiyorlarmış?', ['Pilav ve balık', 'Tavuk ve pilav', 'Balık ve salata'], 0),
+        match([
+          ['sweet', 'tatlı'],
+          ['soup', 'çorba'],
+          ['fruit', 'meyve'],
+          ['vegetables', 'sebzeler'],
+        ]),
       ]),
     ]),
     unit('tr-en.u3', 3, 'Seyahat', 'Yol sor, bilet al ve otelde konuş.', [
-      lesson('tr-en.u3.l1', 1, ['airport', 'ticket', 'train', 'bus', 'where', 'hotel'], [
+      lesson('tr-en.u3.l1', 1, ['airport', 'ticket', 'train', 'bus', 'where', 'hotel', 'ship', 'boat', 'bicycle', 'road'], [
         sel('"havalimanı" hangisi?', ['hotel', 'airport', 'station'], 1),
         sel('"bilet" hangisi?', ['ticket', 'train', 'map'], 0),
         match([
@@ -525,6 +729,12 @@ export const trEn = course(
         listenSel('Where is the train?', ['Where is the train?', 'Where is the bus?', 'Where is the hotel?'], 0),
         chat([['a', 'Excuse me, where is the hotel?']], ['It is near the airport.', 'The train is the hotel.', 'Yes, it is a ticket.'], 0),
         read('The train is late. I have a ticket for the bus.', 'Konuşmacının bileti hangi araç için?', ['Otobüs', 'Tren', 'Uçak'], 0),
+        match([
+          ['ship', 'gemi'],
+          ['boat', 'tekne'],
+          ['bicycle', 'bisiklet'],
+          ['road', 'yol'],
+        ]),
       ]),
       lesson('tr-en.u3.l2', 2, ['left', 'right', 'street', 'far', 'near', 'map'], [
         sel('"sol" hangisi?', ['right', 'left', 'near'], 1),
@@ -571,7 +781,7 @@ export const trEn = course(
         chat([['a', 'Excuse me, where is the taxi?']], ['It is in front of the hotel.', 'The passport is a taxi.', 'Yes, I am a taxi.'], 0),
         read('Here is my passport. I need a taxi to the hotel.', 'Konuşmacının neye ihtiyacı varmış?', ['Taksiye', 'Otobüse', 'Trene'], 0),
       ]),
-      lesson('tr-en.u3.l4', 4, ['car', 'plane', 'station', 'late', 'early', 'bag'], [
+      lesson('tr-en.u3.l4', 4, ['car', 'plane', 'station', 'late', 'early', 'bag', 'driver', 'seat', 'window', 'passenger'], [
         sel('"uçak" hangisi?', ['car', 'plane', 'train'], 1),
         sel('"geç" hangisi?', ['early', 'late', 'near'], 1),
         match([
@@ -595,6 +805,12 @@ export const trEn = course(
         ], 0),
         listenSel('The train is late', ['The train is late', 'The train is early', 'The plane is late'], 0),
         read('My plane is early. My bag is in the car.', 'Çanta neredeymiş?', ['Arabada', 'Uçakta', 'İstasyonda'], 0),
+        match([
+          ['driver', 'şoför'],
+          ['seat', 'koltuk / oturacak yer'],
+          ['window', 'pencere'],
+          ['passenger', 'yolcu'],
+        ]),
       ]),
     ]),
     unit('tr-en.u4', 4, 'Aile', 'Aileni tanıt ve sahip olduklarından bahset.', [
@@ -623,7 +839,7 @@ export const trEn = course(
         listenSel('My mother is a teacher', ['My mother is a teacher', 'My mother is a student', 'My father is a teacher'], 0),
         read('I have a sister. My brother is a student.', 'Konuşmacının kaç kardeşi varmış?', ['İki', 'Bir', 'Üç'], 0),
       ]),
-      lesson('tr-en.u4.l2', 2, ['son', 'daughter', 'child', 'love', 'husband', 'wife'], [
+      lesson('tr-en.u4.l2', 2, ['son', 'daughter', 'child', 'love', 'husband', 'wife', 'uncle', 'aunt', 'cousin', 'baby'], [
         sel('"oğul" hangisi?', ['daughter', 'son', 'child'], 1),
         match([
           ['son', 'oğul'],
@@ -642,8 +858,14 @@ export const trEn = course(
         listenSel('I love my son', ['I love my son', 'I love my daughter', 'I love my child'], 0),
         chat([['a', 'This is my daughter, Elif.']], ['Hello, Elif! Nice to meet you.', 'I am your daughter.', 'No, thank you, daughter.'], 0),
         read('Her son is five years old. His name is Can.', 'Oğlan kaç yaşındaymış?', ['Beş', 'Altı', 'Dört'], 0),
+        match([
+          ['uncle', 'amca / dayı'],
+          ['aunt', 'teyze / hala'],
+          ['cousin', 'kuzen'],
+          ['baby', 'bebek'],
+        ]),
       ]),
-      lesson('tr-en.u4.l3', 3, ['grandmother', 'grandfather', 'family', 'big', 'small', 'love'], [
+      lesson('tr-en.u4.l3', 3, ['grandmother', 'grandfather', 'family', 'big', 'small', 'love', 'parents', 'yearsold', 'married', 'twins'], [
         sel('"büyükanne" hangisi?', ['grandfather', 'grandmother', 'mother'], 1),
         match([
           ['grandmother', 'büyükanne'],
@@ -665,6 +887,12 @@ export const trEn = course(
         ], 1),
         listenSel('My grandmother drinks tea', ['My grandmother drinks tea', 'My grandfather drinks tea', 'My grandmother drinks coffee'], 0),
         read('My family is big. My grandfather is sixty years old.', 'Aile nasılmış?', ['Büyükmüş', 'Küçükmüş', 'Gençmiş'], 0),
+        match([
+          ['parents', 'anne baba / ebeveyn'],
+          ['years old', 'yaşında'],
+          ['married', 'evli'],
+          ['twins', 'ikizler'],
+        ]),
       ]),
       lesson('tr-en.u4.l4', 4, ['family', 'have', 'love', 'friend', 'child', 'brother'], [
         sel('"çocuk" hangisi?', ['child', 'friend', 'brother'], 0),
@@ -688,7 +916,7 @@ export const trEn = course(
       ]),
     ]),
     unit('tr-en.u5', 5, 'Alışveriş', 'Fiyat sor, renk ve beden söyle, alışveriş yap.', [
-      lesson('tr-en.u5.l1', 1, ['shop', 'money', 'price', 'expensive', 'cheap', 'howmuch'], [
+      lesson('tr-en.u5.l1', 1, ['shop', 'money', 'price', 'expensive', 'cheap', 'howmuch', 'lira', 'euro', 'size', 'color'], [
         sel('"pahalı" hangisi?', ['cheap', 'expensive', 'price'], 1),
         sel('"para" hangisi?', ['money', 'shop', 'price'], 0),
         match([
@@ -707,6 +935,12 @@ export const trEn = course(
         listenSel('How much is this?', ['How much is this?', 'How old is this?', 'Where is this?'], 0),
         chat([['a', 'This car is very expensive!']], ['Yes, and it is not cheap.', 'Yes, it is very cheap.', 'The shop is a price.'], 0),
         read('I have no money today. This shop is very expensive.', 'Dükkân nasılmış?', ['Çok pahalıymış', 'Çok ucuzmuş', 'Kapalıymış'], 0),
+        match([
+          ['lira', 'lira'],
+          ['euro', 'euro'],
+          ['size', 'beden / numara'],
+          ['color', 'renk'],
+        ]),
       ]),
       lesson('tr-en.u5.l2', 2, ['buy', 'shirt', 'shoes', 'dress', 'big', 'small'], [
         sel('"gömlek" hangisi?', ['shoes', 'shirt', 'dress'], 1),
@@ -728,10 +962,10 @@ export const trEn = course(
           { emoji: '👗', label: 'dress' },
           { emoji: '👜', label: 'bag' },
         ], 1),
-        listenSel('I buy a new shirt', ['I buy a new shirt', 'I buy a new shoes', 'I buy an old shirt'], 0),
+        listenSel('I buy a new shirt', ['I buy a new shirt', 'I buy a new dress', 'I buy an old shirt'], 0),
         read('The shoes are too big. I buy a small dress.', 'Ayakkabılar nasılmış?', ['Çok büyükmüş', 'Küçükmüş', 'Yeniymiş'], 0),
       ]),
-      lesson('tr-en.u5.l3', 3, ['red', 'blue', 'dress', 'shirt', 'like', 'buy'], [
+      lesson('tr-en.u5.l3', 3, ['red', 'blue', 'dress', 'shirt', 'like', 'buy', 'green', 'yellow', 'white', 'black'], [
         sel('"kırmızı" hangisi?', ['blue', 'red', 'big'], 1),
         match([
           ['red', 'kırmızı'],
@@ -750,6 +984,12 @@ export const trEn = course(
         listenSel('I like the blue dress', ['I like the blue dress', 'I like the red dress', 'I buy the blue dress'], 0),
         chat([['a', 'I like the blue dress. Do you like it?']], ['Yes, it is beautiful!', 'The blue dress is a shirt.', 'No, the shop is closed.'], 0),
         read('I like the red shirt. The blue dress is expensive.', 'Hangi kıyafet pahalıymış?', ['Mavi elbise', 'Kırmızı gömlek', 'İkisi de ucuzmuş'], 0),
+        match([
+          ['green', 'yeşil'],
+          ['yellow', 'sarı'],
+          ['white', 'beyaz'],
+          ['black', 'siyah'],
+        ]),
       ]),
       lesson('tr-en.u5.l4', 4, ['howmuch', 'money', 'buy', 'cheap', 'expensive', 'shop'], [
         sel('"dükkân" hangisi?', ['shop', 'money', 'price'], 0),
@@ -771,7 +1011,7 @@ export const trEn = course(
       ]),
     ]),
     unit('tr-en.u6', 6, 'İş ve Okul', 'Mesleğini söyle, okul ve iş hayatından bahset.', [
-      lesson('tr-en.u6.l1', 1, ['work', 'office', 'school', 'doctor', 'engineer', 'busy'], [
+      lesson('tr-en.u6.l1', 1, ['work', 'office', 'school', 'doctor', 'engineer', 'busy', 'company', 'factory', 'worker', 'university'], [
         sel('"doktor" hangisi?', ['engineer', 'doctor', 'teacher'], 1),
         sel('"okul" hangisi?', ['office', 'school', 'shop'], 1),
         match([
@@ -790,8 +1030,14 @@ export const trEn = course(
         listenSel('My father is an engineer', ['My father is an engineer', 'My father is a doctor', 'My mother is an engineer'], 0),
         chat([['a', 'Where do you work?']], ['I work in an office.', 'I am an office.', 'Yes, I work.'], 0),
         read('My mother is a doctor. She is very busy today.', 'Annesi bugün nasılmış?', ['Çok meşgulmuş', 'Boşmuş', 'Hastaymış'], 0),
+        match([
+          ['company', 'şirket'],
+          ['factory', 'fabrika'],
+          ['worker', 'işçi'],
+          ['university', 'üniversite'],
+        ]),
       ]),
-      lesson('tr-en.u6.l2', 2, ['book', 'pen', 'read', 'write', 'learn', 'english'], [
+      lesson('tr-en.u6.l2', 2, ['book', 'pen', 'read', 'write', 'learn', 'english', 'notebook', 'paper', 'desk', 'board'], [
         sel('"kitap" hangisi?', ['pen', 'book', 'computer'], 1),
         match([
           ['book', 'kitap'],
@@ -810,6 +1056,12 @@ export const trEn = course(
         listenSel('I write with a blue pen', ['I write with a blue pen', 'I write with a blue book', 'I read with a blue pen'], 0),
         chat([['a', 'What are you doing?']], ['I am reading a book.', 'Yes, I am doing.', 'The book is a pen.'], 0),
         read('I learn English at school. I read English books at night.', 'Konuşmacı ne öğreniyormuş?', ['İngilizce', 'Almanca', 'Matematik'], 0),
+        match([
+          ['notebook', 'defter'],
+          ['paper', 'kağıt'],
+          ['desk', 'sıra / çalışma masası'],
+          ['board', 'tahta'],
+        ]),
       ]),
       lesson('tr-en.u6.l3', 3, ['computer', 'meeting', 'work', 'busy', 'office', 'today'], [
         sel('"toplantı" hangisi?', ['meeting', 'computer', 'office'], 0),
@@ -849,7 +1101,7 @@ export const trEn = course(
       ]),
     ]),
     unit('tr-en.u7', 7, 'Hava ve Zaman', 'Havadan konuş, günleri ve saati söyle.', [
-      lesson('tr-en.u7.l1', 1, ['weather', 'sunny', 'rainy', 'cold', 'hot', 'today'], [
+      lesson('tr-en.u7.l1', 1, ['weather', 'sunny', 'rainy', 'cold', 'hot', 'today', 'cloudy', 'windy', 'snow', 'warm'], [
         sel('"güneşli" hangisi?', ['rainy', 'sunny', 'cold'], 1),
         sel('"soğuk" hangisi?', ['hot', 'cold', 'weather'], 1),
         match([
@@ -868,8 +1120,14 @@ export const trEn = course(
         listenSel('It is hot today', ['It is hot today', 'It is cold today', 'It is hot tomorrow'], 0),
         chat([['a', 'It is very cold today!']], ['Yes, and it is rainy too.', 'Yes, it is very hot.', 'The weather is a cold.'], 0),
         read('It is sunny today. The weather is nice.', 'Bugün hava nasılmış?', ['Güneşli ve güzelmiş', 'Yağmurlu ve soğukmuş', 'Soğukmuş'], 0),
+        match([
+          ['cloudy', 'bulutlu'],
+          ['windy', 'rüzgârlı'],
+          ['snow', 'kar'],
+          ['warm', 'ılık'],
+        ]),
       ]),
-      lesson('tr-en.u7.l2', 2, ['tomorrow', 'now', 'monday', 'sunday', 'week', 'today'], [
+      lesson('tr-en.u7.l2', 2, ['tomorrow', 'now', 'monday', 'sunday', 'week', 'today', 'tuesday', 'wednesday', 'friday', 'saturday'], [
         sel('"yarın" hangisi?', ['today', 'tomorrow', 'now'], 1),
         match([
           ['tomorrow', 'yarın'],
@@ -888,6 +1146,12 @@ export const trEn = course(
         listenSel('Tomorrow is Monday', ['Tomorrow is Monday', 'Today is Monday', 'Tomorrow is Sunday'], 0),
         chat([['a', 'See you tomorrow!']], ['See you! Have a nice day.', 'Yes, I am tomorrow.', 'Tomorrow is a week.'], 0),
         read('I work five days a week. On Sunday I rest.', 'Konuşmacı haftada kaç gün çalışıyormuş?', ['Beş gün', 'Yedi gün', 'İki gün'], 0),
+        match([
+          ['Tuesday', 'salı'],
+          ['Wednesday', 'çarşamba'],
+          ['Friday', 'cuma'],
+          ['Saturday', 'cumartesi'],
+        ]),
       ]),
       lesson('tr-en.u7.l3', 3, ['whattime', 'oclock', 'hour', 'now', 'late', 'early'], [
         sel('"saat kaç" hangisi?', ['how much', 'what time', 'where'], 1),
@@ -927,7 +1191,7 @@ export const trEn = course(
       ]),
     ]),
     unit('tr-en.u8', 8, 'Hobiler', 'Sevdiğin şeylerden ve hafta sonu planlarından bahset.', [
-      lesson('tr-en.u8.l1', 1, ['music', 'football', 'play', 'like', 'guitar', 'movie'], [
+      lesson('tr-en.u8.l1', 1, ['music', 'football', 'play', 'like', 'guitar', 'movie', 'song', 'piano', 'game', 'ball'], [
         sel('"müzik" hangisi?', ['movie', 'music', 'guitar'], 1),
         sel('"futbol" hangisi?', ['football', 'guitar', 'music'], 0),
         match([
@@ -951,6 +1215,12 @@ export const trEn = course(
         ], 1),
         listenSel('I like music', ['I like music', 'I like movies', 'I play music'], 0),
         read('We watch a movie tonight. I like football.', 'Bu akşam ne yapacaklarmış?', ['Film izleyeceklermiş', 'Futbol oynayacaklarmış', 'Müzik dinleyeceklermiş'], 0),
+        match([
+          ['song', 'şarkı'],
+          ['piano', 'piyano'],
+          ['game', 'oyun'],
+          ['ball', 'top'],
+        ]),
       ]),
       lesson('tr-en.u8.l2', 2, ['swim', 'run', 'dance', 'park', 'weekend', 'like'], [
         sel('"yüzmek" hangisi?', ['run', 'swim', 'dance'], 1),
@@ -972,7 +1242,7 @@ export const trEn = course(
         chat([['a', 'What do you do at the weekend?']], ['I run in the park.', 'Yes, I do the weekend.', 'The park is a weekend.'], 0),
         read('I like to dance. My sister likes to swim.', 'Kız kardeş ne yapmayı seviyormuş?', ['Yüzmeyi', 'Dans etmeyi', 'Koşmayı'], 0),
       ]),
-      lesson('tr-en.u8.l3', 3, ['cook', 'photo', 'travel', 'like', 'weekend', 'music'], [
+      lesson('tr-en.u8.l3', 3, ['cook', 'photo', 'travel', 'like', 'weekend', 'music', 'walk', 'draw', 'painting', 'picnic'], [
         sel('"seyahat etmek" hangisi?', ['cook', 'travel', 'photo'], 1),
         match([
           ['cook', 'yemek pişirmek'],
@@ -986,9 +1256,15 @@ export const trEn = course(
         fill('This is a ___ of my family.', ['photo', 'cook', 'travel'], 0),
         speak('I cook dinner.'),
         sel('"cook" ne demek?', ['yemek pişirmek', 'seyahat etmek', 'dans etmek'], 0, 'to'),
-        listenSel('I like to take photos', ['I like to take photos', 'I like to cook photos', 'I like to take music'], 0),
+        listenSel('I like to take photos', ['I like to take photos', 'I like to cook dinner', 'I like to take videos'], 0),
         chat([['a', 'I cook dinner for my family every weekend.']], ['That is nice! What do you cook?', 'Yes, I am cooking.', 'The weekend is dinner.'], 0),
         read('I like to travel by train. I take a lot of photos.', 'Konuşmacı nasıl seyahat ediyormuş?', ['Trenle', 'Otobüsle', 'Uçakla'], 0),
+        match([
+          ['walk', 'yürümek'],
+          ['draw', 'çizmek'],
+          ['painting', 'resim / tablo'],
+          ['picnic', 'piknik'],
+        ]),
       ]),
       lesson('tr-en.u8.l4', 4, ['play', 'like', 'movie', 'football', 'guitar', 'weekend'], [
         sel('"film" hangisi?', ['music', 'movie', 'photo'], 1),
@@ -1004,13 +1280,13 @@ export const trEn = course(
         fill('I ___ the guitar.', ['play', 'like', 'watch'], 0),
         speak('I like movies.'),
         sel('"guitar" ne demek?', ['müzik', 'gitar', 'film'], 1, 'to'),
-        listenSel('My friend likes movies', ['My friend likes movies', 'My friend likes music', 'My friend plays movies'], 0),
+        listenSel('My friend likes movies', ['My friend likes movies', 'My friend likes music', 'My friend likes games'], 0),
         chat([['a', 'Let\'s play football!']], ['Sure! I like football.', 'I like movies very much.', 'I am a doctor.'], 0),
         read('I play the guitar at the weekend. My friend likes to watch movies.', 'Arkadaş ne yapmayı seviyormuş?', ['Film izlemeyi', 'Gitar çalmayı', 'Futbol oynamayı'], 0),
       ]),
     ]),
     unit('tr-en.u9', 9, 'Geçmiş Zaman I', 'Hafta sonunu ve geçmişte yaptıklarını -ed ve temel düzensiz fiillerle anlat; did soruları ve ago.', [
-      lesson('tr-en.u9.l1', 1, ['yesterday', 'lastweek', 'weekend', 'visited', 'went', 'saw'], [
+      lesson('tr-en.u9.l1', 1, ['yesterday', 'lastweek', 'weekend', 'visited', 'went', 'saw', 'walked', 'ran', 'slept', 'drank'], [
         sel('"dün" hangisi?', ['yesterday', 'today', 'tomorrow'], 0),
         sel('"geçen hafta" hangisi?', ['last week', 'next week', 'this week'], 0),
         match([
@@ -1028,8 +1304,15 @@ export const trEn = course(
         listenSel('I visited my mother last week', ['I visited my mother last week', 'I visited my father last week', 'I visit my mother last week'], 0),
         chat([['a', 'Where did you go yesterday?']], ['I went to the park.', 'Yes, I went yesterday.', 'I go to the park every day.'], 0),
         read('I went to the park yesterday. I watched a good movie at home.', 'Konuşmacı dün nereye gitmiş?', ['Parka', 'Sinemaya', 'Okula'], 0),
+        match([
+          ['walked', 'yürüdü'],
+          ['ran', 'koştu'],
+          ['slept', 'uyudu'],
+          ['drank', 'içti'],
+        ]),
+        listenSel('I walked to school yesterday', ['I walked to school yesterday', 'I walked to the park yesterday', 'I walked to school last week'], 0),
       ]),
-      lesson('tr-en.u9.l2', 2, ['watched', 'played', 'stayed', 'cooked', 'movie', 'football'], [
+      lesson('tr-en.u9.l2', 2, ['watched', 'played', 'stayed', 'cooked', 'movie', 'football', 'talked', 'listened', 'wanted', 'helped'], [
         sel('"izledi" hangisi?', ['watched', 'watch', 'watches'], 0),
         match([
           ['watched', 'izledi'],
@@ -1047,6 +1330,13 @@ export const trEn = course(
         listenSel('I watched a movie last night', ['I watched a movie last night', 'I watched a movie last week', 'I watch a movie last night'], 0),
         chat([['a', 'What did you do yesterday?']], ['I watched a movie at home.', 'Yes, I did yesterday.', 'I watch movies every day.'], 0),
         read('She stayed at a hotel last weekend. She cooked dinner there.', 'Nerede kalmış?', ['Otelde', 'Evde', 'Okulda'], 0),
+        match([
+          ['talked', 'konuştu / sohbet etti'],
+          ['listened', 'dinledi'],
+          ['wanted', 'istedi'],
+          ['helped', 'yardım etti'],
+        ]),
+        listenSel('She talked to her friend', ['She talked to her friend', 'She talked to her teacher', 'She listened to her friend'], 0),
       ]),
       lesson('tr-en.u9.l3', 3, ['ate', 'saw', 'had', 'didyou', 'went', 'yesterday'], [
         sel('"yedi (geçmiş)" hangisi?', ['ate', 'eat', 'eaten'], 0),
@@ -1088,7 +1378,7 @@ export const trEn = course(
       ]),
     ]),
     unit('tr-en.u10', 10, 'Gelecek Planları', 'Günlük hayatta gelecek için plan yap: going to ile niyet, will ile tahmin ve nazik davetler.', [
-      lesson('tr-en.u10.l1', 1, ['goingto', 'tonight', 'nextweek', 'movie', 'weekend', 'play'], [
+      lesson('tr-en.u10.l1', 1, ['goingto', 'tonight', 'nextweek', 'movie', 'weekend', 'play', 'trip', 'plan', 'arrive', 'leave'], [
         sel('"bu akşam" hangisi?', ['tonight', 'today', 'tomorrow'], 0),
         sel('"gelecek hafta" hangisi?', ['last week', 'next week', 'this week'], 1),
         match([
@@ -1106,8 +1396,15 @@ export const trEn = course(
         listenSel('I am going to watch a movie tonight', ['I am going to watch a movie tonight', 'I am going to watched a movie tonight', 'I am going to watch a movie tomorrow night'], 0),
         chat([['a', 'What are you going to do tonight?']], ['I am going to watch a movie.', 'Yes, I am going tonight.', 'Tonight is a movie.'], 0),
         read('We are going to play football at the weekend. Next week we are going to watch a movie.', 'Hafta sonu ne yapacaklarmış?', ['Futbol oynayacaklarmış', 'Film izleyeceklermiş', 'Hiçbir şey yapmayacaklarmış'], 0),
+        match([
+          ['trip', 'gezi / seyahat'],
+          ['plan', 'plan'],
+          ['arrive', 'varmak'],
+          ['leave', 'ayrılmak / kalkmak'],
+        ]),
+        listenSel('We are going to arrive at nine', ['We are going to arrive at nine', 'We are going to arrive at eight', 'We are going to leave at nine'], 0),
       ]),
-      lesson('tr-en.u10.l2', 2, ['will', 'maybe', 'sure', 'rain', 'weather', 'tomorrow'], [
+      lesson('tr-en.u10.l2', 2, ['will', 'maybe', 'sure', 'rain', 'weather', 'tomorrow', 'umbrella', 'probably', 'bring', 'wear'], [
         sel('"belki" hangisi?', ['maybe', 'never', 'always'], 0),
         match([
           ['will', '-ecek (tahmin)'],
@@ -1125,6 +1422,13 @@ export const trEn = course(
         listenSel('It will rain tomorrow', ['It will rain tomorrow', 'It will be sunny tomorrow', 'It would rain tomorrow'], 0),
         chat([['a', 'Will you come to the park tomorrow?']], ['Sure! I will come.', 'Yes, I come tomorrow.', 'The park will rain.'], 0),
         read('Maybe it will rain tomorrow. I will stay home.', 'Yarın hava nasıl olabilirmiş?', ['Yağmurlu olabilirmiş', 'Güneşli olabilirmiş', 'Karlı olabilirmiş'], 0),
+        match([
+          ['umbrella', 'şemsiye'],
+          ['probably', 'muhtemelen'],
+          ['bring', 'getirmek'],
+          ['wear', 'giymek'],
+        ]),
+        listenSel('It will probably rain tonight', ['It will probably rain tonight', 'It will probably rain tomorrow', 'It will probably snow tonight'], 0),
       ]),
       lesson('tr-en.u10.l3', 3, ['meet', 'appointment', 'meeting', 'busy', 'tonight', 'tomorrow'], [
         sel('"buluşmak" hangisi?', ['meet', 'meat', 'met'], 0),
@@ -1166,7 +1470,7 @@ export const trEn = course(
       ]),
     ]),
     unit('tr-en.u11', 11, 'Sağlık', 'Şikâyetlerini ve belirtilerini anlat: ağrı, ateş, grip; should ile tavsiye al.', [
-      lesson('tr-en.u11.l1', 1, ['head', 'stomach', 'back', 'tooth', 'pain', 'doctor'], [
+      lesson('tr-en.u11.l1', 1, ['head', 'stomach', 'back', 'tooth', 'pain', 'doctor', 'hand', 'foot', 'nose', 'mouth'], [
         sel('"kafa" hangisi?', ['head', 'hand', 'heart'], 0),
         sel('"diş" hangisi?', ['tooth', 'mouth', 'foot'], 0),
         match([
@@ -1184,6 +1488,13 @@ export const trEn = course(
         listenSel('My tooth hurts', ['My tooth hurts', 'My tooth hurt', 'My head hurts'], 0),
         chat([['a', 'My head hurts.']], ['Oh no! You need a doctor.', 'Yes, my head.', 'The doctor is here.'], 0),
         read('I have a pain in my back. The doctor can help me.', 'Konuşmacının nesi ağrıyormuş?', ['Sırtı', 'Kafası', 'Dişi'], 0),
+        match([
+          ['hand', 'el'],
+          ['foot', 'ayak'],
+          ['nose', 'burun'],
+          ['mouth', 'ağız'],
+        ]),
+        listenSel('My hand hurts', ['My hand hurts', 'My foot hurts', 'My head hurts'], 0),
       ]),
       lesson('tr-en.u11.l2', 2, ['sick', 'fever', 'cough', 'flu', 'headache', 'doctor'], [
         sel('"hasta" hangisi?', ['sick', 'strong', 'happy'], 0),
@@ -1204,7 +1515,7 @@ export const trEn = course(
         chat([['a', 'I have a headache and a fever.']], ['Poor you! Do you want to see a doctor?', 'Yes, I have a headache.', 'The fever is a doctor.'], 0),
         read('She has a headache and a fever. She needs to see a doctor.', 'Onun nesi ağrıyormuş?', ['Kafası', 'Midesi', 'Sırtı'], 0),
       ]),
-      lesson('tr-en.u11.l3', 3, ['medicine', 'pharmacy', 'should', 'rest', 'better', 'water'], [
+      lesson('tr-en.u11.l3', 3, ['medicine', 'pharmacy', 'should', 'rest', 'better', 'water', 'sleep', 'tired', 'healthy', 'strong'], [
         sel('"eczane" hangisi?', ['pharmacy', 'hospital', 'market'], 0),
         match([
           ['medicine', 'ilaç'],
@@ -1222,6 +1533,13 @@ export const trEn = course(
         listenSel('I need some medicine', ['I need some medicine', 'I need some water', 'I needed some medicine'], 0),
         chat([['a', 'I feel better today.']], ['Great! The medicine is working.', 'Yes, I feel today.', 'The pharmacy is better.'], 0),
         read('The pharmacy is near the hospital. You should rest and drink water.', 'Eczane neredeymiş?', ['Hastanenin yanındaymış', 'Okulun arkasındaymış', 'Evin önündeymiş'], 0),
+        match([
+          ['sleep', 'uyumak / uyku'],
+          ['tired', 'yorgun'],
+          ['healthy', 'sağlıklı'],
+          ['strong', 'güçlü'],
+        ]),
+        listenSel('You should sleep more', ['You should sleep more', 'You should rest more', 'You should sleep less'], 0),
       ]),
       lesson('tr-en.u11.l4', 4, ['hurt', 'pain', 'should', 'rest', 'better', 'sick'], [
         sel('"ağrımak" hangisi?', ['hurt', 'hunt', 'heat'], 0),
@@ -1244,7 +1562,7 @@ export const trEn = course(
       ]),
     ]),
     unit('tr-en.u12', 12, 'İş Hayatı', 'İş görüşmesinde konuş, deneyimini anlat ve nazik isteklerde bulun.', [
-      lesson('tr-en.u12.l1', 1, ['interview', 'job', 'experience', 'apply', 'work', 'office'], [
+      lesson('tr-en.u12.l1', 1, ['interview', 'job', 'experience', 'apply', 'work', 'office', 'boss', 'colleague', 'employee', 'cv'], [
         sel('"mülakat" hangisi?', ['interview', 'internet', 'interest'], 0),
         match([
           ['interview', 'mülakat / görüşme'],
@@ -1262,6 +1580,13 @@ export const trEn = course(
         listenSel('I have a job interview tomorrow', ['I have a job interview tomorrow', 'I have a job interview today', 'I had a job interview tomorrow'], 0),
         chat([['a', 'I have a job interview tomorrow!']], ['Good luck! You have a lot of experience.', 'Yes, it is an interview.', 'The job is tomorrow.'], 0),
         read('She has a new job. She works in an office.', 'Yeni işinde nerede çalışıyormuş?', ['Ofiste', 'Okulda', 'Hastanede'], 0),
+        match([
+          ['boss', 'patron'],
+          ['colleague', 'iş arkadaşı'],
+          ['employee', 'çalışan / işçi'],
+          ['CV', 'özgeçmiş'],
+        ]),
+        listenSel('I sent my CV yesterday', ['I sent my CV yesterday', 'I sent my CV last week', 'I wrote my CV yesterday'], 0),
       ]),
       lesson('tr-en.u12.l2', 2, ['haveworked', 'since', 'work', 'office', 'busy', 'meeting'], [
         sel('"-den beri" hangisi?', ['since', 'for', 'from'], 0),
@@ -1282,7 +1607,7 @@ export const trEn = course(
         chat([['a', 'How long have you worked here?']], ['I have worked here since 2020.', 'Yes, I work here.', 'The office is two years.'], 0),
         read('I have worked at this company for two years. My office is very busy.', 'Konuşmacı ne zamandan beri çalışıyormuş?', ['İki yıldır', 'Beş yıldır', 'On yıldır'], 0),
       ]),
-      lesson('tr-en.u12.l3', 3, ['email', 'call', 'couldyou', 'message', 'write', 'meeting'], [
+      lesson('tr-en.u12.l3', 3, ['email', 'call', 'couldyou', 'message', 'write', 'meeting', 'laptop', 'printer', 'file', 'online'], [
         sel('"e-posta" hangisi?', ['e-mail', 'phone', 'letter'], 0),
         match([
           ['e-mail', 'e-posta'],
@@ -1300,6 +1625,13 @@ export const trEn = course(
         listenSel('Could you call me back, please?', ['Could you call me back, please?', 'Could you call me later, please?', 'Could you called me back, please?'], 0),
         chat([['a', 'Could you send me an e-mail tonight?']], ['Sure, I will send it tonight.', 'Yes, I am an e-mail.', 'The message is tonight.'], 0),
         read('She sent me a message. I will call her tomorrow.', 'Konuşmacı ona ne yapacakmış?', ['Yarın telefon edecekmiş', 'Hemen mesaj atacakmış', 'E-posta yazacakmış'], 0),
+        match([
+          ['laptop', 'dizüstü bilgisayar'],
+          ['printer', 'yazıcı'],
+          ['file', 'dosya'],
+          ['online', 'çevrimiçi / internetten'],
+        ]),
+        listenSel('Could you print this file?', ['Could you print this file?', 'Could you print this letter?', 'Could you send this file?'], 0),
       ]),
       lesson('tr-en.u12.l4', 4, ['salary', 'team', 'manager', 'couldyou', 'meeting', 'help'], [
         sel('"maaş" hangisi?', ['salary', 'sale', 'seller'], 0),
@@ -1322,7 +1654,7 @@ export const trEn = course(
       ]),
     ]),
     unit('tr-en.u13', 13, 'Geçmiş Zaman II', 'Geçmişteki günlük rutinleri anlat: did ile sorular, didn\'t ile olumsuzlar ve yeni düzensiz fiiller.', [
-      lesson('tr-en.u13.l1', 1, ['didwhat', 'cleaned', 'washed', 'didnt', 'gotup', 'woke'], [
+      lesson('tr-en.u13.l1', 1, ['didwhat', 'cleaned', 'washed', 'didnt', 'gotup', 'woke', 'swam', 'flew', 'wrote', 'began'], [
         sel('"yıkadı" hangisi?', ['washed', 'watched', 'walked'], 0),
         match([
           ['got up', 'kalktı (yataktan)'],
@@ -1340,8 +1672,15 @@ export const trEn = course(
         listenSel('What did you do yesterday', ['What did you do yesterday?', 'What do you do yesterday?', 'What you did yesterday?'], 0),
         chat([['a', 'Did you sleep well last night?']], ['Yes, I slept very well.', "No, I don't sleep.", 'I sleep every day.'], 0),
         read('Yesterday I got up at seven. I cleaned my room and washed the dishes.', 'Metindeki kişi dün ne yaptı?', ['Odasını temizledi ve bulaşık yıkadı', 'Televizyon izledi', 'Parka gitti'], 0),
+        match([
+          ['swam', 'yüzdü'],
+          ['flew', 'uçtu'],
+          ['wrote', 'yazdı'],
+          ['began', 'başladı'],
+        ]),
+        listenSel('She wrote a long letter', ['She wrote a long letter', 'She wrote a long story', 'She wrote a short letter'], 0),
       ]),
-      lesson('tr-en.u13.l2', 2, ['bought', 'came', 'took', 'made', 'homework', 'cake'], [
+      lesson('tr-en.u13.l2', 2, ['bought', 'came', 'took', 'made', 'homework', 'cake', 'found', 'gave', 'met', 'said'], [
         sel('"satın aldı" hangisi?', ['bought', 'brought', 'buy'], 0),
         match([
           ['bought', 'satın aldı'],
@@ -1364,6 +1703,13 @@ export const trEn = course(
           { emoji: '☕', label: 'coffee' },
         ], 0),
         read('We spent the day at the park. My friend came with me and we took a lot of photos.', 'Arkadaşlar nerede vakit geçirdi?', ['Parkta', 'Okulda', 'İstasyonda'], 0),
+        match([
+          ['found', 'buldu'],
+          ['gave', 'verdi'],
+          ['met', 'buluştu / tanıştı'],
+          ['said', 'dedi / söyledi'],
+        ]),
+        listenSel('I met her two days ago', ['I met her two days ago', 'I met him two days ago', 'I met her three days ago'], 0),
       ]),
       lesson('tr-en.u13.l3', 3, ['spent', 'woke', 'gotup', 'came', 'didnt', 'didwhat'], [
         sel('"uyandı" hangisi?', ['woke up', 'get up', 'goes up'], 0),
@@ -1404,7 +1750,7 @@ export const trEn = course(
       ]),
     ]),
     unit('tr-en.u14', 14, 'Ev ve Günlük İşler', 'Evindeki odaları tanıt ve ev işlerinden bahset.', [
-      lesson('tr-en.u14.l1', 1, ['kitchen', 'bathroom', 'bedroom', 'floor', 'dishes', 'tidy'], [
+      lesson('tr-en.u14.l1', 1, ['kitchen', 'bathroom', 'bedroom', 'floor', 'dishes', 'tidy', 'balcony', 'fridge', 'oven', 'cupboard'], [
         sel('"mutfak" hangisi?', ['kitchen', 'chicken', 'garden'], 0),
         match([
           ['kitchen', 'mutfak'],
@@ -1426,6 +1772,13 @@ export const trEn = course(
           { emoji: '🛋️', label: 'living room' },
         ], 1),
         read('My house has three rooms. The kitchen is small, but the living room is big.', 'Hangi oda küçükmüş?', ['Mutfak', 'Oturma odası', 'Yatak odası'], 0),
+        match([
+          ['balcony', 'balkon'],
+          ['fridge', 'buzdolabı'],
+          ['oven', 'fırın'],
+          ['cupboard', 'dolap'],
+        ]),
+        listenSel('The balcony is small', ['The balcony is small', 'The balcony is big', 'The kitchen is small'], 0),
       ]),
       lesson('tr-en.u14.l2', 2, ['livingroom', 'garden', 'floor', 'sweep', 'tidy', 'chores'], [
         sel('"bahçe" hangisi?', ['garage', 'garden', 'ground'], 1),
@@ -1446,7 +1799,7 @@ export const trEn = course(
         chat([['a', 'Who sweeps the floor at home?']], ['I do it every Saturday.', 'The floor is very clean.', 'It is behind the house.'], 0),
         read('Our house is small but nice. There is a garden behind the house, and a living room next to the kitchen.', 'Bahçe nerede?', ['Evin arkasında', 'Evin önünde', 'Mutfağın içinde'], 0),
       ]),
-      lesson('tr-en.u14.l3', 3, ['dishes', 'laundry', 'chores', 'housework', 'tidy', 'bedroom'], [
+      lesson('tr-en.u14.l3', 3, ['dishes', 'laundry', 'chores', 'housework', 'tidy', 'bedroom', 'garbage', 'iron', 'mop', 'bucket'], [
         sel('"çamaşır" hangisi?', ['laundry', 'dishes', 'floor'], 0),
         match([
           ['the dishes', 'bulaşıklar'],
@@ -1463,6 +1816,13 @@ export const trEn = course(
         speak('I help with the housework.'),
         chat([['a', 'Do you like doing the chores?']], ['Yes, I like a clean house.', 'The housework is a room.', 'I sweep the garden.'], 0),
         read('On Saturdays I do the laundry. My brother washes the dishes, and we both tidy the living room.', 'Cumartesi günü çamaşırı kim yıkıyor?', ['Ben', 'Erkek kardeşim', 'İkimiz birden'], 0),
+        match([
+          ['garbage', 'çöp'],
+          ['iron', 'ütü / ütülemek'],
+          ['mop', 'paspas / paspas çekmek'],
+          ['bucket', 'kova'],
+        ]),
+        listenSel('Please take out the garbage', ['Please take out the garbage', 'Please take out the bucket', 'Please put away the garbage'], 0),
       ]),
       lesson('tr-en.u14.l4', 4, ['kitchen', 'garden', 'tidy', 'sweep', 'chores', 'laundry'], [
         sel('"düzenli tutmak" hangisi?', ['tidy', 'sweep', 'wash'], 0),
@@ -1484,7 +1844,7 @@ export const trEn = course(
       ]),
     ]),
     unit('tr-en.u15', 15, 'Doktorda', 'Doktorda ve hastanede konuş: vücut bölümleri, muayene ve yıllık sağlık kontrolü.', [
-      lesson('tr-en.u15.l1', 1, ['arm', 'leg', 'eye', 'ear', 'matter', 'nurse'], [
+      lesson('tr-en.u15.l1', 1, ['arm', 'leg', 'eye', 'ear', 'matter', 'nurse', 'finger', 'shoulder', 'knee', 'neck'], [
         sel('"kol" hangisi?', ['arm', 'leg', 'ear'], 0),
         match([
           ['arm', 'kol'],
@@ -1506,8 +1866,15 @@ export const trEn = course(
           { emoji: '🦵', label: 'leg' },
         ], 0),
         read('A nurse works in a hospital. She helps the doctor and looks after sick people.', 'Hemşire nerede çalışır?', ['Hastanede', 'Okulda', 'Eczanede'], 0),
+        match([
+          ['finger', 'parmak'],
+          ['shoulder', 'omuz'],
+          ['knee', 'diz'],
+          ['neck', 'boyun'],
+        ]),
+        listenSel('My knee hurts', ['My knee hurts', 'My neck hurts', 'My knee is fine'], 0),
       ]),
-      lesson('tr-en.u15.l2', 2, ['throat', 'matter', 'temperature', 'dizzy', 'feel', 'hospital'], [
+      lesson('tr-en.u15.l2', 2, ['throat', 'matter', 'temperature', 'dizzy', 'feel', 'hospital', 'ache', 'symptom', 'allergy', 'prescription'], [
         sel('"boğaz" hangisi?', ['throat', 'through', 'thought'], 0),
         match([
           ['throat', 'boğaz'],
@@ -1524,6 +1891,13 @@ export const trEn = course(
         speak('I have a sore throat.'),
         chat([['a', 'You look pale. What is the matter?']], ['I feel dizzy and tired.', 'I am a nurse.', 'The hospital is near.'], 0),
         read('I do not feel well. I have a sore throat and I feel dizzy, so my mother is taking me to the hospital.', 'Nereye gidiyorlar?', ['Hastaneye', 'Eczaneye', 'Okula'], 0),
+        match([
+          ['ache', 'ağrı'],
+          ['symptom', 'belirti'],
+          ['allergy', 'alerji'],
+          ['prescription', 'reçete'],
+        ]),
+        listenSel('The doctor wrote a prescription', ['The doctor wrote a prescription', 'The nurse wrote a prescription', 'The doctor wrote a note'], 0),
       ]),
       lesson('tr-en.u15.l3', 3, ['checkup', 'hospital', 'feel', 'temperature', 'nurse', 'matter'], [
         sel('"kontrol (muayene)" hangisi?', ['check-up', 'check', 'cheque'], 0),
@@ -1563,7 +1937,7 @@ export const trEn = course(
       ]),
     ]),
     unit('tr-en.u16', 16, 'Şehirde Ulaşım', 'Gelişmiş yön tarifi yap ve şehirde yol bul.', [
-      lesson('tr-en.u16.l1', 1, ['straight', 'corner', 'cross', 'block', 'trafficlights', 'subway'], [
+      lesson('tr-en.u16.l1', 1, ['straight', 'corner', 'cross', 'block', 'trafficlights', 'subway', 'bridge', 'tunnel', 'pavement', 'crossing'], [
         sel('"köşe" hangisi?', ['corner', 'cross', 'corridor'], 0),
         match([
           ['straight', 'düz (ileri)'],
@@ -1580,8 +1954,15 @@ export const trEn = course(
         speak('Go straight and turn left.'),
         listenSel('Turn right at the traffic lights', ['Turn right at the traffic lights', 'Turn left at the traffic lights', 'Turn right at the corner'], 0),
         read('Go straight for two blocks. Then turn left at the corner and cross the street.', 'Kaç blok düz gidiliyor?', ['İki', 'Üç', 'Bir'], 0),
+        match([
+          ['bridge', 'köprü'],
+          ['tunnel', 'tünel'],
+          ['pavement', 'kaldırım'],
+          ['crossing', 'yaya geçidi'],
+        ]),
+        listenSel('The bridge is near the station', ['The bridge is near the station', 'The bridge is far from the station', 'The tunnel is near the station'], 0),
       ]),
-      lesson('tr-en.u16.l2', 2, ['subway', 'busstop', 'platform', 'opposite', 'behind', 'nextto'], [
+      lesson('tr-en.u16.l2', 2, ['subway', 'busstop', 'platform', 'opposite', 'behind', 'nextto', 'fare', 'line', 'delay', 'entrance'], [
         sel('"metro" hangisi?', ['subway', 'bus', 'train'], 0),
         match([
           ['subway', 'metro'],
@@ -1598,6 +1979,13 @@ export const trEn = course(
         speak('I take the subway to work.'),
         chat([['a', 'Excuse me, where is the subway station?']], ['It is next to the bank, opposite the library.', 'The subway is fast.', 'I go by bus.'], 0),
         read('The bus stop is in front of the school. The subway station is next to it, opposite the library.', 'Metro istasyonu nerede?', ['Kütüphanenin karşısında', 'Okulun arkasında', 'Bankın bitişiğinde'], 0),
+        match([
+          ['fare', 'ücret (bilet/ulaşım)'],
+          ['line', 'hat / çizgi'],
+          ['delay', 'gecikme / rötar'],
+          ['entrance', 'giriş'],
+        ]),
+        listenSel('There is a delay', ['There is a delay', 'There is a line', 'There was a delay'], 0),
       ]),
       lesson('tr-en.u16.l3', 3, ['between', 'nextto', 'behind', 'cross', 'straight', 'corner'], [
         sel('"arasında" hangisi?', ['between', 'behind', 'beside'], 0),
@@ -1637,7 +2025,7 @@ export const trEn = course(
       ]),
     ]),
     unit('tr-en.u17', 17, 'Tatil Planları', 'Tatile çıkmadan hazırlan: bavul, uçuş ve otel rezervasyonu için gelecek planları kur.', [
-      lesson('tr-en.u17.l1', 1, ['holiday', 'suitcase', 'pack', 'ready', 'beach', 'plans'], [
+      lesson('tr-en.u17.l1', 1, ['holiday', 'suitcase', 'pack', 'ready', 'beach', 'plans', 'sunscreen', 'swimsuit', 'sandals', 'sunglasses'], [
         sel('"tatil" hangisi?', ['holiday', 'holyday', 'weekday'], 0),
         match([
           ['holiday', 'tatil'],
@@ -1659,6 +2047,13 @@ export const trEn = course(
           { emoji: '📦', label: 'box' },
         ], 0),
         read('The summer holiday starts next week. We are packing our suitcases and we are very excited.', 'Yaz tatili ne zaman başlıyor?', ['Gelecek hafta', 'Bu hafta', 'Geçen hafta'], 0),
+        match([
+          ['sunscreen', 'güneş kremi'],
+          ['swimsuit', 'mayo'],
+          ['sandals', 'sandalet'],
+          ['sunglasses', 'güneş gözlüğü'],
+        ]),
+        listenSel('Do not forget the sunscreen', ['Do not forget the sunscreen', 'Do not forget the sunglasses', 'Do not forget the towel'], 0),
       ]),
       lesson('tr-en.u17.l2', 2, ['beach', 'flight', 'camera', 'sun', 'towel', 'sightseeing'], [
         sel('"plaj" hangisi?', ['beach', 'bench', 'peach'], 0),
@@ -1678,7 +2073,7 @@ export const trEn = course(
         chat([['a', 'What are you going to do on holiday?']], ['We are going to the beach every day.', 'I went to the beach yesterday.', 'The beach is far.'], 0),
         read('Our flight leaves at nine in the morning. We are going to the beach and we are going sightseeing in the afternoon.', 'Uçuş ne zaman?', ['Sabah saat dokuzda', 'Öğleden sonra', 'Akşam saat dokuzda'], 0),
       ]),
-      lesson('tr-en.u17.l3', 3, ['bookv', 'sightseeing', 'plans', 'holiday', 'ready', 'pack'], [
+      lesson('tr-en.u17.l3', 3, ['bookv', 'sightseeing', 'plans', 'holiday', 'ready', 'pack', 'reception', 'key', 'luggage', 'guest'], [
         sel('"yer ayırtmak" hangisi?', ['book', 'look', 'back'], 0),
         match([
           ['book', 'yer ayırtmak'],
@@ -1695,6 +2090,13 @@ export const trEn = course(
         speak('We are going to book a hotel.'),
         listenSel('We are going to book a hotel', ['We are going to book a hotel', 'We are going to booked a hotel', 'We is going to book a hotel'], 0),
         read('On holiday we are going sightseeing every morning. In the afternoon we go to the beach, and at night we walk in the old town.', 'Sabahları ne yapıyorlar?', ['Şehir turuna çıkıyorlar', 'Plaja gidiyorlar', 'Eski şehirde yürüyorlar'], 0),
+        match([
+          ['reception', 'resepsiyon'],
+          ['key', 'anahtar'],
+          ['luggage', 'bagaj / eşyalar'],
+          ['guest', 'misafir'],
+        ]),
+        listenSel('The luggage is heavy', ['The luggage is heavy', 'The luggage is light', 'The suitcase is heavy'], 0),
       ]),
       lesson('tr-en.u17.l4', 4, ['holiday', 'flight', 'suitcase', 'beach', 'camera', 'pack'], [
         sel('"havlu" hangisi?', ['towel', 'tower', 'toilet'], 0),
@@ -1716,7 +2118,7 @@ export const trEn = course(
       ]),
     ]),
     unit('tr-en.u18', 18, 'Karşılaştırmalar', 'İki şeyi karşılaştır ve en üstünlüğü anlat.', [
-      lesson('tr-en.u18.l1', 1, ['taller', 'shorter', 'than', 'faster', 'bigger', 'smaller'], [
+      lesson('tr-en.u18.l1', 1, ['taller', 'shorter', 'than', 'faster', 'bigger', 'smaller', 'higher', 'longer', 'worse', 'warmer'], [
         sel('"daha uzun" hangisi?', ['taller', 'tallest', 'tall'], 0),
         match([
           ['taller', 'daha uzun'],
@@ -1733,6 +2135,13 @@ export const trEn = course(
         speak('My brother is taller than me.'),
         read('My brother is taller than me, but I am faster than him. He is bigger, but I can run for longer.', 'Kim daha hızlı?', ['Konuşmacı', 'Erkek kardeş', 'İkisi de'], 0),
         chat([['a', 'Is the train faster than the bus?']], ['Yes, much faster.', 'No, the bus is faster.', 'No, the bus is the best.'], 0),
+        match([
+          ['higher', 'daha yüksek'],
+          ['longer', 'daha uzun'],
+          ['worse', 'daha kötü'],
+          ['warmer', 'daha sıcak'],
+        ]),
+        listenSel('The weather is getting worse', ['The weather is getting worse', 'The weather is getting better', 'The weather is getting colder'], 0),
       ]),
       lesson('tr-en.u18.l2', 2, ['older', 'colder', 'cheaper', 'moreexpensive', 'than', 'smaller'], [
         sel('"daha yaşlı" hangisi?', ['oldest', 'older', 'old'], 1),
@@ -1752,7 +2161,7 @@ export const trEn = course(
         listenSel('The market is cheaper than the shop', ['The market is cheaper than the shop', 'The market is cheap than the shop', 'The market is the cheapest than the shop'], 0),
         read('The market is cheaper than the shop, but the shop is near our house. This market is bigger and the fruit is more expensive.', 'Meyve nerede daha pahalı?', ['Markette', 'Dükkânda', 'İkisinde de aynı'], 0),
       ]),
-      lesson('tr-en.u18.l3', 3, ['best', 'worst', 'biggest', 'faster', 'than', 'cheaper'], [
+      lesson('tr-en.u18.l3', 3, ['best', 'worst', 'biggest', 'faster', 'than', 'cheaper', 'fastest', 'mostexpensive', 'tallest', 'easiest'], [
         sel('"en iyi" hangisi?', ['the best', 'the better', 'the goodest'], 0),
         match([
           ['the best', 'en iyi'],
@@ -1769,6 +2178,13 @@ export const trEn = course(
         speak('This is the best pizza in town.'),
         read('The blue whale is the biggest animal, and the cheetah is the fastest. The snail is one of the slowest!', 'En büyük hayvan hangisi?', ['Mavi balina', 'Çita', 'Sümüklüböcek'], 0),
         chat([['a', 'What is the best restaurant here?']], ['The little cafe near the museum.', 'It is more expensive.', 'Yes, it is the best.'], 0),
+        match([
+          ['the fastest', 'en hızlı'],
+          ['the most expensive', 'en pahalı'],
+          ['the tallest', 'en uzun'],
+          ['the easiest', 'en kolay'],
+        ]),
+        listenSel('This is the easiest question', ['This is the easiest question', 'This is the easiest lesson', 'This is the most difficult question'], 0),
       ]),
       lesson('tr-en.u18.l4', 4, ['than', 'best', 'cheaper', 'faster', 'bigger', 'worst'], [
         sel('"en kötü" hangisi?', ['the worst', 'the worse', 'the bad'], 0),
@@ -1790,7 +2206,7 @@ export const trEn = course(
       ]),
     ]),
     unit('tr-en.u19', 19, 'Duygular ve Fikirler', 'Duygularını ve kişiliğini anlat, fikir bildir.', [
-      lesson('tr-en.u19.l1', 1, ['happy', 'sad', 'excited', 'bored', 'nervous', 'angry'], [
+      lesson('tr-en.u19.l1', 1, ['happy', 'sad', 'excited', 'bored', 'nervous', 'angry', 'surprised', 'worried', 'proud', 'lonely'], [
         sel('"mutlu" hangisi?', ['happy', 'sad', 'angry'], 0),
         match([
           ['happy', 'mutlu'],
@@ -1807,8 +2223,15 @@ export const trEn = course(
         speak('I am excited about the trip.'),
         read('My little brother is excited about the trip, but I am a little nervous. My mother is happy and my father is sad to leave his garden.', 'Kim biraz gerginmiş?', ['Konuşmacı', 'Küçük erkek kardeş', 'Babası'], 0),
         chat([['a', 'You look sad. What is wrong?']], ['I am sad because my friend is sick.', 'I am happy because of the sun.', 'I am bored with you.'], 0),
+        match([
+          ['surprised', 'şaşırmış / şaşkın'],
+          ['worried', 'kaygılı / endişeli'],
+          ['proud', 'gururlu'],
+          ['lonely', 'yalnız (kendini yalnız hisseden)'],
+        ]),
+        listenSel('She was surprised by the news', ['She was surprised by the news', 'She was worried by the news', 'She was surprised by the gift'], 0),
       ]),
-      lesson('tr-en.u19.l2', 2, ['friendly', 'shy', 'kind', 'funny', 'think', 'agree'], [
+      lesson('tr-en.u19.l2', 2, ['friendly', 'shy', 'kind', 'funny', 'think', 'agree', 'clever', 'lazy', 'honest', 'calm'], [
         sel('"utangaç" hangisi?', ['shy', 'sly', 'fly'], 0),
         match([
           ['friendly', 'arkadaş canlısı'],
@@ -1825,6 +2248,13 @@ export const trEn = course(
         speak('Our neighbours are very friendly.'),
         listenSel('Our neighbours are very friendly', ['Our neighbours are very friendly', 'Our neighbours is very friendly', 'Our neighbours are very friend'], 0),
         read('The new student is shy, but he is very kind. Our teacher is friendly and funny, so the class is never bored.', 'Yeni öğrenci nasıl biri?', ['Utangaç ama iyi kalpli', 'Komik ve korkak', 'Kızgın ve utangaç'], 0),
+        match([
+          ['clever', 'zeki'],
+          ['lazy', 'tembel'],
+          ['honest', 'dürüst'],
+          ['calm', 'sakin'],
+        ]),
+        listenSel('He is very lazy', ['He is very lazy', 'He is very clever', 'She is very lazy'], 0),
       ]),
       lesson('tr-en.u19.l3', 3, ['think', 'opinion', 'agree', 'excited', 'nervous', 'kind'], [
         sel('"bence / görüşüme göre" hangisi?', ['in my opinion', 'in my mind', 'on my idea'], 0),
@@ -1864,7 +2294,7 @@ export const trEn = course(
       ]),
     ]),
     unit('tr-en.u20', 20, 'Kibar İstekler', 'Restoranda, telefonda ve resmî durumlarda kibarca konuş.', [
-      lesson('tr-en.u20.l1', 1, ['reservation', 'table', 'waiter', 'order', 'available', 'polite'], [
+      lesson('tr-en.u20.l1', 1, ['reservation', 'table', 'waiter', 'order', 'available', 'polite', 'tip', 'fork', 'knife', 'spoon'], [
         sel('"rezervasyon" hangisi?', ['reservation', 'resignation', 'presentation'], 0),
         match([
           ['reservation', 'rezervasyon'],
@@ -1881,6 +2311,13 @@ export const trEn = course(
         speak('I have a reservation for two.'),
         chat([['a', 'Good evening. I have a reservation for two.'], ['b', 'Of course. This way, please.']], ['Thank you. Could we sit near the window?', 'We are ready to order.', 'The table is available.'], 0),
         read('The waiter is very polite. He brings the menu and asks: Are you ready to order?', 'Garson ne getiriyor?', ['Menüyü', 'Hesabı', 'Yemeği'], 0),
+        match([
+          ['tip', 'bahşiş'],
+          ['fork', 'çatal'],
+          ['knife', 'bıçak'],
+          ['spoon', 'kaşık'],
+        ]),
+        listenSel('Could I have a spoon?', ['Could I have a spoon?', 'Could I have a fork?', 'Could you bring a spoon?'], 0),
       ]),
       lesson('tr-en.u20.l2', 2, ['phone', 'holdon', 'spell', 'repeat', 'slowly', 'polite'], [
         sel('"telefon" hangisi?', ['phone', 'photo', 'phrase'], 0),
@@ -1900,7 +2337,7 @@ export const trEn = course(
         listenSel('Could you spell your name, please', ['Could you spell your name, please', 'Could you spill your name, please', 'Could you speak your name, please'], 0),
         read('On the phone: Could you hold on, please? ... Thank you for waiting. Could you spell your surname?', 'Telefonda ne isteniyor?', ['Soyadının hecelenmesi', 'Adresin tekrarlanması', 'Numaranın söylenmesi'], 0),
       ]),
-      lesson('tr-en.u20.l3', 3, ['form', 'sign', 'slowly', 'repeat', 'table', 'available'], [
+      lesson('tr-en.u20.l3', 3, ['form', 'sign', 'slowly', 'repeat', 'table', 'available', 'receipt', 'copy', 'date', 'address'], [
         sel('"form" hangisi?', ['form', 'from', 'farm'], 0),
         match([
           ['form', 'form / dilekçe'],
@@ -1917,6 +2354,13 @@ export const trEn = course(
         speak('Please fill in this form.'),
         chat([['a', 'Good morning. How can I help you?'], ['b', 'I have an appointment with Dr. Kaya.']], ['Please fill in this form and sign here.', 'Please order at the table.', 'The doctor is not available today.'], 0),
         read("At the doctor's office I fill in a form and sign my name. The receptionist speaks slowly and repeats the questions.", 'Resepsiyonist ne yapıyor?', ['Yavaş konuşup soruları tekrarlıyor', 'Hızlı konuşup formu alıyor', 'Soruları yazıyor'], 0),
+        match([
+          ['receipt', 'fiş'],
+          ['copy', 'kopya'],
+          ['date', 'tarih'],
+          ['address', 'adres'],
+        ]),
+        listenSel('Could you write the date here?', ['Could you write the date here?', 'Could you write the date there?', 'Could you write your name here?'], 0),
       ]),
       lesson('tr-en.u20.l4', 4, ['reservation', 'polite', 'phone', 'form', 'slowly', 'order'], [
         sel('"kibar / nazik" hangisi?', ['polite', 'police', 'policy'], 0),
