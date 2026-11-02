@@ -256,6 +256,9 @@ export const trDe = course(
         sel('"tschüss" ne demek?', ['merhaba', 'hoşça kal', 'lütfen'], 1, 'to'),
         build('Hayır, teşekkürler.', ['Nein, danke', 'Nein danke'], ['ja', 'bitte']),
         listen('Nein, danke', ['Nein, danke', 'Nein danke']),
+        listenSel('Ja, bitte', ['Nein, bitte', 'Ja, bitte', 'Ja, danke'], 1),
+        chat([['a', 'Danke!']], ['Nein!', 'Bitte!', 'Tschüss!'], 1),
+        read('Nein, danke. Ja, bitte!', 'Metinde neler var?', ['Hem "hayır, teşekkürler" hem "evet, lütfen"', 'Sadece "evet" var', 'Sadece "hayır" var'], 0),
       ]),
       lesson('tr-de.u1.l2', 2, ['ichbin', 'dubist', 'mann', 'frau'], [
         sel('"kadın" hangisi?', ['der Mann', 'die Frau', 'das Brot'], 1),
@@ -272,6 +275,9 @@ export const trDe = course(
         speak('Ich bin ein Mann.'),
         fill('Ich ___ eine Frau.', ['bist', 'bin', 'ist'], 1),
         speak('Du bist ein Mann.'),
+        listenSel('Ich bin ein Mann', ['Ich bin ein Mann', 'Ich bin eine Mann', 'Du bist ein Mann'], 0),
+        chat([['a', 'Ich bin Ayşe.']], ['Du bist Ayşe.', 'Und ich bin Tom.', 'Ich bin ein Mann.'], 1),
+        read('Ich bin ein Mann. Du bist eine Frau.', 'Metinde kimler var?', ['Bir adam ve bir kadın', 'İki kadın', 'İki adam'], 0),
       ]),
       lesson('tr-de.u1.l3', 3, ['kind', 'freund', 'gut', 'wiegehts'], [
         sel('"çocuk" hangisi?', ['der Freund', 'das Kind', 'die Frau'], 1),
@@ -288,6 +294,14 @@ export const trDe = course(
         speak('Hallo, wie geht es dir?'),
         sel('"gut" ne demek?', ['kötü', 'iyi', 'büyük'], 1, 'to'),
         listen("Wie geht's?", ["Wie geht's?", "Wie geht's"]),
+        listenSel('Mir geht es gut', ['Mir geht es nicht gut', 'Mir geht es gut', 'Dir geht es gut'], 1),
+        pic('"das Kind" hangisi?', [
+          { emoji: '👨', label: 'der Mann' },
+          { emoji: '👩', label: 'die Frau' },
+          { emoji: '🧒', label: 'das Kind' },
+          { emoji: '🤝', label: 'der Freund' },
+        ], 2),
+        chat([['a', "Hallo, Tom! Wie geht's?"]], ['Ich bin Tom.', 'Gut, danke! Und dir?', 'Tschüss!'], 1),
       ]),
       lesson('tr-de.u1.l4', 4, ['schueler', 'lehrer', 'freund', 'eins', 'zwei', 'drei'], [
         sel('"öğrenci" hangisi?', ['der Lehrer', 'der Schüler', 'der Freund'], 1),
@@ -331,6 +345,14 @@ export const trDe = course(
         speak('Ich trinke Tee.'),
         sel('"der Kaffee" ne demek?', ['çay', 'kahve', 'süt'], 1, 'to'),
         speak('Ich esse Brot.'),
+        listenSel('Ich trinke Wasser', ['Ich esse Wasser', 'Du trinkst Wasser', 'Ich trinke Wasser'], 2),
+        pic('"das Brot" hangisi?', [
+          { emoji: '🍞', label: 'das Brot' },
+          { emoji: '☕', label: 'der Kaffee' },
+          { emoji: '🍵', label: 'der Tee' },
+          { emoji: '👨', label: 'der Mann' },
+        ], 0),
+        read('Ich trinke Tee. Du isst Brot.', 'Metindeki kişiler ne yapıyor?', ['İkisi de kahve içiyor', 'Biri çay içiyor, diğeri ekmek yiyor', 'Biri su içiyor, diğeri çay içiyor'], 1),
       ]),
       lesson('tr-de.u2.l2', 2, ['apfel', 'milch', 'essen', 'trinken'], [
         sel('"elma" hangisi?', ['die Milch', 'der Apfel', 'das Brot'], 1),
@@ -347,6 +369,14 @@ export const trDe = course(
         speak('Du trinkst Milch.'),
         sel('"die Milch" ne demek?', ['elma', 'süt', 'su'], 1, 'to'),
         listen('Ich trinke Milch', ['Ich trinke Milch']),
+        listenSel('Du trinkst Milch', ['Du isst Milch', 'Ich trinke Milch', 'Du trinkst Milch'], 2),
+        pic('"der Apfel" hangisi?', [
+          { emoji: '🍎', label: 'der Apfel' },
+          { emoji: '🥛', label: 'die Milch' },
+          { emoji: '🍞', label: 'das Brot' },
+          { emoji: '☕', label: 'der Kaffee' },
+        ], 0),
+        read('Ich esse einen Apfel. Du trinkst Milch.', 'Kim süt içiyor?', ['İkinci kişi ("du")', 'İlk kişi ("ich")', 'İkisi de'], 0),
       ]),
       lesson('tr-de.u2.l3', 3, ['kaese', 'ei', 'hunger', 'lecker', 'rechnung', 'speisekarte'], [
         sel('"peynir" hangisi?', ['das Ei', 'der Käse', 'das Brot'], 1),
@@ -364,6 +394,9 @@ export const trDe = course(
         sel('"die Speisekarte" ne demek?', ['hesap', 'menü', 'yumurta'], 1, 'to'),
         fill('Ich esse ein ___.', ['Ei', 'Hunger', 'lecker'], 0),
         speak('Die Rechnung, bitte.'),
+        listenSel('Die Rechnung, bitte', ['Die Rechnung, bitte', 'Die Speisekarte, bitte', 'Die Rechnung, danke'], 0),
+        chat([['a', 'Ich habe Hunger.']], ['Die Rechnung, bitte.', 'Tschüss!', 'Die Speisekarte, bitte.'], 2),
+        read('Ich esse ein Ei. Der Käse ist lecker.', 'Metindeki peynir nasıl?', ['Lezzetli', 'Tuzlu', 'Küçük'], 0),
       ]),
       lesson('tr-de.u2.l4', 4, ['fisch', 'haehnchen', 'reis', 'salat', 'zucker', 'salz'], [
         sel('"balık" hangisi?', ['das Hähnchen', 'der Fisch', 'der Reis'], 1),
@@ -380,6 +413,14 @@ export const trDe = course(
         fill('Ich esse keinen ___.', ['Fisch', 'Salz', 'Wasser'], 0),
         speak('Ich esse Reis.'),
         sel('"der Zucker" ne demek?', ['tuz', 'şeker', 'salata'], 1, 'to'),
+        listenSel('Ich esse Fisch', ['Ich esse Fisch', 'Ich esse frisch', 'Du isst Fisch'], 0),
+        pic('"der Fisch" hangisi?', [
+          { emoji: '🐟', label: 'der Fisch' },
+          { emoji: '🍗', label: 'das Hähnchen' },
+          { emoji: '🥗', label: 'der Salat' },
+          { emoji: '🍚', label: 'der Reis' },
+        ], 0),
+        read('Ich esse Hähnchen und Reis. Der Salat ist frisch.', 'Yazar ne yiyor?', ['Balık ve salata', 'Sadece salata', 'Tavuk ve pirinç'], 2),
       ]),
     ]),
     unit('tr-de.u3', 3, 'Aile', 'Aileni tanıt.', [
@@ -398,6 +439,14 @@ export const trDe = course(
         speak('Das ist meine Mutter.'),
         sel('"der Bruder" ne demek?', ['kız kardeş', 'erkek kardeş', 'baba'], 1, 'to'),
         speak('Ich habe eine Schwester.'),
+        listenSel('Meine Mutter trinkt Tee', ['Mein Vater trinkt Tee', 'Meine Mutter trinkt Kaffee', 'Meine Mutter trinkt Tee'], 2),
+        pic('"die Mutter" hangisi?', [
+          { emoji: '👩', label: 'die Mutter' },
+          { emoji: '👨', label: 'der Vater' },
+          { emoji: '👧', label: 'die Schwester' },
+          { emoji: '👦', label: 'der Bruder' },
+        ], 0),
+        read('Meine Mutter trinkt Tee. Mein Vater isst Brot.', 'Metindeki anne ne yapıyor?', ['Çay içiyor', 'Ekmek yiyor', 'Kahve içiyor'], 0),
       ]),
       lesson('tr-de.u3.l2', 2, ['familie', 'lieben', 'gross', 'klein', 'kind'], [
         sel('"aile" hangisi?', ['das Kind', 'die Familie', 'der Freund'], 1),
@@ -414,6 +463,9 @@ export const trDe = course(
         speak('Meine Familie ist klein.'),
         sel('"groß" ne demek?', ['küçük', 'büyük', 'iyi'], 1, 'to'),
         listen('Meine Familie ist groß', ['Meine Familie ist groß', 'Meine Familie ist gross']),
+        listenSel('Mein Kind ist klein', ['Mein Kind ist klein', 'Mein Kind ist groß', 'Dein Kind ist klein'], 0),
+        chat([['a', 'Wie ist deine Familie?']], ['Ich habe Hunger.', 'Meine Familie ist groß.', 'Das Kind ist klein.'], 1),
+        read('Das Kind ist klein. Die Familie ist groß.', 'Metindeki aile nasıl?', ['Büyük', 'Küçük', 'Kısa'], 0),
       ]),
       lesson('tr-de.u3.l3', 3, ['haben', 'kind', 'freund', 'bruder', 'schwester'], [
         sel('"sahip olmak" hangisi?', ['haben', 'lieben', 'essen'], 0),
@@ -430,6 +482,14 @@ export const trDe = course(
         speak('Mein Bruder ist mein Freund.'),
         sel('"das Kind" ne demek?', ['arkadaş', 'çocuk', 'aile'], 1, 'to'),
         fill('Mein Freund ___ ein Kind.', ['hat', 'habe', 'bist'], 0),
+        listenSel('Mein Freund hat ein Kind', ['Mein Freund hat ein Ei', 'Mein Freund ist ein Kind', 'Mein Freund hat ein Kind'], 2),
+        pic('"die Schwester" hangisi?', [
+          { emoji: '👧', label: 'die Schwester' },
+          { emoji: '👦', label: 'der Bruder' },
+          { emoji: '🤝', label: 'der Freund' },
+          { emoji: '🧒', label: 'das Kind' },
+        ], 0),
+        read('Ich habe einen Bruder und eine Schwester. Mein Freund hat ein Kind.', 'Yazarın arkadaşı neye sahip?', ['Bir çocuğa', 'Bir erkek kardeşe', 'Bir kız kardeşe'], 0),
       ]),
       lesson('tr-de.u3.l4', 4, ['familie', 'haben', 'lieben', 'freund', 'ehemann', 'ehefrau'], [
         sel('"koca" hangisi?', ['die Ehefrau', 'der Ehemann', 'der Bruder'], 1),
@@ -446,6 +506,9 @@ export const trDe = course(
         speak('Meine Familie ist groß.'),
         sel('"die Ehefrau" ne demek?', ['koca', 'eş (kadın)', 'kız kardeş'], 1, 'to'),
         fill('Mein Bruder ___ ein Kind.', ['hat', 'habe', 'bist'], 0),
+        listenSel('Ich liebe meine Ehefrau', ['Ich liebe meine Ehefrau', 'Ich liebe meine Ehemann', 'Du liebst meine Ehefrau'], 0),
+        chat([['a', 'Wie ist deine Ehefrau?']], ['Ich habe eine Ehefrau.', 'Meine Ehefrau ist gut.', 'Mein Ehemann trinkt Tee.'], 1),
+        read('Ich habe einen Ehemann. Ich liebe meine Familie.', 'Yazar neye sahip?', ['Bir kocaya', 'Bir çocuğa', 'Bir kardeşe'], 0),
       ]),
     ]),
     unit('tr-de.u4', 4, 'Seyahat', 'Yol sor ve bilet al.', [
@@ -464,6 +527,14 @@ export const trDe = course(
         speak('Wo ist das Hotel?'),
         sel('"wo" ne demek?', ['ne', 'nerede', 'kim'], 1, 'to'),
         listen('Eine Fahrkarte, bitte', ['Eine Fahrkarte, bitte', 'Eine Fahrkarte bitte']),
+        listenSel('Wo ist das Hotel', ['Wo ist das Brot', 'Wo ist das Hotel', 'Wo ist der Zug'], 1),
+        pic('"der Zug" hangisi?', [
+          { emoji: '🚆', label: 'der Zug' },
+          { emoji: '🏨', label: 'das Hotel' },
+          { emoji: '🚉', label: 'der Bahnhof' },
+          { emoji: '🎫', label: 'die Fahrkarte' },
+        ], 0),
+        read('Ich habe eine Fahrkarte. Der Zug ist hier.', 'Yazarın neyi var?', ['Bileti var', 'Otel var', 'Treni yok'], 0),
       ]),
       lesson('tr-de.u4.l2', 2, ['links', 'rechts', 'weit', 'nah', 'hotel'], [
         sel('"sol" hangisi?', ['rechts', 'links', 'nah'], 1),
@@ -485,6 +556,9 @@ export const trDe = course(
           ['Der Zug ist hier', 'tren burada'],
           ['Das Hotel ist rechts', 'otel sağda'],
         ]),
+        listenSel('Das Hotel ist nah', ['Das Hotel ist nah', 'Das Hotel ist weit', 'Das Brot ist nah'], 0),
+        chat([['a', 'Wo ist das Hotel?']], ['Das Hotel ist gut.', 'Ich mag das Hotel.', 'Das Hotel ist links.'], 2),
+        read('Das Hotel ist links. Der Bahnhof ist weit.', 'Metindeki istasyon nasıl?', ['Yakın', 'Solda', 'Uzak'], 2),
       ]),
       lesson('tr-de.u4.l3', 3, ['hilfe', 'entschuldigung', 'wo', 'bahnhof', 'fahrkarte'], [
         sel('"affedersiniz" hangisi?', ['Entschuldigung', 'die Hilfe', 'danke'], 0),
@@ -501,6 +575,9 @@ export const trDe = course(
         speak('Entschuldigung, eine Fahrkarte bitte.'),
         sel('"die Hilfe" ne demek?', ['bilet', 'yardım', 'otel'], 1, 'to'),
         speak('Ich brauche Hilfe.'),
+        listenSel('Ich brauche Hilfe', ['Du brauchst Hilfe', 'Ich habe Hilfe', 'Ich brauche Hilfe'], 2),
+        chat([['a', 'Entschuldigung! Wo ist der Bahnhof?']], ['Der Bahnhof ist links.', 'Entschuldigung, ich habe Hunger.', 'Die Fahrkarte ist billig.'], 0),
+        read('Entschuldigung, ich brauche Hilfe. Wo ist der Bahnhof?', 'Kişi ne istiyor?', ['Yardım istiyor', 'Bilet istiyor', 'Otel istiyor'], 0),
       ]),
       lesson('tr-de.u4.l4', 4, ['auto', 'flugzeug', 'flughafen', 'spaet', 'frueh', 'tasche'], [
         sel('"uçak" hangisi?', ['das Auto', 'das Flugzeug', 'der Zug'], 1),
@@ -517,6 +594,14 @@ export const trDe = course(
         fill('Das Flugzeug ist ___.', ['spät', 'Tasche', 'wo'], 0),
         speak('Wo ist der Flughafen?'),
         sel('"früh" ne demek?', ['geç', 'erken', 'uzak'], 1, 'to'),
+        listenSel('Das Flugzeug kommt spät', ['Das Flugzeug kommt früh', 'Der Zug kommt spät', 'Das Flugzeug kommt spät'], 2),
+        pic('"das Flugzeug" hangisi?', [
+          { emoji: '✈️', label: 'das Flugzeug' },
+          { emoji: '🚗', label: 'das Auto' },
+          { emoji: '🚉', label: 'der Bahnhof' },
+          { emoji: '👜', label: 'die Tasche' },
+        ], 0),
+        read('Meine Tasche ist im Auto. Das Flugzeug kommt früh.', 'Çanta nerede?', ['Arabada', 'Uçakta', 'Havalimanında'], 0),
       ]),
     ]),
     unit('tr-de.u5', 5, 'Alışveriş', 'Fiyat sor, renk söyle, alışveriş yap.', [
@@ -535,6 +620,14 @@ export const trDe = course(
         fill('Der ___ ist zehn Euro.', ['Preis', 'Laden', 'Geld'], 0),
         speak('Wie viel kostet das?'),
         sel('"billig" ne demek?', ['pahalı', 'ucuz', 'fiyat'], 1, 'to'),
+        chat([['a', 'Wie viel kostet das?']], ['Das Kleid ist blau.', 'Zehn Euro.', 'Ich kaufe ein Kleid.'], 1),
+        pic('"das Geld" hangisi?', [
+          { emoji: '💶', label: 'das Geld' },
+          { emoji: '🏪', label: 'der Laden' },
+          { emoji: '🚗', label: 'das Auto' },
+          { emoji: '🎫', label: 'die Fahrkarte' },
+        ], 0),
+        read('Der Laden ist billig. Ich habe kein Geld.', 'Yazarın parası var mı?', ['Hayır, parası yok', 'Evet, çok parası var', 'Evet, bileti var'], 0),
       ]),
       lesson('tr-de.u5.l2', 2, ['kaufen', 'hemd', 'schuhe', 'kleid', 'gross', 'klein'], [
         sel('"gömlek" hangisi?', ['die Schuhe', 'das Hemd', 'das Kleid'], 1),
@@ -551,6 +644,14 @@ export const trDe = course(
         speak('Ich kaufe neue Schuhe.'),
         sel('"das Kleid" ne demek?', ['gömlek', 'elbise', 'ayakkabı'], 1, 'to'),
         fill('Ich will ein ___ kaufen.', ['Kleid', 'Geld', 'teuer'], 0),
+        listenSel('Ich kaufe ein Hemd', ['Du kaufst ein Hemd', 'Ich kaufe ein Kleid', 'Ich kaufe ein Hemd'], 2),
+        pic('"das Kleid" hangisi?', [
+          { emoji: '👗', label: 'das Kleid' },
+          { emoji: '👕', label: 'das Hemd' },
+          { emoji: '👟', label: 'die Schuhe' },
+          { emoji: '🚗', label: 'das Auto' },
+        ], 0),
+        read('Ich kaufe Schuhe. Das Hemd ist zu klein.', 'Yazar ne satın alıyor?', ['Ayakkabı', 'Gömlek', 'Elbise'], 0),
       ]),
       lesson('tr-de.u5.l3', 3, ['rot', 'blau', 'mogen', 'kleid', 'hemd'], [
         sel('"kırmızı" hangisi?', ['blau', 'rot', 'groß'], 1),
@@ -567,6 +668,14 @@ export const trDe = course(
         speak('Ich mag Blau.'),
         sel('"blau" ne demek?', ['kırmızı', 'mavi', 'büyük'], 1, 'to'),
         fill('Das ___ ist rot.', ['Hemd', 'mögen', 'kaufen'], 0),
+        listenSel('Ich mag das blaue Kleid', ['Ich mag das rote Kleid', 'Ich mag das blaue Kleid', 'Ich mag das blaue Hemd'], 1),
+        pic('"das Hemd" hangisi?', [
+          { emoji: '👕', label: 'das Hemd' },
+          { emoji: '👗', label: 'das Kleid' },
+          { emoji: '👟', label: 'die Schuhe' },
+          { emoji: '🍎', label: 'der Apfel' },
+        ], 0),
+        read('Das Hemd ist rot. Das Kleid ist blau.', 'Elbise ne renk?', ['Mavi', 'Kırmızı', 'Beyaz'], 0),
       ]),
       lesson('tr-de.u5.l4', 4, ['wieviel', 'geld', 'kaufen', 'billig', 'teuer', 'laden'], [
         sel('"dükkân" hangisi?', ['der Laden', 'das Geld', 'der Preis'], 0),
@@ -583,6 +692,9 @@ export const trDe = course(
         speak('Es ist sehr billig.'),
         sel('"wie viel" ne demek?', ['nerede', 'ne kadar', 'ne zaman'], 1, 'to'),
         build('Bu çok ucuz.', ['Das ist sehr billig'], ['teuer', 'kaufen', 'Geld']),
+        listenSel('Ich habe kein Geld', ['Ich habe kein Geld', 'Ich habe kein Kleid', 'Du hast kein Geld'], 0),
+        chat([['a', 'Wie viel kostet das Kleid?']], ['Zehn Euro.', 'Das Kleid ist blau.', 'Ich kaufe das Kleid.'], 0),
+        read('Der Laden ist billig. Ich kaufe ein Kleid.', 'Metindeki dükkân nasıl?', ['Ucuz', 'Pahalı', 'Büyük'], 0),
       ]),
     ]),
     unit('tr-de.u6', 6, 'İş ve Okul', 'Mesleğini söyle, okul ve işten bahset.', [
@@ -601,6 +713,14 @@ export const trDe = course(
         fill('Er ist heute sehr ___.', ['beschäftigt', 'Büro', 'arbeiten'], 0),
         speak('Ich arbeite in der Schule.'),
         sel('"beschäftigt" ne demek?', ['boş', 'meşgul', 'yorgun'], 1, 'to'),
+        listenSel('Ich arbeite in der Schule', ['Du arbeitest in der Schule', 'Ich arbeite in der Schule', 'Ich arbeite in der Büro'], 1),
+        pic('"der Arzt" hangisi?', [
+          { emoji: '👨‍⚕️', label: 'der Arzt' },
+          { emoji: '👷', label: 'der Ingenieur' },
+          { emoji: '🏢', label: 'das Büro' },
+          { emoji: '🏫', label: 'die Schule' },
+        ], 0),
+        read('Mein Vater ist Arzt. Er arbeitet in einem Büro.', 'Yazarın babası nerede çalışıyor?', ['Bir ofiste', 'Bir okulda', 'Bir dükkânda'], 0),
       ]),
       lesson('tr-de.u6.l2', 2, ['buch', 'stift', 'lesen', 'schreiben', 'lernen', 'deutsch'], [
         sel('"kitap" hangisi?', ['der Stift', 'das Buch', 'der Computer'], 1),
@@ -617,6 +737,14 @@ export const trDe = course(
         speak('Ich lese deutsche Bücher.'),
         sel('"schreiben" ne demek?', ['okumak', 'yazmak', 'öğrenmek'], 1, 'to'),
         fill('Das ___ liegt auf dem Tisch.', ['Buch', 'lesen', 'lernen'], 0),
+        listenSel('Ich lese ein Buch', ['Ich lese ein Buch', 'Du liest ein Buch', 'Ich lese ein Stift'], 0),
+        pic('"das Buch" hangisi?', [
+          { emoji: '📖', label: 'das Buch' },
+          { emoji: '🖊️', label: 'der Stift' },
+          { emoji: '☕', label: 'der Kaffee' },
+          { emoji: '🍞', label: 'das Brot' },
+        ], 0),
+        read('Ich lerne Deutsch. Du liest ein Buch.', 'İlk kişi ne öğreniyor?', ['Kitap okumayı', 'Almanca', 'Yazmayı'], 1),
       ]),
       lesson('tr-de.u6.l3', 3, ['computer', 'besprechung', 'heute', 'arbeiten', 'beschaeftigt', 'buero'], [
         sel('"toplantı" hangisi?', ['die Besprechung', 'der Computer', 'das Büro'], 0),
@@ -633,6 +761,9 @@ export const trDe = course(
         speak('Die Besprechung ist heute.'),
         sel('"der Computer" ne demek?', ['toplantı', 'bilgisayar', 'ofis'], 1, 'to'),
         fill('___ habe ich eine Besprechung.', ['Heute', 'Computer', 'Büro'], 0),
+        listenSel('Ich habe heute eine Besprechung', ['Ich habe heute eine Besprechung', 'Ich habe heute einen Besprechung', 'Du hast heute eine Besprechung'], 0),
+        chat([['a', 'Wo ist dein Computer?']], ['Ich habe heute eine Besprechung.', 'Mein Computer ist im Büro.', 'Ich bin heute beschäftigt.'], 1),
+        read('Ich arbeite heute im Büro. Die Besprechung ist heute.', 'Toplantı ne zaman?', ['Bugün', 'Yarın', 'Hafta sonu'], 0),
       ]),
       lesson('tr-de.u6.l4', 4, ['lehrer', 'schueler', 'lernen', 'schule', 'deutsch', 'lesen'], [
         sel('"öğrenmek" hangisi?', ['lesen', 'lernen', 'schreiben'], 1),
@@ -649,6 +780,14 @@ export const trDe = course(
         speak('Ich bin ein guter Schüler.'),
         sel('"lernen" ne demek?', ['okumak', 'öğrenmek', 'çalışmak'], 1, 'to'),
         fill('Die Schüler ___ Deutsch.', ['lernen', 'das', 'gut'], 0),
+        listenSel('Der Lehrer spricht Deutsch', ['Der Schüler spricht Deutsch', 'Der Lehrer spricht Deutsch', 'Die Schüler sprechen Deutsch'], 1),
+        pic('"der Schüler" hangisi?', [
+          { emoji: '🧑‍🎓', label: 'der Schüler' },
+          { emoji: '🧑‍🏫', label: 'der Lehrer' },
+          { emoji: '📖', label: 'das Buch' },
+          { emoji: '🏫', label: 'die Schule' },
+        ], 0),
+        read('Die Schüler lesen in der Schule. Der Lehrer lernt Deutsch.', 'Öğrenciler nerede okuyor?', ['Okulda', 'Ofiste', 'Dükkânda'], 0),
       ]),
     ]),
     unit('tr-de.u7', 7, 'Hava ve Zaman', 'Havadan konuş, gün ve saat söyle.', [
@@ -667,6 +806,9 @@ export const trDe = course(
         fill('Das ___ ist heute heiß.', ['Wetter', 'regnerisch', 'kalt'], 0),
         speak('Es ist sehr heiß.'),
         sel('"regnerisch" ne demek?', ['güneşli', 'yağmurlu', 'soğuk'], 1, 'to'),
+        listenSel('Heute ist es heiß', ['Heute ist es heiß', 'Heute ist es kalt', 'Morgen ist es heiß'], 0),
+        chat([['a', 'Wie ist das Wetter heute?']], ['Heute ist es sonnig.', 'Ich mag Musik.', 'Der Zug ist spät.'], 0),
+        read('Heute ist es heiß. Das Wetter ist gut.', 'Bugün hava nasıl?', ['Soğuk', 'Sıcak', 'Yağmurlu'], 1),
       ]),
       lesson('tr-de.u7.l2', 2, ['morgen', 'jetzt', 'montag', 'sonntag', 'woche', 'heute'], [
         sel('"yarın" hangisi?', ['heute', 'morgen', 'jetzt'], 1),
@@ -683,6 +825,9 @@ export const trDe = course(
         speak('Bis morgen!'),
         sel('"die Woche" ne demek?', ['gün', 'hafta', 'ay'], 1, 'to'),
         fill('___ ist Montag.', ['Heute', 'Jetzt', 'Woche'], 0),
+        listenSel('Morgen ist Montag', ['Morgen ist Montag', 'Morgen ist Sonntag', 'Heute ist Montag'], 0),
+        chat([['a', 'Heute ist Sonntag.']], ['Morgen ist Sonntag.', 'Heute ist Montag.', 'Morgen ist Montag.'], 2),
+        read('Die Woche hat sieben Tage. Heute ist Montag.', 'Bugün günlerden ne?', ['Pazartesi', 'Pazar', 'Cuma'], 0),
       ]),
       lesson('tr-de.u7.l3', 3, ['wiespaet', 'uhr', 'stunde', 'jetzt', 'spaet', 'frueh'], [
         sel('"saat kaç" hangisi?', ['Wie spät ist es', 'Wie weit ist es', 'Wie alt ist es'], 0),
@@ -699,6 +844,9 @@ export const trDe = course(
         speak('Es ist jetzt früh.'),
         sel('"die Stunde" ne demek?', ['dakika', 'saat (süre)', 'gün'], 1, 'to'),
         fill('Der Zug ist ___.', ['spät', 'Uhr', 'Woche'], 0),
+        listenSel('Es ist drei Uhr', ['Es ist drei Uhr', 'Es ist zwei Uhr', 'Ist es drei Uhr'], 0),
+        chat([['a', 'Wie spät ist es?']], ['Es ist jetzt.', 'Es ist drei Uhr.', 'Die Besprechung ist heute.'], 1),
+        read('Der Zug kommt spät. Es ist drei Uhr.', 'Saat kaç?', ['Üç', 'İki', 'On'], 0),
       ]),
       lesson('tr-de.u7.l4', 4, ['wetter', 'woche', 'sonntag', 'heiss', 'kalt', 'morgen'], [
         sel('"hava" hangisi?', ['die Woche', 'das Wetter', 'die Stunde'], 1),
@@ -715,6 +863,9 @@ export const trDe = course(
         speak('Das Wetter ist schön.'),
         sel('"morgen" ne demek?', ['bugün', 'yarın', 'şimdi'], 1, 'to'),
         fill('Heute ist ___.', ['Sonntag', 'Woche', 'Wetter'], 0),
+        listenSel('Morgen ist es kalt', ['Morgen ist es kalt', 'Morgen ist es heiß', 'Heute ist es kalt'], 0),
+        chat([['a', 'Wie ist das Wetter morgen?']], ['Morgen ist es kalt.', 'Morgen ist Sonntag.', 'Die Woche ist lang.'], 0),
+        read('Am Sonntag ist es heiß. Am Montag ist es kalt.', 'Pazar günü hava nasıl?', ['Soğuk', 'Yağmurlu', 'Sıcak'], 2),
       ]),
     ]),
     unit('tr-de.u8', 8, 'Hobiler', 'Sevdiğin şeylerden ve hafta sonundan bahset.', [
@@ -733,6 +884,14 @@ export const trDe = course(
         fill('Wir sehen heute einen ___.', ['Film', 'Musik', 'Fußball'], 0),
         speak('Ich mag Fußball.'),
         sel('"spielen" ne demek?', ['izlemek', 'oynamak / çalmak', 'dinlemek'], 1, 'to'),
+        pic('"die Musik" hangisi?', [
+          { emoji: '🎵', label: 'die Musik' },
+          { emoji: '⚽', label: 'der Fußball' },
+          { emoji: '🎸', label: 'die Gitarre' },
+          { emoji: '🎬', label: 'der Film' },
+        ], 0),
+        chat([['a', 'Magst du Fußball?']], ['Nein, ich mag Fußball nicht.', 'Ja, ich mag Fußball.', 'Der Film ist gut.'], 1),
+        read('Ich spiele Fußball. Mein Bruder spielt Gitarre.', 'Yazarın kardeşi ne çalıyor?', ['Gitar', 'Futbol', 'Müzik'], 0),
       ]),
       lesson('tr-de.u8.l2', 2, ['schwimmen', 'laufen', 'tanzen', 'park', 'wochenende', 'mogen'], [
         sel('"yüzmek" hangisi?', ['laufen', 'schwimmen', 'tanzen'], 1),
@@ -749,6 +908,9 @@ export const trDe = course(
         speak('Ich laufe jeden Tag.'),
         sel('"das Wochenende" ne demek?', ['hafta', 'hafta sonu', 'pazartesi'], 1, 'to'),
         fill('Ich ___ im Meer.', ['schwimme', 'tanze', 'Park'], 0),
+        listenSel('Ich laufe im Park', ['Du läufst im Park', 'Ich tanze im Park', 'Ich laufe im Park'], 2),
+        chat([['a', 'Was machst du am Wochenende?']], ['Ich laufe im Park.', 'Ich mag den Park.', 'Der Park ist groß.'], 0),
+        read('Am Wochenende schwimme ich. Meine Schwester tanzt.', 'Yazar hafta sonu ne yapıyor?', ['Yüzüyor', 'Koşuyor', 'Dans ediyor'], 0),
       ]),
       lesson('tr-de.u8.l3', 3, ['kochen', 'foto', 'reisen', 'mogen', 'wochenende', 'musik'], [
         sel('"seyahat etmek" hangisi?', ['kochen', 'reisen', 'Foto'], 1),
@@ -765,6 +927,14 @@ export const trDe = course(
         speak('Ich koche das Abendessen.'),
         sel('"kochen" ne demek?', ['yemek pişirmek', 'seyahat etmek', 'dans etmek'], 0, 'to'),
         fill('Wir ___ am Wochenende.', ['reisen', 'Foto', 'Musik'], 0),
+        listenSel('Ich koche gern', ['Du kochst gern', 'Ich reise gern', 'Ich koche gern'], 2),
+        pic('"das Foto" hangisi?', [
+          { emoji: '📷', label: 'das Foto' },
+          { emoji: '🎵', label: 'die Musik' },
+          { emoji: '✈️', label: 'das Flugzeug' },
+          { emoji: '🌳', label: 'der Park' },
+        ], 0),
+        read('Wir reisen nach Berlin. Am Wochenende koche ich.', 'Yazarlar nereye seyahat ediyor?', ['Berlin’e', 'Okula', 'İstasyona'], 0),
       ]),
       lesson('tr-de.u8.l4', 4, ['spielen', 'mogen', 'film', 'fussball', 'gitarre', 'wochenende'], [
         sel('"film" hangisi?', ['die Musik', 'der Film', 'das Foto'], 1),
@@ -781,6 +951,14 @@ export const trDe = course(
         speak('Ich mag Filme.'),
         sel('"die Gitarre" ne demek?', ['müzik', 'gitar', 'film'], 1, 'to'),
         build('Biz hafta sonu oynarız.', ['Wir spielen am Wochenende'], ['Fußball', 'ich', 'mag']),
+        listenSel('Am Wochenende spiele ich Fußball', ['Am Wochenende spiele ich Fußball', 'Am Wochenende spielst du Fußball', 'Am Wochenende spiele ich Gitarre'], 0),
+        pic('"der Film" hangisi?', [
+          { emoji: '🎬', label: 'der Film' },
+          { emoji: '🎸', label: 'die Gitarre' },
+          { emoji: '⚽', label: 'der Fußball' },
+          { emoji: '📷', label: 'das Foto' },
+        ], 0),
+        read('Wir spielen am Wochenende Fußball. Mein Freund spielt Gitarre.', 'Yazar hafta sonu ne oynuyor?', ['Gitar', 'Futbol', 'Müzik'], 1),
       ]),
     ]),
     unit('tr-de.u9', 9, 'Geçmiş Zaman', 'Dün ne yaptın? Geçmişten bahset.', [
