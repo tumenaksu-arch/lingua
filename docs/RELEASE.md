@@ -57,3 +57,10 @@ npx eas-cli@latest submit --platform android --latest
 ## 6. Yayın sonrası
 - Çökme takibi için Sentry eklenebilir (henüz yok; eski Firebase Crashlytics artık bağlı değil).
 - Küçük JS düzeltmeleri mağaza incelemesi olmadan `npx eas-cli@latest update --branch production` (EAS Update) ile gönderilebilir; native modül değişikliklerinde yeni derleme şarttır.
+
+## 7. Görsel kilit (Playwright snapshot — yerel)
+Love-Vox web sürümünün 12 ekranının 390×844 telefon görünümü koyu ve açık temada piksel düzeyinde kilitlidir (`e2e/__screenshots__/`, platform eki olmadan — yalnızca Linux'ta üretilip Linux'ta karşılaştırılır). **CI'da koşmaz.**
+
+- Koşma: `npm run e2e:snap` (önce `npm run export:web -- /` derler; derlemeyi atlamak için `E2E_SKIP_EXPORT=1 npm run e2e:snap`).
+- Güncelleme: yalnızca **kasıtlı tasarım değişikliğinde** `npm run e2e:snap:update`. PR'da taban görüntüler diff olarak görünür — değişikliği inceleyip onaylayın.
+- Sunucu: `scripts/serve-dist.js` (statik, COOP/COEP başlıklı). Port **sabit değildir**: `E2E_PORT` ortam değişkeninden alınır; verilmezse `4000 + (pid % 1000)` seçilir (paralel oturumlar aynı portu kullanamaz). Yalnız sunucu için: `npm run e2e:serve`.
