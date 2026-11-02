@@ -1,6 +1,6 @@
 import * as Haptics from 'expo-haptics';
-import { useCallback, useEffect } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { useCallback, useEffect, useRef } from 'react';
+import { Pressable, ScrollView, StyleSheet, View, type ScrollView as ScrollViewType } from 'react-native';
 import { router, useFocusEffect } from 'expo-router';
 
 import { getCourse } from '@/content';
@@ -11,9 +11,10 @@ import { dueLabel, pickHomeClass, relativeTime } from '@/features/classes/classV
 import { useNow } from '@/features/useNow';
 import type { QuestStatus } from '@/features/quests';
 import { localDateString, gemsOf, regenerate } from '@/domain';
+import { unitLevel } from '@/domain/unitLevel';
 import { getUnitNote } from '@/content/notes';
 import { getUnitStory } from '@/content/stories';
-import { Body, Button, Caption, GemChip, Heading, Hearts, PathNode, ProgressBar, Screen, StreakFlame, Vox, XpBadge, XpBoostChip, radii, showAlert, spacing, upperTr, useSettingsStore, useTheme, type PathNodeState } from '@/ui';
+import { Body, Button, Caption, GemChip, Heading, Hearts, PathNode, ProgressBar, Screen, StreakFlame, UnitHeader, Vox, XpBadge, XpBoostChip, radii, showAlert, spacing, upperTr, useReduceMotion, useSettingsStore, useTheme, type PathNodeState } from '@/ui';
 
 const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', it: '🇮🇹', tr: '🇹🇷' };
 const LANG_NAME: Record<string, string> = { en: 'İngilizce', de: 'Almanca', es: 'İspanyolca', fr: 'Fransızca', it: 'İtalyanca', tr: 'Türkçe' };
@@ -33,6 +34,43 @@ export default function LearnScreen() {
   const stats = regenerate(rawStats, now);
   const active = activeLessonId(course, progress);
   const today = localDateString(new Date(now));
+
+  // Sıradaki ders görünür olsun: ilk açılışta (ve aktif ders değişince) aktif
+  // düğüm ScrollView içinde ölçülüp görünür alanın dışındaysa bir kez kaydırılır.
+  // Web ve Android WebView'da ScrollView'nin kendi kaydırıcısı kullanılır.
+  const scrollRef = useRef<ScrollViewType>(null);
+  const activeRowRef = useRef<View>(null);
+  const scrolledFor = useRef<string | null>(null);
+  const scrollY = useRef(0);
+  const viewportH = useRef(0);
+  const reduceMotion = useReduceMotion();
+  useEffect(() => {
+    if (active === null || scrolledFor.current === active) return;
+    scrolledFor.current = active;
+    // Bir nefes bekle: ölçüm ancak yerleşim tamamlanınca geçerlidir.
+    const timer = setTimeout(() => {
+      const node = activeRowRef.current;
+      const sv = scrollRef.current;
+      const inner = sv?.getInnerViewNode?.();
+      if (!node || !sv || inner === undefined || typeof node.measureLayout !== 'function') return;
+      try {
+        node.measureLayout(
+          inner as number,
+          (_x, top, _w, height) => {
+            const margin = 16;
+            const visible =
+              viewportH.current > 0 && top >= scrollY.current + margin && top + height <= scrollY.current + viewportH.current - margin;
+            if (visible) return;
+            sv.scrollTo({ y: Math.max(0, top - viewportH.current / 3), animated: !reduceMotion });
+          },
+          () => {},
+        );
+      } catch {
+        // Ölçüm desteklenmiyorsa (ör. test ortamı) sessizce geç.
+      }
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [active, reduceMotion]);
 
   // Day-rollover refresh: the store only refreshes on activity, so an app left
   // open overnight would show yesterday's quests all day. useNow ticks on every
@@ -63,7 +101,17 @@ export default function LearnScreen() {
       {/* İş 3A: çift XP etkinse üstte geri sayım çipi. */}
       {stats.xpBoostUntil !== undefined ? <XpBoostChip until={stats.xpBoostUntil} style={styles.boostChip} /> : null}
 
-      <ScrollView contentContainerStyle={styles.path}>
+      <ScrollView
+        ref={scrollRef}
+        contentContainerStyle={styles.path}
+        scrollEventThrottle={16}
+        onScroll={(e) => {
+          scrollY.current = e.nativeEvent.contentOffset.y;
+        }}
+        onLayout={(e) => {
+          viewportH.current = e.nativeEvent.layout.height;
+        }}
+      >
         <VoxPrompt />
         <ClassCard />
         <DailyQuestsCard />
@@ -75,36 +123,25 @@ export default function LearnScreen() {
           </View>
         )}
         {course.units.map((unit, ui) => {
-          const unitDone = unit.lessons.every((l) => progress[l.id]?.completedAt);
+          const lessonsDone = unit.lessons.filter((l) => progress[l.id]?.completedAt).length;
+          const unitDone = lessonsDone === unit.lessons.length;
           const story = getUnitStory(unit.id);
+          const note = getUnitNote(unit.id);
           return (
             <View key={unit.id} style={styles.unit}>
-              <View style={[styles.unitHeader, { backgroundColor: colors.surface, borderColor: unitDone ? colors.warning : colors.border }]}>
-                <View
-                  accessible
-                  accessibilityRole="header"
-                  accessibilityLabel={`Bölüm ${ui + 1}, ${unit.title}${unitDone ? ', tamamlandı' : ''}. ${unit.description}`}
-                >
-                  <Caption color={colors.primaryText}>{upperTr(`Bölüm ${ui + 1}`)}</Caption>
-                  <Heading>{unit.title}</Heading>
-                  <Body color={colors.textMuted}>{unit.description}</Body>
-                </View>
-                <View style={styles.chipRow}>
-                  {getUnitNote(unit.id) ? (
-                    <Pressable
-                      accessibilityRole="button"
-                      accessibilityLabel={`${unit.title} notları`}
-                      onPress={() => router.push({ pathname: '/notes/[unitId]', params: { unitId: unit.id } })}
-                      style={({ pressed }) => [styles.notesChip, { borderColor: colors.primary, opacity: pressed ? 0.8 : 1 }]}
-                    >
-                      <Body color={colors.primaryText}>Notlar</Body>
-                    </Pressable>
-                  ) : null}
-                  {!unitDone ? (
-                    <Pressable
-                      accessibilityRole="button"
-                      accessibilityLabel={`${unit.title} ünitesini atla`}
-                      onPress={() =>
+              <UnitHeader
+                index={ui + 1}
+                title={unit.title}
+                description={unit.description}
+                level={unitLevel(unit)}
+                lessonsDone={lessonsDone}
+                lessonsTotal={unit.lessons.length}
+                unitDone={unitDone}
+                hasNotes={Boolean(note)}
+                onNotes={note ? () => router.push({ pathname: '/notes/[unitId]', params: { unitId: unit.id } }) : undefined}
+                onSkip={
+                  !unitDone
+                    ? () =>
                         showAlert(
                           'Ünite atlama sınavı',
                           '12 soruluk sınav. %80 ve üstü alırsan ünitenin dersleri tamamlanmış sayılır.',
@@ -116,14 +153,9 @@ export default function LearnScreen() {
                             },
                           ],
                         )
-                      }
-                      style={({ pressed }) => [styles.notesChip, { borderColor: colors.primary, opacity: pressed ? 0.8 : 1 }]}
-                    >
-                      <Body color={colors.primaryText}>Atla</Body>
-                    </Pressable>
-                  ) : null}
-                </View>
-              </View>
+                    : undefined
+                }
+              />
               <View style={styles.lessons}>
                 <View style={[styles.track, { backgroundColor: colors.border }]} pointerEvents="none" />
                 {unit.lessons.map((lesson, li) => {
@@ -136,6 +168,7 @@ export default function LearnScreen() {
                   return (
                     <Pressable
                       key={lesson.id}
+                      ref={isActive ? activeRowRef : undefined}
                       accessibilityRole="button"
                       accessibilityLabel={label}
                       accessibilityState={{ disabled: state === 'locked' }}
@@ -182,7 +215,7 @@ export default function LearnScreen() {
                     >
                       {/* Visual node only: the row above is the single accessibility element. */}
                       <View style={styles.nodeCol} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
-                        <PathNode state={state} label="📖" style={styles.node} />
+                        <PathNode state={state} kind="story" style={styles.node} />
                       </View>
                       {/* Decorative texts: the row Pressable above is the single
                           accessibility element announcing the full label. */}
@@ -372,9 +405,6 @@ const styles = StyleSheet.create({
   voxCard: { margin: spacing.lg, marginBottom: 0, flexDirection: 'row', alignItems: 'center', gap: spacing.md, padding: spacing.md, borderRadius: 10, borderWidth: 1 },
   voxBubble: { flex: 1, borderRadius: radii.lg, paddingHorizontal: spacing.md, paddingVertical: spacing.sm },
   unit: { paddingBottom: spacing.lg },
-  unitHeader: { margin: spacing.lg, marginBottom: spacing.sm, padding: spacing.lg, borderRadius: 10, borderWidth: 1, gap: spacing.sm },
-  notesChip: { alignSelf: 'flex-start', borderWidth: 1, borderRadius: 8, paddingHorizontal: spacing.md, paddingVertical: spacing.xs },
-  chipRow: { flexDirection: 'row', gap: spacing.sm },
   lessons: { marginHorizontal: spacing.lg, marginBottom: spacing.md },
   track: { position: 'absolute', left: NODE_SIZE / 2, top: 30, bottom: 30, width: 1 },
   lesson: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, minHeight: 56 },

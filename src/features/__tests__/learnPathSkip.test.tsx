@@ -50,7 +50,7 @@ it('shows an "… ünitesini atla" chip per uncompleted unit and opens the exam 
     </SafeAreaProvider>,
   );
 
-  const chip = screen.getByRole('button', { name: 'Temeller ünitesini atla' });
+  const chip = screen.getByRole('button', { name: 'Temeller ünitesini atla, başlanabilir' });
   expect(chip).toBeTruthy();
 
   await fireEvent.press(chip);
@@ -77,7 +77,7 @@ it('renders no skip chip for a fully completed unit', async () => {
     </SafeAreaProvider>,
   );
 
-  expect(screen.queryByRole('button', { name: 'Temeller ünitesini atla' })).toBeNull();
+  expect(screen.queryByRole('button', { name: 'Temeller ünitesini atla, başlanabilir' })).toBeNull();
   // the other units still offer the chip (all units except the completed first one)
-  expect(screen.queryAllByRole('button', { name: /ünitesini atla$/ })).toHaveLength(trEn.units.length - 1);
+  expect(screen.queryAllByRole('button', { name: /ünitesini atla, başlanabilir$/ })).toHaveLength(trEn.units.length - 1);
 });
