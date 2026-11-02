@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, Share, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ScrollView, Share, StyleSheet, Text, TextInput, View } from 'react-native';
 import { router } from 'expo-router';
 
 import { useAppStore } from '@/features/store';
@@ -12,10 +12,15 @@ import {
   Body,
   Button,
   Caption,
+  EmptyState,
+  ErrorState,
   Heading,
   Icon,
+  LoadingState,
   Screen,
+  SegmentedControl,
   Title,
+  fontSize,
   fonts,
   radii,
   showAlert,
@@ -25,6 +30,11 @@ import {
 
 type Tab = 'week' | 'friends';
 
+const TABS: { value: Tab; label: string }[] = [
+  { value: 'week', label: 'Bu hafta' },
+  { value: 'friends', label: 'Arkadaşlar' },
+];
+
 function validateNickname(raw: string): string | null {
   const nickname = raw.trim();
   if (nickname.length < 3 || nickname.length > 20) return 'Takma ad 3–20 karakter olmalı.';
@@ -32,36 +42,6 @@ function validateNickname(raw: string): string | null {
     return 'Takma ad yalnızca harf, rakam, nokta, tire, alt çizgi ve boşluk içerebilir.';
   }
   return null;
-}
-
-/** Segmented "Bu hafta" / "Arkadaşlar" switch. */
-function Segment({ value, onChange }: { value: Tab; onChange: (t: Tab) => void }) {
-  const { colors } = useTheme();
-  const items: { key: Tab; label: string }[] = [
-    { key: 'week', label: 'Bu hafta' },
-    { key: 'friends', label: 'Arkadaşlar' },
-  ];
-  return (
-    <View style={[styles.segment, { borderColor: colors.borderStrong }]} accessibilityRole="tablist">
-      {items.map((item) => {
-        const selected = item.key === value;
-        return (
-          <Pressable
-            key={item.key}
-            accessibilityRole="tab"
-            accessibilityState={{ selected }}
-            accessibilityLabel={item.label}
-            onPress={() => onChange(item.key)}
-            style={[styles.segmentItem, { backgroundColor: selected ? colors.primary : 'transparent' }]}
-          >
-            <Text style={[styles.segmentText, { color: selected ? colors.textOnBrand : colors.textMuted }]}>
-              {item.label}
-            </Text>
-          </Pressable>
-        );
-      })}
-    </View>
-  );
 }
 
 /** One leaderboard row: rank, nickname, mono XP; the player's own row uses the copper accent. */
@@ -76,14 +56,16 @@ function EntryRow({ rank, nickname, xp, isMe }: { rank: number; nickname: string
       accessibilityLabel={`Sıra ${rank}: ${nickname}, ${xp} XP${isMe ? ', sen' : ''}`}
       accessibilityState={{ selected: isMe }}
     >
-      <Caption color={isMe ? colors.primaryText : colors.textMuted} style={styles.rank}>
+      <Caption dense color={isMe ? colors.primaryText : colors.textMuted} style={styles.rank}>
         {rank}.
       </Caption>
-      <Body style={styles.nickname} numberOfLines={1}>
+      <Body dense style={styles.nickname} numberOfLines={1}>
         {nickname}
         {isMe ? ' (sen)' : ''}
       </Body>
-      <Text style={[styles.xp, { color: isMe ? colors.primaryText : colors.text }]}>{xp} XP</Text>
+      <Caption dense color={isMe ? colors.primaryText : colors.text}>
+        {xp} XP
+      </Caption>
     </View>
   );
 }
@@ -253,7 +235,7 @@ function FriendsTab() {
         <Button title="Yenile" variant="outline" block={false} onPress={() => void load()} />
       </View>
       {rows.length <= 1 && friends.length === 0 ? (
-        <Caption color={colors.textMuted}>Henüz arkadaşın yok. Kodunu paylaş, birlikte yarışın!</Caption>
+        <EmptyState icon="user" title="Henüz arkadaşın yok. Kodunu paylaş, birlikte yarışın!" />
       ) : (
         rows.map((r, i) => {
           const streak = r.friend ? streakByUid.get(r.friend.friend_uid) : undefined;
@@ -361,7 +343,7 @@ export default function LeagueScreen() {
             <Button title="Giriş yap" onPress={() => router.push('/auth')} />
           </View>
         ) : !anonymousResolved ? (
-          <Caption color={colors.textMuted}>Yükleniyor…</Caption>
+          <LoadingState />
         ) : anonymous ? (
           <View style={styles.section}>
             <Body color={colors.textMuted}>Genel lig için e-postalı hesap gerekir. Sınıf ligin sınıf ekranında.</Body>
@@ -376,12 +358,12 @@ export default function LeagueScreen() {
           <NicknameForm />
         ) : (
           <>
-            <Segment value={tab} onChange={setTab} />
-            {error && <Caption color={colors.dangerText}>Bir sorun oluştu: {error}</Caption>}
+            <SegmentedControl options={TABS} value={tab} onChange={setTab} />
+            {error ? <ErrorState message={`Bir sorun oluştu: ${error}`} onRetry={() => void load()} /> : null}
             {tab === 'week' ? (
               <View style={styles.section}>
                 {top.length === 0 && !loading ? (
-                  <Caption color={colors.textMuted}>Bu hafta için henüz kayıt yok. İlk sen ol!</Caption>
+                  <EmptyState icon="trophy" title="Bu hafta için henüz kayıt yok. İlk sen ol!" />
                 ) : (
                   top.map((entry, i) => (
                     <EntryRow key={entry.uid} rank={i + 1} nickname={entry.nickname} xp={entry.xp} isMe={entry.uid === user.uid} />
@@ -402,9 +384,6 @@ const styles = StyleSheet.create({
   content: { padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xxxl },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   section: { gap: spacing.sm },
-  segment: { flexDirection: 'row', borderWidth: 1, borderRadius: radii.pill, padding: 3 },
-  segmentItem: { flex: 1, minHeight: 40, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center' },
-  segmentText: { fontFamily: fonts.mono, fontSize: 13, letterSpacing: 1 },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -417,25 +396,26 @@ const styles = StyleSheet.create({
   },
   rank: { width: 28 },
   nickname: { flex: 1 },
-  xp: { fontFamily: fonts.mono, fontSize: 14, letterSpacing: 1 },
   input: {
     minHeight: 48,
     borderWidth: 1,
     borderRadius: radii.md,
     paddingHorizontal: spacing.md,
-    fontSize: 16,
+    fontSize: fontSize.md,
   },
   addRow: { flexDirection: 'row', gap: spacing.sm, alignItems: 'center' },
   addInput: { flex: 1 },
   listHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.sm },
   codeCard: { borderWidth: 1, borderRadius: radii.md, padding: spacing.md, alignItems: 'center', gap: spacing.sm },
-  code: { fontFamily: fonts.mono, fontSize: 32, letterSpacing: 8 },
-  friendRowWrap: { gap: 2 },
+  // Büyük kod gösterimi — bilinçli display ölçeği: geniş mono harf aralığı okunabilirlik için.
+  code: { fontFamily: fonts.mono, fontSize: fontSize.xxl, letterSpacing: 8 },
+  friendRowWrap: { gap: spacing.xxs },
   friendRowMain: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   removeBtn: { paddingHorizontal: spacing.sm },
   streakLine: { marginLeft: spacing.md, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   streakBadge: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   streakCard: { borderWidth: 1, borderRadius: radii.md, padding: spacing.md, alignItems: 'center', gap: spacing.sm },
-  streakCardNumber: { fontFamily: fonts.mono, fontSize: 32, letterSpacing: 2 },
+  // Bilinçli büyük seri sayısı (display numarası — mono etiket ölçeğinin dışında).
+  streakCardNumber: { fontFamily: fonts.mono, fontSize: fontSize.xxl, letterSpacing: 2 },
   streakCardNumberRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs },
 });

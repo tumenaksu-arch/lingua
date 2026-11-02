@@ -190,6 +190,8 @@ export const darkColors: ColorTokens = {
 };
 
 export const spacing = {
+  /** Micro gap for tight text stacks (label + subtitle). */
+  xxs: 2,
   xs: 4,
   sm: 8,
   md: 12,

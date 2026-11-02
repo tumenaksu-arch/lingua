@@ -17,9 +17,14 @@ import { useTheme } from './useTheme';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'danger';
 
+/** Button density: 'compact' keeps the 44px touch target but shrinks inner padding. */
+export type ButtonSize = 'default' | 'compact';
+
 export type ButtonProps = Omit<PressableProps, 'style' | 'children'> & {
   title: string;
   variant?: ButtonVariant;
+  /** Visual density (default 'default'). Touch target never drops below MIN_TOUCH. */
+  size?: ButtonSize;
   loading?: boolean;
   /** Stretch to the parent width (default true). */
   block?: boolean;
@@ -48,6 +53,7 @@ function faceFor(variant: ButtonVariant, c: ColorTokens): { bg: string; text: st
 export function Button({
   title,
   variant = 'primary',
+  size = 'default',
   loading = false,
   disabled,
   block = true,
@@ -87,6 +93,7 @@ export function Button({
       <View
         style={[
           styles.face,
+          size === 'compact' && styles.faceCompact,
           {
             backgroundColor: inactive ? colors.disabled : face.bg,
             borderColor: face.border ?? 'transparent',
@@ -118,6 +125,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.xl,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  faceCompact: {
+    minHeight: MIN_TOUCH,
+    paddingHorizontal: spacing.md,
   },
   label: { fontSize: 13, letterSpacing: 1.5, fontFamily: fonts.mono, textAlign: 'center' },
 });
