@@ -21,7 +21,7 @@ beforeEach(() => {
 
 afterEach(() => {
   setOS(originalOS);
-  for (const k of ['matchMedia', 'addEventListener', 'removeEventListener', '__linguaInstallPrompt', 'Capacitor']) delete g[k];
+  for (const k of ['matchMedia', 'addEventListener', 'removeEventListener', '__lovevoxInstallPrompt', 'Capacitor']) delete g[k];
   if (originalNavigator) Object.defineProperty(globalThis, 'navigator', originalNavigator);
 });
 
@@ -48,7 +48,7 @@ test('iPhone Safari gets the Share → Ana Ekrana Ekle path; other browsers the 
 
 test('a captured install prompt installs with one tap and is used only once', async () => {
   const prompt = { prompt: jest.fn(() => Promise.resolve()), userChoice: Promise.resolve({ outcome: 'accepted' as const }) };
-  g.__linguaInstallPrompt = prompt;
+  g.__lovevoxInstallPrompt = prompt;
   const { result } = await renderHook(() => usePwaInstall());
   expect(result.current.state).toBe('installable');
   let ok = false;
@@ -58,5 +58,5 @@ test('a captured install prompt installs with one tap and is used only once', as
   expect(prompt.prompt).toHaveBeenCalledTimes(1);
   expect(ok).toBe(true);
   expect(result.current.state).toBe('installed');
-  expect(g.__linguaInstallPrompt).toBeUndefined();
+  expect(g.__lovevoxInstallPrompt).toBeUndefined();
 });

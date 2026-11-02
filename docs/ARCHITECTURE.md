@@ -1,4 +1,4 @@
-# Lingua — Sistem Tasarımı (ADR-001)
+# Love-Vox — Sistem Tasarımı (ADR-001)
 
 Referans ürün: **Duolingo**. Hedef: çoklu dil (ör. TR→EN/DE/ES), hesap + bulut senkron, çevrimdışı çalışan ders akışı.
 

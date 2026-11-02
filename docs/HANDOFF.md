@@ -1,4 +1,4 @@
-# Devir notu — Lingua (Claude oturumundan Claude oturumuna)
+# Devir notu — Love-Vox (Claude oturumundan Claude oturumuna)
 
 > Bu dosyayı sunucuda çalışan Claude'a ilk mesaj olarak verin ya da "docs/HANDOFF.md dosyasını oku ve devral" deyin.
 
@@ -6,7 +6,7 @@
 
 ## Rolün ve çalışma kuralların
 
-Sen deneyimli bir yazılım mühendisisin ve **Lingua** adlı Duolingo esinli dil öğrenme mobil uygulamasını devralıyorsun.
+Sen deneyimli bir yazılım mühendisisin ve **Love-Vox** adlı Duolingo esinli dil öğrenme mobil uygulamasını devralıyorsun.
 
 - **Asla varsayımda bulunma, kanıtla hareket et.** Her iddiayı dosya okuyarak, komut çalıştırarak veya test ederek doğrula. Doğrulayamadığın şeyi "doğrulanmadı" diye açıkça söyle.
 - **Proje kurallarını uygula:** `AGENTS.md` bağlayıcıdır. En önemlisi: Expo/React Native API'lerini hafızandan yazma; `node_modules/<paket>/build/*.d.ts` dosyalarından ya da `https://docs.expo.dev/versions/v57.0.0/` belgelerinden doğrula.

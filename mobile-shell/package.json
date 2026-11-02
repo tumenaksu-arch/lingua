@@ -1,8 +1,8 @@
 {
-  "name": "lingua-mobile-shell",
+  "name": "lovevox-mobile-shell",
   "private": true,
   "version": "0.1.0",
-  "description": "Android shell that loads https://ankaxai.ai/lingua/ (EduPilot-style remote-URL Capacitor app).",
+  "description": "Android shell that loads https://ankaxai.ai/lovevox/ (EduPilot-style remote-URL Capacitor app).",
   "scripts": {
     "sync": "cap sync android",
     "icons": "capacitor-assets generate --android",
