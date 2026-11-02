@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { aiStatus, AiError } from '@/features/conversation';
 import { aiExplain, type AiExplainRequest } from '@/features/lesson/explainApi';
-import { Body, Button, Caption, spacing, upperTr, useTheme } from '@/ui';
+import { Body, Button, Caption, Icon, spacing, upperTr, useTheme } from '@/ui';
 
 type Phase = 'idle' | 'loading' | 'done' | 'error';
 
@@ -62,7 +62,12 @@ export function ExplainButton(props: AiExplainRequest) {
       <View style={styles.result} accessibilityLiveRegion="polite">
         <Caption color={colors.textMuted}>{upperTr('Yapay zekâ açıklaması')}</Caption>
         <Body>{explanation}</Body>
-        {tip ? <Caption color={colors.textMuted}>💡 {tip}</Caption> : null}
+        {tip ? (
+          <View style={styles.tipRow} accessible={false}>
+            <Icon name="lightbulb" size={14} color={colors.textMuted} />
+            <Caption color={colors.textMuted}>{tip}</Caption>
+          </View>
+        ) : null}
       </View>
     );
   }
@@ -75,7 +80,7 @@ export function ExplainButton(props: AiExplainRequest) {
         </Caption>
       ) : null}
       <Button
-        title={phase === 'error' ? 'Tekrar dene' : '🤖 Cevabımı açıkla'}
+        title={phase === 'error' ? 'Tekrar dene' : 'Cevabımı açıkla'}
         variant="outline"
         loading={phase === 'loading'}
         onPress={request}
@@ -88,4 +93,5 @@ export function ExplainButton(props: AiExplainRequest) {
 const styles = StyleSheet.create({
   wrap: { gap: spacing.sm },
   result: { gap: spacing.xs },
+  tipRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs },
 });

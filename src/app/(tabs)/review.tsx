@@ -81,7 +81,10 @@ export default function ReviewScreen() {
               <Title center>Tekrar bitti!</Title>
             </View>
           ) : (
-            <Title center>Bugün tekrar yok ✅</Title>
+            <View style={styles.doneTitle}>
+              <Icon name="check" size={26} color={colors.successText} strokeWidth={2} />
+              <Title center>Bugün tekrar yok</Title>
+            </View>
           )}
           <Body center color={colors.textMuted}>
             {deck.cards.length

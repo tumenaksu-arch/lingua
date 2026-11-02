@@ -52,7 +52,7 @@ describe('ExplainButton', () => {
     aiStatusMock.mockResolvedValue({ enabled: false, limit: 30, remaining: null });
     await renderButton();
     await waitFor(() => expect(aiStatusMock).toHaveBeenCalledTimes(1));
-    expect(screen.queryByRole('button', { name: '🤖 Cevabımı açıkla' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Cevabımı açıkla' })).toBeNull();
     expect(aiExplainMock).not.toHaveBeenCalled();
   });
 
@@ -60,33 +60,33 @@ describe('ExplainButton', () => {
     aiStatusMock.mockRejectedValue(new AiError('auth', 'Oturumun geçersiz. Lütfen tekrar giriş yap.'));
     await renderButton();
     await waitFor(() => expect(aiStatusMock).toHaveBeenCalledTimes(1));
-    expect(screen.queryByRole('button', { name: '🤖 Cevabımı açıkla' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Cevabımı açıkla' })).toBeNull();
   });
 
   it('açıkken dokunulunca doğru gövdeyle istek atar ve açıklama görünür', async () => {
     aiStatusMock.mockResolvedValue({ enabled: true, limit: 30, remaining: 10 });
     await renderButton();
-    await screen.findByRole('button', { name: '🤖 Cevabımı açıkla' });
+    await screen.findByRole('button', { name: 'Cevabımı açıkla' });
 
     await act(async () => {
-      fireEvent.press(screen.getByRole('button', { name: '🤖 Cevabımı açıkla' }));
+      fireEvent.press(screen.getByRole('button', { name: 'Cevabımı açıkla' }));
     });
 
     await screen.findByText(EXPLANATION);
     expect(aiExplainMock).toHaveBeenCalledTimes(1);
     expect(aiExplainMock).toHaveBeenCalledWith(PROPS);
     // düğme yerini açıklamaya bıraktı
-    expect(screen.queryByRole('button', { name: '🤖 Cevabımı açıkla' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Cevabımı açıkla' })).toBeNull();
   });
 
   it('429 limit hatasında nazik Türkçe limit mesajı gösterilir', async () => {
     aiStatusMock.mockResolvedValue({ enabled: true, limit: 30, remaining: 0 });
     aiExplainMock.mockRejectedValue(new AiError('limit', 'Bugünlük yapay zekâ mesaj limitin doldu, yarın tekrar dene.'));
     await renderButton();
-    await screen.findByRole('button', { name: '🤖 Cevabımı açıkla' });
+    await screen.findByRole('button', { name: 'Cevabımı açıkla' });
 
     await act(async () => {
-      fireEvent.press(screen.getByRole('button', { name: '🤖 Cevabımı açıkla' }));
+      fireEvent.press(screen.getByRole('button', { name: 'Cevabımı açıkla' }));
     });
 
     await screen.findByText('Bugünlük yapay zekâ mesaj limitin doldu, yarın tekrar dene.');
@@ -96,10 +96,10 @@ describe('ExplainButton', () => {
   it('başarıdan sonra ikinci dokunuş yeni istek atmaz', async () => {
     aiStatusMock.mockResolvedValue({ enabled: true, limit: 30, remaining: 10 });
     await renderButton();
-    await screen.findByRole('button', { name: '🤖 Cevabımı açıkla' });
+    await screen.findByRole('button', { name: 'Cevabımı açıkla' });
 
     await act(async () => {
-      fireEvent.press(screen.getByRole('button', { name: '🤖 Cevabımı açıkla' }));
+      fireEvent.press(screen.getByRole('button', { name: 'Cevabımı açıkla' }));
     });
     await screen.findByText(EXPLANATION);
     expect(aiExplainMock).toHaveBeenCalledTimes(1);
@@ -117,10 +117,10 @@ describe('ExplainButton', () => {
       .mockRejectedValueOnce(new AiError('network', 'Bağlantı yok. İnternetini kontrol et.'))
       .mockResolvedValueOnce({ explanation: EXPLANATION, tip: null, remaining: 8 });
     await renderButton();
-    await screen.findByRole('button', { name: '🤖 Cevabımı açıkla' });
+    await screen.findByRole('button', { name: 'Cevabımı açıkla' });
 
     await act(async () => {
-      fireEvent.press(screen.getByRole('button', { name: '🤖 Cevabımı açıkla' }));
+      fireEvent.press(screen.getByRole('button', { name: 'Cevabımı açıkla' }));
     });
     await screen.findByText('Bağlantı yok. İnternetini kontrol et.');
 

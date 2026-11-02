@@ -7,7 +7,7 @@ import {
 
 describe('streakTodayLabel', () => {
   it('both active today → celebration text', () => {
-    expect(streakTodayLabel({ me_today: true, friend_today: true })).toBe('İkiniz de bugün çalıştınız ✅');
+    expect(streakTodayLabel({ me_today: true, friend_today: true })).toBe('İkiniz de bugün çalıştınız');
   });
 
   it('only me active → the friend is the one waiting', () => {
@@ -22,8 +22,8 @@ describe('streakTodayLabel', () => {
 
 describe('streakBadgeText', () => {
   it('formats the fire badge', () => {
-    expect(streakBadgeText(5)).toBe('🔥 5 gün birlikte');
-    expect(streakBadgeText(1)).toBe('🔥 1 gün birlikte');
+    expect(streakBadgeText(5)).toBe('5 gün birlikte');
+    expect(streakBadgeText(1)).toBe('1 gün birlikte');
   });
 });
 

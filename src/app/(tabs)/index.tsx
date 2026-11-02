@@ -14,9 +14,10 @@ import { localDateString, gemsOf, regenerate } from '@/domain';
 import { unitLevel } from '@/domain/unitLevel';
 import { getUnitNote } from '@/content/notes';
 import { getUnitStory } from '@/content/stories';
-import { Body, Button, Caption, GemChip, Heading, Hearts, Icon, PathNode, ProgressBar, Screen, StreakFlame, UnitHeader, Vox, XpBadge, XpBoostChip, radii, showAlert, spacing, upperTr, useReduceMotion, useSettingsStore, useTheme, type PathNodeState } from '@/ui';
+import { Body, Button, Caption, GemChip, Heading, Hearts, Icon, PathNode, ProgressBar, Screen, StreakFlame, UnitHeader, Vox, XpBadge, XpBoostChip, fonts, radii, showAlert, spacing, upperTr, useReduceMotion, useSettingsStore, useTheme, type PathNodeState } from '@/ui';
 
-const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', it: '🇮🇹', tr: '🇹🇷' };
+/** İki harfli dil kodu rozeti (bayrak emojisi Windows/başsız Chromium'da kutu/ harf çıkarır). */
+const LANG_CODE: Record<string, string> = { en: 'EN', de: 'DE', es: 'ES', fr: 'FR', it: 'IT', tr: 'TR' };
 const LANG_NAME: Record<string, string> = { en: 'İngilizce', de: 'Almanca', es: 'İspanyolca', fr: 'Fransızca', it: 'İtalyanca', tr: 'Türkçe' };
 /** Node width — the vertical connector line runs through the node centres. */
 const NODE_SIZE = 44;
@@ -90,8 +91,8 @@ export default function LearnScreen() {
           accessibilityLabel={`Kurs: ${LANG_NAME[course.toLang] ?? course.toLang}. Kurs değiştir`}
           style={styles.flag}
         >
-          {LANG_FLAG[course.toLang] ? (
-            <Body accessible={false}>{LANG_FLAG[course.toLang]}</Body>
+          {LANG_CODE[course.toLang] ? (
+            <LangBadge code={LANG_CODE[course.toLang]} />
           ) : (
             <Icon name="globe" size={20} color={colors.textMuted} />
           )}
@@ -239,6 +240,16 @@ export default function LearnScreen() {
         })}
       </ScrollView>
     </Screen>
+  );
+}
+
+/** İki harfli dil kodu hapı (LevelBadge benzeri): bayrak yerine tüm platformlarda tutarlı mono rozet. */
+function LangBadge({ code }: { code: string }) {
+  const { colors } = useTheme();
+  return (
+    <View style={[styles.langBadge, { borderColor: colors.borderStrong }]} accessible={false}>
+      <Caption color={colors.text} style={styles.langBadgeText}>{code}</Caption>
+    </View>
   );
 }
 
@@ -403,6 +414,8 @@ const styles = StyleSheet.create({
   topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: spacing.lg, paddingVertical: spacing.sm, borderBottomWidth: 1 },
   boostChip: { alignSelf: 'flex-start', marginTop: spacing.sm, marginLeft: spacing.lg },
   flag: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
+  langBadge: { minWidth: 40, minHeight: 28, borderWidth: 1, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center', paddingHorizontal: spacing.sm },
+  langBadgeText: { fontFamily: fonts.mono, letterSpacing: 1 },
   path: { paddingBottom: spacing.xxxl },
   questCard: { margin: spacing.lg, marginBottom: 0, padding: spacing.lg, borderRadius: 10, borderWidth: 1, gap: spacing.md },
   classCard: { margin: spacing.lg, marginBottom: 0, padding: spacing.lg, borderRadius: 10, borderWidth: 1, gap: spacing.sm },

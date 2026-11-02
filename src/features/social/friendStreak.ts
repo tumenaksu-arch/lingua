@@ -14,19 +14,19 @@ export interface FriendStreak {
   friend_today: boolean;
 }
 
-/** Sıra satırındaki rozet metni: "🔥 5 gün birlikte". */
+/** Sıra satırındaki rozet metni: "5 gün birlikte" (flame ikonunu satır çizer). */
 export function streakBadgeText(streak: number): string {
-  return `🔥 ${streak} gün birlikte`;
+  return `${streak} gün birlikte`;
 }
 
 /**
  * Bugün durumu metni:
- * - ikisi de bugün çalıştı → "İkiniz de bugün çalıştınız ✅"
+ * - ikisi de bugün çalıştı → "İkiniz de bugün çalıştınız"
  * - ben çalıştım, arkadaş bekleniyor → "Arkadaşın bekliyor"
  * - ben çalışmadım → "Sıra sende"
  */
 export function streakTodayLabel(s: Pick<FriendStreak, 'me_today' | 'friend_today'>): string {
-  if (s.me_today && s.friend_today) return 'İkiniz de bugün çalıştınız ✅';
+  if (s.me_today && s.friend_today) return 'İkiniz de bugün çalıştınız';
   if (s.me_today) return 'Arkadaşın bekliyor';
   return 'Sıra sende';
 }

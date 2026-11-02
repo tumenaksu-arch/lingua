@@ -17,6 +17,7 @@ import {
   Button,
   Caption,
   Heading,
+  Icon,
   Screen,
   Title,
   fonts,
@@ -252,7 +253,7 @@ function CreateClassForm({ onCreated }: { onCreated: (doc: ClassDoc) => void }) 
         style={styles.checkRow}
       >
         <View style={[styles.box, { borderColor: colors.borderStrong, backgroundColor: veliOnay ? colors.primary : 'transparent' }]}>
-          {veliOnay && <Text style={styles.boxTick}>✓</Text>}
+          {veliOnay && <Icon name="check" size={16} color={palette.white} strokeWidth={3} />}
         </View>
         <Body style={styles.checkLabel}>Velileri bilgilendirdim; öğrenciler yalnız takma adla katılır.</Body>
       </Pressable>
@@ -274,6 +275,5 @@ const styles = StyleSheet.create({
   chipText: { fontSize: 12, letterSpacing: 1, fontFamily: fonts.mono },
   checkRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, minHeight: 44 },
   box: { width: 24, height: 24, borderWidth: 2, borderRadius: radii.sm, alignItems: 'center', justifyContent: 'center' },
-  boxTick: { color: palette.white, fontSize: 14, fontWeight: '700' },
   checkLabel: { flex: 1 },
 });

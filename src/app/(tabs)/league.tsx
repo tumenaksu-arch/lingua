@@ -272,14 +272,20 @@ function FriendsTab() {
                 )}
               </View>
               {streak && (
-                <Caption
-                  color={colors.textMuted}
-                  style={styles.streakLine}
-                  accessibilityLabel={`${streakBadgeText(streak.streak)}, ${streakTodayLabel(streak)}`}
-                >
-                  {streak.streak > 0 ? `${streakBadgeText(streak.streak)} · ` : ''}
-                  {streakTodayLabel(streak)}
-                </Caption>
+                <View style={styles.streakLine}>
+                  {streak.streak > 0 ? (
+                    <View style={styles.streakBadge} accessible={false}>
+                      <Icon name="flame" size={14} color={colors.primaryText} strokeWidth={2} />
+                      <Caption color={colors.textMuted}>{streakBadgeText(streak.streak)}</Caption>
+                    </View>
+                  ) : null}
+                  <Caption
+                    color={colors.textMuted}
+                    accessibilityLabel={`${streakBadgeText(streak.streak)}, ${streakTodayLabel(streak)}`}
+                  >
+                    {streakTodayLabel(streak)}
+                  </Caption>
+                </View>
               )}
             </View>
           );
@@ -427,7 +433,8 @@ const styles = StyleSheet.create({
   friendRowWrap: { gap: 2 },
   friendRowMain: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   removeBtn: { paddingHorizontal: spacing.sm },
-  streakLine: { marginLeft: spacing.md },
+  streakLine: { marginLeft: spacing.md, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  streakBadge: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   streakCard: { borderWidth: 1, borderRadius: radii.md, padding: spacing.md, alignItems: 'center', gap: spacing.sm },
   streakCardNumber: { fontFamily: fonts.mono, fontSize: 32, letterSpacing: 2 },
   streakCardNumberRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs },

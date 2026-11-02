@@ -101,7 +101,7 @@ it('deleting the voice pack resets the card to the download button', async () =>
 
   await renderProfile();
 
-  const deleteButton = await screen.findByRole('button', { name: 'İndirildi ✓ · Sil' });
+  const deleteButton = await screen.findByRole('button', { name: 'İndirildi · Sil' });
   await fireEvent.press(deleteButton);
 
   await waitFor(() => expect(deleted).toEqual(['lovevox-tts-v1']));
