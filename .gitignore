@@ -9,3 +9,6 @@ android/
 ios/
 # ...except the Capacitor web shell's own native project (not CNG output)
 !mobile-shell/android/
+# Playwright görsel kilit çıktıları
+test-results/
+playwright-report/
