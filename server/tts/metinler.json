@@ -2397,6 +2397,34 @@
  },
  {
   "lang": "en",
+  "text": "Yes, thank you."
+ },
+ {
+  "lang": "en",
+  "text": "No, please."
+ },
+ {
+  "lang": "en",
+  "text": "Hello! I am Ayşe."
+ },
+ {
+  "lang": "en",
+  "text": "Hello, Ayşe! I am Tom."
+ },
+ {
+  "lang": "en",
+  "text": "Goodbye, Ayşe!"
+ },
+ {
+  "lang": "en",
+  "text": "No, thank you, Ayşe."
+ },
+ {
+  "lang": "en",
+  "text": "Hello, I am Ayşe. Thank you very much."
+ },
+ {
+  "lang": "en",
   "text": "I am a man"
  },
  {
@@ -2437,6 +2465,34 @@
  },
  {
   "lang": "en",
+  "text": "You are a boy"
+ },
+ {
+  "lang": "en",
+  "text": "I am a girl"
+ },
+ {
+  "lang": "en",
+  "text": "I am Ayşe."
+ },
+ {
+  "lang": "en",
+  "text": "Hello, Ayşe! I am Ali."
+ },
+ {
+  "lang": "en",
+  "text": "You are a boy, Ayşe."
+ },
+ {
+  "lang": "en",
+  "text": "Goodbye, I am a girl."
+ },
+ {
+  "lang": "en",
+  "text": "The boy is Tom. I am a girl."
+ },
+ {
+  "lang": "en",
   "text": "How are you"
  },
  {
@@ -2474,6 +2530,26 @@
  {
   "lang": "en",
   "text": "Good night"
+ },
+ {
+  "lang": "en",
+  "text": "Good morning! How are you?"
+ },
+ {
+  "lang": "en",
+  "text": "I am fine, thank you."
+ },
+ {
+  "lang": "en",
+  "text": "Good night, I am fine."
+ },
+ {
+  "lang": "en",
+  "text": "My name is good morning."
+ },
+ {
+  "lang": "en",
+  "text": "My name is Ali. Nice to meet you."
  },
  {
   "lang": "en",
@@ -2557,6 +2633,18 @@
  },
  {
   "lang": "en",
+  "text": "She drinks milk"
+ },
+ {
+  "lang": "en",
+  "text": "She drinks tea"
+ },
+ {
+  "lang": "en",
+  "text": "I drink tea in the morning. My brother drinks milk."
+ },
+ {
+  "lang": "en",
   "text": "I am hungry"
  },
  {
@@ -2582,6 +2670,30 @@
  {
   "lang": "en",
   "text": "Cheese and bread"
+ },
+ {
+  "lang": "en",
+  "text": "I eat an apple for breakfast"
+ },
+ {
+  "lang": "en",
+  "text": "I eat eggs for dinner"
+ },
+ {
+  "lang": "en",
+  "text": "What do you eat for breakfast?"
+ },
+ {
+  "lang": "en",
+  "text": "I am hungry for breakfast."
+ },
+ {
+  "lang": "en",
+  "text": "An apple is red."
+ },
+ {
+  "lang": "en",
+  "text": "The apple is red. The egg is for breakfast."
  },
  {
   "lang": "en",
@@ -2637,6 +2749,30 @@
  },
  {
   "lang": "en",
+  "text": "The coffee, please"
+ },
+ {
+  "lang": "en",
+  "text": "Can I see the menu, please?"
+ },
+ {
+  "lang": "en",
+  "text": "Of course. Here you are."
+ },
+ {
+  "lang": "en",
+  "text": "The bill is delicious."
+ },
+ {
+  "lang": "en",
+  "text": "No, I am the menu."
+ },
+ {
+  "lang": "en",
+  "text": "The soup is delicious. Can we have the bill, please?"
+ },
+ {
+  "lang": "en",
   "text": "I eat chicken and rice"
  },
  {
@@ -2666,6 +2802,22 @@
  {
   "lang": "en",
   "text": "Pass the ___, please."
+ },
+ {
+  "lang": "en",
+  "text": "I like salad"
+ },
+ {
+  "lang": "en",
+  "text": "I like sugar"
+ },
+ {
+  "lang": "en",
+  "text": "I like salt"
+ },
+ {
+  "lang": "en",
+  "text": "We eat rice and fish for dinner. The fish is delicious."
  },
  {
   "lang": "en",
@@ -2709,6 +2861,30 @@
  },
  {
   "lang": "en",
+  "text": "Where is the train?"
+ },
+ {
+  "lang": "en",
+  "text": "Excuse me, where is the hotel?"
+ },
+ {
+  "lang": "en",
+  "text": "It is near the airport."
+ },
+ {
+  "lang": "en",
+  "text": "The train is the hotel."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, it is a ticket."
+ },
+ {
+  "lang": "en",
+  "text": "The train is late. I have a ticket for the bus."
+ },
+ {
+  "lang": "en",
   "text": "The hotel is near"
  },
  {
@@ -2738,6 +2914,22 @@
  {
   "lang": "en",
   "text": "The street is far"
+ },
+ {
+  "lang": "en",
+  "text": "Turn right at the station"
+ },
+ {
+  "lang": "en",
+  "text": "Turn left at the station"
+ },
+ {
+  "lang": "en",
+  "text": "Turn right at the hotel"
+ },
+ {
+  "lang": "en",
+  "text": "The hotel is near. The airport is far."
  },
  {
   "lang": "en",
@@ -2777,6 +2969,34 @@
  },
  {
   "lang": "en",
+  "text": "Can I help you?"
+ },
+ {
+  "lang": "en",
+  "text": "Can I help us?"
+ },
+ {
+  "lang": "en",
+  "text": "Excuse me, where is the taxi?"
+ },
+ {
+  "lang": "en",
+  "text": "It is in front of the hotel."
+ },
+ {
+  "lang": "en",
+  "text": "The passport is a taxi."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I am a taxi."
+ },
+ {
+  "lang": "en",
+  "text": "Here is my passport. I need a taxi to the hotel."
+ },
+ {
+  "lang": "en",
   "text": "The train is late"
  },
  {
@@ -2805,6 +3025,18 @@
  },
  {
   "lang": "en",
+  "text": "The train is early"
+ },
+ {
+  "lang": "en",
+  "text": "The plane is late"
+ },
+ {
+  "lang": "en",
+  "text": "My plane is early. My bag is in the car."
+ },
+ {
+  "lang": "en",
   "text": "I have a sister"
  },
  {
@@ -2826,6 +3058,18 @@
  {
   "lang": "en",
   "text": "I ___ two sisters."
+ },
+ {
+  "lang": "en",
+  "text": "My mother is a student"
+ },
+ {
+  "lang": "en",
+  "text": "My father is a teacher"
+ },
+ {
+  "lang": "en",
+  "text": "I have a sister. My brother is a student."
  },
  {
   "lang": "en",
@@ -2865,6 +3109,34 @@
  },
  {
   "lang": "en",
+  "text": "I love my son"
+ },
+ {
+  "lang": "en",
+  "text": "I love my child"
+ },
+ {
+  "lang": "en",
+  "text": "This is my daughter, Elif."
+ },
+ {
+  "lang": "en",
+  "text": "Hello, Elif! Nice to meet you."
+ },
+ {
+  "lang": "en",
+  "text": "I am your daughter."
+ },
+ {
+  "lang": "en",
+  "text": "No, thank you, daughter."
+ },
+ {
+  "lang": "en",
+  "text": "Her son is five years old. His name is Can."
+ },
+ {
+  "lang": "en",
   "text": "My family is big"
  },
  {
@@ -2886,6 +3158,18 @@
  {
   "lang": "en",
   "text": "\"grandfather\" ne demek?"
+ },
+ {
+  "lang": "en",
+  "text": "My grandmother drinks tea"
+ },
+ {
+  "lang": "en",
+  "text": "My grandmother drinks coffee"
+ },
+ {
+  "lang": "en",
+  "text": "My family is big. My grandfather is sixty years old."
  },
  {
   "lang": "en",
@@ -2921,6 +3205,38 @@
  },
  {
   "lang": "en",
+  "text": "My brother is my friend"
+ },
+ {
+  "lang": "en",
+  "text": "My brother is your friend"
+ },
+ {
+  "lang": "en",
+  "text": "My brother is my teacher"
+ },
+ {
+  "lang": "en",
+  "text": "Tell me about your family."
+ },
+ {
+  "lang": "en",
+  "text": "I have two brothers, and I love my family."
+ },
+ {
+  "lang": "en",
+  "text": "My family is your friend."
+ },
+ {
+  "lang": "en",
+  "text": "I love to eat family."
+ },
+ {
+  "lang": "en",
+  "text": "My friend has a child. The child is small."
+ },
+ {
+  "lang": "en",
   "text": "How much is this"
  },
  {
@@ -2946,6 +3262,34 @@
  {
   "lang": "en",
   "text": "This shop is cheap."
+ },
+ {
+  "lang": "en",
+  "text": "How old is this?"
+ },
+ {
+  "lang": "en",
+  "text": "Where is this?"
+ },
+ {
+  "lang": "en",
+  "text": "This car is very expensive!"
+ },
+ {
+  "lang": "en",
+  "text": "Yes, and it is not cheap."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, it is very cheap."
+ },
+ {
+  "lang": "en",
+  "text": "The shop is a price."
+ },
+ {
+  "lang": "en",
+  "text": "I have no money today. This shop is very expensive."
  },
  {
   "lang": "en",
@@ -2981,6 +3325,22 @@
  },
  {
   "lang": "en",
+  "text": "I buy a new shirt"
+ },
+ {
+  "lang": "en",
+  "text": "I buy a new shoes"
+ },
+ {
+  "lang": "en",
+  "text": "I buy an old shirt"
+ },
+ {
+  "lang": "en",
+  "text": "The shoes are too big. I buy a small dress."
+ },
+ {
+  "lang": "en",
   "text": "I like the blue dress"
  },
  {
@@ -3006,6 +3366,34 @@
  {
   "lang": "en",
   "text": "I ___ this shirt."
+ },
+ {
+  "lang": "en",
+  "text": "I like the red dress"
+ },
+ {
+  "lang": "en",
+  "text": "I buy the blue dress"
+ },
+ {
+  "lang": "en",
+  "text": "I like the blue dress. Do you like it?"
+ },
+ {
+  "lang": "en",
+  "text": "Yes, it is beautiful!"
+ },
+ {
+  "lang": "en",
+  "text": "The blue dress is a shirt."
+ },
+ {
+  "lang": "en",
+  "text": "No, the shop is closed."
+ },
+ {
+  "lang": "en",
+  "text": "I like the red shirt. The blue dress is expensive."
  },
  {
   "lang": "en",
@@ -3041,6 +3429,34 @@
  },
  {
   "lang": "en",
+  "text": "It is very cheap"
+ },
+ {
+  "lang": "en",
+  "text": "It is very expensive"
+ },
+ {
+  "lang": "en",
+  "text": "They are very cheap"
+ },
+ {
+  "lang": "en",
+  "text": "They are fifty liras."
+ },
+ {
+  "lang": "en",
+  "text": "The shoes are money."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, they are shoes."
+ },
+ {
+  "lang": "en",
+  "text": "I have no money today. The shop is very expensive."
+ },
+ {
+  "lang": "en",
   "text": "I work in an office"
  },
  {
@@ -3066,6 +3482,30 @@
  {
   "lang": "en",
   "text": "The doctor is busy"
+ },
+ {
+  "lang": "en",
+  "text": "My father is a doctor"
+ },
+ {
+  "lang": "en",
+  "text": "My mother is an engineer"
+ },
+ {
+  "lang": "en",
+  "text": "Where do you work?"
+ },
+ {
+  "lang": "en",
+  "text": "I am an office."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I work."
+ },
+ {
+  "lang": "en",
+  "text": "My mother is a doctor. She is very busy today."
  },
  {
   "lang": "en",
@@ -3101,6 +3541,38 @@
  },
  {
   "lang": "en",
+  "text": "I write with a blue pen"
+ },
+ {
+  "lang": "en",
+  "text": "I write with a blue book"
+ },
+ {
+  "lang": "en",
+  "text": "I read with a blue pen"
+ },
+ {
+  "lang": "en",
+  "text": "What are you doing?"
+ },
+ {
+  "lang": "en",
+  "text": "I am reading a book."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I am doing."
+ },
+ {
+  "lang": "en",
+  "text": "The book is a pen."
+ },
+ {
+  "lang": "en",
+  "text": "I learn English at school. I read English books at night."
+ },
+ {
+  "lang": "en",
   "text": "I have a meeting today"
  },
  {
@@ -3122,6 +3594,38 @@
  {
   "lang": "en",
   "text": "\"computer\" ne demek?"
+ },
+ {
+  "lang": "en",
+  "text": "The meeting is today"
+ },
+ {
+  "lang": "en",
+  "text": "The meeting is tomorrow"
+ },
+ {
+  "lang": "en",
+  "text": "The meeting was today"
+ },
+ {
+  "lang": "en",
+  "text": "Are you busy today?"
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I have a meeting today."
+ },
+ {
+  "lang": "en",
+  "text": "No, I am a meeting."
+ },
+ {
+  "lang": "en",
+  "text": "The computer is busy."
+ },
+ {
+  "lang": "en",
+  "text": "My computer is in the office. I am busy today."
  },
  {
   "lang": "en",
@@ -3150,6 +3654,34 @@
  {
   "lang": "en",
   "text": "\"learn\" ne demek?"
+ },
+ {
+  "lang": "en",
+  "text": "The teacher speaks slowly"
+ },
+ {
+  "lang": "en",
+  "text": "The student speaks English"
+ },
+ {
+  "lang": "en",
+  "text": "I am a new student here."
+ },
+ {
+  "lang": "en",
+  "text": "Welcome! Do you learn English?"
+ },
+ {
+  "lang": "en",
+  "text": "You are a new student, yes."
+ },
+ {
+  "lang": "en",
+  "text": "I am a school."
+ },
+ {
+  "lang": "en",
+  "text": "The students read at school. The teacher is happy."
  },
  {
   "lang": "en",
@@ -3193,6 +3725,38 @@
  },
  {
   "lang": "en",
+  "text": "It is hot today"
+ },
+ {
+  "lang": "en",
+  "text": "It is cold today"
+ },
+ {
+  "lang": "en",
+  "text": "It is hot tomorrow"
+ },
+ {
+  "lang": "en",
+  "text": "It is very cold today!"
+ },
+ {
+  "lang": "en",
+  "text": "Yes, and it is rainy too."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, it is very hot."
+ },
+ {
+  "lang": "en",
+  "text": "The weather is a cold."
+ },
+ {
+  "lang": "en",
+  "text": "It is sunny today. The weather is nice."
+ },
+ {
+  "lang": "en",
   "text": "Tomorrow is Monday"
  },
  {
@@ -3229,6 +3793,34 @@
  },
  {
   "lang": "en",
+  "text": "Today is Monday"
+ },
+ {
+  "lang": "en",
+  "text": "Tomorrow is Sunday"
+ },
+ {
+  "lang": "en",
+  "text": "See you tomorrow!"
+ },
+ {
+  "lang": "en",
+  "text": "See you! Have a nice day."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I am tomorrow."
+ },
+ {
+  "lang": "en",
+  "text": "Tomorrow is a week."
+ },
+ {
+  "lang": "en",
+  "text": "I work five days a week. On Sunday I rest."
+ },
+ {
+  "lang": "en",
   "text": "What time is it"
  },
  {
@@ -3258,6 +3850,34 @@
  {
   "lang": "en",
   "text": "\"hour\" ne demek?"
+ },
+ {
+  "lang": "en",
+  "text": "It is seven o'clock"
+ },
+ {
+  "lang": "en",
+  "text": "It is eleven o'clock"
+ },
+ {
+  "lang": "en",
+  "text": "It is seven hours"
+ },
+ {
+  "lang": "en",
+  "text": "It is three o'clock."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, it is time."
+ },
+ {
+  "lang": "en",
+  "text": "The time is very late today."
+ },
+ {
+  "lang": "en",
+  "text": "The meeting is one hour long. It is late now."
  },
  {
   "lang": "en",
@@ -3297,6 +3917,34 @@
  },
  {
   "lang": "en",
+  "text": "It is cold on Sunday"
+ },
+ {
+  "lang": "en",
+  "text": "It is hot on Saturday"
+ },
+ {
+  "lang": "en",
+  "text": "It is very hot today!"
+ },
+ {
+  "lang": "en",
+  "text": "Yes, but it is cold tomorrow."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, it is very cold."
+ },
+ {
+  "lang": "en",
+  "text": "The weather is a week."
+ },
+ {
+  "lang": "en",
+  "text": "It is cold tomorrow. On Sunday it is hot."
+ },
+ {
+  "lang": "en",
   "text": "I play football"
  },
  {
@@ -3322,6 +3970,18 @@
  {
   "lang": "en",
   "text": "We like music"
+ },
+ {
+  "lang": "en",
+  "text": "I like movies"
+ },
+ {
+  "lang": "en",
+  "text": "I play music"
+ },
+ {
+  "lang": "en",
+  "text": "We watch a movie tonight. I like football."
  },
  {
   "lang": "en",
@@ -3361,6 +4021,34 @@
  },
  {
   "lang": "en",
+  "text": "I swim in the sea"
+ },
+ {
+  "lang": "en",
+  "text": "I run in the sea"
+ },
+ {
+  "lang": "en",
+  "text": "I swim in the park"
+ },
+ {
+  "lang": "en",
+  "text": "What do you do at the weekend?"
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I do the weekend."
+ },
+ {
+  "lang": "en",
+  "text": "The park is a weekend."
+ },
+ {
+  "lang": "en",
+  "text": "I like to dance. My sister likes to swim."
+ },
+ {
+  "lang": "en",
   "text": "I cook at the weekend"
  },
  {
@@ -3390,6 +4078,34 @@
  {
   "lang": "en",
   "text": "\"cook\" ne demek?"
+ },
+ {
+  "lang": "en",
+  "text": "I like to cook photos"
+ },
+ {
+  "lang": "en",
+  "text": "I like to take music"
+ },
+ {
+  "lang": "en",
+  "text": "I cook dinner for my family every weekend."
+ },
+ {
+  "lang": "en",
+  "text": "That is nice! What do you cook?"
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I am cooking."
+ },
+ {
+  "lang": "en",
+  "text": "The weekend is dinner."
+ },
+ {
+  "lang": "en",
+  "text": "I like to travel by train. I take a lot of photos."
  },
  {
   "lang": "en",
@@ -3437,6 +4153,38 @@
  },
  {
   "lang": "en",
+  "text": "My friend likes movies"
+ },
+ {
+  "lang": "en",
+  "text": "My friend likes music"
+ },
+ {
+  "lang": "en",
+  "text": "My friend plays movies"
+ },
+ {
+  "lang": "en",
+  "text": "Let's play football!"
+ },
+ {
+  "lang": "en",
+  "text": "Sure! I like football."
+ },
+ {
+  "lang": "en",
+  "text": "I like movies very much."
+ },
+ {
+  "lang": "en",
+  "text": "I am a doctor."
+ },
+ {
+  "lang": "en",
+  "text": "I play the guitar at the weekend. My friend likes to watch movies."
+ },
+ {
+  "lang": "en",
   "text": "this week"
  },
  {
@@ -3477,6 +4225,34 @@
  },
  {
   "lang": "en",
+  "text": "I visited my father last week"
+ },
+ {
+  "lang": "en",
+  "text": "I visit my mother last week"
+ },
+ {
+  "lang": "en",
+  "text": "Where did you go yesterday?"
+ },
+ {
+  "lang": "en",
+  "text": "I went to the park."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I went yesterday."
+ },
+ {
+  "lang": "en",
+  "text": "I go to the park every day."
+ },
+ {
+  "lang": "en",
+  "text": "I went to the park yesterday. I watched a good movie at home."
+ },
+ {
+  "lang": "en",
   "text": "watches"
  },
  {
@@ -3514,6 +4290,30 @@
  {
   "lang": "en",
   "text": "plays"
+ },
+ {
+  "lang": "en",
+  "text": "I watched a movie last week"
+ },
+ {
+  "lang": "en",
+  "text": "I watch a movie last night"
+ },
+ {
+  "lang": "en",
+  "text": "I watched a movie at home."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I did yesterday."
+ },
+ {
+  "lang": "en",
+  "text": "I watch movies every day."
+ },
+ {
+  "lang": "en",
+  "text": "She stayed at a hotel last weekend. She cooked dinner there."
  },
  {
   "lang": "en",
@@ -3562,6 +4362,38 @@
  {
   "lang": "en",
   "text": "Did you have a good weekend?"
+ },
+ {
+  "lang": "en",
+  "text": "We ate dinner at eight"
+ },
+ {
+  "lang": "en",
+  "text": "We eat dinner at eight"
+ },
+ {
+  "lang": "en",
+  "text": "We ate breakfast at eight"
+ },
+ {
+  "lang": "en",
+  "text": "What did you see at the cinema?"
+ },
+ {
+  "lang": "en",
+  "text": "I saw a very good movie."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I saw the cinema."
+ },
+ {
+  "lang": "en",
+  "text": "I see movies every day."
+ },
+ {
+  "lang": "en",
+  "text": "I ate a delicious meal yesterday. Then I slept."
  },
  {
   "lang": "en",
@@ -3625,6 +4457,30 @@
  },
  {
   "lang": "en",
+  "text": "I see her two days ago"
+ },
+ {
+  "lang": "en",
+  "text": "How was your weekend?"
+ },
+ {
+  "lang": "en",
+  "text": "It was great! We had a lot of fun."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, it was a weekend."
+ },
+ {
+  "lang": "en",
+  "text": "The last night is fun."
+ },
+ {
+  "lang": "en",
+  "text": "We had a lot of fun last weekend. We stayed home and watched movies."
+ },
+ {
+  "lang": "en",
   "text": "I am going to watch a movie tonight"
  },
  {
@@ -3642,6 +4498,34 @@
  {
   "lang": "en",
   "text": "\"going to\" ne demek?"
+ },
+ {
+  "lang": "en",
+  "text": "I am going to watched a movie tonight"
+ },
+ {
+  "lang": "en",
+  "text": "I am going to watch a movie tomorrow night"
+ },
+ {
+  "lang": "en",
+  "text": "What are you going to do tonight?"
+ },
+ {
+  "lang": "en",
+  "text": "I am going to watch a movie."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I am going tonight."
+ },
+ {
+  "lang": "en",
+  "text": "Tonight is a movie."
+ },
+ {
+  "lang": "en",
+  "text": "We are going to play football at the weekend. Next week we are going to watch a movie."
  },
  {
   "lang": "en",
@@ -3693,6 +4577,30 @@
  },
  {
   "lang": "en",
+  "text": "It would rain tomorrow"
+ },
+ {
+  "lang": "en",
+  "text": "Will you come to the park tomorrow?"
+ },
+ {
+  "lang": "en",
+  "text": "Sure! I will come."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I come tomorrow."
+ },
+ {
+  "lang": "en",
+  "text": "The park will rain."
+ },
+ {
+  "lang": "en",
+  "text": "Maybe it will rain tomorrow. I will stay home."
+ },
+ {
+  "lang": "en",
   "text": "meat"
  },
  {
@@ -3741,6 +4649,38 @@
  },
  {
   "lang": "en",
+  "text": "I have an appointment at three"
+ },
+ {
+  "lang": "en",
+  "text": "I have an appointment at two"
+ },
+ {
+  "lang": "en",
+  "text": "I had an appointment at three"
+ },
+ {
+  "lang": "en",
+  "text": "I am meeting Ali tonight."
+ },
+ {
+  "lang": "en",
+  "text": "Nice! Where are you meeting?"
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I am Ali."
+ },
+ {
+  "lang": "en",
+  "text": "Tonight is a meeting."
+ },
+ {
+  "lang": "en",
+  "text": "I have a meeting at three. The meeting is one hour long."
+ },
+ {
+  "lang": "en",
   "text": "present"
  },
  {
@@ -3785,6 +4725,34 @@
  },
  {
   "lang": "en",
+  "text": "Would you like some coffee?"
+ },
+ {
+  "lang": "en",
+  "text": "Do you like some tea?"
+ },
+ {
+  "lang": "en",
+  "text": "Would you like to come to my birthday party?"
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I would love to!"
+ },
+ {
+  "lang": "en",
+  "text": "No, it is a party."
+ },
+ {
+  "lang": "en",
+  "text": "The birthday is sure."
+ },
+ {
+  "lang": "en",
+  "text": "The party is on Saturday. It is my birthday party."
+ },
+ {
+  "lang": "en",
   "text": "hand"
  },
  {
@@ -3821,6 +4789,30 @@
  },
  {
   "lang": "en",
+  "text": "My tooth hurts"
+ },
+ {
+  "lang": "en",
+  "text": "My tooth hurt"
+ },
+ {
+  "lang": "en",
+  "text": "Oh no! You need a doctor."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, my head."
+ },
+ {
+  "lang": "en",
+  "text": "The doctor is here."
+ },
+ {
+  "lang": "en",
+  "text": "I have a pain in my back. The doctor can help me."
+ },
+ {
+  "lang": "en",
   "text": "strong"
  },
  {
@@ -3842,6 +4834,34 @@
  {
   "lang": "en",
   "text": "I have a headache and a ___."
+ },
+ {
+  "lang": "en",
+  "text": "I have a bad fever"
+ },
+ {
+  "lang": "en",
+  "text": "I have a good cough"
+ },
+ {
+  "lang": "en",
+  "text": "I have a headache and a fever."
+ },
+ {
+  "lang": "en",
+  "text": "Poor you! Do you want to see a doctor?"
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I have a headache."
+ },
+ {
+  "lang": "en",
+  "text": "The fever is a doctor."
+ },
+ {
+  "lang": "en",
+  "text": "She has a headache and a fever. She needs to see a doctor."
  },
  {
   "lang": "en",
@@ -3885,6 +4905,34 @@
  },
  {
   "lang": "en",
+  "text": "I need some medicine"
+ },
+ {
+  "lang": "en",
+  "text": "I need some water"
+ },
+ {
+  "lang": "en",
+  "text": "I needed some medicine"
+ },
+ {
+  "lang": "en",
+  "text": "Great! The medicine is working."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I feel today."
+ },
+ {
+  "lang": "en",
+  "text": "The pharmacy is better."
+ },
+ {
+  "lang": "en",
+  "text": "The pharmacy is near the hospital. You should rest and drink water."
+ },
+ {
+  "lang": "en",
   "text": "hunt"
  },
  {
@@ -3925,6 +4973,30 @@
  },
  {
   "lang": "en",
+  "text": "My foot hurt"
+ },
+ {
+  "lang": "en",
+  "text": "My hand hurts"
+ },
+ {
+  "lang": "en",
+  "text": "My leg hurts. What should I do?"
+ },
+ {
+  "lang": "en",
+  "text": "Yes, you should a leg."
+ },
+ {
+  "lang": "en",
+  "text": "The rest is a leg."
+ },
+ {
+  "lang": "en",
+  "text": "You should rest for two days. Then you will feel better."
+ },
+ {
+  "lang": "en",
   "text": "internet"
  },
  {
@@ -3958,6 +5030,34 @@
  {
   "lang": "en",
   "text": "The ___ is at ten tomorrow."
+ },
+ {
+  "lang": "en",
+  "text": "I have a job interview today"
+ },
+ {
+  "lang": "en",
+  "text": "I had a job interview tomorrow"
+ },
+ {
+  "lang": "en",
+  "text": "I have a job interview tomorrow!"
+ },
+ {
+  "lang": "en",
+  "text": "Good luck! You have a lot of experience."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, it is an interview."
+ },
+ {
+  "lang": "en",
+  "text": "The job is tomorrow."
+ },
+ {
+  "lang": "en",
+  "text": "She has a new job. She works in an office."
  },
  {
   "lang": "en",
@@ -4006,6 +5106,38 @@
  {
   "lang": "en",
   "text": "Have"
+ },
+ {
+  "lang": "en",
+  "text": "I have worked here for two years"
+ },
+ {
+  "lang": "en",
+  "text": "I worked here for two years"
+ },
+ {
+  "lang": "en",
+  "text": "I have worked here since two years"
+ },
+ {
+  "lang": "en",
+  "text": "How long have you worked here?"
+ },
+ {
+  "lang": "en",
+  "text": "I have worked here since 2020."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I work here."
+ },
+ {
+  "lang": "en",
+  "text": "The office is two years."
+ },
+ {
+  "lang": "en",
+  "text": "I have worked at this company for two years. My office is very busy."
  },
  {
   "lang": "en",
@@ -4061,6 +5193,38 @@
  },
  {
   "lang": "en",
+  "text": "Could you call me back, please?"
+ },
+ {
+  "lang": "en",
+  "text": "Could you call me later, please?"
+ },
+ {
+  "lang": "en",
+  "text": "Could you called me back, please?"
+ },
+ {
+  "lang": "en",
+  "text": "Could you send me an e-mail tonight?"
+ },
+ {
+  "lang": "en",
+  "text": "Sure, I will send it tonight."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I am an e-mail."
+ },
+ {
+  "lang": "en",
+  "text": "The message is tonight."
+ },
+ {
+  "lang": "en",
+  "text": "She sent me a message. I will call her tomorrow."
+ },
+ {
+  "lang": "en",
   "text": "sale"
  },
  {
@@ -4110,6 +5274,34 @@
  {
   "lang": "en",
   "text": "management"
+ },
+ {
+  "lang": "en",
+  "text": "The salary is very good"
+ },
+ {
+  "lang": "en",
+  "text": "The salary is very bad"
+ },
+ {
+  "lang": "en",
+  "text": "The team is very good"
+ },
+ {
+  "lang": "en",
+  "text": "Sure! What do you need?"
+ },
+ {
+  "lang": "en",
+  "text": "Yes, I could you."
+ },
+ {
+  "lang": "en",
+  "text": "The help is a manager."
+ },
+ {
+  "lang": "en",
+  "text": "Our team is very good. The manager is happy with us."
  },
  {
   "lang": "en",
@@ -4798,10 +5990,6 @@
  {
   "lang": "en",
   "text": "Yes, I will make an appointment."
- },
- {
-  "lang": "en",
-  "text": "I am a doctor."
  },
  {
   "lang": "en",
@@ -7781,6 +8969,34 @@
  },
  {
   "lang": "de",
+  "text": "Nein, bitte"
+ },
+ {
+  "lang": "de",
+  "text": "Ja, danke"
+ },
+ {
+  "lang": "de",
+  "text": "Danke!"
+ },
+ {
+  "lang": "de",
+  "text": "Nein!"
+ },
+ {
+  "lang": "de",
+  "text": "Bitte!"
+ },
+ {
+  "lang": "de",
+  "text": "Tschüss!"
+ },
+ {
+  "lang": "de",
+  "text": "Nein, danke. Ja, bitte!"
+ },
+ {
+  "lang": "de",
   "text": "Ich bin ein Mann"
  },
  {
@@ -7818,6 +9034,26 @@
  {
   "lang": "de",
   "text": "Du bist ein Mann."
+ },
+ {
+  "lang": "de",
+  "text": "Ich bin eine Mann"
+ },
+ {
+  "lang": "de",
+  "text": "Du bist ein Mann"
+ },
+ {
+  "lang": "de",
+  "text": "Du bist Ayşe."
+ },
+ {
+  "lang": "de",
+  "text": "Und ich bin Tom."
+ },
+ {
+  "lang": "de",
+  "text": "Ich bin ein Mann. Du bist eine Frau."
  },
  {
   "lang": "de",
@@ -7862,6 +9098,30 @@
  {
   "lang": "de",
   "text": "\"gut\" ne demek?"
+ },
+ {
+  "lang": "de",
+  "text": "Mir geht es gut"
+ },
+ {
+  "lang": "de",
+  "text": "Mir geht es nicht gut"
+ },
+ {
+  "lang": "de",
+  "text": "Dir geht es gut"
+ },
+ {
+  "lang": "de",
+  "text": "Hallo, Tom! Wie geht's?"
+ },
+ {
+  "lang": "de",
+  "text": "Ich bin Tom."
+ },
+ {
+  "lang": "de",
+  "text": "Gut, danke! Und dir?"
  },
  {
   "lang": "de",
@@ -7949,6 +9209,18 @@
  },
  {
   "lang": "de",
+  "text": "Ich esse Wasser"
+ },
+ {
+  "lang": "de",
+  "text": "Du trinkst Wasser"
+ },
+ {
+  "lang": "de",
+  "text": "Ich trinke Tee. Du isst Brot."
+ },
+ {
+  "lang": "de",
   "text": "Ich esse einen Apfel"
  },
  {
@@ -7978,6 +9250,14 @@
  {
   "lang": "de",
   "text": "Ich trinke Milch"
+ },
+ {
+  "lang": "de",
+  "text": "Du isst Milch"
+ },
+ {
+  "lang": "de",
+  "text": "Ich esse einen Apfel. Du trinkst Milch."
  },
  {
   "lang": "de",
@@ -8021,6 +9301,18 @@
  },
  {
   "lang": "de",
+  "text": "Die Speisekarte, bitte"
+ },
+ {
+  "lang": "de",
+  "text": "Die Rechnung, danke"
+ },
+ {
+  "lang": "de",
+  "text": "Ich esse ein Ei. Der Käse ist lecker."
+ },
+ {
+  "lang": "de",
   "text": "Ich esse Hähnchen und Reis"
  },
  {
@@ -8054,6 +9346,22 @@
  {
   "lang": "de",
   "text": "\"der Zucker\" ne demek?"
+ },
+ {
+  "lang": "de",
+  "text": "Ich esse Fisch"
+ },
+ {
+  "lang": "de",
+  "text": "Ich esse frisch"
+ },
+ {
+  "lang": "de",
+  "text": "Du isst Fisch"
+ },
+ {
+  "lang": "de",
+  "text": "Ich esse Hähnchen und Reis. Der Salat ist frisch."
  },
  {
   "lang": "de",
@@ -8093,6 +9401,22 @@
  },
  {
   "lang": "de",
+  "text": "Meine Mutter trinkt Tee"
+ },
+ {
+  "lang": "de",
+  "text": "Mein Vater trinkt Tee"
+ },
+ {
+  "lang": "de",
+  "text": "Meine Mutter trinkt Kaffee"
+ },
+ {
+  "lang": "de",
+  "text": "Meine Mutter trinkt Tee. Mein Vater isst Brot."
+ },
+ {
+  "lang": "de",
   "text": "Meine Familie ist groß"
  },
  {
@@ -8118,6 +9442,26 @@
  {
   "lang": "de",
   "text": "Meine Familie ist gross"
+ },
+ {
+  "lang": "de",
+  "text": "Mein Kind ist klein"
+ },
+ {
+  "lang": "de",
+  "text": "Mein Kind ist groß"
+ },
+ {
+  "lang": "de",
+  "text": "Dein Kind ist klein"
+ },
+ {
+  "lang": "de",
+  "text": "Wie ist deine Familie?"
+ },
+ {
+  "lang": "de",
+  "text": "Das Kind ist klein. Die Familie ist groß."
  },
  {
   "lang": "de",
@@ -8157,6 +9501,18 @@
  },
  {
   "lang": "de",
+  "text": "Mein Freund hat ein Ei"
+ },
+ {
+  "lang": "de",
+  "text": "Mein Freund ist ein Kind"
+ },
+ {
+  "lang": "de",
+  "text": "Ich habe einen Bruder und eine Schwester. Mein Freund hat ein Kind."
+ },
+ {
+  "lang": "de",
   "text": "Ich liebe meine Ehefrau"
  },
  {
@@ -8178,6 +9534,34 @@
  {
   "lang": "de",
   "text": "Mein Bruder ___ ein Kind."
+ },
+ {
+  "lang": "de",
+  "text": "Ich liebe meine Ehemann"
+ },
+ {
+  "lang": "de",
+  "text": "Du liebst meine Ehefrau"
+ },
+ {
+  "lang": "de",
+  "text": "Wie ist deine Ehefrau?"
+ },
+ {
+  "lang": "de",
+  "text": "Ich habe eine Ehefrau."
+ },
+ {
+  "lang": "de",
+  "text": "Meine Ehefrau ist gut."
+ },
+ {
+  "lang": "de",
+  "text": "Mein Ehemann trinkt Tee."
+ },
+ {
+  "lang": "de",
+  "text": "Ich habe einen Ehemann. Ich liebe meine Familie."
  },
  {
   "lang": "de",
@@ -8225,6 +9609,14 @@
  },
  {
   "lang": "de",
+  "text": "Wo ist das Brot"
+ },
+ {
+  "lang": "de",
+  "text": "Ich habe eine Fahrkarte. Der Zug ist hier."
+ },
+ {
+  "lang": "de",
   "text": "Das Hotel ist nah"
  },
  {
@@ -8258,6 +9650,26 @@
  {
   "lang": "de",
   "text": "Das Hotel ist rechts"
+ },
+ {
+  "lang": "de",
+  "text": "Das Hotel ist weit"
+ },
+ {
+  "lang": "de",
+  "text": "Das Brot ist nah"
+ },
+ {
+  "lang": "de",
+  "text": "Das Hotel ist gut."
+ },
+ {
+  "lang": "de",
+  "text": "Ich mag das Hotel."
+ },
+ {
+  "lang": "de",
+  "text": "Das Hotel ist links. Der Bahnhof ist weit."
  },
  {
   "lang": "de",
@@ -8301,6 +9713,38 @@
  },
  {
   "lang": "de",
+  "text": "Ich brauche Hilfe"
+ },
+ {
+  "lang": "de",
+  "text": "Du brauchst Hilfe"
+ },
+ {
+  "lang": "de",
+  "text": "Ich habe Hilfe"
+ },
+ {
+  "lang": "de",
+  "text": "Entschuldigung! Wo ist der Bahnhof?"
+ },
+ {
+  "lang": "de",
+  "text": "Der Bahnhof ist links."
+ },
+ {
+  "lang": "de",
+  "text": "Entschuldigung, ich habe Hunger."
+ },
+ {
+  "lang": "de",
+  "text": "Die Fahrkarte ist billig."
+ },
+ {
+  "lang": "de",
+  "text": "Entschuldigung, ich brauche Hilfe. Wo ist der Bahnhof?"
+ },
+ {
+  "lang": "de",
   "text": "Der Zug ist spät"
  },
  {
@@ -8326,6 +9770,22 @@
  {
   "lang": "de",
   "text": "\"früh\" ne demek?"
+ },
+ {
+  "lang": "de",
+  "text": "Das Flugzeug kommt spät"
+ },
+ {
+  "lang": "de",
+  "text": "Das Flugzeug kommt früh"
+ },
+ {
+  "lang": "de",
+  "text": "Der Zug kommt spät"
+ },
+ {
+  "lang": "de",
+  "text": "Meine Tasche ist im Auto. Das Flugzeug kommt früh."
  },
  {
   "lang": "de",
@@ -8358,6 +9818,22 @@
  {
   "lang": "de",
   "text": "\"billig\" ne demek?"
+ },
+ {
+  "lang": "de",
+  "text": "Das Kleid ist blau."
+ },
+ {
+  "lang": "de",
+  "text": "Zehn Euro."
+ },
+ {
+  "lang": "de",
+  "text": "Ich kaufe ein Kleid."
+ },
+ {
+  "lang": "de",
+  "text": "Der Laden ist billig. Ich habe kein Geld."
  },
  {
   "lang": "de",
@@ -8405,6 +9881,14 @@
  },
  {
   "lang": "de",
+  "text": "Du kaufst ein Hemd"
+ },
+ {
+  "lang": "de",
+  "text": "Ich kaufe Schuhe. Das Hemd ist zu klein."
+ },
+ {
+  "lang": "de",
   "text": "Ich mag das blaue Kleid"
  },
  {
@@ -8441,6 +9925,18 @@
  },
  {
   "lang": "de",
+  "text": "Ich mag das rote Kleid"
+ },
+ {
+  "lang": "de",
+  "text": "Ich mag das blaue Hemd"
+ },
+ {
+  "lang": "de",
+  "text": "Das Hemd ist rot. Das Kleid ist blau."
+ },
+ {
+  "lang": "de",
   "text": "Ich habe kein Geld"
  },
  {
@@ -8470,6 +9966,26 @@
  {
   "lang": "de",
   "text": "Das ist sehr billig"
+ },
+ {
+  "lang": "de",
+  "text": "Ich habe kein Kleid"
+ },
+ {
+  "lang": "de",
+  "text": "Du hast kein Geld"
+ },
+ {
+  "lang": "de",
+  "text": "Wie viel kostet das Kleid?"
+ },
+ {
+  "lang": "de",
+  "text": "Ich kaufe das Kleid."
+ },
+ {
+  "lang": "de",
+  "text": "Der Laden ist billig. Ich kaufe ein Kleid."
  },
  {
   "lang": "de",
@@ -8506,6 +10022,22 @@
  {
   "lang": "de",
   "text": "\"beschäftigt\" ne demek?"
+ },
+ {
+  "lang": "de",
+  "text": "Ich arbeite in der Schule"
+ },
+ {
+  "lang": "de",
+  "text": "Du arbeitest in der Schule"
+ },
+ {
+  "lang": "de",
+  "text": "Ich arbeite in der Büro"
+ },
+ {
+  "lang": "de",
+  "text": "Mein Vater ist Arzt. Er arbeitet in einem Büro."
  },
  {
   "lang": "de",
@@ -8549,6 +10081,18 @@
  },
  {
   "lang": "de",
+  "text": "Du liest ein Buch"
+ },
+ {
+  "lang": "de",
+  "text": "Ich lese ein Stift"
+ },
+ {
+  "lang": "de",
+  "text": "Ich lerne Deutsch. Du liest ein Buch."
+ },
+ {
+  "lang": "de",
   "text": "Ich habe heute eine Besprechung"
  },
  {
@@ -8589,6 +10133,30 @@
  },
  {
   "lang": "de",
+  "text": "Ich habe heute einen Besprechung"
+ },
+ {
+  "lang": "de",
+  "text": "Du hast heute eine Besprechung"
+ },
+ {
+  "lang": "de",
+  "text": "Wo ist dein Computer?"
+ },
+ {
+  "lang": "de",
+  "text": "Ich habe heute eine Besprechung."
+ },
+ {
+  "lang": "de",
+  "text": "Mein Computer ist im Büro."
+ },
+ {
+  "lang": "de",
+  "text": "Ich arbeite heute im Büro. Die Besprechung ist heute."
+ },
+ {
+  "lang": "de",
   "text": "Der Lehrer spricht Deutsch"
  },
  {
@@ -8622,6 +10190,18 @@
  {
   "lang": "de",
   "text": "das"
+ },
+ {
+  "lang": "de",
+  "text": "Der Schüler spricht Deutsch"
+ },
+ {
+  "lang": "de",
+  "text": "Die Schüler sprechen Deutsch"
+ },
+ {
+  "lang": "de",
+  "text": "Die Schüler lesen in der Schule. Der Lehrer lernt Deutsch."
  },
  {
   "lang": "de",
@@ -8661,6 +10241,26 @@
  },
  {
   "lang": "de",
+  "text": "Heute ist es heiß"
+ },
+ {
+  "lang": "de",
+  "text": "Heute ist es kalt"
+ },
+ {
+  "lang": "de",
+  "text": "Morgen ist es heiß"
+ },
+ {
+  "lang": "de",
+  "text": "Wie ist das Wetter heute?"
+ },
+ {
+  "lang": "de",
+  "text": "Heute ist es heiß. Das Wetter ist gut."
+ },
+ {
+  "lang": "de",
   "text": "Morgen ist Montag"
  },
  {
@@ -8690,6 +10290,30 @@
  {
   "lang": "de",
   "text": "Jetzt"
+ },
+ {
+  "lang": "de",
+  "text": "Morgen ist Sonntag"
+ },
+ {
+  "lang": "de",
+  "text": "Heute ist Montag"
+ },
+ {
+  "lang": "de",
+  "text": "Heute ist Sonntag."
+ },
+ {
+  "lang": "de",
+  "text": "Morgen ist Sonntag."
+ },
+ {
+  "lang": "de",
+  "text": "Morgen ist Montag."
+ },
+ {
+  "lang": "de",
+  "text": "Die Woche hat sieben Tage. Heute ist Montag."
  },
  {
   "lang": "de",
@@ -8737,6 +10361,22 @@
  },
  {
   "lang": "de",
+  "text": "Es ist zwei Uhr"
+ },
+ {
+  "lang": "de",
+  "text": "Ist es drei Uhr"
+ },
+ {
+  "lang": "de",
+  "text": "Es ist jetzt."
+ },
+ {
+  "lang": "de",
+  "text": "Der Zug kommt spät. Es ist drei Uhr."
+ },
+ {
+  "lang": "de",
   "text": "Morgen ist es kalt"
  },
  {
@@ -8766,6 +10406,22 @@
  {
   "lang": "de",
   "text": "Heute ist ___."
+ },
+ {
+  "lang": "de",
+  "text": "Wie ist das Wetter morgen?"
+ },
+ {
+  "lang": "de",
+  "text": "Morgen ist es kalt."
+ },
+ {
+  "lang": "de",
+  "text": "Die Woche ist lang."
+ },
+ {
+  "lang": "de",
+  "text": "Am Sonntag ist es heiß. Am Montag ist es kalt."
  },
  {
   "lang": "de",
@@ -8806,6 +10462,22 @@
  {
   "lang": "de",
   "text": "\"spielen\" ne demek?"
+ },
+ {
+  "lang": "de",
+  "text": "Magst du Fußball?"
+ },
+ {
+  "lang": "de",
+  "text": "Nein, ich mag Fußball nicht."
+ },
+ {
+  "lang": "de",
+  "text": "Ja, ich mag Fußball."
+ },
+ {
+  "lang": "de",
+  "text": "Ich spiele Fußball. Mein Bruder spielt Gitarre."
  },
  {
   "lang": "de",
@@ -8857,6 +10529,30 @@
  },
  {
   "lang": "de",
+  "text": "Ich laufe im Park"
+ },
+ {
+  "lang": "de",
+  "text": "Du läufst im Park"
+ },
+ {
+  "lang": "de",
+  "text": "Ich tanze im Park"
+ },
+ {
+  "lang": "de",
+  "text": "Was machst du am Wochenende?"
+ },
+ {
+  "lang": "de",
+  "text": "Ich mag den Park."
+ },
+ {
+  "lang": "de",
+  "text": "Am Wochenende schwimme ich. Meine Schwester tanzt."
+ },
+ {
+  "lang": "de",
   "text": "Foto"
  },
  {
@@ -8901,6 +10597,18 @@
  },
  {
   "lang": "de",
+  "text": "Ich koche gern"
+ },
+ {
+  "lang": "de",
+  "text": "Du kochst gern"
+ },
+ {
+  "lang": "de",
+  "text": "Wir reisen nach Berlin. Am Wochenende koche ich."
+ },
+ {
+  "lang": "de",
   "text": "Am Wochenende spiele ich Gitarre"
  },
  {
@@ -8938,6 +10646,18 @@
  {
   "lang": "de",
   "text": "Wir spielen am Wochenende"
+ },
+ {
+  "lang": "de",
+  "text": "Am Wochenende spiele ich Fußball"
+ },
+ {
+  "lang": "de",
+  "text": "Am Wochenende spielst du Fußball"
+ },
+ {
+  "lang": "de",
+  "text": "Wir spielen am Wochenende Fußball. Mein Freund spielt Gitarre."
  },
  {
   "lang": "de",
@@ -10993,10 +12713,6 @@
  },
  {
   "lang": "de",
-  "text": "Danke!"
- },
- {
-  "lang": "de",
   "text": "Das ist sehr nett von Ihnen."
  },
  {
@@ -12845,6 +14561,30 @@
  },
  {
   "lang": "es",
+  "text": "Sí, gracias"
+ },
+ {
+  "lang": "es",
+  "text": "No, adiós"
+ },
+ {
+  "lang": "es",
+  "text": "¡Adiós!"
+ },
+ {
+  "lang": "es",
+  "text": "Sí, gracias."
+ },
+ {
+  "lang": "es",
+  "text": "Por favor."
+ },
+ {
+  "lang": "es",
+  "text": "Hola, soy Ana. Adiós, Ana."
+ },
+ {
+  "lang": "es",
   "text": "Yo soy un hombre"
  },
  {
@@ -12878,6 +14618,14 @@
  {
   "lang": "es",
   "text": "Yo ___ una mujer."
+ },
+ {
+  "lang": "es",
+  "text": "Tú eres un hombre"
+ },
+ {
+  "lang": "es",
+  "text": "Yo soy un hombre. Tú eres una mujer."
  },
  {
   "lang": "es",
@@ -12922,6 +14670,18 @@
  {
   "lang": "es",
   "text": "\"bien\" ne demek?"
+ },
+ {
+  "lang": "es",
+  "text": "¿Cómo estoy?"
+ },
+ {
+  "lang": "es",
+  "text": "¿Cómo eres?"
+ },
+ {
+  "lang": "es",
+  "text": "El niño está bien. Él es mi amigo."
  },
  {
   "lang": "es",
@@ -13009,6 +14769,22 @@
  },
  {
   "lang": "es",
+  "text": "Yo bebo té"
+ },
+ {
+  "lang": "es",
+  "text": "Yo como té"
+ },
+ {
+  "lang": "es",
+  "text": "Tú bebes té"
+ },
+ {
+  "lang": "es",
+  "text": "Yo como pan. Tú bebes agua."
+ },
+ {
+  "lang": "es",
   "text": "Yo como una manzana"
  },
  {
@@ -13034,6 +14810,34 @@
  {
   "lang": "es",
   "text": "\"la leche\" ne demek?"
+ },
+ {
+  "lang": "es",
+  "text": "Tú comes leche"
+ },
+ {
+  "lang": "es",
+  "text": "Yo bebo leche"
+ },
+ {
+  "lang": "es",
+  "text": "Bebo leche. ¿Y tú?"
+ },
+ {
+  "lang": "es",
+  "text": "Como una manzana."
+ },
+ {
+  "lang": "es",
+  "text": "Estoy bien."
+ },
+ {
+  "lang": "es",
+  "text": "Sí, por favor."
+ },
+ {
+  "lang": "es",
+  "text": "Yo como una manzana. Mi amigo bebe leche."
  },
  {
   "lang": "es",
@@ -13078,6 +14882,18 @@
  {
   "lang": "es",
   "text": "tengo hambre"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo hombre"
+ },
+ {
+  "lang": "es",
+  "text": "Tienes hambre"
+ },
+ {
+  "lang": "es",
+  "text": "Yo como un huevo. El queso está rico."
  },
  {
   "lang": "es",
@@ -13129,6 +14945,30 @@
  },
  {
   "lang": "es",
+  "text": "Yo como pescado y arroz"
+ },
+ {
+  "lang": "es",
+  "text": "Yo bebo pollo y arroz"
+ },
+ {
+  "lang": "es",
+  "text": "Yo como pollo y arroz. ¿Y tú?"
+ },
+ {
+  "lang": "es",
+  "text": "Yo como pescado y ensalada."
+ },
+ {
+  "lang": "es",
+  "text": "Yo bebo arroz."
+ },
+ {
+  "lang": "es",
+  "text": "La sal está rica."
+ },
+ {
+  "lang": "es",
   "text": "Tengo una hermana"
  },
  {
@@ -13165,6 +15005,14 @@
  },
  {
   "lang": "es",
+  "text": "Tienes una hermana"
+ },
+ {
+  "lang": "es",
+  "text": "Mi madre bebe té. Mi padre come pan."
+ },
+ {
+  "lang": "es",
   "text": "Mi familia es grande"
  },
  {
@@ -13186,6 +15034,22 @@
  {
   "lang": "es",
   "text": "\"grande\" ne demek?"
+ },
+ {
+  "lang": "es",
+  "text": "Mi familia es pequeña"
+ },
+ {
+  "lang": "es",
+  "text": "Mi familia está grande"
+ },
+ {
+  "lang": "es",
+  "text": "Mi familia es pequeña. ¿Y tú?"
+ },
+ {
+  "lang": "es",
+  "text": "Mi familia es grande. El niño es pequeño."
  },
  {
   "lang": "es",
@@ -13221,6 +15085,18 @@
  },
  {
   "lang": "es",
+  "text": "Mi amigo tengo un niño"
+ },
+ {
+  "lang": "es",
+  "text": "Mi amigo tiene una niño"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo dos hermanos. Mi amigo tiene una hermana."
+ },
+ {
+  "lang": "es",
   "text": "Tengo un hijo y una hija"
  },
  {
@@ -13250,6 +15126,18 @@
  {
   "lang": "es",
   "text": "Yo ___ a mi abuela."
+ },
+ {
+  "lang": "es",
+  "text": "Mi abuela bebe té"
+ },
+ {
+  "lang": "es",
+  "text": "Mi abuelo come té"
+ },
+ {
+  "lang": "es",
+  "text": "Mi hijo es pequeño. Mi hija es grande."
  },
  {
   "lang": "es",
@@ -13301,6 +15189,14 @@
  },
  {
   "lang": "es",
+  "text": "¿Dónde está la tren?"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo un billete para el tren. El tren está en la estación."
+ },
+ {
+  "lang": "es",
   "text": "El hotel está cerca"
  },
  {
@@ -13326,6 +15222,34 @@
  {
   "lang": "es",
   "text": "\"lejos\" ne demek?"
+ },
+ {
+  "lang": "es",
+  "text": "El hotel está lejos"
+ },
+ {
+  "lang": "es",
+  "text": "El tren está cerca"
+ },
+ {
+  "lang": "es",
+  "text": "El tren no está cerca."
+ },
+ {
+  "lang": "es",
+  "text": "Está lejos."
+ },
+ {
+  "lang": "es",
+  "text": "Está cerca."
+ },
+ {
+  "lang": "es",
+  "text": "Está a la derecha."
+ },
+ {
+  "lang": "es",
+  "text": "La estación está lejos. El hotel está cerca."
  },
  {
   "lang": "es",
@@ -13381,6 +15305,34 @@
  },
  {
   "lang": "es",
+  "text": "Necesito ayuda"
+ },
+ {
+  "lang": "es",
+  "text": "Necesito agua"
+ },
+ {
+  "lang": "es",
+  "text": "Necesitas ayuda"
+ },
+ {
+  "lang": "es",
+  "text": "Está a la izquierda."
+ },
+ {
+  "lang": "es",
+  "text": "Es un billete."
+ },
+ {
+  "lang": "es",
+  "text": "Bebo té."
+ },
+ {
+  "lang": "es",
+  "text": "Perdón, necesito ayuda. Quiero un billete para el tren."
+ },
+ {
+  "lang": "es",
   "text": "coche"
  },
  {
@@ -13417,6 +15369,30 @@
  },
  {
   "lang": "es",
+  "text": "El tren llega temprano"
+ },
+ {
+  "lang": "es",
+  "text": "El avión llega tarde"
+ },
+ {
+  "lang": "es",
+  "text": "Necesito la maleta."
+ },
+ {
+  "lang": "es",
+  "text": "Está en el coche."
+ },
+ {
+  "lang": "es",
+  "text": "El avión es grande."
+ },
+ {
+  "lang": "es",
+  "text": "Llega tarde."
+ },
+ {
+  "lang": "es",
   "text": "¿Cuánto cuesta esto?"
  },
  {
@@ -13450,6 +15426,22 @@
  {
   "lang": "es",
   "text": "\"barato\" ne demek?"
+ },
+ {
+  "lang": "es",
+  "text": "El precio es diez euros"
+ },
+ {
+  "lang": "es",
+  "text": "El precio es dos euros"
+ },
+ {
+  "lang": "es",
+  "text": "La precio es diez euros"
+ },
+ {
+  "lang": "es",
+  "text": "La tienda es cara. El pan es barato."
  },
  {
   "lang": "es",
@@ -13493,6 +15485,14 @@
  },
  {
   "lang": "es",
+  "text": "Compro un camisa"
+ },
+ {
+  "lang": "es",
+  "text": "Quiero comprar un vestido."
+ },
+ {
+  "lang": "es",
   "text": "Me gusta el vestido azul"
  },
  {
@@ -13529,6 +15529,26 @@
  },
  {
   "lang": "es",
+  "text": "La camisa roja es azul"
+ },
+ {
+  "lang": "es",
+  "text": "La camisa azul es cara"
+ },
+ {
+  "lang": "es",
+  "text": "Compro la camisa roja."
+ },
+ {
+  "lang": "es",
+  "text": "Me gusta."
+ },
+ {
+  "lang": "es",
+  "text": "Me gusta el vestido azul. No me gusta la camisa roja."
+ },
+ {
+  "lang": "es",
   "text": "No tengo dinero"
  },
  {
@@ -13550,6 +15570,18 @@
  {
   "lang": "es",
   "text": "No tengo ___."
+ },
+ {
+  "lang": "es",
+  "text": "Yo tengo dinero"
+ },
+ {
+  "lang": "es",
+  "text": "No tienes dinero"
+ },
+ {
+  "lang": "es",
+  "text": "No tengo dinero. Quiero comprar zapatos baratos."
  },
  {
   "lang": "es",
@@ -13586,6 +15618,26 @@
  {
   "lang": "es",
   "text": "\"ocupado\" ne demek?"
+ },
+ {
+  "lang": "es",
+  "text": "Trabajo en una escuela"
+ },
+ {
+  "lang": "es",
+  "text": "Trabajas en una oficina"
+ },
+ {
+  "lang": "es",
+  "text": "¿Dónde trabajas?"
+ },
+ {
+  "lang": "es",
+  "text": "Trabajo en una escuela."
+ },
+ {
+  "lang": "es",
+  "text": "Soy ingeniero."
  },
  {
   "lang": "es",
@@ -13637,6 +15689,18 @@
  },
  {
   "lang": "es",
+  "text": "Leo un bolígrafo"
+ },
+ {
+  "lang": "es",
+  "text": "Lees un libro"
+ },
+ {
+  "lang": "es",
+  "text": "Aprendo español. Escribo con un bolígrafo."
+ },
+ {
+  "lang": "es",
   "text": "Hoy tengo una reunión"
  },
  {
@@ -13670,6 +15734,34 @@
  {
   "lang": "es",
   "text": "Estoy ___ hoy."
+ },
+ {
+  "lang": "es",
+  "text": "Hoy tienes una reunión"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy tengo una oficina"
+ },
+ {
+  "lang": "es",
+  "text": "¿Dónde trabajas hoy?"
+ },
+ {
+  "lang": "es",
+  "text": "En la oficina."
+ },
+ {
+  "lang": "es",
+  "text": "Tengo una reunión."
+ },
+ {
+  "lang": "es",
+  "text": "Sí, hoy."
+ },
+ {
+  "lang": "es",
+  "text": "El ordenador está en la oficina. Hoy tengo una reunión."
  },
  {
   "lang": "es",
@@ -13713,6 +15805,18 @@
  },
  {
   "lang": "es",
+  "text": "El estudiante habla español"
+ },
+ {
+  "lang": "es",
+  "text": "El profesor habla española"
+ },
+ {
+  "lang": "es",
+  "text": "Los estudiantes leen en la escuela. El profesor escribe."
+ },
+ {
+  "lang": "es",
   "text": "Hoy hace sol"
  },
  {
@@ -13742,6 +15846,34 @@
  {
   "lang": "es",
   "text": "\"frío\" ne demek?"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy hace calor"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy hace frío"
+ },
+ {
+  "lang": "es",
+  "text": "el frío"
+ },
+ {
+  "lang": "es",
+  "text": "el calor"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy hace mucho calor."
+ },
+ {
+  "lang": "es",
+  "text": "Quiero agua."
+ },
+ {
+  "lang": "es",
+  "text": "Hace frío hoy."
  },
  {
   "lang": "es",
@@ -13789,6 +15921,22 @@
  },
  {
   "lang": "es",
+  "text": "Mañana es domingo"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy es lunes"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy es domingo. ¿Quieres café?"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy es lunes. Trabajo toda la semana."
+ },
+ {
+  "lang": "es",
   "text": "¿dónde?"
  },
  {
@@ -13821,6 +15969,22 @@
  },
  {
   "lang": "es",
+  "text": "Son las dos"
+ },
+ {
+  "lang": "es",
+  "text": "Es las tres"
+ },
+ {
+  "lang": "es",
+  "text": "Tengo un libro."
+ },
+ {
+  "lang": "es",
+  "text": "Es la una ahora. El tren llega tarde."
+ },
+ {
+  "lang": "es",
   "text": "Mañana hace frío"
  },
  {
@@ -13846,6 +16010,26 @@
  {
   "lang": "es",
   "text": "tiene"
+ },
+ {
+  "lang": "es",
+  "text": "Mañana hace calor"
+ },
+ {
+  "lang": "es",
+  "text": "Mañana es frío"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy hace mucho calor. ¿Quieres agua?"
+ },
+ {
+  "lang": "es",
+  "text": "Hoy hace frío."
+ },
+ {
+  "lang": "es",
+  "text": "El domingo hace calor. Mañana hace frío."
  },
  {
   "lang": "es",
@@ -13885,6 +16069,18 @@
  },
  {
   "lang": "es",
+  "text": "Juego a la guitarra"
+ },
+ {
+  "lang": "es",
+  "text": "Juegas al fútbol"
+ },
+ {
+  "lang": "es",
+  "text": "Yo toco la guitarra."
+ },
+ {
+  "lang": "es",
   "text": "Corro en el parque el fin de semana"
  },
  {
@@ -13921,6 +16117,26 @@
  },
  {
   "lang": "es",
+  "text": "Corro en el parque"
+ },
+ {
+  "lang": "es",
+  "text": "Corro en la parque"
+ },
+ {
+  "lang": "es",
+  "text": "Nado en el parque"
+ },
+ {
+  "lang": "es",
+  "text": "A mí también. Bailo los domingos."
+ },
+ {
+  "lang": "es",
+  "text": "No me gusta nadar."
+ },
+ {
+  "lang": "es",
   "text": "Cocino el fin de semana"
  },
  {
@@ -13950,6 +16166,26 @@
  {
   "lang": "es",
   "text": "Me gusta la ___."
+ },
+ {
+  "lang": "es",
+  "text": "Cocinas el fin de semana"
+ },
+ {
+  "lang": "es",
+  "text": "Cocino en la semana"
+ },
+ {
+  "lang": "es",
+  "text": "¿Adónde viajas?"
+ },
+ {
+  "lang": "es",
+  "text": "Viajo a España."
+ },
+ {
+  "lang": "es",
+  "text": "Cocino el fin de semana."
  },
  {
   "lang": "es",
@@ -13986,6 +16222,34 @@
  {
   "lang": "es",
   "text": "Juego al fútbol con mi amigo"
+ },
+ {
+  "lang": "es",
+  "text": "Juego la guitarra el fin de semana"
+ },
+ {
+  "lang": "es",
+  "text": "Toco el fútbol el fin de semana"
+ },
+ {
+  "lang": "es",
+  "text": "Quiero jugar al fútbol."
+ },
+ {
+  "lang": "es",
+  "text": "Jugamos el fin de semana."
+ },
+ {
+  "lang": "es",
+  "text": "Me gusta el té."
+ },
+ {
+  "lang": "es",
+  "text": "Hoy es domingo."
+ },
+ {
+  "lang": "es",
+  "text": "Jugamos al fútbol el fin de semana. Me gustan las películas."
  },
  {
   "lang": "es",
@@ -17581,6 +19845,34 @@
  },
  {
   "lang": "fr",
+  "text": "Bonjour ! Comment ça va ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Ça va bien, merci !"
+ },
+ {
+  "lang": "fr",
+  "text": "Au revoir !"
+ },
+ {
+  "lang": "fr",
+  "text": "Merci beaucoup"
+ },
+ {
+  "lang": "fr",
+  "text": "Merci, au revoir"
+ },
+ {
+  "lang": "fr",
+  "text": "Merci, madame"
+ },
+ {
+  "lang": "fr",
+  "text": "Oui, merci. Au revoir, madame."
+ },
+ {
+  "lang": "fr",
   "text": "Je suis un homme"
  },
  {
@@ -17614,6 +19906,30 @@
  {
   "lang": "fr",
   "text": "Je ___ une femme."
+ },
+ {
+  "lang": "fr",
+  "text": "Je suis Ayşe. Et toi ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je suis Tom."
+ },
+ {
+  "lang": "fr",
+  "text": "Tu es Tom."
+ },
+ {
+  "lang": "fr",
+  "text": "Il est Tom."
+ },
+ {
+  "lang": "fr",
+  "text": "Tu es un homme"
+ },
+ {
+  "lang": "fr",
+  "text": "Marie est une femme. Tom est un homme."
  },
  {
   "lang": "fr",
@@ -17686,6 +20002,14 @@
  {
   "lang": "fr",
   "text": "Je"
+ },
+ {
+  "lang": "fr",
+  "text": "Ça va, au revoir"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu vas bien, merci"
  },
  {
   "lang": "fr",
@@ -17797,6 +20121,18 @@
  },
  {
   "lang": "fr",
+  "text": "Je bois du thé"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu bois de l'eau"
+ },
+ {
+  "lang": "fr",
+  "text": "Je mange du pain. Je bois du thé."
+ },
+ {
+  "lang": "fr",
   "text": "Je mange une pomme"
  },
  {
@@ -17814,6 +20150,14 @@
  {
   "lang": "fr",
   "text": "\"le lait\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je bois du lait"
+ },
+ {
+  "lang": "fr",
+  "text": "Je mange une pomme. Je bois du lait."
  },
  {
   "lang": "fr",
@@ -17861,6 +20205,26 @@
  },
  {
   "lang": "fr",
+  "text": "L'addition et le fromage"
+ },
+ {
+  "lang": "fr",
+  "text": "L'addition, s'il te plaît"
+ },
+ {
+  "lang": "fr",
+  "text": "Monsieur, l'addition, s'il vous plaît."
+ },
+ {
+  "lang": "fr",
+  "text": "Tout de suite, monsieur !"
+ },
+ {
+  "lang": "fr",
+  "text": "Le pain est délicieux. L'addition, s'il vous plaît !"
+ },
+ {
+  "lang": "fr",
   "text": "Je mange du poulet et du riz"
  },
  {
@@ -17890,6 +20254,22 @@
  {
   "lang": "fr",
   "text": "\"le sucre\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu manges une salade"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu manges une pomme"
+ },
+ {
+  "lang": "fr",
+  "text": "Je mange une salade"
+ },
+ {
+  "lang": "fr",
+  "text": "Le poulet est délicieux. Je mange du riz avec du poulet."
  },
  {
   "lang": "fr",
@@ -17941,6 +20321,38 @@
  },
  {
   "lang": "fr",
+  "text": "J'ai deux sœurs"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai deux frères"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu as deux sœurs"
+ },
+ {
+  "lang": "fr",
+  "text": "Voici ma sœur, Léa."
+ },
+ {
+  "lang": "fr",
+  "text": "Bonjour, Léa !"
+ },
+ {
+  "lang": "fr",
+  "text": "Le père est grand."
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai un frère."
+ },
+ {
+  "lang": "fr",
+  "text": "Ma mère boit du thé. Mon père mange du pain."
+ },
+ {
+  "lang": "fr",
   "text": "Ma famille est grande"
  },
  {
@@ -17973,7 +20385,23 @@
  },
  {
   "lang": "fr",
-  "text": "J'ai deux frères"
+  "text": "Ma famille est petite"
+ },
+ {
+  "lang": "fr",
+  "text": "Ta famille est grande"
+ },
+ {
+  "lang": "fr",
+  "text": "J'aime ma famille. Et toi ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Moi aussi, j'aime ma famille !"
+ },
+ {
+  "lang": "fr",
+  "text": "L'enfant est petit. Ma sœur est grande."
  },
  {
   "lang": "fr",
@@ -18010,6 +20438,18 @@
  {
   "lang": "fr",
   "text": "a"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon ami a deux enfants"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon ami est un enfant"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon frère a deux enfants. Ma sœur a un enfant."
  },
  {
   "lang": "fr",
@@ -18073,6 +20513,18 @@
  },
  {
   "lang": "fr",
+  "text": "Ma grand-mère boit du café"
+ },
+ {
+  "lang": "fr",
+  "text": "Ta grand-mère boit du thé"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma grand-mère est petite. Mon grand-père boit du thé."
+ },
+ {
+  "lang": "fr",
   "text": "Où est l'hôtel"
  },
  {
@@ -18113,6 +20565,18 @@
  },
  {
   "lang": "fr",
+  "text": "Où est le bus"
+ },
+ {
+  "lang": "fr",
+  "text": "C'est l'hôtel"
+ },
+ {
+  "lang": "fr",
+  "text": "L'aéroport est loin. L'hôtel est près de l'aéroport."
+ },
+ {
+  "lang": "fr",
   "text": "la droite"
  },
  {
@@ -18150,6 +20614,34 @@
  {
   "lang": "fr",
   "text": "La rue est à droite"
+ },
+ {
+  "lang": "fr",
+  "text": "La rue est à gauche"
+ },
+ {
+  "lang": "fr",
+  "text": "La gare est à droite"
+ },
+ {
+  "lang": "fr",
+  "text": "L'hôtel est proche. La gare est loin."
+ },
+ {
+  "lang": "fr",
+  "text": "Je cherche la gare."
+ },
+ {
+  "lang": "fr",
+  "text": "Tournez à droite, c'est près."
+ },
+ {
+  "lang": "fr",
+  "text": "La gare est grande."
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai un billet."
  },
  {
   "lang": "fr",
@@ -18201,6 +20693,30 @@
  },
  {
   "lang": "fr",
+  "text": "Voici mon passeport"
+ },
+ {
+  "lang": "fr",
+  "text": "Voici mon billet"
+ },
+ {
+  "lang": "fr",
+  "text": "Voici le passeport"
+ },
+ {
+  "lang": "fr",
+  "text": "Voici mon passeport. Le taxi est là."
+ },
+ {
+  "lang": "fr",
+  "text": "Excusez-moi, j'ai besoin d'aide."
+ },
+ {
+  "lang": "fr",
+  "text": "Bien sûr ! Qu'est-ce qu'il y a ?"
+ },
+ {
+  "lang": "fr",
   "text": "Le train est en retard"
  },
  {
@@ -18234,6 +20750,18 @@
  {
   "lang": "fr",
   "text": "\"tôt\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "Le train est en avance"
+ },
+ {
+  "lang": "fr",
+  "text": "L'avion est en retard"
+ },
+ {
+  "lang": "fr",
+  "text": "L'avion est à l'aéroport. Mon sac est dans la voiture."
  },
  {
   "lang": "fr",
@@ -18281,6 +20809,34 @@
  },
  {
   "lang": "fr",
+  "text": "Combien coûte ce sac ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Il coûte deux euros."
+ },
+ {
+  "lang": "fr",
+  "text": "Le sac est grand."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est trop cher"
+ },
+ {
+  "lang": "fr",
+  "text": "Ce n'est pas cher"
+ },
+ {
+  "lang": "fr",
+  "text": "C'est cher"
+ },
+ {
+  "lang": "fr",
+  "text": "Le prix est de deux euros. Ce n'est pas cher."
+ },
+ {
+  "lang": "fr",
   "text": "J'achète une chemise"
  },
  {
@@ -18314,6 +20870,22 @@
  {
   "lang": "fr",
   "text": "\"la robe\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "Les chaussures sont trop grandes"
+ },
+ {
+  "lang": "fr",
+  "text": "Les chaussures sont trop petites"
+ },
+ {
+  "lang": "fr",
+  "text": "La robe est trop grande"
+ },
+ {
+  "lang": "fr",
+  "text": "J'achète une chemise et des chaussures. La chemise est bleue."
  },
  {
   "lang": "fr",
@@ -18353,6 +20925,34 @@
  },
  {
   "lang": "fr",
+  "text": "J'aime la robe rouge"
+ },
+ {
+  "lang": "fr",
+  "text": "J'aime la chemise bleue"
+ },
+ {
+  "lang": "fr",
+  "text": "La chemise rouge est chère. La robe bleue n'est pas chère."
+ },
+ {
+  "lang": "fr",
+  "text": "J'aime la robe bleue. Et toi ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Moi, j'aime le rouge."
+ },
+ {
+  "lang": "fr",
+  "text": "La robe est bleue."
+ },
+ {
+  "lang": "fr",
+  "text": "J'achète une chemise."
+ },
+ {
+  "lang": "fr",
   "text": "Je n'ai pas d'argent"
  },
  {
@@ -18374,6 +20974,26 @@
  {
   "lang": "fr",
   "text": "\"combien\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je n'ai pas de sac"
+ },
+ {
+  "lang": "fr",
+  "text": "J'ai de l'argent"
+ },
+ {
+  "lang": "fr",
+  "text": "Le magasin est proche. Je veux acheter une robe, mais je n'ai pas d'argent."
+ },
+ {
+  "lang": "fr",
+  "text": "Je veux acheter cette robe."
+ },
+ {
+  "lang": "fr",
+  "text": "Elle est très belle !"
  },
  {
   "lang": "fr",
@@ -18406,6 +21026,30 @@
  {
   "lang": "fr",
   "text": "\"occupé\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu travailles où ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je travaille dans un bureau."
+ },
+ {
+  "lang": "fr",
+  "text": "Je suis docteur."
+ },
+ {
+  "lang": "fr",
+  "text": "Mon père est docteur"
+ },
+ {
+  "lang": "fr",
+  "text": "Ma mère est ingénieure"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon frère est ingénieur. Il travaille dans un grand bureau."
  },
  {
   "lang": "fr",
@@ -18449,6 +21093,18 @@
  },
  {
   "lang": "fr",
+  "text": "Tu apprends le français"
+ },
+ {
+  "lang": "fr",
+  "text": "J'écris le français"
+ },
+ {
+  "lang": "fr",
+  "text": "J'écris avec un stylo. Je lis un livre."
+ },
+ {
+  "lang": "fr",
   "text": "J'ai une réunion aujourd'hui"
  },
  {
@@ -18485,6 +21141,30 @@
  },
  {
   "lang": "fr",
+  "text": "Je travaille sur mon ordinateur"
+ },
+ {
+  "lang": "fr",
+  "text": "Je travaille sur l'ordinateur"
+ },
+ {
+  "lang": "fr",
+  "text": "Je travaille sous mon ordinateur"
+ },
+ {
+  "lang": "fr",
+  "text": "L'ordinateur est sur le bureau. La réunion est aujourd'hui."
+ },
+ {
+  "lang": "fr",
+  "text": "La réunion est aujourd'hui !"
+ },
+ {
+  "lang": "fr",
+  "text": "Oui, je suis très occupé."
+ },
+ {
+  "lang": "fr",
   "text": "Le professeur parle français"
  },
  {
@@ -18518,6 +21198,34 @@
  {
   "lang": "fr",
   "text": "\"apprendre\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "L'étudiant parle français"
+ },
+ {
+  "lang": "fr",
+  "text": "Le professeur apprend le français"
+ },
+ {
+  "lang": "fr",
+  "text": "Les étudiants lisent à l'école. Le professeur écrit au tableau."
+ },
+ {
+  "lang": "fr",
+  "text": "J'apprends le français à l'école."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est bien ! Moi aussi, j'apprends le français."
+ },
+ {
+  "lang": "fr",
+  "text": "Le français est à l'école."
+ },
+ {
+  "lang": "fr",
+  "text": "Le professeur lit un livre."
  },
  {
   "lang": "fr",
@@ -18565,6 +21273,34 @@
  },
  {
   "lang": "fr",
+  "text": "Il fait froid aujourd'hui"
+ },
+ {
+  "lang": "fr",
+  "text": "Il fait chaud aujourd'hui. Il fait froid demain."
+ },
+ {
+  "lang": "fr",
+  "text": "Il fait beau aujourd'hui ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Non..."
+ },
+ {
+  "lang": "fr",
+  "text": "Non, il pleut aujourd'hui."
+ },
+ {
+  "lang": "fr",
+  "text": "Oui, il fait soleil."
+ },
+ {
+  "lang": "fr",
+  "text": "Je suis étudiant."
+ },
+ {
+  "lang": "fr",
   "text": "Demain c'est lundi"
  },
  {
@@ -18598,6 +21334,30 @@
  {
   "lang": "fr",
   "text": "\"la semaine\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "Demain c'est dimanche"
+ },
+ {
+  "lang": "fr",
+  "text": "Aujourd'hui c'est lundi"
+ },
+ {
+  "lang": "fr",
+  "text": "Aujourd'hui c'est dimanche. Demain c'est lundi et je travaille."
+ },
+ {
+  "lang": "fr",
+  "text": "Tu travailles quel jour ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Le lundi."
+ },
+ {
+  "lang": "fr",
+  "text": "Je travaille beaucoup."
  },
  {
   "lang": "fr",
@@ -18653,6 +21413,30 @@
  },
  {
   "lang": "fr",
+  "text": "Il est deux heures"
+ },
+ {
+  "lang": "fr",
+  "text": "Il est quatre heures"
+ },
+ {
+  "lang": "fr",
+  "text": "Il est dix heures. Je suis en retard !"
+ },
+ {
+  "lang": "fr",
+  "text": "Il est trois heures."
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais à l'école."
+ },
+ {
+  "lang": "fr",
+  "text": "Il fait beau."
+ },
+ {
+  "lang": "fr",
   "text": "Il fait froid demain"
  },
  {
@@ -18681,11 +21465,31 @@
  },
  {
   "lang": "fr",
-  "text": "Il fait beau."
+  "text": "\"demain\" ne demek?"
  },
  {
   "lang": "fr",
-  "text": "\"demain\" ne demek?"
+  "text": "Il fait chaud demain"
+ },
+ {
+  "lang": "fr",
+  "text": "Il fait chaud dimanche. Il fait froid lundi."
+ },
+ {
+  "lang": "fr",
+  "text": "Il fait beau cette semaine ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Oui !"
+ },
+ {
+  "lang": "fr",
+  "text": "Je vais au parc dimanche !"
+ },
+ {
+  "lang": "fr",
+  "text": "Non, il pleut."
  },
  {
   "lang": "fr",
@@ -18725,6 +21529,18 @@
  },
  {
   "lang": "fr",
+  "text": "Tu aimes la musique"
+ },
+ {
+  "lang": "fr",
+  "text": "J'aime la guitare"
+ },
+ {
+  "lang": "fr",
+  "text": "Mon ami joue au football. Moi, je joue de la guitare."
+ },
+ {
+  "lang": "fr",
   "text": "Je cours dans le parc le week-end"
  },
  {
@@ -18758,6 +21574,34 @@
  {
   "lang": "fr",
   "text": "\"le week-end\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je cours le matin"
+ },
+ {
+  "lang": "fr",
+  "text": "Je nage le matin"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu cours le matin"
+ },
+ {
+  "lang": "fr",
+  "text": "Le samedi je nage. Dimanche je cours dans le parc."
+ },
+ {
+  "lang": "fr",
+  "text": "Tu fais quoi le week-end ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je nage et je cours au parc."
+ },
+ {
+  "lang": "fr",
+  "text": "Je travaille le lundi."
  },
  {
   "lang": "fr",
@@ -18797,6 +21641,30 @@
  },
  {
   "lang": "fr",
+  "text": "Je voyage le week-end"
+ },
+ {
+  "lang": "fr",
+  "text": "Tu cuisines le week-end"
+ },
+ {
+  "lang": "fr",
+  "text": "Je prends des photos le samedi. Je cuisine le dimanche."
+ },
+ {
+  "lang": "fr",
+  "text": "Qu'est-ce que tu fais le week-end ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Je cuisine et je prends des photos."
+ },
+ {
+  "lang": "fr",
+  "text": "Le week-end est court."
+ },
+ {
+  "lang": "fr",
   "text": "Je joue de la guitare le week-end"
  },
  {
@@ -18826,6 +21694,34 @@
  {
   "lang": "fr",
   "text": "\"la guitare\" ne demek?"
+ },
+ {
+  "lang": "fr",
+  "text": "J'aime les films. Et toi ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Moi, j'aime jouer de la guitare."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est un film."
+ },
+ {
+  "lang": "fr",
+  "text": "Nous jouons au football"
+ },
+ {
+  "lang": "fr",
+  "text": "Nous jouons de la guitare"
+ },
+ {
+  "lang": "fr",
+  "text": "Vous jouez au football"
+ },
+ {
+  "lang": "fr",
+  "text": "Je joue de la guitare le week-end. Mon ami joue au football."
  },
  {
   "lang": "fr",
@@ -18974,10 +21870,6 @@
  {
   "lang": "fr",
   "text": "Tu as regardé le film hier soir ?"
- },
- {
-  "lang": "fr",
-  "text": "Oui !"
  },
  {
   "lang": "fr",
@@ -19398,10 +22290,6 @@
  {
   "lang": "fr",
   "text": "Ta chambre est propre ?"
- },
- {
-  "lang": "fr",
-  "text": "Non..."
  },
  {
   "lang": "fr",
@@ -21361,10 +24249,6 @@
  },
  {
   "lang": "fr",
-  "text": "Tout de suite, monsieur !"
- },
- {
-  "lang": "fr",
   "text": "Merci beaucoup !"
  },
  {
@@ -22813,6 +25697,38 @@
  },
  {
   "lang": "it",
+  "text": "Ciao, grazie"
+ },
+ {
+  "lang": "it",
+  "text": "Ciao, grazia"
+ },
+ {
+  "lang": "it",
+  "text": "Ciao, arrivederci"
+ },
+ {
+  "lang": "it",
+  "text": "Ciao! Sono Ali."
+ },
+ {
+  "lang": "it",
+  "text": "Ciao, Ali! Io sono Ayşe."
+ },
+ {
+  "lang": "it",
+  "text": "Arrivederci, Ali! Sono sì."
+ },
+ {
+  "lang": "it",
+  "text": "Io sono ciao, Ali."
+ },
+ {
+  "lang": "it",
+  "text": "Marco dice: «Ciao!» Anna dice: «Arrivederci, a domani!»"
+ },
+ {
+  "lang": "it",
   "text": "Io sono un uomo"
  },
  {
@@ -22849,6 +25765,30 @@
  },
  {
   "lang": "it",
+  "text": "Io sono una ragazza"
+ },
+ {
+  "lang": "it",
+  "text": "Tu sei un ragazzo"
+ },
+ {
+  "lang": "it",
+  "text": "Ciao! Io sono Marco. Tu sei un ragazzo?"
+ },
+ {
+  "lang": "it",
+  "text": "Sì, io sono un ragazzo."
+ },
+ {
+  "lang": "it",
+  "text": "Sì, tu sei un ragazzo."
+ },
+ {
+  "lang": "it",
+  "text": "Io sono ragazzo sì tu."
+ },
+ {
+  "lang": "it",
   "text": "Come stai"
  },
  {
@@ -22882,6 +25822,38 @@
  {
   "lang": "it",
   "text": "Buonanotte"
+ },
+ {
+  "lang": "it",
+  "text": "Il mio nome è Ali"
+ },
+ {
+  "lang": "it",
+  "text": "Il tuo nome è Ali"
+ },
+ {
+  "lang": "it",
+  "text": "Il mio nonno è Ali"
+ },
+ {
+  "lang": "it",
+  "text": "Come stai?"
+ },
+ {
+  "lang": "it",
+  "text": "Sto bene, grazie!"
+ },
+ {
+  "lang": "it",
+  "text": "Sto male nome."
+ },
+ {
+  "lang": "it",
+  "text": "Come stai bene!"
+ },
+ {
+  "lang": "it",
+  "text": "Il mio nome è Sara. Sto bene, grazie."
  },
  {
   "lang": "it",
@@ -22969,6 +25941,18 @@
  },
  {
   "lang": "it",
+  "text": "Io bevo latte"
+ },
+ {
+  "lang": "it",
+  "text": "Io mangio latte"
+ },
+ {
+  "lang": "it",
+  "text": "Io bevo acqua. Tu bevi tè."
+ },
+ {
+  "lang": "it",
   "text": "Ho fame"
  },
  {
@@ -22994,6 +25978,34 @@
  {
   "lang": "it",
   "text": "Formaggio e pane"
+ },
+ {
+  "lang": "it",
+  "text": "Mangio una mela"
+ },
+ {
+  "lang": "it",
+  "text": "Mangio un mela"
+ },
+ {
+  "lang": "it",
+  "text": "Mangio due mele"
+ },
+ {
+  "lang": "it",
+  "text": "Ho fame!"
+ },
+ {
+  "lang": "it",
+  "text": "Mangiamo una mela!"
+ },
+ {
+  "lang": "it",
+  "text": "Bevo una mela!"
+ },
+ {
+  "lang": "it",
+  "text": "La fame mangia me."
  },
  {
   "lang": "it",
@@ -23045,6 +26057,34 @@
  },
  {
   "lang": "it",
+  "text": "Ecco il conto."
+ },
+ {
+  "lang": "it",
+  "text": "Ecco il menù."
+ },
+ {
+  "lang": "it",
+  "text": "Il conto beve caffè."
+ },
+ {
+  "lang": "it",
+  "text": "Il caffè è delizioso"
+ },
+ {
+  "lang": "it",
+  "text": "Il caffè è deliziosi"
+ },
+ {
+  "lang": "it",
+  "text": "Il tè è delizioso"
+ },
+ {
+  "lang": "it",
+  "text": "Il pane è delizioso. Anche il caffè è delizioso."
+ },
+ {
+  "lang": "it",
   "text": "Io mangio pollo e riso"
  },
  {
@@ -23074,6 +26114,18 @@
  {
   "lang": "it",
   "text": "Passami il ___, per favore."
+ },
+ {
+  "lang": "it",
+  "text": "Io mangio pesce e riso"
+ },
+ {
+  "lang": "it",
+  "text": "Io bevo pesce e riso"
+ },
+ {
+  "lang": "it",
+  "text": "A cena mangio pollo e insalata. Non mangio pesce."
  },
  {
   "lang": "it",
@@ -23125,6 +26177,30 @@
  },
  {
   "lang": "it",
+  "text": "Dov'è il biglietto"
+ },
+ {
+  "lang": "it",
+  "text": "Dov'è il passaporto"
+ },
+ {
+  "lang": "it",
+  "text": "Scusi, dov'è l'aeroporto?"
+ },
+ {
+  "lang": "it",
+  "text": "È vicino all'albergo."
+ },
+ {
+  "lang": "it",
+  "text": "Il biglietto è un aeroporto."
+ },
+ {
+  "lang": "it",
+  "text": "Sì, tu sei aeroporto."
+ },
+ {
+  "lang": "it",
   "text": "L'albergo è vicino"
  },
  {
@@ -23150,6 +26226,34 @@
  {
   "lang": "it",
   "text": "La via è a destra"
+ },
+ {
+  "lang": "it",
+  "text": "L'albergo è lontano"
+ },
+ {
+  "lang": "it",
+  "text": "L'aeroporto è vicino"
+ },
+ {
+  "lang": "it",
+  "text": "Dov'è la stazione?"
+ },
+ {
+  "lang": "it",
+  "text": "Gira a sinistra e poi vai dritto."
+ },
+ {
+  "lang": "it",
+  "text": "La stazione è una mappa."
+ },
+ {
+  "lang": "it",
+  "text": "Sì, sono la stazione."
+ },
+ {
+  "lang": "it",
+  "text": "L'albergo è vicino. La stazione è lontana."
  },
  {
   "lang": "it",
@@ -23197,6 +26301,30 @@
  },
  {
   "lang": "it",
+  "text": "Mi scusi, ho bisogno di aiuto."
+ },
+ {
+  "lang": "it",
+  "text": "Certo! Come posso aiutarla?"
+ },
+ {
+  "lang": "it",
+  "text": "Il taxi ha bisogno di aiuto."
+ },
+ {
+  "lang": "it",
+  "text": "L'aiuto è scusi."
+ },
+ {
+  "lang": "it",
+  "text": "Dov'è il passaporti"
+ },
+ {
+  "lang": "it",
+  "text": "Ecco il mio passaporto. Dov'è il taxi?"
+ },
+ {
+  "lang": "it",
   "text": "Il treno è in ritardo"
  },
  {
@@ -23213,11 +26341,35 @@
  },
  {
   "lang": "it",
-  "text": "Dov'è la stazione?"
+  "text": "\"presto\" ne demek?"
  },
  {
   "lang": "it",
-  "text": "\"presto\" ne demek?"
+  "text": "La stazione è vicina"
+ },
+ {
+  "lang": "it",
+  "text": "La stazione è lontana"
+ },
+ {
+  "lang": "it",
+  "text": "La stazione è vicino"
+ },
+ {
+  "lang": "it",
+  "text": "Scusi, il treno è in ritardo?"
+ },
+ {
+  "lang": "it",
+  "text": "Sì, è in ritardo."
+ },
+ {
+  "lang": "it",
+  "text": "No, è in ritardo."
+ },
+ {
+  "lang": "it",
+  "text": "Il treno è una macchina."
  },
  {
   "lang": "it",
@@ -23246,6 +26398,18 @@
  {
   "lang": "it",
   "text": "\"famiglia\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Ho un sorella"
+ },
+ {
+  "lang": "it",
+  "text": "Ho una sorelle"
+ },
+ {
+  "lang": "it",
+  "text": "Ho un fratello e una sorella. Mia madre è insegnante."
  },
  {
   "lang": "it",
@@ -23297,6 +26461,38 @@
  },
  {
   "lang": "it",
+  "text": "Amo mia figlia"
+ },
+ {
+  "lang": "it",
+  "text": "Amo mio figlia"
+ },
+ {
+  "lang": "it",
+  "text": "Amo mia figlio"
+ },
+ {
+  "lang": "it",
+  "text": "Hai figli?"
+ },
+ {
+  "lang": "it",
+  "text": "Sì, ho un figlio e una figlia."
+ },
+ {
+  "lang": "it",
+  "text": "No, ho un figlio e una figlia."
+ },
+ {
+  "lang": "it",
+  "text": "Il figlio è un marito."
+ },
+ {
+  "lang": "it",
+  "text": "Amo mio marito. Amo mia figlia."
+ },
+ {
+  "lang": "it",
   "text": "La mia famiglia è grande"
  },
  {
@@ -23318,6 +26514,30 @@
  {
   "lang": "it",
   "text": "\"nonno\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "La mia famiglia è piccola"
+ },
+ {
+  "lang": "it",
+  "text": "La tua famiglia è grande"
+ },
+ {
+  "lang": "it",
+  "text": "Com'è la tua famiglia?"
+ },
+ {
+  "lang": "it",
+  "text": "La mia famiglia è grande."
+ },
+ {
+  "lang": "it",
+  "text": "La tua famiglia è grande."
+ },
+ {
+  "lang": "it",
+  "text": "Sono una famiglia, sì."
  },
  {
   "lang": "it",
@@ -23365,6 +26585,34 @@
  },
  {
   "lang": "it",
+  "text": "Ho due sorelle"
+ },
+ {
+  "lang": "it",
+  "text": "Ho due famiglie"
+ },
+ {
+  "lang": "it",
+  "text": "Quanti fratelli hai?"
+ },
+ {
+  "lang": "it",
+  "text": "Ho due fratelli."
+ },
+ {
+  "lang": "it",
+  "text": "Ho due fratelli, tu hai."
+ },
+ {
+  "lang": "it",
+  "text": "I fratelli sono due bambini."
+ },
+ {
+  "lang": "it",
+  "text": "Il mio amico ha un bambino. Il bambino è piccolo."
+ },
+ {
+  "lang": "it",
   "text": "Quanto costa questo"
  },
  {
@@ -23386,6 +26634,26 @@
  {
   "lang": "it",
   "text": "\"economico\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Quanto costa questa"
+ },
+ {
+  "lang": "it",
+  "text": "Quando costa questo"
+ },
+ {
+  "lang": "it",
+  "text": "Costa dieci euro."
+ },
+ {
+  "lang": "it",
+  "text": "Il prezzo è un negozio."
+ },
+ {
+  "lang": "it",
+  "text": "Questo negozio è economico. Quanto costa?"
  },
  {
   "lang": "it",
@@ -23425,6 +26693,18 @@
  },
  {
   "lang": "it",
+  "text": "Compro un camicia"
+ },
+ {
+  "lang": "it",
+  "text": "Compro una camice"
+ },
+ {
+  "lang": "it",
+  "text": "Compro le scarpe. Sono grandi."
+ },
+ {
+  "lang": "it",
   "text": "Mi piace il vestito blu"
  },
  {
@@ -23454,6 +26734,34 @@
  {
   "lang": "it",
   "text": "Mi ___ questo vestito."
+ },
+ {
+  "lang": "it",
+  "text": "Mi piace il vestito rosso"
+ },
+ {
+  "lang": "it",
+  "text": "Mi piace la camicia rossa"
+ },
+ {
+  "lang": "it",
+  "text": "Ti piace questo vestito?"
+ },
+ {
+  "lang": "it",
+  "text": "Sì, mi piace molto!"
+ },
+ {
+  "lang": "it",
+  "text": "No, mi piace molto!"
+ },
+ {
+  "lang": "it",
+  "text": "Il vestito compra me."
+ },
+ {
+  "lang": "it",
+  "text": "La camicia blu è economica. La camicia rossa è cara."
  },
  {
   "lang": "it",
@@ -23490,6 +26798,34 @@
  {
   "lang": "it",
   "text": "\"quanto\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Questo negozio è molto caro!"
+ },
+ {
+  "lang": "it",
+  "text": "Sì, non compro niente qui."
+ },
+ {
+  "lang": "it",
+  "text": "Sì, è molto economico!"
+ },
+ {
+  "lang": "it",
+  "text": "Il negozio compra me."
+ },
+ {
+  "lang": "it",
+  "text": "Non hai i soldi"
+ },
+ {
+  "lang": "it",
+  "text": "Non ho il soldi"
+ },
+ {
+  "lang": "it",
+  "text": "Voglio comprare questo. È economico e ho i soldi."
  },
  {
   "lang": "it",
@@ -23530,6 +26866,26 @@
  {
   "lang": "it",
   "text": "\"impegnato\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Lavoro in una ufficio"
+ },
+ {
+  "lang": "it",
+  "text": "Lavoro in un scuola"
+ },
+ {
+  "lang": "it",
+  "text": "Dove lavori?"
+ },
+ {
+  "lang": "it",
+  "text": "Lavori tu in ufficio."
+ },
+ {
+  "lang": "it",
+  "text": "L'ufficio lavora me."
  },
  {
   "lang": "it",
@@ -23577,6 +26933,18 @@
  },
  {
   "lang": "it",
+  "text": "Imparo il italiano"
+ },
+ {
+  "lang": "it",
+  "text": "Impari l'italiano"
+ },
+ {
+  "lang": "it",
+  "text": "Leggo un libro. Scrivo con una penna."
+ },
+ {
+  "lang": "it",
   "text": "Oggi ho una riunione"
  },
  {
@@ -23602,6 +26970,34 @@
  {
   "lang": "it",
   "text": "\"computer\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Sei impegnato oggi?"
+ },
+ {
+  "lang": "it",
+  "text": "Sì, ho una riunione in ufficio."
+ },
+ {
+  "lang": "it",
+  "text": "No, ho una riunione in ufficio."
+ },
+ {
+  "lang": "it",
+  "text": "La riunione è impegnata oggi."
+ },
+ {
+  "lang": "it",
+  "text": "Domani ho una riunione"
+ },
+ {
+  "lang": "it",
+  "text": "Oggi hai una riunione"
+ },
+ {
+  "lang": "it",
+  "text": "Oggi sono impegnato. Lavoro e ho una riunione."
  },
  {
   "lang": "it",
@@ -23637,6 +27033,30 @@
  },
  {
   "lang": "it",
+  "text": "L'insegnanti parla italiano"
+ },
+ {
+  "lang": "it",
+  "text": "L'insegnante parla italiana"
+ },
+ {
+  "lang": "it",
+  "text": "Cosa impari a scuola?"
+ },
+ {
+  "lang": "it",
+  "text": "Impari l'italiano tu."
+ },
+ {
+  "lang": "it",
+  "text": "La scuola impara me."
+ },
+ {
+  "lang": "it",
+  "text": "Io sono studente. Imparo l'italiano a scuola."
+ },
+ {
+  "lang": "it",
   "text": "Oggi è soleggiato"
  },
  {
@@ -23666,6 +27086,30 @@
  {
   "lang": "it",
   "text": "\"piovoso\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Domani è soleggiato"
+ },
+ {
+  "lang": "it",
+  "text": "Com'è il tempo oggi?"
+ },
+ {
+  "lang": "it",
+  "text": "È soleggiato e caldo."
+ },
+ {
+  "lang": "it",
+  "text": "Il tempo è oggi."
+ },
+ {
+  "lang": "it",
+  "text": "Sono il tempo, sì."
+ },
+ {
+  "lang": "it",
+  "text": "Oggi è piovoso. Fa anche freddo."
  },
  {
   "lang": "it",
@@ -23713,6 +27157,34 @@
  },
  {
   "lang": "it",
+  "text": "Domani è domenica"
+ },
+ {
+  "lang": "it",
+  "text": "Oggi è lunedì"
+ },
+ {
+  "lang": "it",
+  "text": "Oggi è domenica. Che giorno è domani?"
+ },
+ {
+  "lang": "it",
+  "text": "Domani è lunedì."
+ },
+ {
+  "lang": "it",
+  "text": "Domani è domenica."
+ },
+ {
+  "lang": "it",
+  "text": "La settimana è domani."
+ },
+ {
+  "lang": "it",
+  "text": "Oggi è domenica. Domani è lunedì e lavoro."
+ },
+ {
+  "lang": "it",
   "text": "quanto"
  },
  {
@@ -23742,6 +27214,26 @@
  {
   "lang": "it",
   "text": "\"ora\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Sono le tre."
+ },
+ {
+  "lang": "it",
+  "text": "Io sono le ore."
+ },
+ {
+  "lang": "it",
+  "text": "Sono le trenta"
+ },
+ {
+  "lang": "it",
+  "text": "Sono le tre ore"
+ },
+ {
+  "lang": "it",
+  "text": "Sono le otto. È presto!"
  },
  {
   "lang": "it",
@@ -23777,6 +27269,34 @@
  },
  {
   "lang": "it",
+  "text": "Com'è il tempo domani?"
+ },
+ {
+  "lang": "it",
+  "text": "Domani fa freddo."
+ },
+ {
+  "lang": "it",
+  "text": "Il tempo è domani."
+ },
+ {
+  "lang": "it",
+  "text": "Sono freddo, sì."
+ },
+ {
+  "lang": "it",
+  "text": "Domenica fa freddo"
+ },
+ {
+  "lang": "it",
+  "text": "Lunedì fa caldo"
+ },
+ {
+  "lang": "it",
+  "text": "Domani fa freddo. Domenica fa caldo."
+ },
+ {
+  "lang": "it",
   "text": "Gioco a calcio"
  },
  {
@@ -23802,6 +27322,30 @@
  {
   "lang": "it",
   "text": "\"giocare\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Mi piace il musica"
+ },
+ {
+  "lang": "it",
+  "text": "Ti piace la musica"
+ },
+ {
+  "lang": "it",
+  "text": "Ti piace il calcio?"
+ },
+ {
+  "lang": "it",
+  "text": "Sì, gioco a calcio ogni settimana."
+ },
+ {
+  "lang": "it",
+  "text": "No, gioco a calcio ogni settimana."
+ },
+ {
+  "lang": "it",
+  "text": "Il calcio gioca me."
  },
  {
   "lang": "it",
@@ -23857,6 +27401,34 @@
  },
  {
   "lang": "it",
+  "text": "Nuoti di domenica?"
+ },
+ {
+  "lang": "it",
+  "text": "Sì, nuoto e poi corro nel parco."
+ },
+ {
+  "lang": "it",
+  "text": "No, nuoto e poi corro nel parco."
+ },
+ {
+  "lang": "it",
+  "text": "Il parco nuota me."
+ },
+ {
+  "lang": "it",
+  "text": "Mi piace nuotare"
+ },
+ {
+  "lang": "it",
+  "text": "Mi piacciono ballare"
+ },
+ {
+  "lang": "it",
+  "text": "Il fine settimana nuoto. Poi corro nel parco."
+ },
+ {
+  "lang": "it",
   "text": "Il fine settimana cucino"
  },
  {
@@ -23886,6 +27458,34 @@
  {
   "lang": "it",
   "text": "\"cucinare\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Ti piace cucinare?"
+ },
+ {
+  "lang": "it",
+  "text": "Sì, cucino il fine settimana."
+ },
+ {
+  "lang": "it",
+  "text": "No, cucino il fine settimana."
+ },
+ {
+  "lang": "it",
+  "text": "La cucina piace me."
+ },
+ {
+  "lang": "it",
+  "text": "Mi piace fare fotografia"
+ },
+ {
+  "lang": "it",
+  "text": "Mi piace cucinare"
+ },
+ {
+  "lang": "it",
+  "text": "Mi piace fare fotografie. Mi piace anche viaggiare."
  },
  {
   "lang": "it",
@@ -23926,6 +27526,26 @@
  {
   "lang": "it",
   "text": "\"chitarra\" ne demek?"
+ },
+ {
+  "lang": "it",
+  "text": "Suono il chitarra"
+ },
+ {
+  "lang": "it",
+  "text": "Suono la chitarre"
+ },
+ {
+  "lang": "it",
+  "text": "Giochi a calcio?"
+ },
+ {
+  "lang": "it",
+  "text": "Sì, gioco ogni settimana."
+ },
+ {
+  "lang": "it",
+  "text": "No, gioco ogni settimana."
  },
  {
   "lang": "it",
@@ -24374,10 +27994,6 @@
  {
   "lang": "it",
   "text": "Cosa c'ha?"
- },
- {
-  "lang": "it",
-  "text": "Sto bene, grazie!"
  },
  {
   "lang": "it",
@@ -25658,10 +29274,6 @@
  {
   "lang": "en",
   "text": "Excuse me, can you help me?"
- },
- {
-  "lang": "en",
-  "text": "Sure! What do you need?"
  },
  {
   "lang": "en",
@@ -29393,10 +33005,6 @@
  },
  {
   "lang": "de",
-  "text": "Ich habe heute eine Besprechung."
- },
- {
-  "lang": "de",
   "text": "Der Lehrer spricht Deutsch."
  },
  {
@@ -29406,10 +33014,6 @@
  {
   "lang": "de",
   "text": "Es ist kalt."
- },
- {
-  "lang": "de",
-  "text": "Morgen ist Montag."
  },
  {
   "lang": "de",
@@ -29697,23 +33301,11 @@
  },
  {
   "lang": "fr",
-  "text": "Je travaille dans un bureau."
- },
- {
-  "lang": "fr",
-  "text": "J'achète une chemise."
- },
- {
-  "lang": "fr",
   "text": "Mon père est ingénieur."
  },
  {
   "lang": "fr",
   "text": "L'ordinateur est dans le bureau."
- },
- {
-  "lang": "fr",
-  "text": "J'apprends le français à l'école."
  },
  {
   "lang": "fr",
@@ -29881,10 +33473,6 @@
  },
  {
   "lang": "it",
-  "text": "Come stai?"
- },
- {
-  "lang": "it",
   "text": "Sto bene, grazie."
  },
  {
@@ -29969,10 +33557,6 @@
  },
  {
   "lang": "it",
-  "text": "La mia famiglia è grande."
- },
- {
-  "lang": "it",
   "text": "Questo è molto caro."
  },
  {
@@ -30029,19 +33613,7 @@
  },
  {
   "lang": "it",
-  "text": "Domani fa freddo."
- },
- {
-  "lang": "it",
-  "text": "Sono le tre."
- },
- {
-  "lang": "it",
   "text": "La riunione dura un'ora."
- },
- {
-  "lang": "it",
-  "text": "Domani è lunedì."
  },
  {
   "lang": "it",
