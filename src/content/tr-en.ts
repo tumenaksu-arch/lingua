@@ -962,7 +962,7 @@ export const trEn = course(
           { emoji: '👗', label: 'dress' },
           { emoji: '👜', label: 'bag' },
         ], 1),
-        listenSel('I buy a new shirt', ['I buy a new shirt', 'I buy a new shoes', 'I buy an old shirt'], 0),
+        listenSel('I buy a new shirt', ['I buy a new shirt', 'I buy a new dress', 'I buy an old shirt'], 0),
         read('The shoes are too big. I buy a small dress.', 'Ayakkabılar nasılmış?', ['Çok büyükmüş', 'Küçükmüş', 'Yeniymiş'], 0),
       ]),
       lesson('tr-en.u5.l3', 3, ['red', 'blue', 'dress', 'shirt', 'like', 'buy', 'green', 'yellow', 'white', 'black'], [
@@ -1256,7 +1256,7 @@ export const trEn = course(
         fill('This is a ___ of my family.', ['photo', 'cook', 'travel'], 0),
         speak('I cook dinner.'),
         sel('"cook" ne demek?', ['yemek pişirmek', 'seyahat etmek', 'dans etmek'], 0, 'to'),
-        listenSel('I like to take photos', ['I like to take photos', 'I like to cook photos', 'I like to take music'], 0),
+        listenSel('I like to take photos', ['I like to take photos', 'I like to cook dinner', 'I like to take videos'], 0),
         chat([['a', 'I cook dinner for my family every weekend.']], ['That is nice! What do you cook?', 'Yes, I am cooking.', 'The weekend is dinner.'], 0),
         read('I like to travel by train. I take a lot of photos.', 'Konuşmacı nasıl seyahat ediyormuş?', ['Trenle', 'Otobüsle', 'Uçakla'], 0),
         match([
@@ -1280,7 +1280,7 @@ export const trEn = course(
         fill('I ___ the guitar.', ['play', 'like', 'watch'], 0),
         speak('I like movies.'),
         sel('"guitar" ne demek?', ['müzik', 'gitar', 'film'], 1, 'to'),
-        listenSel('My friend likes movies', ['My friend likes movies', 'My friend likes music', 'My friend plays movies'], 0),
+        listenSel('My friend likes movies', ['My friend likes movies', 'My friend likes music', 'My friend watches movies'], 0),
         chat([['a', 'Let\'s play football!']], ['Sure! I like football.', 'I like movies very much.', 'I am a doctor.'], 0),
         read('I play the guitar at the weekend. My friend likes to watch movies.', 'Arkadaş ne yapmayı seviyormuş?', ['Film izlemeyi', 'Gitar çalmayı', 'Futbol oynamayı'], 0),
       ]),
