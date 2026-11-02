@@ -1,17 +1,18 @@
 import { StyleSheet, Text, type TextProps } from 'react-native';
 
-import { fontSize, fonts } from './theme';
+import { MAX_FONT_SCALE_DENSE, fontSize, fonts } from './theme';
 import { useTheme } from './useTheme';
 
-type Props = TextProps & { color?: string; center?: boolean };
+type Props = TextProps & { color?: string; center?: boolean; dense?: boolean };
 
 function make(base: object, muted = false) {
-  return function Typo({ style, color, center, ...rest }: Props) {
+  return function Typo({ style, color, center, dense, ...rest }: Props) {
     const { colors } = useTheme();
     return (
       <Text
         {...rest}
         style={[base, { color: color ?? (muted ? colors.textMuted : colors.text) }, center ? styles.center : null, style]}
+        maxFontSizeMultiplier={dense ? MAX_FONT_SCALE_DENSE : undefined}
       />
     );
   };

@@ -4,7 +4,7 @@ import { router } from 'expo-router';
 
 import { aiScenarios, aiStatus, type AiScenario } from '@/data/remote/ai';
 import { useAppStore } from '@/features/store';
-import { Body, Button, Caption, EmptyState, ErrorState, Heading, LevelBadge, LoadingState, Screen, Title, fonts, radii, spacing, useTheme } from '@/ui';
+import { Body, Button, Caption, EmptyState, ErrorState, Heading, LevelBadge, LoadingState, Screen, Title, radii, spacing, useTheme } from '@/ui';
 
 type LoadState =
   | { kind: 'loading' }
@@ -81,7 +81,7 @@ export default function KonusScreen() {
         ) : (
           <View style={styles.section}>
             {state.remaining !== null && (
-              <Caption color={colors.primaryText} style={styles.remaining}>
+              <Caption dense color={colors.primaryText}>
                 Bugün kalan: {state.remaining}/{state.limit}
               </Caption>
             )}
@@ -101,7 +101,7 @@ export default function KonusScreen() {
                   <LevelBadge level={s.level} />
                 </View>
                 <Body color={colors.textMuted}>{s.descriptionTr}</Body>
-                <Caption color={colors.textMuted}>Hedef: {s.goalTr}</Caption>
+                <Caption dense color={colors.textMuted}>Hedef: {s.goalTr}</Caption>
               </Pressable>
             ))}
           </View>
@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
   content: { padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xxxl },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   section: { gap: spacing.sm },
-  remaining: { fontFamily: fonts.mono },
   card: { borderWidth: 1, borderRadius: radii.md, padding: spacing.md, gap: spacing.sm },
   cardHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.sm },
   cardTitle: { flex: 1 },

@@ -14,7 +14,7 @@ import { localDateString, gemsOf, regenerate } from '@/domain';
 import { unitLevel } from '@/domain/unitLevel';
 import { getUnitNote } from '@/content/notes';
 import { getUnitStory } from '@/content/stories';
-import { Body, Button, Caption, GemChip, Heading, Hearts, Icon, PathNode, ProgressBar, Screen, StreakFlame, UnitHeader, Vox, XpBadge, XpBoostChip, fonts, radii, showAlert, spacing, upperTr, useReduceMotion, useSettingsStore, useTheme, type PathNodeState } from '@/ui';
+import { Body, Button, Caption, GemChip, Heading, Hearts, Icon, PathNode, ProgressBar, Screen, StreakFlame, UnitHeader, Vox, XpBadge, XpBoostChip, fonts, radii, showAlert, spacing, upperTr, useReduceMotion, useSettingsStore, useTheme, type ColorTokens, type PathNodeState } from '@/ui';
 
 /** İki harfli dil kodu rozeti (bayrak emojisi Windows/başsız Chromium'da kutu/ harf çıkarır). */
 const LANG_CODE: Record<string, string> = { en: 'EN', de: 'DE', es: 'ES', fr: 'FR', it: 'IT', tr: 'TR' };
@@ -25,6 +25,11 @@ const NODE_SIZE = 44;
 const STATE_TR: Record<PathNodeState, string> = { locked: 'kilitli', active: 'başlanabilir', completed: 'tamamlandı' };
 /** Mono small-caps state label shown next to each lesson. */
 const STATE_CHIP: Record<PathNodeState, string> = { locked: 'KİLİTLİ', active: 'BAŞLA', completed: 'TAMAMLANDI' };
+
+/** Tekil durum rengi: ders/hikâye satırlarındaki mono durum etiketi için. */
+function pathChipColor(state: PathNodeState, colors: ColorTokens): string {
+  return state === 'completed' ? colors.successText : state === 'active' ? colors.primaryText : colors.textMuted;
+}
 
 export default function LearnScreen() {
   const course = useAppStore((s) => s.course);
@@ -172,7 +177,7 @@ export default function LearnScreen() {
                   const state: PathNodeState = p?.completedAt ? 'completed' : isActive ? 'active' : 'locked';
                   const crowns = p?.crowns ?? 0;
                   const label = `${unit.title} ders ${li + 1}, ${STATE_TR[state]}${crowns ? `, ${crowns} taç` : ''}`;
-                  const chipColor = state === 'completed' ? colors.successText : state === 'active' ? colors.primaryText : colors.textMuted;
+                  const chipColor = pathChipColor(state, colors);
                   return (
                     <Pressable
                       key={lesson.id}
@@ -196,8 +201,8 @@ export default function LearnScreen() {
                       {/* Decorative texts: the row Pressable above is the single
                           accessibility element announcing the full label. */}
                       <View style={styles.lessonText} accessible={false}>
-                        <Body accessible={false}>Ders {li + 1}</Body>
-                        <Caption accessible={false} color={chipColor}>{STATE_CHIP[state]}</Caption>
+                        <Body accessible={false} dense>Ders {li + 1}</Body>
+                        <Caption accessible={false} dense color={chipColor}>{STATE_CHIP[state]}</Caption>
                       </View>
                     </Pressable>
                   );
@@ -207,7 +212,7 @@ export default function LearnScreen() {
                   const sp = progress[storyId];
                   const state: PathNodeState = sp?.completedAt ? 'completed' : unitDone ? 'active' : 'locked';
                   const label = `${unit.title} hikâyesi, ${STATE_TR[state]}`;
-                  const chipColor = state === 'completed' ? colors.successText : state === 'active' ? colors.primaryText : colors.textMuted;
+                  const chipColor = pathChipColor(state, colors);
                   return (
                     <Pressable
                       key={storyId}
@@ -228,8 +233,8 @@ export default function LearnScreen() {
                       {/* Decorative texts: the row Pressable above is the single
                           accessibility element announcing the full label. */}
                       <View style={styles.lessonText} accessible={false}>
-                        <Body accessible={false}>Hikâye: {story.title}</Body>
-                        <Caption accessible={false} color={chipColor}>{STATE_CHIP[state]}</Caption>
+                        <Body accessible={false} dense>Hikâye: {story.title}</Body>
+                        <Caption accessible={false} dense color={chipColor}>{STATE_CHIP[state]}</Caption>
                       </View>
                     </Pressable>
                   );
@@ -395,16 +400,15 @@ function QuestRow({ quest, onClaim }: { quest: QuestStatus; onClaim: () => void 
           <Caption color={colors.successText}>Alındı</Caption>
         </View>
       ) : quest.done ? (
-        <Pressable
-          accessibilityRole="button"
+        <Button
+          title="Ödülü al"
+          variant="outline"
+          size="compact"
+          block={false}
+          loading={claiming}
           accessibilityLabel={`${quest.title} ödülünü al`}
-          accessibilityState={{ disabled: claiming }}
-          disabled={claiming}
           onPress={onClaim}
-          style={({ pressed }) => [styles.claimBtn, { borderColor: colors.primary, opacity: pressed || claiming ? 0.5 : 1 }]}
-        >
-          <Caption color={colors.primaryText}>{upperTr('Ödülü al')}</Caption>
-        </Pressable>
+        />
       ) : null}
     </View>
   );
@@ -415,7 +419,7 @@ const styles = StyleSheet.create({
   boostChip: { alignSelf: 'flex-start', marginTop: spacing.sm, marginLeft: spacing.lg },
   flag: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   langBadge: { minWidth: 40, minHeight: 28, borderWidth: 1, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center', paddingHorizontal: spacing.sm },
-  langBadgeText: { fontFamily: fonts.mono, letterSpacing: 1 },
+  langBadgeText: { fontFamily: fonts.mono },
   path: { paddingBottom: spacing.xxxl },
   questCard: { margin: spacing.lg, marginBottom: 0, padding: spacing.lg, borderRadius: radii.md, borderWidth: 1, gap: spacing.md },
   classCard: { margin: spacing.lg, marginBottom: 0, padding: spacing.lg, borderRadius: radii.md, borderWidth: 1, gap: spacing.sm },
@@ -430,7 +434,6 @@ const styles = StyleSheet.create({
   questMain: { flex: 1, gap: spacing.xs },
   questTitleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.sm },
   questTitle: { flexShrink: 1 },
-  claimBtn: { borderWidth: 1, borderRadius: 8, paddingHorizontal: spacing.md, paddingVertical: spacing.xs },
   doneBanner: { margin: spacing.lg, marginBottom: 0, padding: spacing.lg, borderRadius: radii.md, borderWidth: 1, gap: spacing.sm },
   voxCard: { margin: spacing.lg, marginBottom: 0, flexDirection: 'row', alignItems: 'center', gap: spacing.md, padding: spacing.md, borderRadius: radii.md, borderWidth: 1 },
   voxBubble: { flex: 1, borderRadius: radii.lg, paddingHorizontal: spacing.md, paddingVertical: spacing.sm },

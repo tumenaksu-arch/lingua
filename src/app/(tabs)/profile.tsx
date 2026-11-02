@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Platform, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
-import * as Haptics from 'expo-haptics';
+import { Platform, Pressable, ScrollView, StyleSheet, Switch, View } from 'react-native';
 import { router, useFocusEffect } from 'expo-router';
 
 import { ACHIEVEMENTS, FREEZE_EVERY_DAYS, MAX_HEARTS, MAX_STREAK_FREEZES, getAchievement, msUntilNextHeart, regenerate } from '@/domain';
@@ -18,6 +17,7 @@ import {
   Body,
   Button,
   Caption,
+  FilterChip,
   Heading,
   Icon,
   type IconName,
@@ -29,9 +29,6 @@ import {
   setThemePreference,
   showAlert,
   spacing,
-  fonts,
-  upperTr,
-  MIN_TOUCH,
   useSettingsStore,
   useTheme,
   useThemeStore,
@@ -108,43 +105,6 @@ function Stat({ label, value, icon }: { label: string; value: string | number; i
       </View>
       <Caption color={colors.textMuted}>{label}</Caption>
     </View>
-  );
-}
-
-/** Compact selectable mono chip (daily goal, theme, slow-rate) — hairline outline, flat fill when selected. */
-function Chip({
-  label,
-  selected,
-  onPress,
-  disabled,
-  accessibilityLabel,
-  haptic = false,
-}: {
-  label: string;
-  selected: boolean;
-  onPress: () => void;
-  disabled?: boolean;
-  accessibilityLabel?: string;
-  /** Fire the same light haptic tick as ui Button on press (parity for chips that replaced Buttons). */
-  haptic?: boolean;
-}) {
-  const { colors } = useTheme();
-  return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={accessibilityLabel ?? label}
-      accessibilityState={{ selected, disabled: !!disabled }}
-      disabled={disabled}
-      onPress={() => {
-        if (haptic) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
-        onPress();
-      }}
-      style={[styles.chip, { backgroundColor: selected ? colors.primary : 'transparent', borderColor: selected ? colors.primary : colors.borderStrong }]}
-    >
-      <Text style={[styles.chipText, { color: selected ? colors.textOnBrand : colors.text }]} maxFontSizeMultiplier={1.6}>
-        {upperTr(label)}
-      </Text>
-    </Pressable>
   );
 }
 
@@ -289,7 +249,7 @@ export default function ProfileScreen() {
         <Caption color={colors.textMuted}>{stats.xpToday} / {stats.dailyGoalXp} XP bugün</Caption>
         <View style={styles.chips}>
           {GOALS.map((g) => (
-            <Chip key={g} label={`${g} XP`} selected={g === stats.dailyGoalXp} haptic onPress={() => setDailyGoal(g)} />
+            <FilterChip key={g} label={`${g} XP`} selected={g === stats.dailyGoalXp} haptic onPress={() => setDailyGoal(g)} />
           ))}
         </View>
 
@@ -342,7 +302,7 @@ export default function ProfileScreen() {
         <Heading>Görünüm ve ses</Heading>
         <View style={styles.chips}>
           {THEMES.map((t) => (
-            <Chip key={t.value} label={t.label} selected={t.value === themePreference} haptic onPress={() => void setThemePreference(t.value)} />
+            <FilterChip key={t.value} label={t.label} selected={t.value === themePreference} haptic onPress={() => void setThemePreference(t.value)} />
           ))}
         </View>
         <View style={styles.row}>
@@ -370,7 +330,7 @@ export default function ProfileScreen() {
         </View>
         <View style={styles.chips}>
           {SLOW_RATES.map((r) => (
-            <Chip
+            <FilterChip
               key={r}
               label={`%${Math.round(r * 100)}`}
               accessibilityLabel={`Yavaş hız yüzde ${Math.round(r * 100)}`}
@@ -391,14 +351,14 @@ export default function ProfileScreen() {
 
         <Heading>Ses</Heading>
         <View style={styles.chips}>
-          <Chip
+          <FilterChip
             label="Doğal (sunucu)"
             accessibilityLabel="Doğal sunucu sesi"
             selected={voice === 'dogal'}
             haptic
             onPress={() => void setVoice('dogal')}
           />
-          <Chip
+          <FilterChip
             label="Cihaz sesi"
             accessibilityLabel="Cihaz sesi"
             selected={voice === 'cihaz'}
@@ -534,15 +494,6 @@ const styles = StyleSheet.create({
   goals: { flexDirection: 'row', gap: spacing.sm },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', minHeight: 44 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
-  chip: {
-    minHeight: MIN_TOUCH,
-    paddingHorizontal: spacing.md,
-    borderRadius: 999,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  chipText: { fontSize: 13, letterSpacing: 1, fontFamily: fonts.mono },
   week: { flexDirection: 'row', gap: spacing.xs, height: 120, alignItems: 'flex-end' },
   weekCol: { flex: 1, alignItems: 'center', gap: spacing.xxs, height: '100%', justifyContent: 'flex-end' },
   weekTrack: { width: '100%', flex: 1, borderRadius: radii.sm, justifyContent: 'flex-end', overflow: 'hidden' },
