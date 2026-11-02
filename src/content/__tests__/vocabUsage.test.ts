@@ -5,6 +5,9 @@ import { courses } from '..';
  * (SRS kartı yalnız oradan doğar) ve kurs başına kelime sayısı A2 hedefinin altına
  * düşmez. Kelime sayısı hedefleri İ3 dalgası bittikçe yükseltilir.
  */
+/** Bilinen eş-yazımlılar (isim/fiil): yeni eklemeler bu listeye GİRMEZ, farklı term seçilir. */
+const HOMOGRAPHS = new Set(['tr-en.bookv']);
+
 const MIN_VOCAB: Record<string, number> = { 'tr-en': 296, 'tr-de': 218, 'tr-es': 217, 'tr-fr': 220, 'tr-it': 236 };
 
 describe.each(courses.map((c) => [c.id, c] as const))('course %s', (id, course) => {
@@ -19,6 +22,7 @@ describe.each(courses.map((c) => [c.id, c] as const))('course %s', (id, course) 
     const dups: string[] = [];
     for (const v of course.vocab) {
       const k = v.term.toLocaleLowerCase('tr');
+      if (HOMOGRAPHS.has(v.id)) continue;
       if (seen.has(k)) dups.push(`${v.id}=${seen.get(k)}`);
       else seen.set(k, v.id);
     }
