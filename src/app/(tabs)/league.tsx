@@ -12,11 +12,15 @@ import {
   Body,
   Button,
   Caption,
+  EmptyState,
+  ErrorState,
   Heading,
   Icon,
+  LoadingState,
   MIN_TOUCH,
   Screen,
   Title,
+  fontSize,
   fonts,
   radii,
   showAlert,
@@ -254,7 +258,7 @@ function FriendsTab() {
         <Button title="Yenile" variant="outline" block={false} onPress={() => void load()} />
       </View>
       {rows.length <= 1 && friends.length === 0 ? (
-        <Caption color={colors.textMuted}>Henüz arkadaşın yok. Kodunu paylaş, birlikte yarışın!</Caption>
+        <EmptyState icon="user" title="Henüz arkadaşın yok. Kodunu paylaş, birlikte yarışın!" />
       ) : (
         rows.map((r, i) => {
           const streak = r.friend ? streakByUid.get(r.friend.friend_uid) : undefined;
@@ -362,7 +366,7 @@ export default function LeagueScreen() {
             <Button title="Giriş yap" onPress={() => router.push('/auth')} />
           </View>
         ) : !anonymousResolved ? (
-          <Caption color={colors.textMuted}>Yükleniyor…</Caption>
+          <LoadingState />
         ) : anonymous ? (
           <View style={styles.section}>
             <Body color={colors.textMuted}>Genel lig için e-postalı hesap gerekir. Sınıf ligin sınıf ekranında.</Body>
@@ -378,11 +382,11 @@ export default function LeagueScreen() {
         ) : (
           <>
             <Segment value={tab} onChange={setTab} />
-            {error && <Caption color={colors.dangerText}>Bir sorun oluştu: {error}</Caption>}
+            {error ? <ErrorState message={`Bir sorun oluştu: ${error}`} onRetry={() => void load()} /> : null}
             {tab === 'week' ? (
               <View style={styles.section}>
                 {top.length === 0 && !loading ? (
-                  <Caption color={colors.textMuted}>Bu hafta için henüz kayıt yok. İlk sen ol!</Caption>
+                  <EmptyState icon="trophy" title="Bu hafta için henüz kayıt yok. İlk sen ol!" />
                 ) : (
                   top.map((entry, i) => (
                     <EntryRow key={entry.uid} rank={i + 1} nickname={entry.nickname} xp={entry.xp} isMe={entry.uid === user.uid} />
@@ -424,14 +428,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: radii.md,
     paddingHorizontal: spacing.md,
-    fontSize: 16,
+    fontSize: fontSize.md,
   },
   addRow: { flexDirection: 'row', gap: spacing.sm, alignItems: 'center' },
   addInput: { flex: 1 },
   listHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.sm },
   codeCard: { borderWidth: 1, borderRadius: radii.md, padding: spacing.md, alignItems: 'center', gap: spacing.sm },
   code: { fontFamily: fonts.mono, fontSize: 32, letterSpacing: 8 },
-  friendRowWrap: { gap: 2 },
+  friendRowWrap: { gap: spacing.xxs },
   friendRowMain: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   removeBtn: { paddingHorizontal: spacing.sm },
   streakLine: { marginLeft: spacing.md, flexDirection: 'row', alignItems: 'center', gap: spacing.sm },

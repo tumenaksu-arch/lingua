@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -20,7 +19,26 @@ import { ChatThread } from '@/features/conversation/ChatThread';
 import { historyFor, type ConversationMessage } from '@/features/conversation/history';
 import { useAppStore } from '@/features/store';
 import { speak, stopSpeaking, useSpeechRecognition } from '@/speech';
-import { Body, Button, Caption, Heading, Icon, Screen, MIN_TOUCH, radii, showAlert, spacing, useSettingsStore, useTheme } from '@/ui';
+import {
+  Body,
+  Button,
+  Caption,
+  CloseButton,
+  EmptyState,
+  ErrorState,
+  Heading,
+  Icon,
+  LoadingState,
+  NoticeCard,
+  Screen,
+  MIN_TOUCH,
+  fontSize,
+  radii,
+  showAlert,
+  spacing,
+  useSettingsStore,
+  useTheme,
+} from '@/ui';
 
 const MAX_MESSAGE = 500;
 const LIMIT_MESSAGE = 'Bugünlük konuşma hakkın doldu. Yarın tekrar gel!';
@@ -300,31 +318,27 @@ export default function ConversationScreen() {
           </View>
         ) : state.kind === 'loading' ? (
           <View style={styles.center}>
-            <ActivityIndicator color={colors.primary} size="large" accessibilityLabel="Yükleniyor" />
+            <LoadingState />
           </View>
         ) : state.kind === 'disabled' ? (
           <View style={[styles.center, styles.guestBody]}>
-            <View style={[styles.soonCard, { borderColor: colors.border, backgroundColor: colors.surface }]}>
-              <Icon name="messages" size={28} color={colors.primaryText} strokeWidth={1.75} />
-              <Heading center>Konuşma pratiği yakında</Heading>
-              <Body color={colors.textMuted} center>
-                Yapay zekâ destekli konuşma alıştırmaları üzerinde çalışıyoruz. Çok yakında burada olacak!
-              </Body>
-            </View>
+            <EmptyState
+              icon="messages"
+              title="Konuşma pratiği yakında"
+              body="Yapay zekâ destekli konuşma alıştırmaları üzerinde çalışıyoruz. Çok yakında burada olacak!"
+            />
             <Button title="Geri" variant="secondary" onPress={backOrHome} />
           </View>
         ) : state.kind === 'error' ? (
           <View style={[styles.center, styles.errorBody]}>
-            <Body color={colors.dangerText}>{state.message}</Body>
-            <Button
-              title="Tekrar dene"
-              variant="outline"
-              onPress={() => {
+            <ErrorState
+              message={state.message}
+              onRetry={() => {
                 setState({ kind: 'loading' });
                 setReloadKey((k) => k + 1);
               }}
+              secondary={{ label: 'Geri', onPress: backOrHome }}
             />
-            <Button title="Geri" variant="outline" onPress={backOrHome} />
           </View>
         ) : (
           <>
@@ -338,14 +352,7 @@ export default function ConversationScreen() {
                   {state.remaining !== null ? ` • Bugün kalan: ${state.remaining}/${state.limit}` : ''}
                 </Caption>
               </View>
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel="Kapat"
-                onPress={backOrHome}
-                style={({ pressed }) => [styles.close, { opacity: pressed ? 0.6 : 1 }]}
-              >
-                <Icon name="x" size={20} color={colors.textMuted} strokeWidth={2} />
-              </Pressable>
+              <CloseButton onPress={backOrHome} />
             </View>
 
             <View style={[styles.modeRow, { borderBottomColor: colors.border }]}>
@@ -394,10 +401,9 @@ export default function ConversationScreen() {
             <ScrollView contentContainerStyle={styles.thread}>
               {voiceMode && !micAvailable ? (
                 // İzin reddi / tanıyıcı yok: nazik açıklama + yazılı moda dönüş.
-                <View style={[styles.notice, { borderColor: colors.warning, backgroundColor: colors.surface }]}>
+                <NoticeCard tone="warning" action={{ label: 'Yazılı moda geç', onPress: switchToWritten }}>
                   <Body>{MIC_UNAVAILABLE_MESSAGE}</Body>
-                  <Button title="Yazılı moda geç" variant="outline" block={false} onPress={switchToWritten} />
-                </View>
+                </NoticeCard>
               ) : null}
               <ChatThread
                 messages={messages}
@@ -410,37 +416,39 @@ export default function ConversationScreen() {
                 waiting={waiting}
               />
               {limitHit ? (
-                <View style={[styles.notice, { borderColor: colors.warning, backgroundColor: colors.surface }]}>
+                <NoticeCard tone="warning">
                   <Body>{LIMIT_MESSAGE}</Body>
-                </View>
+                </NoticeCard>
               ) : null}
               {errorMsg ? (
-                <View style={[styles.notice, { borderColor: colors.danger, backgroundColor: colors.surface }]}>
+                <NoticeCard
+                  tone="danger"
+                  action={canRetry ? { label: 'Tekrar dene', onPress: onRetry } : undefined}
+                >
                   <Body color={colors.dangerText}>{errorMsg}</Body>
-                  {canRetry ? <Button title="Tekrar dene" variant="outline" block={false} onPress={onRetry} /> : null}
-                </View>
+                </NoticeCard>
               ) : null}
               {done ? (
-                voiceMode ? (
-                  <View style={[styles.doneCard, { borderColor: colors.success, backgroundColor: colors.successTint }]}>
-                    <Icon name="party" size={28} color={colors.successText} strokeWidth={1.75} />
-                    <Heading center>Görev tamam!</Heading>
-                    <Body color={colors.textMuted} center>
-                      {userTurns} mesaj konuştun, {correctionCount} düzeltme aldın.
-                    </Body>
-                    {xpSaved ? <Body center>+10 XP kazandın!</Body> : null}
-                    <Button title="Konuşmayı yeniden başlat" onPress={restartConversation} />
-                  </View>
-                ) : (
-                  <View style={[styles.doneCard, { borderColor: colors.success, backgroundColor: colors.successTint }]}>
-                    <Icon name="party" size={28} color={colors.successText} strokeWidth={1.75} />
-                    <Heading center>Görev tamam!</Heading>
-                    <Body color={colors.textMuted} center>
-                      {xpSaved ? 'Senaryoyu başarıyla tamamladın. +10 XP kazandın!' : 'Senaryoyu başarıyla tamamladın.'}
-                    </Body>
-                    <Button title="Yeni senaryo" onPress={() => router.push('/konus')} />
-                  </View>
-                )
+                <View style={[styles.doneCard, { borderColor: colors.success, backgroundColor: colors.successTint }]}>
+                  <Icon name="party" size={28} color={colors.successText} strokeWidth={1.75} />
+                  <Heading center>Görev tamam!</Heading>
+                  {voiceMode ? (
+                    <>
+                      <Body color={colors.textMuted} center>
+                        {userTurns} mesaj konuştun, {correctionCount} düzeltme aldın.
+                      </Body>
+                      {xpSaved ? <Body center>+10 XP kazandın!</Body> : null}
+                      <Button title="Konuşmayı yeniden başlat" onPress={restartConversation} />
+                    </>
+                  ) : (
+                    <>
+                      <Body color={colors.textMuted} center>
+                        {xpSaved ? 'Senaryoyu başarıyla tamamladın. +10 XP kazandın!' : 'Senaryoyu başarıyla tamamladın.'}
+                      </Body>
+                      <Button title="Yeni senaryo" onPress={() => router.push('/konus')} />
+                    </>
+                  )}
+                </View>
               ) : null}
             </ScrollView>
 
@@ -563,7 +571,6 @@ const styles = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: spacing.xl, gap: spacing.md },
   errorBody: { justifyContent: 'center' },
   guestBody: { gap: spacing.md },
-  soonCard: { borderWidth: 1, borderRadius: radii.lg, padding: spacing.xl, gap: spacing.sm, alignItems: 'center' },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -572,8 +579,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.sm,
     borderBottomWidth: 1,
   },
-  headerText: { flex: 1, gap: 2 },
-  close: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
+  headerText: { flex: 1, gap: spacing.xxs },
   modeChipContent: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs },
   modeRow: {
     flexDirection: 'row',
@@ -584,7 +590,6 @@ const styles = StyleSheet.create({
   },
   modeChip: { flex: 1, minHeight: MIN_TOUCH, borderRadius: radii.pill, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   thread: { padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xl },
-  notice: { borderWidth: 1, borderRadius: radii.md, padding: spacing.md, gap: spacing.sm, alignItems: 'flex-start' },
   doneCard: { borderWidth: 1, borderRadius: radii.lg, padding: spacing.xl, gap: spacing.sm, alignItems: 'center' },
   voiceBar: { alignItems: 'center', paddingHorizontal: spacing.lg, paddingTop: spacing.sm, paddingBottom: spacing.xs, borderTopWidth: 1 },
   voiceMic: {
@@ -594,7 +599,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 2,
+    gap: spacing.xxs,
     paddingHorizontal: spacing.lg,
   },
   inputBar: { flexDirection: 'row', alignItems: 'flex-end', gap: spacing.sm, paddingHorizontal: spacing.lg, paddingTop: spacing.sm, borderTopWidth: 1 },
@@ -606,8 +611,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  input: { flex: 1, minHeight: 48, maxHeight: 120, borderWidth: 1, borderRadius: radii.md, paddingHorizontal: spacing.md, paddingTop: 12, paddingBottom: 12, fontSize: 16 },
+  input: {
+    flex: 1,
+    minHeight: 48,
+    maxHeight: 120,
+    borderWidth: 1,
+    borderRadius: radii.md,
+    paddingHorizontal: spacing.md,
+    paddingTop: spacing.md,
+    paddingBottom: spacing.md,
+    fontSize: fontSize.md,
+  },
   send: { width: 48, height: 48, borderRadius: radii.md, alignItems: 'center', justifyContent: 'center' },
-  counter: { alignSelf: 'flex-end', paddingHorizontal: spacing.lg, paddingTop: 2 },
+  counter: { alignSelf: 'flex-end', paddingHorizontal: spacing.lg, paddingTop: spacing.xxs },
   privacy: { paddingHorizontal: spacing.lg, paddingBottom: spacing.sm },
 });

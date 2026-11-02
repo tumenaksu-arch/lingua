@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 
 import { aiScenarios, aiStatus, type AiScenario } from '@/data/remote/ai';
 import { useAppStore } from '@/features/store';
-import { Body, Button, Caption, Heading, Icon, Screen, Title, fonts, radii, spacing, useTheme } from '@/ui';
+import { Body, Button, Caption, EmptyState, ErrorState, Heading, LevelBadge, LoadingState, Screen, Title, fonts, radii, spacing, useTheme } from '@/ui';
 
 type LoadState =
   | { kind: 'loading' }
@@ -63,27 +63,21 @@ export default function KonusScreen() {
             <Button title="Sınıf koduyla katıl" variant="outline" onPress={() => router.push('/sinif-katil')} />
           </View>
         ) : state.kind === 'loading' ? (
-          <ActivityIndicator color={colors.primary} size="large" accessibilityLabel="Yükleniyor" />
+          <LoadingState />
         ) : state.kind === 'error' ? (
-          <View style={styles.section}>
-            <Caption color={colors.dangerText}>{state.message}</Caption>
-            <Button
-              title="Tekrar dene"
-              variant="outline"
-              onPress={() => {
-                setState({ kind: 'loading' });
-                setReloadKey((k) => k + 1);
-              }}
-            />
-          </View>
+          <ErrorState
+            message={state.message}
+            onRetry={() => {
+              setState({ kind: 'loading' });
+              setReloadKey((k) => k + 1);
+            }}
+          />
         ) : state.scenarios.length === 0 ? (
-          <View style={[styles.soonCard, { borderColor: colors.border, backgroundColor: colors.surface }]}>
-            <Icon name="messages" size={28} color={colors.primaryText} strokeWidth={1.75} />
-            <Heading center>Konuşma pratiği yakında</Heading>
-            <Body color={colors.textMuted} center>
-              Yapay zekâ destekli konuşma alıştırmaları üzerinde çalışıyoruz. Çok yakında burada olacak!
-            </Body>
-          </View>
+          <EmptyState
+            icon="messages"
+            title="Konuşma pratiği yakında"
+            body="Yapay zekâ destekli konuşma alıştırmaları üzerinde çalışıyoruz. Çok yakında burada olacak!"
+          />
         ) : (
           <View style={styles.section}>
             {state.remaining !== null && (
@@ -104,11 +98,7 @@ export default function KonusScreen() {
               >
                 <View style={styles.cardHeader}>
                   <Heading style={styles.cardTitle}>{s.titleTr}</Heading>
-                  <View style={[styles.levelChip, { borderColor: colors.borderStrong }]}>
-                    <Caption color={colors.primaryText} style={styles.levelText}>
-                      {s.level}
-                    </Caption>
-                  </View>
+                  <LevelBadge level={s.level} />
                 </View>
                 <Body color={colors.textMuted}>{s.descriptionTr}</Body>
                 <Caption color={colors.textMuted}>Hedef: {s.goalTr}</Caption>
@@ -126,10 +116,7 @@ const styles = StyleSheet.create({
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   section: { gap: spacing.sm },
   remaining: { fontFamily: fonts.mono },
-  soonCard: { borderWidth: 1, borderRadius: radii.lg, padding: spacing.xl, gap: spacing.sm, alignItems: 'center' },
   card: { borderWidth: 1, borderRadius: radii.md, padding: spacing.md, gap: spacing.sm },
   cardHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.sm },
   cardTitle: { flex: 1 },
-  levelChip: { borderWidth: 1, borderRadius: radii.pill, paddingHorizontal: spacing.sm, paddingVertical: 2 },
-  levelText: { fontFamily: fonts.mono },
 });
