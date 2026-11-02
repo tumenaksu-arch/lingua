@@ -254,7 +254,7 @@ export const trEs = course(
         speak('Gracias, adiós.'),
         sel('"adiós" ne demek?', ['merhaba', 'hoşça kal', 'lütfen'], 1, 'to'),
         build('Hayır, teşekkürler.', ['No, gracias', 'No gracias'], ['sí', 'por', 'favor']),
-        listenSel('No, gracias', ['No, gracias', 'Sí, gracias', 'No, adiós'], 1),
+        listenSel('No, gracias', ['No, gracias', 'Sí, gracias', 'No, adiós'], 0),
         chat([['a', '¡Adiós!']], ['¡Adiós!', 'Sí, gracias.', 'Por favor.'], 0),
         read('Hola, soy Ana. Adiós, Ana.', 'Metindeki kişi kim?', ['Ana', 'Ali', 'Tom'], 0),
       ]),
@@ -645,7 +645,7 @@ export const trEs = course(
         listenSel('Compro una camisa', ['Compro una camisa', 'Compro un camisa', 'Compro un vestido'], 0),
         pic('"ayakkabı" hangisi?', [
           { emoji: '👕', label: 'la camisa' },
-          { emoji: '👟', label: 'los zapatos' },
+          { emoji: '👞', label: 'los zapatos' },
           { emoji: '👗', label: 'el vestido' },
           { emoji: '🍎', label: 'la manzana' },
         ], 1),
@@ -849,7 +849,7 @@ export const trEs = course(
         fill('El tren está ___.', ['tarde', 'temprano', 'ahora'], 0),
         listenSel('Son las tres', ['Son las tres', 'Son las dos', 'Es las tres'], 0),
         chat([['a', '¿Qué hora es?']], ['Son las tres.', 'Hoy es lunes.', 'Tengo un libro.'], 0),
-        read('Es la una ahora. El tren está tarde.', 'Saat kaç?', ['Bir', 'Üç', 'İki'], 0),
+        read('Es la una ahora. El tren llega tarde.', 'Saat kaç?', ['Bir', 'Üç', 'İki'], 0),
       ]),
       lesson('tr-es.u7.l4', 4, ['tiempo', 'semana', 'domingo', 'calor', 'frio', 'manana'], [
         sel('"hava" hangisi?', ['la semana', 'el tiempo', 'la hora'], 1),
@@ -918,7 +918,7 @@ export const trEs = course(
           { emoji: '💃', label: 'bailar' },
           { emoji: '🌳', label: 'el parque' },
         ], 3),
-        chat([['a', 'Me gusta bailar.']], ['Sí, bailo los domingos.', 'No me gusta nadar.', 'Hoy hace frío.'], 0),
+        chat([['a', 'Me gusta bailar.']], ['A mí también. Bailo los domingos.', 'No me gusta nadar.', 'Hoy hace frío.'], 0),
       ]),
       lesson('tr-es.u8.l3', 3, ['cocinar', 'foto', 'viajar', 'gustar', 'finsemana', 'musica'], [
         sel('"seyahat etmek" hangisi?', ['cocinar', 'viajar', 'la foto'], 1),
@@ -942,7 +942,7 @@ export const trEs = course(
           { emoji: '✈️', label: 'viajar' },
           { emoji: '🎸', label: 'la guitarra' },
         ], 1),
-        chat([['a', '¿A dónde viajas?']], ['Viajo con mi familia.', 'Cocino el fin de semana.', 'Hoy es lunes.'], 0),
+        chat([['a', '¿Adónde viajas?']], ['Viajo a España.', 'Cocino el fin de semana.', 'Hoy es lunes.'], 0),
       ]),
       lesson('tr-es.u8.l4', 4, ['jugar', 'gustar', 'pelicula', 'futbol', 'guitarra', 'finsemana'], [
         sel('"film" hangisi?', ['la música', 'la película', 'la foto'], 1),
