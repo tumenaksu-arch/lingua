@@ -14,7 +14,7 @@ import { localDateString, gemsOf, regenerate } from '@/domain';
 import { unitLevel } from '@/domain/unitLevel';
 import { getUnitNote } from '@/content/notes';
 import { getUnitStory } from '@/content/stories';
-import { Body, Button, Caption, GemChip, Heading, Hearts, PathNode, ProgressBar, Screen, StreakFlame, UnitHeader, Vox, XpBadge, XpBoostChip, radii, showAlert, spacing, upperTr, useReduceMotion, useSettingsStore, useTheme, type PathNodeState } from '@/ui';
+import { Body, Button, Caption, GemChip, Heading, Hearts, Icon, PathNode, ProgressBar, Screen, StreakFlame, UnitHeader, Vox, XpBadge, XpBoostChip, radii, showAlert, spacing, upperTr, useReduceMotion, useSettingsStore, useTheme, type PathNodeState } from '@/ui';
 
 const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', it: '🇮🇹', tr: '🇹🇷' };
 const LANG_NAME: Record<string, string> = { en: 'İngilizce', de: 'Almanca', es: 'İspanyolca', fr: 'Fransızca', it: 'İtalyanca', tr: 'Türkçe' };
@@ -90,7 +90,11 @@ export default function LearnScreen() {
           accessibilityLabel={`Kurs: ${LANG_NAME[course.toLang] ?? course.toLang}. Kurs değiştir`}
           style={styles.flag}
         >
-          <Body accessible={false}>{LANG_FLAG[course.toLang] ?? '🌐'}</Body>
+          {LANG_FLAG[course.toLang] ? (
+            <Body accessible={false}>{LANG_FLAG[course.toLang]}</Body>
+          ) : (
+            <Icon name="globe" size={20} color={colors.textMuted} />
+          )}
         </Pressable>
         <StreakFlame streak={stats.streak} active={stats.lastActiveDate === today} />
         <GemChip gems={gemsOf(stats)} onPress={() => router.push('/shop')} />
@@ -117,7 +121,10 @@ export default function LearnScreen() {
         <DailyQuestsCard />
         {active === null && (
           <View style={[styles.doneBanner, { backgroundColor: colors.surface, borderColor: colors.border }]} accessibilityRole="summary">
-            <Heading>🏆 Kursu tamamladın!</Heading>
+            <View style={styles.doneBannerTitle}>
+              <Icon name="trophy" size={24} color={colors.primaryText} strokeWidth={2} />
+              <Heading>Kursu tamamladın!</Heading>
+            </View>
             <Body color={colors.textMuted}>Dersleri pratik modunda tekrar edebilir veya kurs değiştirebilirsin.</Body>
             <Button title="Kurs değiştir" variant="secondary" onPress={() => router.push('/courses')} />
           </View>
@@ -325,9 +332,12 @@ function ClassCard() {
       )}
       {latest && (
         <View style={styles.announcement}>
-          <Caption color={colors.textMuted} numberOfLines={2}>
-            📢 {latest.metin}
-          </Caption>
+          <View style={styles.announcementRow}>
+            <Icon name="megaphone" size={14} color={colors.textMuted} />
+            <Caption color={colors.textMuted} numberOfLines={2} style={styles.announcementText}>
+              {latest.metin}
+            </Caption>
+          </View>
           <Caption color={colors.textMuted}>{relativeTime(latest.createdAt, now)}</Caption>
         </View>
       )}
@@ -369,7 +379,10 @@ function QuestRow({ quest, onClaim }: { quest: QuestStatus; onClaim: () => void 
         />
       </View>
       {quest.claimed ? (
-        <Caption color={colors.successText}>✓ Alındı</Caption>
+        <View style={styles.claimedRow} accessible={false}>
+          <Icon name="check" size={14} color={colors.successText} strokeWidth={2} />
+          <Caption color={colors.successText}>Alındı</Caption>
+        </View>
       ) : quest.done ? (
         <Pressable
           accessibilityRole="button"
@@ -396,6 +409,10 @@ const styles = StyleSheet.create({
   classRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.sm },
   classTitle: { flexShrink: 1 },
   announcement: { gap: 2 },
+  announcementRow: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.xs },
+  announcementText: { flex: 1 },
+  claimedRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  doneBannerTitle: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   questRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   questMain: { flex: 1, gap: spacing.xs },
   questTitleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.sm },

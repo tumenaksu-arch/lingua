@@ -19,6 +19,8 @@ import {
   Button,
   Caption,
   Heading,
+  Icon,
+  type IconName,
   ProgressBar,
   Screen,
   Title,
@@ -89,17 +91,20 @@ function Badge({ id, unlocked }: { id: string; unlocked: boolean }) {
       style={[styles.badge, { borderColor: colors.border, backgroundColor: colors.surface }, !unlocked && styles.badgeLocked]}
       accessibilityLabel={`${a.title}: ${a.description}${unlocked ? '' : ' (kilitli)'}`}
     >
-      <Heading>{unlocked ? a.emoji : '🔒'}</Heading>
+      {unlocked ? <Heading>{a.emoji}</Heading> : <Icon name="lock" size={24} color={colors.textMuted} />}
       <Caption center color={unlocked ? colors.text : colors.textMuted}>{a.title}</Caption>
     </View>
   );
 }
 
-function Stat({ label, value }: { label: string; value: string | number }) {
+function Stat({ label, value, icon }: { label: string; value: string | number; icon?: IconName }) {
   const { colors } = useTheme();
   return (
     <View style={[styles.stat, { borderColor: colors.border, backgroundColor: colors.surface }]}>
-      <Heading>{value}</Heading>
+      <View style={styles.statValue}>
+        {icon ? <Icon name={icon} size={18} color={colors.primaryText} strokeWidth={2} /> : null}
+        <Heading>{value}</Heading>
+      </View>
       <Caption color={colors.textMuted}>{label}</Caption>
     </View>
   );
@@ -253,12 +258,17 @@ export default function ProfileScreen() {
         <Body color={colors.textMuted}>{user?.email ?? 'Misafir (yalnızca bu cihaz)'}</Body>
 
         <View style={styles.statsRow}>
-          <Stat label="Seri" value={`🔥 ${stats.streak}`} />
-          <Stat label="Toplam XP" value={`⚡ ${stats.xp}`} />
-          <Stat label="Kalp" value={`❤️ ${stats.hearts}/${MAX_HEARTS}`} />
+          <Stat label="Seri" icon="flame" value={stats.streak} />
+          <Stat label="Toplam XP" icon="zap" value={stats.xp} />
+          <Stat label="Kalp" icon="heart" value={`${stats.hearts}/${MAX_HEARTS}`} />
         </View>
         {nextHeartMin > 0 && <Caption color={colors.textMuted}>Sonraki kalp ~{nextHeartMin} dk sonra</Caption>}
-        <Body>❄️ Seri dondurma: {stats.streakFreezes}/{MAX_STREAK_FREEZES}</Body>
+        <View style={styles.row}>
+          <View style={styles.statValue}>
+            <Icon name="snowflake" size={16} color={colors.secondaryText} />
+            <Body>Seri dondurma: {stats.streakFreezes}/{MAX_STREAK_FREEZES}</Body>
+          </View>
+        </View>
         <Caption color={colors.textMuted}>Bir gün kaçırırsan serini korur. Her {FREEZE_EVERY_DAYS} günlük seride bir tane kazanırsın.</Caption>
 
         <View style={[styles.scoreCard, { borderColor: colors.border, backgroundColor: colors.surface }]}>
@@ -268,7 +278,7 @@ export default function ProfileScreen() {
           </View>
           <ProgressBar progress={levelProgress} color={colors.primary} />
           <Caption color={colors.textMuted}>
-            {nextName ? `${nextName === 'A2' ? "A2'ye" : "B1'e"} ${levelGap} puan kaldı` : 'Ölçeğin en üst seviyesi 🏆'}
+            {nextName ? `${nextName === 'A2' ? "A2'ye" : "B1'e"} ${levelGap} puan kaldı` : 'Ölçeğin en üst seviyesi'}
           </Caption>
           <Caption color={colors.textMuted}>{proficiency.unitsDone} ünite tamamlandı</Caption>
         </View>
@@ -369,7 +379,7 @@ export default function ProfileScreen() {
           ))}
         </View>
         <Button
-          title="Dene 🐢"
+          title="Dene"
           variant="outline"
           accessibilityLabel="Yavaş hızı dene"
           onPress={() => {
@@ -518,6 +528,7 @@ const styles = StyleSheet.create({
   classCard: { gap: spacing.sm },
   classInfo: { gap: 2 },
   stat: { flex: 1, borderWidth: 1, borderRadius: 10, padding: spacing.md, alignItems: 'center' },
+  statValue: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs },
   scoreCard: { borderWidth: 1, borderRadius: 10, padding: spacing.md, gap: spacing.sm },
   goals: { flexDirection: 'row', gap: spacing.sm },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', minHeight: 44 },

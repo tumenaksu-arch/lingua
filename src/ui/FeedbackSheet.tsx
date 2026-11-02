@@ -5,6 +5,7 @@ import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown } from 'react-nati
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Body, Caption } from './Typography';
+import { Icon } from './Icon';
 import { Button } from './Button';
 import { Vox } from './Vox';
 import { fonts, radii, spacing } from './theme';
@@ -76,9 +77,7 @@ export function FeedbackSheet({
     >
       <View style={styles.header}>
         {showMascot ? <Vox mood={correct ? 'happy' : 'sad'} size={48} /> : null}
-        <Text style={styles.icon} accessible={false}>
-          {correct ? '✅' : '❌'}
-        </Text>
+        <Icon name={correct ? 'check' : 'x'} size={26} color={ink} strokeWidth={2} />
         <View style={styles.textCol}>
           <Text style={[styles.title, { color: ink }]}>{headline}</Text>
           {detail ? <Text style={[styles.detail, { color: ink }]}>{detail}</Text> : null}
@@ -110,7 +109,6 @@ const styles = StyleSheet.create({
     gap: spacing.lg,
   },
   header: { flexDirection: 'row', gap: spacing.md, alignItems: 'flex-start' },
-  icon: { fontSize: 24 },
   textCol: { flex: 1, gap: spacing.xs },
   title: { fontSize: 24, fontFamily: fonts.display },
   detail: { fontSize: 16, lineHeight: 22, fontFamily: fonts.body },

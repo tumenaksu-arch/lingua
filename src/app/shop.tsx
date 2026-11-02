@@ -17,7 +17,7 @@ import {
 import { playComplete } from '@/features/sound';
 import { useAppStore } from '@/features/store';
 import { useNow } from '@/features/useNow';
-import { Body, Button, Caption, GemChip, Heading, Screen, Title, radii, spacing, useTheme } from '@/ui';
+import { Body, Button, Caption, GemChip, Icon, Screen, Title, radii, spacing, useTheme, type IconName } from '@/ui';
 
 /** Kısa başarı bildirimi metni; satın alınan kartın adıyla birlikte gösterilir. */
 function itemLabel(item: ShopItem): string {
@@ -78,7 +78,7 @@ export default function ShopScreen() {
       ) : null}
 
       <ShopCard
-        emoji="🧊"
+        icon="snowflake"
         title="Seri dondurma"
         description="Bir gün çalışamazsan serini korur. En fazla 2 tane taşıyabilirsin."
         price={SHOP_PRICES.streakFreeze}
@@ -88,7 +88,7 @@ export default function ShopScreen() {
         buying={buying}
       />
       <ShopCard
-        emoji="❤️"
+        icon="heart"
         title="Canları doldur"
         description="Tüm canların anında dolsun, beklemeye gerek kalmasın."
         price={SHOP_PRICES.refillHearts}
@@ -98,7 +98,7 @@ export default function ShopScreen() {
         buying={buying}
       />
       <ShopCard
-        emoji="⚡"
+        icon="zap"
         title="Çift XP · 15 dk"
         description="15 dakika boyunca ders, hikâye ve pratikte kazandığın XP iki katına çıkar. Etkinse süreyi uzatır (en fazla 60 dk)."
         price={SHOP_PRICES.xpBoost}
@@ -109,7 +109,7 @@ export default function ShopScreen() {
       />
       {canRepairStreak(stats, today) ? (
         <ShopCard
-          emoji="🔥"
+          icon="flame"
           title="Serini onar"
           description={`Serin ${stats.lostStreak!.value} gündü ve koptu. Onararak kaldığın yerden devam et.`}
           price={SHOP_PRICES.streakRepair}
@@ -124,7 +124,7 @@ export default function ShopScreen() {
 }
 
 function ShopCard({
-  emoji,
+  icon,
   title,
   description,
   price,
@@ -133,7 +133,7 @@ function ShopCard({
   onBuy,
   buying,
 }: {
-  emoji: string;
+  icon: IconName;
   title: string;
   description: string;
   price: number;
@@ -147,7 +147,7 @@ function ShopCard({
   const unaffordable = gems < price;
   return (
     <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-      <Heading>{emoji}</Heading>
+      <Icon name={icon} size={28} color={colors.primaryText} strokeWidth={1.75} />
       <View style={styles.cardBody}>
         <Body>{title}</Body>
         <Caption color={colors.textMuted}>{description}</Caption>
@@ -161,7 +161,7 @@ function ShopCard({
       </View>
       {passive !== null ? null : (
         <Button
-          title={`${price} 💎`}
+          title={`${price}`}
           variant="secondary"
           disabled={unaffordable || buying}
           loading={buying}

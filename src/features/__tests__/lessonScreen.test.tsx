@@ -127,19 +127,19 @@ describe('lesson screen with Rahat mod on', () => {
     await renderLesson();
 
     // hearts 0 in the store but the lesson starts (no OutOfHearts) and the chip shows ∞
-    expect(screen.queryByText('Kalplerin bitti 💔')).toBeNull();
+    expect(screen.queryByText('Kalplerin bitti')).toBeNull();
     expect(screen.getByLabelText('Sınırsız kalp')).toBeTruthy();
 
     // more than 5 wrong answers: no heart is lost, the lesson is not failed
     for (let i = 0; i < 6; i++) await answerCurrentWrong();
     expect(saveStats).not.toHaveBeenCalled();
-    expect(screen.queryByText('Kalplerin bitti 💔')).toBeNull();
+    expect(screen.queryByText('Kalplerin bitti')).toBeNull();
 
     // finishing still saves progress (normal mode, not practice)
     await answerCurrentCorrect();
     await answerCurrentCorrect();
     expect(finishLesson).toHaveBeenCalledTimes(1);
-    expect(screen.getByText('Ders tamamlandı! 🎉')).toBeTruthy();
+    expect(screen.getByText('Ders tamamlandı!')).toBeTruthy();
   });
 });
 
@@ -203,7 +203,7 @@ describe('lesson screen with Rahat mod off', () => {
   it('shows OutOfHearts with 0 hearts and "Rahat modu aç ve devam et" enables Rahat mod', async () => {
     await renderLesson();
 
-    expect(screen.getByText('Kalplerin bitti 💔')).toBeTruthy();
+    expect(screen.getByText('Kalplerin bitti')).toBeTruthy();
 
     await fireEvent.press(screen.getByRole('button', { name: 'Rahat modu aç ve devam et' }));
 
@@ -211,7 +211,7 @@ describe('lesson screen with Rahat mod off', () => {
     // same lesson, normal mode: no 'practice' param, so the lesson counts as completed
     expect(mockReplace).toHaveBeenCalledWith({ pathname: '/lesson/[id]', params: { id: 'l1' } });
     // the relaxed key remounts the runner: the lesson now starts despite 0 hearts
-    expect(screen.queryByText('Kalplerin bitti 💔')).toBeNull();
+    expect(screen.queryByText('Kalplerin bitti')).toBeNull();
     expect(screen.getByLabelText('Sınırsız kalp')).toBeTruthy();
     expect(screen.getByText('p-e1')).toBeTruthy();
   });

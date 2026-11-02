@@ -98,8 +98,9 @@ test('3/3 then 2/3 pass, 1/3 ends the exam; only passed units are saved and the 
   expect(completeUnitsByPlacement).toHaveBeenCalledWith(['u1', 'u2']);
 
   await screen.findByText("Ünite 3'ten başlıyorsun");
-  expect(screen.getByText('✓ Ünite 1')).toBeTruthy();
-  expect(screen.getByText('✓ Ünite 2')).toBeTruthy();
+  // geçilen ünitelerde başta check ikonu var (G4: lucide ikonu, metin değişmedi)
+  expect(screen.getByText('Ünite 1')).toBeTruthy();
+  expect(screen.getByText('Ünite 2')).toBeTruthy();
   expect(screen.getByText('Seviye tespiti XP kazandırmaz.')).toBeTruthy();
   expect(useAppStore.getState().progress).toEqual({}); // saving runs through the mocked action
 

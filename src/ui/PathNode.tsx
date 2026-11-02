@@ -11,6 +11,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import { Icon, type IconName } from './Icon';
 import { MAX_FONT_SCALE_DENSE, fonts, radii, spacing, type ColorTokens } from './theme';
 import { useReduceMotion } from './useReduceMotion';
 import { useTheme } from './useTheme';
@@ -20,8 +21,8 @@ export type PathNodeState = 'locked' | 'active' | 'completed';
 /** Node kind — same 44×44 geometry, the glyph reflects what the node opens. */
 export type PathNodeKind = 'lesson' | 'story' | 'notes' | 'skip';
 
-/** Short letter glyphs for non-lesson kinds (G4 will replace these with icons). */
-const KIND_GLYPH: Record<Exclude<PathNodeKind, 'lesson'>, string> = { story: 'H', notes: 'N', skip: 'A' };
+/** Icons for non-lesson kinds (G4: letter glyphs replaced with lucide icons). */
+const KIND_ICON: Record<Exclude<PathNodeKind, 'lesson'>, IconName> = { story: 'story', notes: 'notes', skip: 'skip' };
 
 export type PathNodeProps = {
   state: PathNodeState;
@@ -40,7 +41,7 @@ export type PathNodeProps = {
   style?: StyleProp<ViewStyle>;
 };
 
-/** Flat compact 44×44 rounded-square node: ✓ completed, numbered active, 🔒 locked. */
+/** Flat compact 44×44 rounded-square node: check completed, numbered active, lock locked. */
 function nodeColors(state: PathNodeState, c: ColorTokens): { bg: string; border: string; icon: string } {
   switch (state) {
     case 'locked':
@@ -92,12 +93,14 @@ export function PathNode({
 
   const tooltipStyle = useAnimatedStyle(() => ({ transform: [{ translateY: bounce.value }] }));
 
-  // Glyph: an explicit label wins; locked always shows the lock. Otherwise the
-  // kind letter (H/N/A) or the lesson state glyph (✓, crown count, •).
+  // Content: an explicit label wins; locked always shows the lock icon.
+  // Otherwise the kind icon (story/notes/skip) or the lesson state
+  // (check icon, crown count, •).
+  const icon: IconName | null = state === 'locked' ? 'lock' : kind !== 'lesson' && !label ? KIND_ICON[kind] : state === 'completed' && !label ? 'check' : null;
   const glyph =
-    state === 'locked'
-      ? '🔒'
-      : (label ?? (kind !== 'lesson' ? KIND_GLYPH[kind] : state === 'completed' ? '✓' : crowns > 0 ? String(crowns) : '•'));
+    icon === null
+      ? (label ?? (crowns > 0 ? String(crowns) : '•'))
+      : null;
   const a11yLabel = `${accessibilityLabel ?? 'Ders'}, ${STATE_LABEL[state]}${crowns ? `, ${crowns} taç` : ''}`;
 
   return (
@@ -128,12 +131,16 @@ export function PathNode({
               },
             ]}
           >
-            <Text
-              style={[styles.glyph, { fontSize: state === 'active' ? size * 0.4 : size * 0.42, color: node.icon }]}
-              accessible={false}
-            >
-              {glyph}
-            </Text>
+            {icon !== null ? (
+              <Icon name={icon} size={size * 0.5} color={node.icon} strokeWidth={2} />
+            ) : (
+              <Text
+                style={[styles.glyph, { fontSize: state === 'active' ? size * 0.4 : size * 0.42, color: node.icon }]}
+                accessible={false}
+              >
+                {glyph}
+              </Text>
+            )}
           </View>
         </Pressable>
 

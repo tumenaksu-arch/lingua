@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
+import { Icon, type IconName } from './Icon';
 import { MAX_FONT_SCALE_DENSE, fontSize, fonts, radii, spacing } from './theme';
 import { useTheme } from './useTheme';
 
@@ -12,7 +13,7 @@ function Chip({
   color,
   label,
   style,
-}: ChipProps & { icon: string; value: string | number; color: string; label: string }) {
+}: ChipProps & { icon: IconName; value: string | number; color: string; label: string }) {
   const { colors } = useTheme();
   return (
     <View
@@ -21,9 +22,7 @@ function Chip({
       accessibilityLabel={label}
       style={[styles.chip, { backgroundColor: colors.surface, borderColor: colors.border }, style]}
     >
-      <Text style={styles.icon} accessible={false} maxFontSizeMultiplier={MAX_FONT_SCALE_DENSE}>
-        {icon}
-      </Text>
+      <Icon name={icon} size={17} color={color} />
       <Text style={[styles.value, { color }]} maxFontSizeMultiplier={MAX_FONT_SCALE_DENSE}>
         {value}
       </Text>
@@ -39,7 +38,7 @@ export function Hearts({ hearts, max = 5, style }: HeartsProps) {
   const value = Number.isFinite(hearts) ? hearts : '∞';
   return (
     <Chip
-      icon={empty ? '🤍' : '❤️'}
+      icon="heart"
       value={value}
       color={empty ? colors.textMuted : colors.heartsText}
       label={Number.isFinite(hearts) ? `${hearts} / ${max} kalp` : 'Sınırsız kalp'}
@@ -53,7 +52,7 @@ export function StreakFlame({ streak, active = true, style }: StreakFlameProps) 
   const { colors } = useTheme();
   return (
     <Chip
-      icon={active ? '🔥' : '🩶'}
+      icon="flame"
       value={streak}
       color={active ? colors.streakText : colors.textMuted}
       label={`${streak} günlük seri${active ? '' : ', bugün henüz çalışılmadı'}`}
@@ -65,7 +64,7 @@ export function StreakFlame({ streak, active = true, style }: StreakFlameProps) 
 export type XpBadgeProps = ChipProps & { xp: number };
 export function XpBadge({ xp, style }: XpBadgeProps) {
   const { colors } = useTheme();
-  return <Chip icon="⚡" value={`${xp} XP`} color={colors.xpText} label={`${xp} XP`} style={style} />;
+  return <Chip icon="zap" value={`${xp} XP`} color={colors.xpText} label={`${xp} XP`} style={style} />;
 }
 
 export type GemChipProps = ChipProps & { gems: number; /** Mağazayı açar; verilmezse salt metin. */
@@ -74,7 +73,7 @@ export type GemChipProps = ChipProps & { gems: number; /** Mağazayı açar; ver
 export function GemChip({ gems, onPress, style }: GemChipProps) {
   const { colors } = useTheme();
   const chip = (
-    <Chip icon="💎" value={gems} color={colors.secondaryText} label={`${gems} elmas`} style={style} />
+    <Chip icon="gem" value={gems} color={colors.secondaryText} label={`${gems} elmas`} style={style} />
   );
   if (!onPress) return chip;
   return (
@@ -91,7 +90,7 @@ export function GemChip({ gems, onPress, style }: GemChipProps) {
 
 export type XpBoostChipProps = ChipProps & { until: number };
 /**
- * "⚡ Çift XP — 12:34" geri sayım çipi. Süre dolunca kendini gizler;
+ * "Çift XP — 12:34" geri sayım çipi (zap ikonu). Süre dolunca kendini gizler;
  * saniyelik tick kendi içinde döner (ana sayfa ve ders sonu ekranı).
  */
 export function XpBoostChip({ until, style }: XpBoostChipProps) {
@@ -107,7 +106,7 @@ export function XpBoostChip({ until, style }: XpBoostChipProps) {
   const ss = String(totalSec % 60).padStart(2, '0');
   return (
     <Chip
-      icon="⚡"
+      icon="zap"
       value={`Çift XP — ${mm}:${ss}`}
       color={colors.xpText}
       label={`Çift XP aktif, kalan süre ${mm} dakika ${ss} saniye`}
@@ -126,6 +125,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: radii.pill,
   },
-  icon: { fontSize: fontSize.lg },
   value: { fontSize: fontSize.sm, fontFamily: fonts.mono },
 });

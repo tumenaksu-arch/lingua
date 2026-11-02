@@ -79,7 +79,8 @@ it('renders the 3 daily quests above the learning path with progress', async () 
     expect(screen.getByText(`${q.current}/${q.target}`)).toBeTruthy();
   }
   // claimed quest shows the mono "taken" label; not-yet-done one shows no reward control
-  expect(screen.getByText('✓ Alındı')).toBeTruthy();
+  // (G4: başta check ikonu, metin "Alındı")
+  expect(screen.getByText('Alındı')).toBeTruthy();
   expect(screen.queryByRole('button', { name: 'Günlük hedefin kadar XP kazan ödülünü al' })).toBeNull();
 });
 

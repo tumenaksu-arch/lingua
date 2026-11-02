@@ -4,7 +4,7 @@ import { router } from 'expo-router';
 
 import { aiScenarios, aiStatus, type AiScenario } from '@/data/remote/ai';
 import { useAppStore } from '@/features/store';
-import { Body, Button, Caption, Heading, Screen, Title, fonts, radii, spacing, useTheme } from '@/ui';
+import { Body, Button, Caption, Heading, Icon, Screen, Title, fonts, radii, spacing, useTheme } from '@/ui';
 
 type LoadState =
   | { kind: 'loading' }
@@ -78,7 +78,7 @@ export default function KonusScreen() {
           </View>
         ) : state.scenarios.length === 0 ? (
           <View style={[styles.soonCard, { borderColor: colors.border, backgroundColor: colors.surface }]}>
-            <Body>🗣️</Body>
+            <Icon name="messages" size={28} color={colors.primaryText} strokeWidth={1.75} />
             <Heading center>Konuşma pratiği yakında</Heading>
             <Body color={colors.textMuted} center>
               Yapay zekâ destekli konuşma alıştırmaları üzerinde çalışıyoruz. Çok yakında burada olacak!

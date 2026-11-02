@@ -132,7 +132,7 @@ describe('story screen', () => {
     await continueFromSheet();
 
     // summary: 1/2 correct, XP from the store; "Bitir" goes back
-    expect(await screen.findByText('Hikâye tamamlandı! 🎉')).toBeTruthy();
+    expect(await screen.findByText('Hikâye tamamlandı!')).toBeTruthy();
     expect(finishStory).toHaveBeenCalledTimes(1);
     expect(finishStory).toHaveBeenCalledWith('tr-en.u1.story', 1, 2);
     expect(screen.getByLabelText('Doğru: 1/2')).toBeTruthy();
@@ -150,7 +150,7 @@ describe('story screen', () => {
     await answer('Nasılsın?');
     await continueFromSheet();
 
-    expect(await screen.findByText('Hikâye tamamlandı! 🎉')).toBeTruthy();
+    expect(await screen.findByText('Hikâye tamamlandı!')).toBeTruthy();
     expect(finishStory).toHaveBeenCalledWith('tr-en.u1.story', 2, 2);
     expect(screen.getByLabelText('Doğru: 2/2')).toBeTruthy();
   });
@@ -181,7 +181,7 @@ describe('story screen finish robustness', () => {
     expect(finishStory).toHaveBeenCalledTimes(1);
 
     await act(async () => resolveFinish({ xpEarned: 16 }));
-    expect(await screen.findByText('Hikâye tamamlandı! 🎉')).toBeTruthy();
+    expect(await screen.findByText('Hikâye tamamlandı!')).toBeTruthy();
     expect(finishStory).toHaveBeenCalledTimes(1);
   });
 
@@ -197,7 +197,7 @@ describe('story screen finish robustness', () => {
     expect(finishStory).toHaveBeenCalledTimes(1);
     expect(finishStory).toHaveBeenCalledWith('tr-en.u1.story', 0, 0);
 
-    expect(await screen.findByText('Hikâye tamamlandı! 🎉')).toBeTruthy();
+    expect(await screen.findByText('Hikâye tamamlandı!')).toBeTruthy();
     expect(screen.getByLabelText('Doğru: 0/0')).toBeTruthy();
     expect(screen.getByLabelText('XP: +10')).toBeTruthy();
   });
@@ -215,12 +215,12 @@ describe('story screen finish robustness', () => {
 
     // error state replaces the unreachable summary
     expect(await screen.findByText('Kaydedilemedi: offline')).toBeTruthy();
-    expect(screen.queryByText('Hikâye tamamlandı! 🎉')).toBeNull();
+    expect(screen.queryByText('Hikâye tamamlandı!')).toBeNull();
     expect(finishStory).toHaveBeenCalledTimes(1);
 
     // retrying the save succeeds and reaches the summary
     await fireEvent.press(screen.getByRole('button', { name: 'Tekrar dene' }));
-    expect(await screen.findByText('Hikâye tamamlandı! 🎉')).toBeTruthy();
+    expect(await screen.findByText('Hikâye tamamlandı!')).toBeTruthy();
     expect(finishStory).toHaveBeenCalledTimes(2);
     expect(screen.getByLabelText('XP: +16')).toBeTruthy();
   });

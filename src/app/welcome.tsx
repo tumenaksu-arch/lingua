@@ -209,7 +209,7 @@ export default function WelcomeScreen() {
                 {courses.map((c) => (
                   <View key={c.id} style={[styles.chip, { borderColor: ep.hairline, backgroundColor: ep.surface }]}>
                     <Text style={[styles.chipText, { color: colors.text, fontFamily: bodyFont }]}>
-                      {LANG_FLAG[c.toLang] ?? '🌐'} {LANG_NAME[c.toLang] ?? c.toLang}
+                      {LANG_FLAG[c.toLang] ? `${LANG_FLAG[c.toLang]} ${LANG_NAME[c.toLang] ?? c.toLang}` : (LANG_NAME[c.toLang] ?? c.toLang)}
                     </Text>
                   </View>
                 ))}
@@ -265,7 +265,7 @@ export default function WelcomeScreen() {
                   <NumberedCard
                     key={c.id}
                     no={String(i + 1).padStart(2, '0')}
-                    title={`${LANG_FLAG[c.toLang] ?? '🌐'} ${LANG_NAME[c.toLang] ?? c.toLang}`}
+                    title={LANG_FLAG[c.toLang] ? `${LANG_FLAG[c.toLang]} ${LANG_NAME[c.toLang] ?? c.toLang}` : (LANG_NAME[c.toLang] ?? c.toLang)}
                     text={`${c.units.length} ünite · ${lessons} ders · ${c.vocab.length} kelime`}
                     tag={upperTr('Ücretsiz')}
                     colors={colors}

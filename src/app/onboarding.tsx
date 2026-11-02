@@ -60,7 +60,7 @@ export default function OnboardingScreen() {
               {courses.map((c) => (
                 <ChoiceCard
                   key={c.id}
-                  label={`${LANG_FLAG[c.toLang] ?? '🌐'}  ${LANG_NAME[c.toLang] ?? c.toLang}`}
+                  label={LANG_FLAG[c.toLang] ? `${LANG_FLAG[c.toLang]}  ${LANG_NAME[c.toLang] ?? c.toLang}` : (LANG_NAME[c.toLang] ?? c.toLang)}
                   state={c.id === courseId ? 'selected' : 'idle'}
                   onPress={() => setCourseId(c.id)}
                 />

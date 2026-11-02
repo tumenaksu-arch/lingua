@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { router } from 'expo-router';
 
 import { authErrorMessage } from '@/data';
 import { useClassStore } from '@/features/classes/classStore';
 import { JOIN_CODE_PATTERN, TAKMA_AD_PATTERN, normalizeJoinCode } from '@/features/classes/classView';
-import { Body, Button, Caption, Heading, Screen, fonts, radii, spacing, useTheme } from '@/ui';
+import { Body, Button, Caption, Heading, Icon, Screen, fonts, radii, spacing, useTheme } from '@/ui';
 
 /**
  * "Sınıf koduyla katıl" (madde 5, wave 2b): reachable from the welcome screen
@@ -67,7 +67,7 @@ export default function JoinClassScreen() {
         <View style={styles.headerRow}>
           <Heading>Sınıfa katıl</Heading>
           <Pressable onPress={() => router.back()} accessibilityRole="button" accessibilityLabel="Kapat" style={styles.close}>
-            <Text style={[styles.closeText, { color: colors.textMuted }]}>✕</Text>
+            <Icon name="x" size={18} color={colors.textMuted} strokeWidth={2} />
           </Pressable>
         </View>
         <Body color={colors.textMuted}>
@@ -122,7 +122,6 @@ const styles = StyleSheet.create({
   content: { gap: spacing.md, paddingBottom: spacing.xxxl },
   headerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   close: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
-  closeText: { fontSize: 20 },
   input: {
     minHeight: 48,
     borderWidth: 2,

@@ -1,15 +1,10 @@
-import { Text, type ColorValue } from 'react-native';
 import { Tabs } from 'expo-router/tabs';
 
 import { useAppStore } from '@/features/store';
-import { fonts, useTheme } from '@/ui';
+import { Icon, type IconName, fonts, useTheme } from '@/ui';
 
-function TabIcon({ glyph, color }: { glyph: string; color: ColorValue }) {
-  return (
-    <Text style={{ fontSize: 22, color }} accessible={false} maxFontSizeMultiplier={1.3}>
-      {glyph}
-    </Text>
-  );
+function TabIcon({ name, color }: { name: IconName; color: string }) {
+  return <Icon name={name} size={22} color={color} strokeWidth={1.75} />;
 }
 
 export default function TabsLayout() {
@@ -33,7 +28,7 @@ export default function TabsLayout() {
     >
       <Tabs.Screen
         name="index"
-        options={{ title: 'Öğren', tabBarIcon: ({ color }) => <TabIcon glyph="🏠" color={color} /> }}
+        options={{ title: 'Öğren', tabBarIcon: ({ color }) => <TabIcon name="home" color={String(color)} /> }}
       />
       <Tabs.Screen
         name="review"
@@ -42,20 +37,20 @@ export default function TabsLayout() {
           tabBarBadge: dueCount > 0 ? dueCount : undefined,
           tabBarBadgeStyle: { backgroundColor: colors.danger, color: colors.textOnColor },
           tabBarAccessibilityLabel: dueCount > 0 ? `Tekrar, ${dueCount} kelime bekliyor` : 'Tekrar',
-          tabBarIcon: ({ color }) => <TabIcon glyph="🗂️" color={color} />,
+          tabBarIcon: ({ color }) => <TabIcon name="review" color={String(color)} />,
         }}
       />
       <Tabs.Screen
         name="konus"
-        options={{ title: 'Konuş', tabBarIcon: ({ color }) => <TabIcon glyph="💬" color={color} /> }}
+        options={{ title: 'Konuş', tabBarIcon: ({ color }) => <TabIcon name="chat" color={String(color)} /> }}
       />
       <Tabs.Screen
         name="league"
-        options={{ title: 'Lig', tabBarIcon: ({ color }) => <TabIcon glyph="🏆" color={color} /> }}
+        options={{ title: 'Lig', tabBarIcon: ({ color }) => <TabIcon name="trophy" color={String(color)} /> }}
       />
       <Tabs.Screen
         name="profile"
-        options={{ title: 'Profil', tabBarIcon: ({ color }) => <TabIcon glyph="👤" color={color} /> }}
+        options={{ title: 'Profil', tabBarIcon: ({ color }) => <TabIcon name="user" color={String(color)} /> }}
       />
     </Tabs>
   );
