@@ -20,6 +20,7 @@ import {
   Screen,
   Title,
   fonts,
+  palette,
   radii,
   spacing,
   upperTr,
@@ -273,6 +274,6 @@ const styles = StyleSheet.create({
   chipText: { fontSize: 12, letterSpacing: 1, fontFamily: fonts.mono },
   checkRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, minHeight: 44 },
   box: { width: 24, height: 24, borderWidth: 2, borderRadius: radii.sm, alignItems: 'center', justifyContent: 'center' },
-  boxTick: { color: '#fff', fontSize: 14, fontWeight: '700' },
+  boxTick: { color: palette.white, fontSize: 14, fontWeight: '700' },
   checkLabel: { flex: 1 },
 });

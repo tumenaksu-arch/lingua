@@ -27,6 +27,7 @@ import {
   Caption,
   colors as baseColors,
   fontSize,
+  palette,
   radii,
   spacing,
   upperTr,
@@ -39,19 +40,20 @@ const LANG_FLAG: Record<string, string> = { en: '🇬🇧', de: '🇩🇪', es: 
 /** Two columns (pitch | sign-in card) and the top menu from this width — same split as EduPilot. */
 const WIDE = 900;
 
-/** EduPilot landing palette (edu-pilot.ai) — the welcome page always uses these, whatever the app theme. */
+/** EduPilot landing palette (edu-pilot.ai) — the welcome page always uses these, whatever the app theme.
+ * Values come straight from the dark palette constants in theme.ts (never useTheme). */
 const ep = {
-  background: '#0e1220',
-  surface: '#161c30',
-  text: '#e8eaf2',
-  dim: '#8e97b5',
-  accent: '#d18b63',
-  onAccent: '#0e1220',
+  background: palette.navy,
+  surface: palette.navySurface,
+  text: palette.cloud,
+  dim: palette.mist,
+  accent: palette.apricot,
+  onAccent: palette.navy,
   hairline: 'rgba(232,234,242,0.10)',
   inputBorder: 'rgba(232,234,242,0.18)',
   inputBg: 'rgba(14,18,32,0.45)',
   nav: 'rgba(232,234,242,0.62)',
-  danger: '#ff8080',
+  danger: palette.coralBright,
 };
 
 /** The page's colors expressed as ColorTokens so the section helpers below can keep their shape. */

@@ -3,13 +3,13 @@ import { Linking, Platform, Pressable, StyleSheet, Text, View } from 'react-nati
 import { usePathname } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Body, spacing } from '@/ui';
+import { Body, palette, spacing } from '@/ui';
 import { isNativeShell, shellPlugin } from './nativeShell';
 
-/** EduPilot landing-page palette (dark navy + apricot accent). */
-const BANNER_BG = '#0e1220';
-const BANNER_TEXT = '#e8eaf2';
-const BANNER_ACCENT = '#d18b63';
+/** EduPilot landing-page palette (dark navy + apricot accent) — dark constants, no hook in this module. */
+const BANNER_BG = palette.navy;
+const BANNER_TEXT = palette.cloud;
+const BANNER_ACCENT = palette.apricot;
 const BANNER_OUTLINE = 'rgba(232,234,242,0.3)';
 
 /**
