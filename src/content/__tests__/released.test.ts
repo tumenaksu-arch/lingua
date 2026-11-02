@@ -1,21 +1,29 @@
 import type { Exercise } from '@/domain/types';
 import { getCourse } from '..';
-import released from './fixtures/released-v1.json';
+import releasedV1 from './fixtures/released-v1.json';
+import releasedV2 from './fixtures/released-v2.json';
 
 /**
  * Saved progress, SRS cards and lesson state are keyed by course/unit/lesson/vocab ids and by
  * exercise position (`<lessonId>.e<n>`). Content may only GROW: everything that was released
- * (fixtures/released-v1.json, taken at 904aa89) must still exist unchanged — same unit, same
- * order, same vocab, and the released exercises as an unchanged prefix of each lesson.
+ * must still exist unchanged — same unit, same order, same vocab, and the released exercises as
+ * an unchanged prefix of each lesson. Snapshots (never edited, never deleted; a new one is added
+ * with released.snapshot.test.ts before each release that adds content):
+ *   v1 — 904aa89 (2026-10-25): 19 units
+ *   v2 — 4ffc604 (2026-11-02): 84 units / 336 lessons incl. the A2 wave
  */
+const snapshots: [string, Snap[]][] = [
+  ['v1', releasedV1 as Snap[]],
+  ['v2', releasedV2 as Snap[]],
+];
 type Snap = {
   id: string;
   vocab: { id: string; term: string; translation: string }[];
   units: { id: string; order: number; lessons: { id: string; order: number; vocabIds: string[]; exercises: Exercise[] }[] }[];
 };
 
-describe.each((released as Snap[]).map((c) => [c.id, c] as const))('released course %s stays compatible', (id, old) => {
-  const now = getCourse(id)!;
+describe.each(snapshots.flatMap(([tag, list]) => list.map((c) => [`${tag} ${c.id}`, c] as const)))('released course %s stays compatible', (id, old) => {
+  const now = getCourse(old.id)!;
 
   test('course still exists', () => {
     expect(now).toBeDefined();
