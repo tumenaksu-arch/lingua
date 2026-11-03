@@ -237,10 +237,218 @@ export const trEs = course(
     ['camarero', 'el camarero', 'garson', 'El camarero trae el menú.'],
     ['gusto', 'con gusto', 'memnuniyetle', 'Te ayudo con gusto.'],
     ['libre', 'libre', 'boş / müsait', '¿Está libre esta mesa?'],
+    // İ3 genişletmesi — Unit 1 (Temeller)
+    ['buenosdias', 'buenos días', 'günaydın', 'Buenos días, ¿cómo estás?'],
+    ['buenastardes', 'buenas tardes', 'iyi günler / tünaydın', 'Buenas tardes, señor.'],
+    ['buenasnoches', 'buenas noches', 'iyi geceler', 'Buenas noches, hasta mañana.'],
+    ['mucho', 'mucho', 'çok', 'Me gusta mucho el café.'],
+    ['senor', 'el señor', 'bay', 'El señor bebe café.'],
+    ['senora', 'la señora', 'bayan', 'La señora come pan.'],
+    ['nombre', 'el nombre', 'isim', 'Mi nombre es Ana.'],
+    ['muchogusto', 'mucho gusto', 'memnun oldum', 'Mucho gusto, me llamo Ana.'],
+    ['llamarse', 'llamarse', 'adı ... olmak', 'Me llamo Ana.'],
+    ['encantado', 'encantado', 'tanıştığıma memnun oldum', 'Encantado de conocerte.'],
+    ['denada', 'de nada', 'bir şey değil', 'De nada, amigo.'],
+    ['hablar', 'hablar', 'konuşmak', 'Hablo un poco de español.'],
+    // İ3 genişletmesi — Unit 2 (Yemek)
+    ['naranja', 'la naranja', 'portakal', 'Yo como una naranja.'],
+    ['platano', 'el plátano', 'muz', 'El plátano está rico.'],
+    ['tomate', 'el tomate', 'domates', 'El tomate está rojo.'],
+    ['zanahoria', 'la zanahoria', 'havuç', 'Me gusta la zanahoria.'],
+    ['uva', 'la uva', 'üzüm', 'Hay uvas en la mesa.'],
+    ['fruta', 'la fruta', 'meyve', 'Me gusta la fruta.'],
+    ['verdura', 'la verdura', 'sebze', 'Compro verduras.'],
+    ['cebolla', 'la cebolla', 'soğan', 'La cebolla es fuerte.'],
+    ['patata', 'la patata', 'patates', 'Me gusta la patata.'],
+    ['carne', 'la carne', 'et', 'La carne está rica.'],
+    ['zumo', 'el zumo', 'meyve suyu', 'Bebo zumo de naranja.'],
+    ['postre', 'el postre', 'tatlı', 'El postre está rico.'],
+    // İ3 genişletmesi — Unit 3 (Aile)
+    ['tio', 'el tío', 'amca / dayı', 'Mi tío es alto.'],
+    ['tia', 'la tía', 'hala / teyze', 'Mi tía bebe té.'],
+    ['primo', 'el primo', 'erkek kuzen', 'Mi primo juega al fútbol.'],
+    ['prima', 'la prima', 'kız kuzen', 'Mi prima estudia español.'],
+    ['bebe', 'el bebé', 'bebek', 'El bebé bebe leche.'],
+    ['perro', 'el perro', 'köpek', 'Mi perro es grande.'],
+    ['gato', 'el gato', 'kedi', 'Mi gato es pequeño.'],
+    ['cumpleanos', 'el cumpleaños', 'doğum günü', 'Mi cumpleaños es en mayo.'],
+    ['esposo', 'el esposo', 'eş (erkek)', 'Mi esposo trabaja mucho.'],
+    ['esposa', 'la esposa', 'eş (kadın)', 'Mi esposa cocina bien.'],
+    ['novio', 'el novio', 'erkek arkadaş', 'Mi novio es muy alto.'],
+    ['novia', 'la novia', 'kız arkadaş', 'Mi novia es amable.'],
+    // İ3 genişletmesi — Unit 4 (Seyahat)
+    ['aeropuerto', 'el aeropuerto', 'havalimanı', 'El aeropuerto está lejos.'],
+    ['pasaporte', 'el pasaporte', 'pasaport', 'Necesito mi pasaporte.'],
+    ['equipaje', 'el equipaje', 'bagaj', 'Mi equipaje está en el coche.'],
+    ['turista', 'el turista', 'turist', 'El turista tiene una maleta.'],
+    ['taxi', 'el taxi', 'taksi', 'Voy al hotel en taxi.'],
+    ['barco', 'el barco', 'tekne / gemi', 'El barco está en el mar.'],
+    ['bicicleta', 'la bicicleta', 'bisiklet', 'Voy a la escuela en bicicleta.'],
+    ['llave', 'la llave', 'anahtar', 'La llave está en la mesa.'],
+    ['habitacion', 'la habitación', 'oda', 'La habitación es grande.'],
+    ['recepcion', 'la recepción', 'resepsiyon', 'La recepción está allí.'],
+    ['ventana', 'la ventana', 'pencere', 'La ventana del hotel es grande.'],
+    ['pais', 'el país', 'ülke', 'España es un país grande.'],
+    // İ3 genişletmesi — Unit 5 (Alışveriş)
+    ['pantalones', 'los pantalones', 'pantolon', 'Los pantalones son azules.'],
+    ['falda', 'la falda', 'etek', 'La falda es verde.'],
+    ['sombrero', 'el sombrero', 'şapka', 'El sombrero es amarillo.'],
+    ['abrigo', 'el abrigo', 'palto / mont', 'El abrigo es nuevo.'],
+    ['verde', 'verde', 'yeşil', 'El vestido es verde.'],
+    ['amarillo', 'amarillo', 'sarı', 'El sombrero es amarillo.'],
+    ['negro', 'negro', 'siyah', 'Los zapatos son negros.'],
+    ['blanco', 'blanco', 'beyaz', 'La camisa es blanca.'],
+    ['calcetines', 'los calcetines', 'çorap', 'Los calcetines son baratos.'],
+    ['bolsa', 'la bolsa', 'torba / poşet', 'La bolsa es grande.'],
+    ['tarjeta', 'la tarjeta', 'kart', 'Pago con tarjeta.'],
+    ['pagar', 'pagar', 'ödemek', 'Pago la cuenta.'],
+    // İ3 genişletmesi — Unit 6 (İş ve Okul)
+    ['pizarra', 'la pizarra', 'tahta', 'El profesor escribe en la pizarra.'],
+    ['mochila', 'la mochila', 'sırt çantası', 'La mochila está en la escuela.'],
+    ['cuaderno', 'el cuaderno', 'defter', 'Escribo en el cuaderno.'],
+    ['clase', 'la clase', 'ders / sınıf', 'Me gusta la clase.'],
+    ['pregunta', 'la pregunta', 'soru', 'Tengo una pregunta.'],
+    ['respuesta', 'la respuesta', 'cevap', 'La respuesta es fácil.'],
+    ['palabra', 'la palabra', 'kelime', 'Esta palabra es difícil.'],
+    ['idioma', 'el idioma', 'dil', 'El español es un idioma bonito.'],
+    ['enfermera', 'la enfermera', 'hemşire', 'La enfermera trabaja en el hospital.'],
+    ['cocinero', 'el cocinero', 'aşçı', 'El cocinero cocina bien.'],
+    ['empresa', 'la empresa', 'şirket', 'La empresa es grande.'],
+    ['descansar', 'descansar', 'dinlenmek', 'Descanso el fin de semana.'],
+    // İ3 genişletmesi — Unit 7 (Hava ve Zaman)
+    ['martes', 'martes', 'salı', 'Hoy es martes.'],
+    ['miercoles', 'miércoles', 'çarşamba', 'Mañana es miércoles.'],
+    ['jueves', 'jueves', 'perşembe', 'El jueves tengo una reunión.'],
+    ['viernes', 'viernes', 'cuma', 'El viernes salgo con mis amigos.'],
+    ['sabado', 'sábado', 'cumartesi', 'Los sábados lavo la ropa.'],
+    ['enero', 'enero', 'ocak', 'Hace frío en enero.'],
+    ['febrero', 'febrero', 'şubat', 'El mes de febrero es corto.'],
+    ['dia', 'el día', 'gün', 'Hoy es un buen día.'],
+    ['noche', 'la noche', 'gece', 'La noche es tranquila.'],
+    ['nublado', 'nublado', 'bulutlu', 'Hoy está nublado.'],
+    ['viento', 'el viento', 'rüzgâr', 'Hace mucho viento.'],
+    ['nieve', 'la nieve', 'kar', 'La nieve es blanca.'],
+    // İ3 genişletmesi — Unit 8 (Hobiler)
+    ['cantar', 'cantar', 'şarkı söylemek', 'Me gusta cantar.'],
+    ['dibujar', 'dibujar', 'resim çizmek', 'Dibujo en casa.'],
+    ['escuchar', 'escuchar', 'dinlemek', 'Escucho música.'],
+    ['tocar', 'tocar', 'çalmak (enstrüman)', 'Toco la guitarra.'],
+    ['piscina', 'la piscina', 'havuz', 'Nado en la piscina.'],
+    ['cine', 'el cine', 'sinema', 'Voy al cine el sábado.'],
+    ['revista', 'la revista', 'dergi', 'Leo una revista.'],
+    ['deporte', 'el deporte', 'spor', 'El deporte es bueno.'],
+    ['partido', 'el partido', 'maç', 'El partido es el domingo.'],
+    ['tiempolibre', 'el tiempo libre', 'boş zaman', 'Leo en mi tiempo libre.'],
+    ['piano', 'el piano', 'piyano', 'El piano está en la sala.'],
+    ['montar', 'montar en bicicleta', 'bisiklete binmek', 'Me gusta montar en bicicleta.'],
+    // İ3 genişletmesi — Unit 9 (Geçmiş Zaman)
+    ['desayunar', 'desayunar', 'kahvaltı yapmak', 'Desayuno a las ocho.'],
+    ['almorzar', 'almorzar', 'öğle yemeği yemek', 'Almuerzo a las dos.'],
+    ['cenar', 'cenar', 'akşam yemeği yemek', 'Ceno con mi familia.'],
+    ['llover', 'llover', 'yağmur yağmak', 'Ayer llovió mucho.'],
+    ['volver', 'volver', 'geri dönmek', 'Anoche volví a casa tarde.'],
+    ['empezar', 'empezar', 'başlamak', 'Ayer empecé un libro nuevo.'],
+    ['terminar', 'terminar', 'bitirmek', 'Ayer terminé la tarea.'],
+    ['encontrar', 'encontrar', 'bulmak', 'Ayer encontré mi libro.'],
+    ['perder', 'perder', 'kaybetmek', 'Ayer perdí mi maleta.'],
+    ['entender', 'entender', 'anlamak', 'No entendí la pregunta.'],
+    ['decir', 'decir', 'söylemek', 'Mi madre dijo que sí.'],
+    ['gastar', 'gastar', 'harcamak', 'Ayer gasté mucho dinero.'],
+    // İ3 genişletmesi — Unit 10 (Ev ve İşler)
+    ['sala', 'la sala', 'oturma odası', 'La sala es grande.'],
+    ['comedor', 'el comedor', 'yemek odası', 'El comedor está cerca de la cocina.'],
+    ['jardin', 'el jardín', 'bahçe', 'El jardín es bonito.'],
+    ['puerta', 'la puerta', 'kapı', 'La puerta está cerrada.'],
+    ['pared', 'la pared', 'duvar', 'La pared es blanca.'],
+    ['sofa', 'el sofá', 'kanepe', 'El sofá está en la sala.'],
+    ['almohada', 'la almohada', 'yastık', 'La almohada está en la cama.'],
+    ['manta', 'la manta', 'battaniye', 'Necesito una manta.'],
+    ['plato', 'el plato', 'tabak', 'El plato está limpio.'],
+    ['vaso', 'el vaso', 'bardak', 'El vaso está en la mesa.'],
+    ['basura', 'la basura', 'çöp', 'Saco la basura los lunes.'],
+    ['planchar', 'planchar', 'ütülemek', 'Plancho la ropa los domingos.'],
+    // İ3 genişletmesi — Unit 11 (Sağlık)
+    ['pie', 'el pie', 'ayak', 'Me duele el pie.'],
+    ['ojo', 'el ojo', 'göz', 'Me duele el ojo.'],
+    ['oreja', 'la oreja', 'kulak', 'Me duele la oreja.'],
+    ['nariz', 'la nariz', 'burun', 'Me duele la nariz.'],
+    ['boca', 'la boca', 'ağız', 'Me duele la boca.'],
+    ['diente', 'el diente', 'diş', 'Me duele el diente.'],
+    ['espalda', 'la espalda', 'sırt', 'Me duele la espalda.'],
+    ['estomago', 'el estómago', 'mide', 'Me duele el estómago.'],
+    ['tos', 'la tos', 'öksürük', 'Tengo tos.'],
+    ['dolor', 'el dolor', 'ağrı', 'El dolor es fuerte.'],
+    ['mareado', 'mareado', 'başı dönen', 'Estoy mareado.'],
+    ['pastilla', 'la pastilla', 'hap', 'Tomo una pastilla.'],
+    // İ3 genişletmesi — Unit 12 (Ulaşım ve Yönler)
+    ['semaforo', 'el semáforo', 'trafik ışığı', 'El semáforo está en la esquina.'],
+    ['carretera', 'la carretera', 'kara yolu', 'La carretera es larga.'],
+    ['avenida', 'la avenida', 'cadde', 'La avenida está cerca.'],
+    ['puente', 'el puente', 'köprü', 'El puente está lejos.'],
+    ['plaza', 'la plaza', 'meydan', 'La plaza es grande.'],
+    ['barrio', 'el barrio', 'semt', 'Mi barrio es tranquilo.'],
+    ['direccion', 'la dirección', 'adres', 'Escribo mi dirección.'],
+    ['destino', 'el destino', 'varış yeri', 'El destino es Madrid.'],
+    ['salida', 'la salida', 'çıkış', 'La salida está a la derecha.'],
+    ['aparcamiento', 'el aparcamiento', 'otopark', 'El coche está en el aparcamiento.'],
+    ['acera', 'la acera', 'kaldırım', 'Camino por la acera.'],
+    ['conducir', 'conducir', 'araba kullanmak', 'Conduzco el coche los sábados.'],
+    // İ3 genişletmesi — Unit 13 (Gelecek ve Tatil)
+    ['invierno', 'el invierno', 'kış', 'En invierno hace frío.'],
+    ['primavera', 'la primavera', 'ilkbahar', 'En primavera hace buen tiempo.'],
+    ['otono', 'el otoño', 'sonbahar', 'En otoño llueve mucho.'],
+    ['camping', 'el camping', 'kamp', 'Voy de camping en verano.'],
+    ['sol', 'el sol', 'güneş', 'Me gusta el sol.'],
+    ['arena', 'la arena', 'kum', 'La arena está caliente.'],
+    ['adonde', '¿adónde?', 'nereye?', '¿Adónde viajas?'],
+    ['vuelo', 'el vuelo', 'uçuş', 'El vuelo es temprano.'],
+    ['protectorsolar', 'el protector solar', 'güneş kremi', 'Llevo protector solar.'],
+    ['camara', 'la cámara', 'fotoğraf makinesi', 'La cámara está en la maleta.'],
+    ['recuerdo', 'el recuerdo', 'hatıra', 'Compro un recuerdo.'],
+    ['pasajero', 'el pasajero', 'yolcu', 'El pasajero está en el aeropuerto.'],
+    // İ3 genişletmesi — Unit 14 (Karşılaştırma)
+    ['lento', 'lento', 'yavaş', 'El autobús es lento.'],
+    ['alto', 'alto', 'uzun / yüksek', 'Mi hermano es alto.'],
+    ['bajo', 'bajo', 'kısa / alçak', 'Mi abuelo es bajo.'],
+    ['largo', 'largo', 'uzun (boyut)', 'La calle es larga.'],
+    ['corto', 'corto', 'kısa (boyut)', 'El examen es corto.'],
+    ['nuevo', 'nuevo', 'yeni', 'Mi coche es nuevo.'],
+    ['viejo', 'viejo', 'eski / yaşlı', 'Mi abuelo es viejo.'],
+    ['joven', 'joven', 'genç', 'Mi hermana es joven.'],
+    ['bonito', 'bonito', 'güzel', 'La casa es bonita.'],
+    ['feo', 'feo', 'çirkin', 'El sombrero es feo.'],
+    ['interesante', 'interesante', 'ilginç', 'El libro es interesante.'],
+    ['aburrido', 'aburrido', 'sıkıcı', 'La película es aburrida.'],
+    // İ3 genişletmesi — Unit 15 (Duygular ve Kişilik)
+    ['enfadado', 'enfadado', 'kızgın', 'Estoy enfadado con mi hermano.'],
+    ['sorprendido', 'sorprendido', 'şaşkın', 'Estoy sorprendido.'],
+    ['solo', 'solo', 'yalnız', 'Estoy solo en casa.'],
+    ['seguro', 'seguro', 'emin', 'Estoy seguro.'],
+    ['listo', 'listo', 'zeki', 'El estudiante es listo.'],
+    ['perezoso', 'perezoso', 'tembel', 'El gato es perezoso.'],
+    ['trabajador', 'trabajador', 'çalışkan', 'Mi hermana es trabajadora.'],
+    ['simpatico', 'simpático', 'sevimli', 'El niño es simpático.'],
+    ['valiente', 'valiente', 'cesur', 'Mi hermano es valiente.'],
+    ['sincero', 'sincero', 'dürüst', 'Mi amigo es sincero.'],
+    ['sonreir', 'sonreír', 'gülümsemek', 'Sonrío cuando estoy feliz.'],
+    ['llorar', 'llorar', 'ağlamak', 'La niña llora.'],
+    // İ3 genişletmesi — Unit 16 (Kibar İstekler)
+    ['camarera', 'la camarera', 'kadın garson', 'La camarera es amable.'],
+    ['comida', 'la comida', 'yemek', 'La comida está rica.'],
+    ['bebida', 'la bebida', 'içecek', 'La bebida está fría.'],
+    ['sopa', 'la sopa', 'çorba', 'La sopa está caliente.'],
+    ['pedir', 'pedir', 'sipariş etmek', 'Pido un café.'],
+    ['servir', 'servir', 'servis etmek', 'El camarero sirve la comida.'],
+    ['desear', 'desear', 'dilemek / istemek', '¿Desea algo más?'],
+    ['repetir', 'repetir', 'tekrar etmek', 'Repito la pregunta.'],
+    ['sentarse', 'sentarse', 'oturmak', 'Nos sentamos a la mesa.'],
+    ['esperar', 'esperar', 'beklemek', 'Espero cinco minutos.'],
+    ['disculpar', 'disculpar', 'affetmek (Disculpe: affedersiniz)', 'Disculpe, ¿dónde está el hotel?'],
+    ['invitar', 'invitar', 'davet etmek', 'Invito a mi amigo a cenar.'],
   ],
   [
     unit('tr-es.u1', 1, 'Temeller', 'Selamlaş ve kendini tanıt.', [
-      lesson('tr-es.u1.l1', 1, ['hola', 'adios', 'gracias', 'porfavor', 'si', 'no'], [
+      lesson('tr-es.u1.l1', 1, ['hola', 'adios', 'gracias', 'porfavor', 'si', 'no', 'buenosdias', 'buenastardes', 'buenasnoches', 'mucho'], [
         sel('"merhaba" hangisi?', ['hola', 'adiós', 'gracias'], 0),
         match([
           ['hola', 'merhaba'],
@@ -257,8 +465,14 @@ export const trEs = course(
         listenSel('No, gracias', ['No, gracias', 'Sí, gracias', 'No, adiós'], 0),
         chat([['a', '¡Adiós!']], ['¡Adiós!', 'Sí, gracias.', 'Por favor.'], 0),
         read('Hola, soy Ana. Adiós, Ana.', 'Metindeki kişi kim?', ['Ana', 'Ali', 'Tom'], 0),
+        match([
+          ['buenos días', 'günaydın'],
+          ['buenas tardes', 'iyi günler / tünaydın'],
+          ['buenas noches', 'iyi geceler'],
+          ['mucho', 'çok'],
+        ]),
       ]),
-      lesson('tr-es.u1.l2', 2, ['yosoy', 'tueres', 'hombre', 'mujer'], [
+      lesson('tr-es.u1.l2', 2, ['yosoy', 'tueres', 'hombre', 'mujer', 'senor', 'senora', 'nombre', 'muchogusto'], [
         sel('"kadın" hangisi?', ['el hombre', 'la mujer', 'el pan'], 1),
         match([
           ['el hombre', 'adam'],
@@ -280,8 +494,14 @@ export const trEs = course(
           { emoji: '🚫', label: 'no' },
         ], 0),
         read('Yo soy un hombre. Tú eres una mujer.', 'Metindeki kişiler kim?', ['Bir adam ve bir kadın', 'İki kadın', 'İki adam'], 0),
+        match([
+          ['el señor', 'bay'],
+          ['la señora', 'bayan'],
+          ['el nombre', 'isim'],
+          ['mucho gusto', 'memnun oldum'],
+        ]),
       ]),
-      lesson('tr-es.u1.l3', 3, ['nino', 'amigo', 'bien', 'comoestas'], [
+      lesson('tr-es.u1.l3', 3, ['nino', 'amigo', 'bien', 'comoestas', 'llamarse', 'encantado', 'denada', 'hablar'], [
         sel('"çocuk" hangisi?', ['el amigo', 'el niño', 'la mujer'], 1),
         match([
           ['el niño', 'çocuk'],
@@ -303,6 +523,12 @@ export const trEs = course(
           { emoji: '👩', label: 'la mujer' },
         ], 1),
         read('El niño está bien. Él es mi amigo.', 'Çocuk kim?', ['Anlatıcının arkadaşı', 'Anlatıcının öğretmeni', 'Anlatıcının kardeşi'], 0),
+        match([
+          ['llamarse', 'adı ... olmak'],
+          ['encantado', 'tanıştığıma memnun oldum'],
+          ['de nada', 'bir şey değil'],
+          ['hablar', 'konuşmak'],
+        ]),
       ]),
       lesson('tr-es.u1.l4', 4, ['estudiante', 'profesor', 'uno', 'dos', 'tres', 'amigo'], [
         sel('"öğrenci" hangisi?', ['el profesor', 'el estudiante', 'el amigo'], 1),
@@ -331,7 +557,7 @@ export const trEs = course(
       ]),
     ]),
     unit('tr-es.u2', 2, 'Yemek', 'Yiyecek ve içecekleri öğren.', [
-      lesson('tr-es.u2.l1', 1, ['agua', 'pan', 'cafe', 'te', 'beber', 'comer'], [
+      lesson('tr-es.u2.l1', 1, ['agua', 'pan', 'cafe', 'te', 'beber', 'comer', 'naranja', 'platano', 'tomate', 'zanahoria'], [
         sel('"su" hangisi?', ['el pan', 'el agua', 'el té'], 1),
         match([
           ['el agua', 'su'],
@@ -345,7 +571,7 @@ export const trEs = course(
         fill('Yo ___ pan.', ['bebo', 'como', 'soy'], 1),
         speak('Yo bebo té.'),
         sel('"el café" ne demek?', ['çay', 'kahve', 'süt'], 1, 'to'),
-        listenSel('Yo bebo té', ['Yo bebo té', 'Yo como té', 'Tú bebes té'], 0),
+        listenSel('Yo bebo té', ['Yo bebo té', 'Yo bebo café', 'Tú bebes té'], 0),
         pic('"ekmek" hangisi?', [
           { emoji: '💧', label: 'el agua' },
           { emoji: '🍞', label: 'el pan' },
@@ -353,8 +579,14 @@ export const trEs = course(
           { emoji: '🍵', label: 'el té' },
         ], 1),
         read('Yo como pan. Tú bebes agua.', 'Anlatıcı ne yapıyor?', ['Ekmek yiyor', 'Su içiyor', 'Çay içiyor'], 0),
+        pic('"portakal" hangisi?', [
+          { emoji: '🍊', label: 'la naranja' },
+          { emoji: '🍌', label: 'el plátano' },
+          { emoji: '🍅', label: 'el tomate' },
+          { emoji: '🥕', label: 'la zanahoria' },
+        ], 0),
       ]),
-      lesson('tr-es.u2.l2', 2, ['manzana', 'leche', 'comer', 'beber'], [
+      lesson('tr-es.u2.l2', 2, ['manzana', 'leche', 'comer', 'beber', 'uva', 'fruta', 'verdura', 'cebolla'], [
         sel('"elma" hangisi?', ['la leche', 'la manzana', 'el pan'], 1),
         match([
           ['la manzana', 'elma'],
@@ -368,11 +600,17 @@ export const trEs = course(
         fill('Tú ___ leche.', ['comes', 'bebes', 'eres'], 1),
         speak('Tú bebes leche.'),
         sel('"la leche" ne demek?', ['elma', 'süt', 'su'], 1, 'to'),
-        listenSel('Tú bebes leche', ['Tú bebes leche', 'Tú comes leche', 'Yo bebo leche'], 0),
+        listenSel('Tú bebes leche', ['Tú bebes leche', 'Tú bebes agua', 'Yo bebo leche'], 0),
         chat([['a', 'Bebo leche. ¿Y tú?']], ['Como una manzana.', 'Estoy bien.', 'Sí, por favor.'], 0),
         read('Yo como una manzana. Mi amigo bebe leche.', 'Arkadaş ne yapıyor?', ['Süt içiyor', 'Elma yiyor', 'Su içiyor'], 0),
+        match([
+          ['la uva', 'üzüm'],
+          ['la fruta', 'meyve'],
+          ['la verdura', 'sebze'],
+          ['la cebolla', 'soğan'],
+        ]),
       ]),
-      lesson('tr-es.u2.l3', 3, ['queso', 'huevo', 'hambre', 'rico', 'cuenta', 'menu'], [
+      lesson('tr-es.u2.l3', 3, ['queso', 'huevo', 'hambre', 'rico', 'cuenta', 'menu', 'patata', 'carne', 'zumo', 'postre'], [
         sel('"peynir" hangisi?', ['el huevo', 'el queso', 'el pan'], 1),
         match([
           ['el queso', 'peynir'],
@@ -393,7 +631,7 @@ export const trEs = course(
           ['tengo hambre', 'aç olmak'],
           ['el menú', 'menü'],
         ]),
-        listenSel('Tengo hambre', ['Tengo hambre', 'Tengo hombre', 'Tienes hambre'], 0),
+        listenSel('Tengo hambre', ['Tengo hambre', 'Tengo sueño', 'Tienes hambre'], 0),
         pic('"yumurta" hangisi?', [
           { emoji: '🧀', label: 'el queso' },
           { emoji: '🥚', label: 'el huevo' },
@@ -401,6 +639,12 @@ export const trEs = course(
           { emoji: '🍞', label: 'el pan' },
         ], 1),
         read('Yo como un huevo. El queso está rico.', 'Hangi yemek lezzetli?', ['Peynir', 'Yumurta', 'Ekmek'], 0),
+        match([
+          ['la patata', 'patates'],
+          ['la carne', 'et'],
+          ['el zumo', 'meyve suyu'],
+          ['el postre', 'tatlı'],
+        ]),
       ]),
       lesson('tr-es.u2.l4', 4, ['pescado', 'pollo', 'arroz', 'ensalada', 'azucar', 'sal'], [
         sel('"balık" hangisi?', ['pollo', 'pescado', 'arroz'], 1),
@@ -417,7 +661,7 @@ export const trEs = course(
         fill('No como ___.', ['pescado', 'rico', 'hambre'], 0),
         speak('Yo como arroz.'),
         sel('"azúcar" ne demek?', ['tuz', 'şeker', 'salata'], 1, 'to'),
-        listenSel('Yo como pollo y arroz', ['Yo como pollo y arroz', 'Yo como pescado y arroz', 'Yo bebo pollo y arroz'], 0),
+        listenSel('Yo como pollo y arroz', ['Yo como pollo y arroz', 'Yo como pescado y arroz', 'Yo como pollo y ensalada'], 0),
         pic('"salata" hangisi?', [
           { emoji: '🐟', label: 'el pescado' },
           { emoji: '🍗', label: 'el pollo' },
@@ -428,7 +672,7 @@ export const trEs = course(
       ]),
     ]),
     unit('tr-es.u3', 3, 'Aile', 'Aileni tanıt.', [
-      lesson('tr-es.u3.l1', 1, ['madre', 'padre', 'hermana', 'hermano', 'tener'], [
+      lesson('tr-es.u3.l1', 1, ['madre', 'padre', 'hermana', 'hermano', 'tener', 'tio', 'tia', 'primo', 'prima'], [
         sel('"anne" hangisi?', ['el padre', 'la madre', 'la hermana'], 1),
         match([
           ['la madre', 'anne'],
@@ -450,8 +694,14 @@ export const trEs = course(
           { emoji: '👦', label: 'el hermano' },
         ], 1),
         read('Mi madre bebe té. Mi padre come pan.', 'Babası ne yapıyor?', ['Ekmek yiyor', 'Çay içiyor', 'Süt içiyor'], 0),
+        match([
+          ['el tío', 'amca / dayı'],
+          ['la tía', 'hala / teyze'],
+          ['el primo', 'erkek kuzen'],
+          ['la prima', 'kız kuzen'],
+        ]),
       ]),
-      lesson('tr-es.u3.l2', 2, ['familia', 'querer', 'grande', 'pequeno', 'nino'], [
+      lesson('tr-es.u3.l2', 2, ['familia', 'querer', 'grande', 'pequeno', 'nino', 'bebe', 'perro', 'gato', 'cumpleanos'], [
         sel('"aile" hangisi?', ['el niño', 'la familia', 'el amigo'], 1),
         match([
           ['la familia', 'aile'],
@@ -465,11 +715,17 @@ export const trEs = course(
         fill('Yo ___ a mi madre.', ['quiero', 'soy', 'como'], 0),
         speak('Mi familia es pequeña.'),
         sel('"grande" ne demek?', ['küçük', 'büyük', 'iyi'], 1, 'to'),
-        listenSel('Mi familia es grande', ['Mi familia es grande', 'Mi familia es pequeña', 'Mi familia está grande'], 0),
+        listenSel('Mi familia es grande', ['Mi familia es grande', 'Mi familia es pequeña', 'Tu familia es grande'], 0),
         chat([['a', 'Mi familia es pequeña. ¿Y tú?']], ['Mi familia es grande.', 'Yo soy un hombre.', 'Tengo hambre.'], 0),
         read('Mi familia es grande. El niño es pequeño.', 'Aile nasıl?', ['Büyük', 'Küçük', 'İyi'], 0),
+        pic('"köpek" hangisi?', [
+          { emoji: '👶', label: 'el bebé' },
+          { emoji: '🐕', label: 'el perro' },
+          { emoji: '🐈', label: 'el gato' },
+          { emoji: '🎂', label: 'el cumpleaños' },
+        ], 1),
       ]),
-      lesson('tr-es.u3.l3', 3, ['tener', 'nino', 'amigo', 'hermano', 'hermana'], [
+      lesson('tr-es.u3.l3', 3, ['tener', 'nino', 'amigo', 'hermano', 'hermana', 'esposo', 'esposa', 'novio', 'novia'], [
         sel('"sahip olmak" hangisi?', ['tener', 'querer', 'comer'], 0),
         match([
           ['tener', 'sahip olmak'],
@@ -483,7 +739,7 @@ export const trEs = course(
         fill('Tú ___ una hermana.', ['tienes', 'tengo', 'eres'], 0),
         speak('Mi hermano es mi amigo.'),
         sel('"el niño" ne demek?', ['arkadaş', 'çocuk', 'aile'], 1, 'to'),
-        listenSel('Mi amigo tiene un niño', ['Mi amigo tiene un niño', 'Mi amigo tengo un niño', 'Mi amigo tiene una niño'], 0),
+        listenSel('Mi amigo tiene un niño', ['Mi amigo tiene un niño', 'Mi amigo tiene una hija', 'Tu amigo tiene un niño'], 0),
         pic('"erkek kardeş" hangisi?', [
           { emoji: '👧', label: 'la hermana' },
           { emoji: '👦', label: 'el hermano' },
@@ -491,6 +747,12 @@ export const trEs = course(
           { emoji: '🤝', label: 'el amigo' },
         ], 1),
         read('Tengo dos hermanos. Mi amigo tiene una hermana.', 'Arkadaşın kaç kardeşi var?', ['Bir kız kardeşi var', 'İki erkek kardeşi var', 'Bir erkek kardeşi var'], 0),
+        match([
+          ['el esposo', 'eş (erkek)'],
+          ['la esposa', 'eş (kadın)'],
+          ['el novio', 'erkek arkadaş'],
+          ['la novia', 'kız arkadaş'],
+        ]),
       ]),
       lesson('tr-es.u3.l4', 4, ['hijo', 'hija', 'abuela', 'abuelo', 'familia', 'tener'], [
         sel('"büyükanne" hangisi?', ['el abuelo', 'la abuela', 'la madre'], 1),
@@ -507,7 +769,7 @@ export const trEs = course(
         speak('Quiero a mi familia.'),
         sel('"el hijo" ne demek?', ['kız (evlat)', 'oğul', 'büyükbaba'], 1, 'to'),
         fill('Yo ___ a mi abuela.', ['quiero', 'soy', 'tengo'], 0),
-        listenSel('Mi abuelo bebe té', ['Mi abuelo bebe té', 'Mi abuela bebe té', 'Mi abuelo come té'], 0),
+        listenSel('Mi abuelo bebe té', ['Mi abuelo bebe té', 'Mi abuela bebe té', 'Mi abuelo come pan'], 0),
         pic('"büyükbaba" hangisi?', [
           { emoji: '👴', label: 'el abuelo' },
           { emoji: '👵', label: 'la abuela' },
@@ -518,7 +780,7 @@ export const trEs = course(
       ]),
     ]),
     unit('tr-es.u4', 4, 'Seyahat', 'Yol sor ve bilet al.', [
-      lesson('tr-es.u4.l1', 1, ['donde', 'estacion', 'tren', 'hotel', 'billete'], [
+      lesson('tr-es.u4.l1', 1, ['donde', 'estacion', 'tren', 'hotel', 'billete', 'aeropuerto', 'pasaporte', 'equipaje', 'turista'], [
         sel('"tren" hangisi?', ['la estación', 'el tren', 'el hotel'], 1),
         match([
           ['la estación', 'istasyon'],
@@ -532,7 +794,7 @@ export const trEs = course(
         fill('Tengo un ___.', ['billete', 'tren', 'dónde'], 0),
         speak('¿Dónde está el hotel?'),
         sel('"dónde" ne demek?', ['ne', 'nerede', 'kim'], 1, 'to'),
-        listenSel('¿Dónde está el tren?', ['¿Dónde está el tren?', '¿Dónde está la tren?', '¿Dónde está el hotel?'], 0),
+        listenSel('¿Dónde está el tren?', ['¿Dónde está el tren?', '¿Dónde está la estación?', '¿Dónde está el hotel?'], 0),
         pic('"bilet" hangisi?', [
           { emoji: '🚉', label: 'la estación' },
           { emoji: '🚂', label: 'el tren' },
@@ -540,8 +802,14 @@ export const trEs = course(
           { emoji: '🎫', label: 'el billete' },
         ], 3),
         read('Tengo un billete para el tren. El tren está en la estación.', 'Bilet ne için?', ['Tren için', 'Otel için', 'Uçak için'], 0),
+        match([
+          ['el aeropuerto', 'havalimanı'],
+          ['el pasaporte', 'pasaport'],
+          ['el equipaje', 'bagaj'],
+          ['el turista', 'turist'],
+        ]),
       ]),
-      lesson('tr-es.u4.l2', 2, ['izquierda', 'derecha', 'lejos', 'cerca', 'hotel'], [
+      lesson('tr-es.u4.l2', 2, ['izquierda', 'derecha', 'lejos', 'cerca', 'hotel', 'taxi', 'barco', 'bicicleta', 'llave'], [
         sel('"sol" hangisi?', ['derecha', 'izquierda', 'cerca'], 1),
         match([
           ['izquierda', 'sol'],
@@ -558,8 +826,14 @@ export const trEs = course(
         listenSel('El hotel está cerca', ['El hotel está cerca', 'El hotel está lejos', 'El tren está cerca'], 0),
         chat([['a', 'El tren no está cerca.']], ['Está lejos.', 'Está cerca.', 'Está a la derecha.'], 0),
         read('La estación está lejos. El hotel está cerca.', 'Otel nerede?', ['Yakında', 'Uzakta', 'İstasyonda'], 0),
+        pic('"anahtar" hangisi?', [
+          { emoji: '🚕', label: 'el taxi' },
+          { emoji: '⛵', label: 'el barco' },
+          { emoji: '🚲', label: 'la bicicleta' },
+          { emoji: '🔑', label: 'la llave' },
+        ], 3),
       ]),
-      lesson('tr-es.u4.l3', 3, ['ayuda', 'perdon', 'donde', 'estacion', 'billete'], [
+      lesson('tr-es.u4.l3', 3, ['ayuda', 'perdon', 'donde', 'estacion', 'billete', 'habitacion', 'recepcion', 'ventana', 'pais'], [
         sel('"affedersiniz" hangisi?', ['perdón', 'la ayuda', 'gracias'], 0),
         match([
           ['la ayuda', 'yardım'],
@@ -576,6 +850,12 @@ export const trEs = course(
         listenSel('Necesito ayuda', ['Necesito ayuda', 'Necesito agua', 'Necesitas ayuda'], 0),
         chat([['a', 'Perdón, ¿dónde está la estación?']], ['Está a la izquierda.', 'Es un billete.', 'Bebo té.'], 0),
         read('Perdón, necesito ayuda. Quiero un billete para el tren.', 'Anlatıcı ne istiyor?', ['Tren bileti istiyor', 'Otel istiyor', 'Yardım istemiyor'], 0),
+        match([
+          ['la habitación', 'oda'],
+          ['la recepción', 'resepsiyon'],
+          ['la ventana', 'pencere'],
+          ['el país', 'ülke'],
+        ]),
       ]),
       lesson('tr-es.u4.l4', 4, ['coche', 'avion', 'tarde', 'temprano', 'maleta', 'estacion'], [
         sel('"uçak" hangisi?', ['coche', 'avión', 'tren'], 1),
@@ -603,7 +883,7 @@ export const trEs = course(
       ]),
     ]),
     unit('tr-es.u5', 5, 'Alışveriş', 'Fiyat sor, renk söyle, alışveriş yap.', [
-      lesson('tr-es.u5.l1', 1, ['tienda', 'dinero', 'precio', 'caro', 'barato', 'cuanto'], [
+      lesson('tr-es.u5.l1', 1, ['tienda', 'dinero', 'precio', 'caro', 'barato', 'cuanto', 'pantalones', 'falda', 'sombrero', 'abrigo'], [
         sel('"pahalı" hangisi?', ['barato', 'caro', 'el precio'], 1),
         sel('"para" hangisi?', ['el dinero', 'la tienda', 'el precio'], 0),
         match([
@@ -618,7 +898,7 @@ export const trEs = course(
         fill('El ___ es diez euros.', ['precio', 'tienda', 'dinero'], 0),
         speak('¿Cuánto cuesta?'),
         sel('"barato" ne demek?', ['pahalı', 'ucuz', 'fiyat'], 1, 'to'),
-        listenSel('El precio es diez euros', ['El precio es diez euros', 'El precio es dos euros', 'La precio es diez euros'], 0),
+        listenSel('El precio es diez euros', ['El precio es diez euros', 'El precio es dos euros', 'El precio es cinco euros'], 0),
         pic('"fiyat" hangisi?', [
           { emoji: '🏪', label: 'la tienda' },
           { emoji: '💵', label: 'el dinero' },
@@ -626,8 +906,14 @@ export const trEs = course(
           { emoji: '💸', label: 'caro' },
         ], 2),
         read('La tienda es cara. El pan es barato.', 'Pahalı olan ne?', ['Dükkân', 'Ekmek', 'Fiyat'], 0),
+        match([
+          ['los pantalones', 'pantolon'],
+          ['la falda', 'etek'],
+          ['el sombrero', 'şapka'],
+          ['el abrigo', 'palto / mont'],
+        ]),
       ]),
-      lesson('tr-es.u5.l2', 2, ['comprar', 'camisa', 'zapatos', 'vestido', 'grande', 'pequeno'], [
+      lesson('tr-es.u5.l2', 2, ['comprar', 'camisa', 'zapatos', 'vestido', 'grande', 'pequeno', 'verde', 'amarillo', 'negro', 'blanco'], [
         sel('"gömlek" hangisi?', ['los zapatos', 'la camisa', 'el vestido'], 1),
         match([
           ['la camisa', 'gömlek'],
@@ -642,7 +928,7 @@ export const trEs = course(
         speak('Compro zapatos nuevos.'),
         sel('"vestido" ne demek?', ['gömlek', 'elbise', 'ayakkabı'], 1, 'to'),
         fill('Los ___ son nuevos.', ['zapatos', 'vestido', 'camisa'], 0),
-        listenSel('Compro una camisa', ['Compro una camisa', 'Compro un camisa', 'Compro un vestido'], 0),
+        listenSel('Compro una camisa', ['Compro una camisa', 'Compro unos zapatos', 'Compro un vestido'], 0),
         pic('"ayakkabı" hangisi?', [
           { emoji: '👕', label: 'la camisa' },
           { emoji: '👞', label: 'los zapatos' },
@@ -650,8 +936,14 @@ export const trEs = course(
           { emoji: '🍎', label: 'la manzana' },
         ], 1),
         chat([['a', 'Quiero comprar un vestido.']], ['¿Cuánto cuesta?', 'Mi familia es grande.', 'Yo bebo té.'], 0),
+        pic('"sarı" hangisi?', [
+          { emoji: '🟢', label: 'verde' },
+          { emoji: '🟡', label: 'amarillo' },
+          { emoji: '⚫', label: 'negro' },
+          { emoji: '⚪', label: 'blanco' },
+        ], 1),
       ]),
-      lesson('tr-es.u5.l3', 3, ['rojo', 'azul', 'gustar', 'vestido', 'camisa'], [
+      lesson('tr-es.u5.l3', 3, ['rojo', 'azul', 'gustar', 'vestido', 'camisa', 'calcetines', 'bolsa', 'tarjeta', 'pagar'], [
         sel('"kırmızı" hangisi?', ['azul', 'rojo', 'grande'], 1),
         match([
           ['rojo', 'kırmızı'],
@@ -669,6 +961,12 @@ export const trEs = course(
         listenSel('La camisa roja es cara', ['La camisa roja es cara', 'La camisa roja es azul', 'La camisa azul es cara'], 0),
         chat([['a', 'Compro la camisa roja.']], ['Me gusta.', 'El vestido es azul.', '¿Dónde está el hotel?'], 0),
         read('Me gusta el vestido azul. No me gusta la camisa roja.', 'Anlatıcı hangisini beğeniyor?', ['Mavi elbiseyi', 'Kırmızı gömleği', 'Kırmızı elbiseyi'], 0),
+        match([
+          ['los calcetines', 'çorap'],
+          ['la bolsa', 'torba / poşet'],
+          ['la tarjeta', 'kart'],
+          ['pagar', 'ödemek'],
+        ]),
       ]),
       lesson('tr-es.u5.l4', 4, ['cuanto', 'dinero', 'comprar', 'barato', 'caro', 'tienda'], [
         sel('"dükkân" hangisi?', ['la tienda', 'el dinero', 'el precio'], 0),
@@ -696,7 +994,7 @@ export const trEs = course(
       ]),
     ]),
     unit('tr-es.u6', 6, 'İş ve Okul', 'Mesleğini söyle, okuldan bahset.', [
-      lesson('tr-es.u6.l1', 1, ['trabajo', 'oficina', 'escuela', 'medico', 'ingeniero', 'ocupado'], [
+      lesson('tr-es.u6.l1', 1, ['trabajo', 'oficina', 'escuela', 'medico', 'ingeniero', 'ocupado', 'pizarra', 'mochila', 'cuaderno', 'clase'], [
         sel('"doktor" hangisi?', ['el ingeniero', 'el médico', 'el profesor'], 1),
         sel('"okul" hangisi?', ['la oficina', 'la escuela', 'la tienda'], 1),
         match([
@@ -719,8 +1017,14 @@ export const trEs = course(
           { emoji: '🏫', label: 'la escuela' },
         ], 1),
         chat([['a', '¿Dónde trabajas?']], ['Trabajo en una escuela.', 'Soy ingeniero.', 'Estoy muy ocupado.'], 0),
+        match([
+          ['la pizarra', 'tahta'],
+          ['la mochila', 'sırt çantası'],
+          ['el cuaderno', 'defter'],
+          ['la clase', 'ders / sınıf'],
+        ]),
       ]),
-      lesson('tr-es.u6.l2', 2, ['libro', 'boligrafo', 'leer', 'escribir', 'aprender', 'espanol'], [
+      lesson('tr-es.u6.l2', 2, ['libro', 'boligrafo', 'leer', 'escribir', 'aprender', 'espanol', 'pregunta', 'respuesta', 'palabra', 'idioma'], [
         sel('"kitap" hangisi?', ['el bolígrafo', 'el libro', 'el ordenador'], 1),
         match([
           ['el libro', 'kitap'],
@@ -735,7 +1039,7 @@ export const trEs = course(
         speak('Leo libros en español.'),
         sel('"escribir" ne demek?', ['okumak', 'yazmak', 'öğrenmek'], 1, 'to'),
         fill('El ___ está en la mesa.', ['libro', 'leer', 'aprender'], 0),
-        listenSel('Leo un libro', ['Leo un libro', 'Leo un bolígrafo', 'Lees un libro'], 0),
+        listenSel('Leo un libro', ['Leo un libro', 'Escribo un libro', 'Lees un libro'], 0),
         pic('"kalem" hangisi?', [
           { emoji: '📖', label: 'el libro' },
           { emoji: '🖊️', label: 'el bolígrafo' },
@@ -743,8 +1047,14 @@ export const trEs = course(
           { emoji: '🍞', label: 'el pan' },
         ], 1),
         read('Aprendo español. Escribo con un bolígrafo.', 'Anlatıcı ne öğreniyor?', ['İspanyolca', 'İngilizce', 'Yazı yazmayı'], 0),
+        match([
+          ['la pregunta', 'soru'],
+          ['la respuesta', 'cevap'],
+          ['la palabra', 'kelime'],
+          ['el idioma', 'dil'],
+        ]),
       ]),
-      lesson('tr-es.u6.l3', 3, ['ordenador', 'reunion', 'trabajo', 'ocupado', 'oficina', 'hoy'], [
+      lesson('tr-es.u6.l3', 3, ['ordenador', 'reunion', 'trabajo', 'ocupado', 'oficina', 'hoy', 'enfermera', 'cocinero', 'empresa', 'descansar'], [
         sel('"toplantı" hangisi?', ['la reunión', 'el ordenador', 'la oficina'], 0),
         match([
           ['el ordenador', 'bilgisayar'],
@@ -762,6 +1072,12 @@ export const trEs = course(
         listenSel('Hoy tengo una reunión', ['Hoy tengo una reunión', 'Hoy tienes una reunión', 'Hoy tengo una oficina'], 0),
         chat([['a', '¿Dónde trabajas hoy?']], ['En la oficina.', 'Tengo una reunión.', 'Sí, hoy.'], 0),
         read('El ordenador está en la oficina. Hoy tengo una reunión.', 'Bilgisayar nerede?', ['Ofiste', 'Okulda', 'Evde'], 0),
+        match([
+          ['la enfermera', 'hemşire'],
+          ['el cocinero', 'aşçı'],
+          ['la empresa', 'şirket'],
+          ['descansar', 'dinlenmek'],
+        ]),
       ]),
       lesson('tr-es.u6.l4', 4, ['profesor', 'estudiante', 'aprender', 'escuela', 'espanol', 'leer'], [
         sel('"öğrenmek" hangisi?', ['leer', 'aprender', 'escribir'], 1),
@@ -778,7 +1094,7 @@ export const trEs = course(
         speak('Soy un buen estudiante.'),
         sel('"aprender" ne demek?', ['okumak', 'öğrenmek', 'çalışmak'], 1, 'to'),
         fill('Los estudiantes ___ en la escuela.', ['leen', 'aprender', 'español'], 0),
-        listenSel('El profesor habla español', ['El profesor habla español', 'El estudiante habla español', 'El profesor habla española'], 0),
+        listenSel('El profesor habla español', ['El profesor habla español', 'El estudiante habla español', 'El profesor habla inglés'], 0),
         pic('"öğrenci" hangisi?', [
           { emoji: '🧑‍🏫', label: 'el profesor' },
           { emoji: '🧑‍🎓', label: 'el estudiante' },
@@ -789,7 +1105,7 @@ export const trEs = course(
       ]),
     ]),
     unit('tr-es.u7', 7, 'Hava ve Zaman', 'Havadan konuş, gün ve saati söyle.', [
-      lesson('tr-es.u7.l1', 1, ['tiempo', 'hacesol', 'lluvia', 'frio', 'calor', 'hoy'], [
+      lesson('tr-es.u7.l1', 1, ['tiempo', 'hacesol', 'lluvia', 'frio', 'calor', 'hoy', 'martes', 'miercoles', 'jueves', 'viernes'], [
         sel('"güneşli" hangisi?', ['la lluvia', 'hace sol', 'frío'], 1),
         sel('"soğuk" hangisi?', ['calor', 'frío', 'el tiempo'], 1),
         match([
@@ -812,8 +1128,14 @@ export const trEs = course(
           { emoji: '🔥', label: 'el calor' },
         ], 1),
         chat([['a', 'Hoy hace mucho calor.']], ['Quiero agua.', 'Hace frío hoy.', 'Leo un libro.'], 0),
+        match([
+          ['martes', 'salı'],
+          ['miércoles', 'çarşamba'],
+          ['jueves', 'perşembe'],
+          ['viernes', 'cuma'],
+        ]),
       ]),
-      lesson('tr-es.u7.l2', 2, ['manana', 'ahora', 'lunes', 'domingo', 'semana', 'hoy'], [
+      lesson('tr-es.u7.l2', 2, ['manana', 'ahora', 'lunes', 'domingo', 'semana', 'hoy', 'sabado', 'enero', 'febrero', 'dia'], [
         sel('"yarın" hangisi?', ['hoy', 'mañana', 'ahora'], 1),
         match([
           ['mañana', 'yarın'],
@@ -831,8 +1153,14 @@ export const trEs = course(
         listenSel('Mañana es lunes', ['Mañana es lunes', 'Mañana es domingo', 'Hoy es lunes'], 0),
         chat([['a', 'Hoy es domingo. ¿Quieres café?']], ['Sí, por favor.', 'Mañana es lunes.', 'Hoy es lunes.'], 0),
         read('Hoy es lunes. Trabajo toda la semana.', 'Bugün günlerden ne?', ['Pazartesi', 'Pazar', 'Cumartesi'], 0),
+        match([
+          ['sábado', 'cumartesi'],
+          ['enero', 'ocak'],
+          ['febrero', 'şubat'],
+          ['el día', 'gün'],
+        ]),
       ]),
-      lesson('tr-es.u7.l3', 3, ['quehora', 'hora', 'tarde', 'temprano', 'ahora'], [
+      lesson('tr-es.u7.l3', 3, ['quehora', 'hora', 'tarde', 'temprano', 'ahora', 'noche', 'nublado', 'viento', 'nieve'], [
         sel('"saat kaç" hangisi?', ['¿cuánto?', '¿qué hora es?', '¿dónde?'], 1),
         match([
           ['¿qué hora es?', 'saat kaç'],
@@ -847,9 +1175,15 @@ export const trEs = course(
         speak('Es temprano.'),
         sel('"hora" ne demek?', ['dakika', 'saat (süre)', 'gün'], 1, 'to'),
         fill('El tren está ___.', ['tarde', 'temprano', 'ahora'], 0),
-        listenSel('Son las tres', ['Son las tres', 'Son las dos', 'Es las tres'], 0),
+        listenSel('Son las tres', ['Son las tres', 'Son las dos', 'Son las cinco'], 0),
         chat([['a', '¿Qué hora es?']], ['Son las tres.', 'Hoy es lunes.', 'Tengo un libro.'], 0),
         read('Es la una ahora. El tren llega tarde.', 'Saat kaç?', ['Bir', 'Üç', 'İki'], 0),
+        pic('"kar" hangisi?', [
+          { emoji: '🌙', label: 'la noche' },
+          { emoji: '☁️', label: 'nublado' },
+          { emoji: '🌬️', label: 'el viento' },
+          { emoji: '❄️', label: 'la nieve' },
+        ], 3),
       ]),
       lesson('tr-es.u7.l4', 4, ['tiempo', 'semana', 'domingo', 'calor', 'frio', 'manana'], [
         sel('"hava" hangisi?', ['la semana', 'el tiempo', 'la hora'], 1),
@@ -866,13 +1200,13 @@ export const trEs = course(
         speak('Hace buen tiempo.'),
         sel('"mañana" ne demek?', ['bugün', 'yarın', 'şimdi'], 1, 'to'),
         fill('Hoy ___ frío.', ['hace', 'es', 'tiene'], 0),
-        listenSel('Mañana hace frío', ['Mañana hace frío', 'Mañana hace calor', 'Mañana es frío'], 0),
+        listenSel('Mañana hace frío', ['Mañana hace frío', 'Mañana hace calor', 'Hoy hace frío'], 0),
         chat([['a', 'Hoy hace mucho calor. ¿Quieres agua?']], ['Sí, por favor.', 'Hoy hace frío.', 'Mañana es lunes.'], 0),
         read('El domingo hace calor. Mañana hace frío.', 'Pazar günü hava nasıl?', ['Sıcak', 'Soğuk', 'Yağmurlu'], 0),
       ]),
     ]),
     unit('tr-es.u8', 8, 'Hobiler', 'Hobilerinden ve hafta sonundan bahset.', [
-      lesson('tr-es.u8.l1', 1, ['musica', 'futbol', 'jugar', 'gustar', 'guitarra', 'pelicula'], [
+      lesson('tr-es.u8.l1', 1, ['musica', 'futbol', 'jugar', 'gustar', 'guitarra', 'pelicula', 'cantar', 'dibujar', 'escuchar', 'tocar'], [
         sel('"müzik" hangisi?', ['la película', 'la música', 'la guitarra'], 1),
         sel('"futbol" hangisi?', ['el fútbol', 'la guitarra', 'la música'], 0),
         match([
@@ -887,7 +1221,7 @@ export const trEs = course(
         fill('Esta noche vemos una ___.', ['película', 'música', 'guitarra'], 0),
         speak('Me gusta el fútbol.'),
         sel('"jugar" ne demek?', ['izlemek', 'oynamak', 'dinlemek'], 1, 'to'),
-        listenSel('Juego al fútbol', ['Juego al fútbol', 'Juego a la guitarra', 'Juegas al fútbol'], 0),
+        listenSel('Juego al fútbol', ['Juego al fútbol', 'Juego al tenis', 'Juegas al fútbol'], 0),
         pic('"gitar" hangisi?', [
           { emoji: '🎵', label: 'la música' },
           { emoji: '⚽', label: 'el fútbol' },
@@ -895,8 +1229,14 @@ export const trEs = course(
           { emoji: '🎬', label: 'la película' },
         ], 2),
         chat([['a', 'Me gusta la música.']], ['Yo toco la guitarra.', 'Hoy es lunes.', 'No tengo dinero.'], 0),
+        match([
+          ['cantar', 'şarkı söylemek'],
+          ['dibujar', 'resim çizmek'],
+          ['escuchar', 'dinlemek'],
+          ['tocar', 'çalmak (enstrüman)'],
+        ]),
       ]),
-      lesson('tr-es.u8.l2', 2, ['nadar', 'correr', 'bailar', 'parque', 'finsemana', 'gustar'], [
+      lesson('tr-es.u8.l2', 2, ['nadar', 'correr', 'bailar', 'parque', 'finsemana', 'gustar', 'piscina', 'cine', 'revista', 'deporte'], [
         sel('"yüzmek" hangisi?', ['correr', 'nadar', 'bailar'], 1),
         match([
           ['nadar', 'yüzmek'],
@@ -911,7 +1251,7 @@ export const trEs = course(
         speak('Corro todos los días.'),
         sel('"fin de semana" ne demek?', ['hafta', 'hafta sonu', 'pazartesi'], 1, 'to'),
         fill('Me gusta ___ en el mar.', ['nadar', 'bailar', 'parque'], 0),
-        listenSel('Corro en el parque', ['Corro en el parque', 'Corro en la parque', 'Nado en el parque'], 0),
+        listenSel('Corro en el parque', ['Corro en el parque', 'Corro en la plaza', 'Nado en el parque'], 0),
         pic('"park" hangisi?', [
           { emoji: '🏊', label: 'nadar' },
           { emoji: '🏃', label: 'correr' },
@@ -919,8 +1259,14 @@ export const trEs = course(
           { emoji: '🌳', label: 'el parque' },
         ], 3),
         chat([['a', 'Me gusta bailar.']], ['A mí también. Bailo los domingos.', 'No me gusta nadar.', 'Hoy hace frío.'], 0),
+        match([
+          ['la piscina', 'havuz'],
+          ['el cine', 'sinema'],
+          ['la revista', 'dergi'],
+          ['el deporte', 'spor'],
+        ]),
       ]),
-      lesson('tr-es.u8.l3', 3, ['cocinar', 'foto', 'viajar', 'gustar', 'finsemana', 'musica'], [
+      lesson('tr-es.u8.l3', 3, ['cocinar', 'foto', 'viajar', 'gustar', 'finsemana', 'musica', 'partido', 'tiempolibre', 'piano', 'montar'], [
         sel('"seyahat etmek" hangisi?', ['cocinar', 'viajar', 'la foto'], 1),
         match([
           ['cocinar', 'yemek pişirmek'],
@@ -943,6 +1289,12 @@ export const trEs = course(
           { emoji: '🎸', label: 'la guitarra' },
         ], 1),
         chat([['a', '¿Adónde viajas?']], ['Viajo a España.', 'Cocino el fin de semana.', 'Hoy es lunes.'], 0),
+        match([
+          ['el partido', 'maç'],
+          ['el tiempo libre', 'boş zaman'],
+          ['el piano', 'piyano'],
+          ['montar en bicicleta', 'bisiklete binmek'],
+        ]),
       ]),
       lesson('tr-es.u8.l4', 4, ['jugar', 'gustar', 'pelicula', 'futbol', 'guitarra', 'finsemana'], [
         sel('"film" hangisi?', ['la música', 'la película', 'la foto'], 1),
@@ -959,13 +1311,13 @@ export const trEs = course(
         speak('Me gustan las películas.'),
         sel('"guitarra" ne demek?', ['müzik', 'gitar', 'film'], 1, 'to'),
         build('Arkadaşımla futbol oynarım.', ['Juego al fútbol con mi amigo'], ['guitarra', 'película', 'gusta']),
-        listenSel('Toco la guitarra el fin de semana', ['Toco la guitarra el fin de semana', 'Juego la guitarra el fin de semana', 'Toco el fútbol el fin de semana'], 0),
+        listenSel('Toco la guitarra el fin de semana', ['Toco la guitarra el fin de semana', 'Toco el piano el fin de semana', 'Toco la guitarra los lunes'], 0),
         chat([['a', 'Quiero jugar al fútbol.']], ['Jugamos el fin de semana.', 'Me gusta el té.', 'Hoy es domingo.'], 0),
         read('Jugamos al fútbol el fin de semana. Me gustan las películas.', 'Hafta sonu ne yapıyorlar?', ['Futbol oynuyorlar', 'Film izliyorlar', 'Gitar çalıyorlar'], 0),
       ]),
     ]),
     unit('tr-es.u9', 9, 'Geçmiş Zaman', 'Dün ne yaptığını anlat.', [
-      lesson('tr-es.u9.l1', 1, ['ayer', 'anoche', 'entonces', 'cansado'], [
+      lesson('tr-es.u9.l1', 1, ['ayer', 'anoche', 'entonces', 'cansado', 'desayunar', 'almorzar', 'cenar', 'llover'], [
         sel('"dün" hangisi?', ['hoy', 'ayer', 'anoche'], 1),
         sel('"dün gece" hangisi?', ['anoche', 'ahora', 'ayer'], 0),
         match([
@@ -983,8 +1335,14 @@ export const trEs = course(
         listenSel('Ayer fui al parque', ['Ayer fui al parque', 'Ayer voy al parque', 'Anoche fui al parque'], 0),
         chat([['a', 'Hola, Ali. ¿Qué hiciste ayer?']], ['Fui al parque con mi hermano.', 'Mañana voy al parque.', 'No, no fui al parque.'], 0),
         read('Ayer fui al parque. Anoche dormí bien, pero hoy estoy cansado.', 'Dün gece ne yaptı?', ['Parka gitti', 'İyi uyudu', 'Film izledi'], 1),
+        match([
+          ['desayunar', 'kahvaltı yapmak'],
+          ['almorzar', 'öğle yemeği yemek'],
+          ['cenar', 'akşam yemeği yemek'],
+          ['llover', 'yağmur yağmak'],
+        ]),
       ]),
-      lesson('tr-es.u9.l2', 2, ['hacer', 'ir', 'ver', 'tarea'], [
+      lesson('tr-es.u9.l2', 2, ['hacer', 'ir', 'ver', 'tarea', 'volver', 'empezar', 'terminar', 'encontrar'], [
         sel('"yapmak" hangisi?', ['hacer', 'ver', 'ir'], 0),
         sel('"izlemek" hangisi?', ['dormir', 'ver', 'hacer'], 1),
         match([
@@ -1007,8 +1365,14 @@ export const trEs = course(
           { emoji: '🛏️', label: 'la cama' },
         ], 1),
         read('Anoche hice la tarea y vi una película. Hoy estoy cansado.', 'Anlatıcı bugün nasıl?', ['Yorgun', 'Meşgul', 'Hasta'], 0),
+        match([
+          ['volver', 'geri dönmek'],
+          ['empezar', 'başlamak'],
+          ['terminar', 'bitirmek'],
+          ['encontrar', 'bulmak'],
+        ]),
       ]),
-      lesson('tr-es.u9.l3', 3, ['trabajar', 'estudiar', 'dormir', 'salir'], [
+      lesson('tr-es.u9.l3', 3, ['trabajar', 'estudiar', 'dormir', 'salir', 'perder', 'entender', 'decir', 'gastar'], [
         sel('"çalışmak" hangisi?', ['estudiar', 'trabajar', 'dormir'], 1),
         sel('"uyumak" hangisi?', ['salir', 'trabajar', 'dormir'], 2),
         match([
@@ -1026,6 +1390,12 @@ export const trEs = course(
         listenSel('Estudié español en casa', ['Estudié español en casa', 'Estudio español en casa', 'Estudié inglés en casa'], 0),
         chat([['a', '¿Qué hiciste ayer?']], ['Estudié español en casa.', 'Mañana estudio español.', 'No, no estudio español.'], 0),
         read('Ayer trabajé ocho horas. Anoche dormí muy bien.', 'Anlatıcı dün gece ne yaptı?', ['Sekiz saat çalıştı', 'Çok iyi uyudu', 'Arkadaşlarıyla çıktı'], 1),
+        match([
+          ['perder', 'kaybetmek'],
+          ['entender', 'anlamak'],
+          ['decir', 'söylemek'],
+          ['gastar', 'harcamak'],
+        ]),
       ]),
       lesson('tr-es.u9.l4', 4, ['entonces', 'cansado', 'ayer', 'anoche'], [
         sel('"o zaman" hangisi?', ['anoche', 'entonces', 'ayer'], 1),
@@ -1053,7 +1423,7 @@ export const trEs = course(
       ]),
     ]),
     unit('tr-es.u10', 10, 'Ev ve İşler', 'Evin ve günlük işler hakkında konuş.', [
-      lesson('tr-es.u10.l1', 1, ['casa', 'cocina', 'bano', 'dormitorio'], [
+      lesson('tr-es.u10.l1', 1, ['casa', 'cocina', 'bano', 'dormitorio', 'sala', 'comedor', 'jardin', 'puerta'], [
         sel('"ev" hangisi?', ['la cocina', 'la casa', 'el dormitorio'], 1),
         sel('"banyo" hangisi?', ['el baño', 'la cama', 'la cocina'], 0),
         match([
@@ -1076,8 +1446,14 @@ export const trEs = course(
           { emoji: '🏠', label: 'la casa' },
         ], 1),
         read('Mi casa es pequeña pero bonita. La cocina es grande y el baño está limpio.', 'Mutfak nasıl?', ['Küçük', 'Büyük', 'Kirli'], 1),
+        match([
+          ['la sala', 'oturma odası'],
+          ['el comedor', 'yemek odası'],
+          ['el jardín', 'bahçe'],
+          ['la puerta', 'kapı'],
+        ]),
       ]),
-      lesson('tr-es.u10.l2', 2, ['cama', 'limpiar', 'lavar', 'ropa'], [
+      lesson('tr-es.u10.l2', 2, ['cama', 'limpiar', 'lavar', 'ropa', 'pared', 'sofa', 'almohada', 'manta'], [
         sel('"yatak" hangisi?', ['la ropa', 'la cama', 'el suelo'], 1),
         sel('"yıkamak" hangisi?', ['limpiar', 'lavar', 'cocinar'], 1),
         match([
@@ -1095,8 +1471,14 @@ export const trEs = course(
         listenSel('Lavo la ropa los sábados', ['Lavo la ropa los sábados', 'Lavo la cama los sábados', 'Limpio la ropa los domingos'], 0),
         chat([['a', '¿Qué haces los sábados?']], ['Lavo la ropa.', 'Lavo la cama.', 'Duermo en la cocina.'], 0),
         read('Los sábados lavo la ropa y limpio el baño. Hago la cama todos los días.', 'Anlatıcı ne zaman çamaşır yıkar?', ['Her gün', 'Cumartesi günleri', 'Pazar günleri'], 1),
+        match([
+          ['la pared', 'duvar'],
+          ['el sofá', 'kanepe'],
+          ['la almohada', 'yastık'],
+          ['la manta', 'battaniye'],
+        ]),
       ]),
-      lesson('tr-es.u10.l3', 3, ['suelo', 'ordenado', 'sucio', 'normalmente'], [
+      lesson('tr-es.u10.l3', 3, ['suelo', 'ordenado', 'sucio', 'normalmente', 'plato', 'vaso', 'basura', 'planchar'], [
         sel('"kirli" hangisi?', ['limpio', 'sucio', 'ordenado'], 1),
         sel('"genellikle" hangisi?', ['normalmente', 'ahora', 'ayer'], 0),
         match([
@@ -1119,6 +1501,12 @@ export const trEs = course(
           { emoji: '👕', label: 'la ropa' },
         ], 0),
         read('Mi dormitorio es ordenado, pero el suelo está sucio. Normalmente limpio los sábados.', 'Yatak odası nasıl?', ['Düzenli', 'Kirli', 'Küçük'], 0),
+        match([
+          ['el plato', 'tabak'],
+          ['el vaso', 'bardak'],
+          ['la basura', 'çöp'],
+          ['planchar', 'ütülemek'],
+        ]),
       ]),
       lesson('tr-es.u10.l4', 4, ['casa', 'cama', 'limpiar', 'lavar'], [
         sel('"temizlemek" hangisi?', ['lavar', 'limpiar', 'cocinar'], 1),
@@ -1141,7 +1529,7 @@ export const trEs = course(
       ]),
     ]),
     unit('tr-es.u11', 11, 'Sağlık', 'Vücudunu söyle, doktorda konuş.', [
-      lesson('tr-es.u11.l1', 1, ['cuerpo', 'cabeza', 'brazo', 'pierna'], [
+      lesson('tr-es.u11.l1', 1, ['cuerpo', 'cabeza', 'brazo', 'pierna', 'pie', 'ojo', 'oreja', 'nariz'], [
         sel('"baş" hangisi?', ['la mano', 'la cabeza', 'la pierna'], 1),
         sel('"kol" hangisi?', ['el brazo', 'el cuerpo', 'la cabeza'], 0),
         match([
@@ -1164,8 +1552,14 @@ export const trEs = course(
           { emoji: '🧠', label: 'la cabeza' },
         ], 0),
         read('Tengo un resfriado y me duele la cabeza. Me duele el brazo también.', 'Anlatıcının neyi ağrıyor?', ['Sadece başı', 'Başı ve kolu', 'Sadece kolu'], 1),
+        pic('"kulak" hangisi?', [
+          { emoji: '🦶', label: 'el pie' },
+          { emoji: '👁️', label: 'el ojo' },
+          { emoji: '👂', label: 'la oreja' },
+          { emoji: '👃', label: 'la nariz' },
+        ], 2),
       ]),
-      lesson('tr-es.u11.l2', 2, ['mano', 'doler', 'resfriado', 'fiebre'], [
+      lesson('tr-es.u11.l2', 2, ['mano', 'doler', 'resfriado', 'fiebre', 'boca', 'diente', 'espalda', 'estomago'], [
         sel('"soğuk algınlığı" hangisi?', ['la fiebre', 'el resfriado', 'la medicina'], 1),
         sel('"ateş" hangisi?', ['la fiebre', 'la farmacia', 'el hospital'], 0),
         match([
@@ -1183,8 +1577,14 @@ export const trEs = course(
         listenSel('Tengo un resfriado', ['Tengo un resfriado', 'Tengo una resfriado', 'Tengo un resfriados'], 0),
         chat([['a', 'Doctor, me duele la cabeza y tengo fiebre.']], ['¿Te duele el brazo también?', 'El hospital está lejos.', 'La farmacia vende ropa.'], 0),
         read('Tengo fiebre y un resfriado. Me duele el cuerpo, pero no me duele la cabeza.', 'Anlatıcının başı ağrıyor mu?', ['Evet, çok ağrıyor', 'Hayır, ağrmıyor', 'Bilmiyoruz'], 1),
+        match([
+          ['la boca', 'ağız'],
+          ['el diente', 'diş'],
+          ['la espalda', 'sırt'],
+          ['el estómago', 'mide'],
+        ]),
       ]),
-      lesson('tr-es.u11.l3', 3, ['medicina', 'farmacia', 'hospital', 'enfermo'], [
+      lesson('tr-es.u11.l3', 3, ['medicina', 'farmacia', 'hospital', 'enfermo', 'tos', 'dolor', 'mareado', 'pastilla'], [
         sel('"ilaç" hangisi?', ['la medicina', 'la fiebre', 'el resfriado'], 0),
         sel('"hastane" hangisi?', ['la farmacia', 'el hospital', 'el médico'], 1),
         match([
@@ -1207,6 +1607,12 @@ export const trEs = course(
           { emoji: '🛏️', label: 'la cama' },
         ], 1),
         read('Estoy enfermo. Tomo la medicina y descanso en casa.', 'Anlatıcı hasta olduğunda ne yapıyor?', ['İlaç alıyor ve evde dinleniyor', 'Hastaneye gidiyor', 'Çalışmaya devam ediyor'], 0),
+        match([
+          ['la tos', 'öksürük'],
+          ['el dolor', 'ağrı'],
+          ['mareado', 'başı dönen'],
+          ['la pastilla', 'hap'],
+        ]),
       ]),
       lesson('tr-es.u11.l4', 4, ['cuerpo', 'cabeza', 'doler', 'enfermo'], [
         sel('"vücut" hangisi?', ['el cuerpo', 'la cabeza', 'el brazo'], 0),
@@ -1229,7 +1635,7 @@ export const trEs = course(
       ]),
     ]),
     unit('tr-es.u12', 12, 'Ulaşım ve Yönler', 'Şehirde yol tarifi al ve ver.', [
-      lesson('tr-es.u12.l1', 1, ['calle', 'autobus', 'metro', 'parada'], [
+      lesson('tr-es.u12.l1', 1, ['calle', 'autobus', 'metro', 'parada', 'semaforo', 'carretera', 'avenida', 'puente'], [
         sel('"otobüs" hangisi?', ['el metro', 'el autobús', 'la parada'], 1),
         sel('"durak" hangisi?', ['la parada', 'el mapa', 'la calle'], 0),
         match([
@@ -1252,8 +1658,14 @@ export const trEs = course(
           { emoji: '🚏', label: 'la parada' },
         ], 1),
         read('La parada está cerca de mi casa. El autobús es lento, pero el metro es rápido.', 'Metro nasıl?', ['Yavaş', 'Hızlı', 'Pahalı'], 1),
+        match([
+          ['el semáforo', 'trafik ışığı'],
+          ['la carretera', 'kara yolu'],
+          ['la avenida', 'cadde'],
+          ['el puente', 'köprü'],
+        ]),
       ]),
-      lesson('tr-es.u12.l2', 2, ['seguir', 'recto', 'girar', 'esquina'], [
+      lesson('tr-es.u12.l2', 2, ['seguir', 'recto', 'girar', 'esquina', 'plaza', 'barrio', 'direccion', 'destino'], [
         sel('"düz" hangisi?', ['recto', 'cruzar', 'girar'], 0),
         sel('"köşe" hangisi?', ['la esquina', 'la calle', 'la parada'], 0),
         match([
@@ -1271,8 +1683,14 @@ export const trEs = course(
         listenSel('Gira a la derecha', ['Gira a la derecha', 'Gira a la izquierda', 'Sigue a la derecha'], 0),
         chat([['a', 'Perdón, ¿dónde está la estación?']], ['Sigue recto y gira a la derecha.', 'La estación es grande.', 'El metro es rápido.'], 0),
         read('Para llegar a la escuela, sigue recto dos calles. Luego gira a la izquierda en la esquina.', 'Okula nasıl gidiliyor?', ['İlk köşeden sağa dönülüyor', 'Düz gidip köşeden sola dönülüyor', 'Metroyla gidiliyor'], 1),
+        match([
+          ['la plaza', 'meydan'],
+          ['el barrio', 'semt'],
+          ['la dirección', 'adres'],
+          ['el destino', 'varış yeri'],
+        ]),
       ]),
-      lesson('tr-es.u12.l3', 3, ['cruzar', 'enfrente', 'mapa', 'llegar'], [
+      lesson('tr-es.u12.l3', 3, ['cruzar', 'enfrente', 'mapa', 'llegar', 'salida', 'aparcamiento', 'acera', 'conducir'], [
         sel('"karşıya geçmek" hangisi?', ['cruzar', 'llegar', 'seguir'], 0),
         sel('"karşısında" hangisi?', ['cerca', 'enfrente', 'lejos'], 1),
         match([
@@ -1295,6 +1713,12 @@ export const trEs = course(
           { emoji: '🏥', label: 'el hospital' },
         ], 0),
         read('El hospital está enfrente de la farmacia. Para llegar, cruza la calle y sigue recto.', 'Hastane nerede?', ['Eczanenin karşısında', 'Eczanenin yanında', 'Sokağın sonunda'], 0),
+        match([
+          ['la salida', 'çıkış'],
+          ['el aparcamiento', 'otopark'],
+          ['la acera', 'kaldırım'],
+          ['conducir', 'araba kullanmak'],
+        ]),
       ]),
       lesson('tr-es.u12.l4', 4, ['calle', 'metro', 'llegar', 'girar'], [
         sel('"sokak" hangisi?', ['la esquina', 'la calle', 'el mapa'], 1),
@@ -1317,7 +1741,7 @@ export const trEs = course(
       ]),
     ]),
     unit('tr-es.u13', 13, 'Gelecek ve Tatil', 'Planlarını ve tatil planlarını anlat.', [
-      lesson('tr-es.u13.l1', 1, ['playa', 'mar', 'verano', 'vacaciones'], [
+      lesson('tr-es.u13.l1', 1, ['playa', 'mar', 'verano', 'vacaciones', 'invierno', 'primavera', 'otono', 'camping'], [
         sel('"plaj" hangisi?', ['la montaña', 'la playa', 'el mar'], 1),
         sel('"yaz" hangisi?', ['el verano', 'el mes', 'las vacaciones'], 0),
         match([
@@ -1340,8 +1764,14 @@ export const trEs = course(
           { emoji: '☀️', label: 'el verano' },
         ], 1),
         read('En verano voy a la playa con mi familia. El mar está frío, pero me gusta nadar.', 'Anlatıcı yazın ne yapıyor?', ['Ailesiyle plaja gidiyor', 'Dağda yürüyüş yapıyor', 'Evde kalıyor'], 0),
+        match([
+          ['el invierno', 'kış'],
+          ['la primavera', 'ilkbahar'],
+          ['el otoño', 'sonbahar'],
+          ['el camping', 'kamp'],
+        ]),
       ]),
-      lesson('tr-es.u13.l2', 2, ['montana', 'proximo', 'mes', 'pensar'], [
+      lesson('tr-es.u13.l2', 2, ['montana', 'proximo', 'mes', 'pensar', 'sol', 'arena', 'adonde', 'vuelo'], [
         sel('"dağ" hangisi?', ['la playa', 'la montaña', 'el mar'], 1),
         sel('"gelecek / sonraki" hangisi?', ['próximo', 'juntos', 'pronto'], 0),
         match([
@@ -1359,8 +1789,14 @@ export const trEs = course(
         listenSel('Pienso viajar el próximo mes', ['Pienso viajar el próximo mes', 'Pienso viajar el mes próximo', 'Pienso nadar el próximo mes'], 0),
         chat([['a', '¿Qué piensas hacer el próximo mes?']], ['Pienso viajar a Madrid.', 'Viajé a Madrid el año pasado.', 'Me gusta Madrid.'], 0),
         read('Pienso visitar la montaña el próximo mes. Mi hermano piensa ir a la playa.', 'Kardeş ne yapmayı düşünüyor?', ['Plaja gitmeyi', 'Dağa gitmeyi', 'Sadece uyumayı'], 0),
+        match([
+          ['el sol', 'güneş'],
+          ['la arena', 'kum'],
+          ['¿adónde?', 'nereye?'],
+          ['el vuelo', 'uçuş'],
+        ]),
       ]),
-      lesson('tr-es.u13.l3', 3, ['visitar', 'llevar', 'juntos', 'pronto'], [
+      lesson('tr-es.u13.l3', 3, ['visitar', 'llevar', 'juntos', 'pronto', 'protectorsolar', 'camara', 'recuerdo', 'pasajero'], [
         sel('"ziyaret etmek" hangisi?', ['visitar', 'llevar', 'llegar'], 0),
         sel('"birlikte" hangisi?', ['juntos', 'pronto', 'próximo'], 0),
         match([
@@ -1383,6 +1819,12 @@ export const trEs = course(
           { emoji: '🗓️', label: 'el próximo mes' },
         ], 1),
         read('El próximo mes voy a visitar a mi abuela. Llevo una maleta y vamos juntos a su casa.', 'Anlatıcı ne götürüyor?', ['Bir bavul', 'Bir kalem', 'Bir kitap'], 0),
+        match([
+          ['el protector solar', 'güneş kremi'],
+          ['la cámara', 'fotoğraf makinesi'],
+          ['el recuerdo', 'hatıra'],
+          ['el pasajero', 'yolcu'],
+        ]),
       ]),
       lesson('tr-es.u13.l4', 4, ['verano', 'vacaciones', 'pensar', 'llevar'], [
         sel('"tatil" hangisi?', ['las vacaciones', 'el verano', 'el mes'], 0),
@@ -1405,7 +1847,7 @@ export const trEs = course(
       ]),
     ]),
     unit('tr-es.u14', 14, 'Karşılaştırma', 'Daha ve en ile karşılaştır yap.', [
-      lesson('tr-es.u14.l1', 1, ['mas', 'menos', 'mejor', 'peor'], [
+      lesson('tr-es.u14.l1', 1, ['mas', 'menos', 'mejor', 'peor', 'lento', 'alto', 'bajo', 'largo'], [
         sel('"daha" hangisi?', ['más', 'menos', 'mejor'], 0),
         sel('"en iyi" hangisi?', ['peor', 'mejor', 'mayor'], 1),
         match([
@@ -1423,8 +1865,14 @@ export const trEs = course(
         listenSel('El tren es menos rápido', ['El tren es menos rápido', 'El tren es más rápido', 'El tren es más lento'], 0),
         chat([['a', '¿Qué es más caro: el té o el café?']], ['El café es más caro.', 'El café es bueno.', 'Yo bebo té.'], 0),
         read('Mi coche es rápido, pero el tren es más rápido. El autobús es menos rápido que el coche.', 'En hızlısı hangisi?', ['Araba', 'Tren', 'Otobüs'], 1),
+        match([
+          ['lento', 'yavaş'],
+          ['alto', 'uzun / yüksek'],
+          ['bajo', 'kısa / alçak'],
+          ['largo', 'uzun (boyut)'],
+        ]),
       ]),
-      lesson('tr-es.u14.l2', 2, ['mayor', 'menor', 'tan', 'mejor'], [
+      lesson('tr-es.u14.l2', 2, ['mayor', 'menor', 'tan', 'mejor', 'corto', 'nuevo', 'viejo', 'joven'], [
         sel('"daha büyük (yaşça)" hangisi?', ['menor', 'mayor', 'mejor'], 1),
         sel('"(o) kadar" hangisi?', ['tan', 'más', 'menos'], 0),
         match([
@@ -1442,8 +1890,14 @@ export const trEs = course(
         listenSel('Este examen no es tan difícil', ['Este examen no es tan difícil', 'Este examen es tan difícil', 'Este examen no es más difícil'], 0),
         chat([['a', '¿Qué es más difícil: el examen o la tarea?']], ['El examen es más difícil.', 'La tarea es fácil.', 'El examen es mañana.'], 0),
         read('Mi hermano es mayor que yo y mi hermana es menor. Este examen no es tan difícil como piensas.', 'Kız kardeş nasıl?', ['Erkek kardeşinden yaşça küçük', 'Erkek kardeşinden yaşça büyük', 'Aynı yaşta'], 0),
+        match([
+          ['corto', 'kısa (boyut)'],
+          ['nuevo', 'yeni'],
+          ['viejo', 'eski / yaşlı'],
+          ['joven', 'genç'],
+        ]),
       ]),
-      lesson('tr-es.u14.l3', 3, ['equipo', 'examen', 'facil', 'dificil'], [
+      lesson('tr-es.u14.l3', 3, ['equipo', 'examen', 'facil', 'dificil', 'bonito', 'feo', 'interesante', 'aburrido'], [
         sel('"sınav" hangisi?', ['el equipo', 'el examen', 'el tren'], 1),
         sel('"zor" hangisi?', ['fácil', 'difícil', 'rápido'], 1),
         match([
@@ -1466,6 +1920,12 @@ export const trEs = course(
           { emoji: '☕', label: 'el café' },
         ], 0),
         read('Mi equipo es bueno y tu equipo es peor. Mi examen es fácil.', 'Anlatıcının sınavı nasıl?', ['Kolay', 'Zor', 'Uzun'], 0),
+        match([
+          ['bonito', 'güzel'],
+          ['feo', 'çirkin'],
+          ['interesante', 'ilginç'],
+          ['aburrido', 'sıkıcı'],
+        ]),
       ]),
       lesson('tr-es.u14.l4', 4, ['mejor', 'mas', 'rapido', 'examen'], [
         sel('"hızlı" hangisi?', ['rápido', 'difícil', 'mayor'], 0),
@@ -1488,7 +1948,7 @@ export const trEs = course(
       ]),
     ]),
     unit('tr-es.u15', 15, 'Duygular ve Kişilik', 'Duygularını ve fikirlerini söyle.', [
-      lesson('tr-es.u15.l1', 1, ['feliz', 'triste', 'contento', 'genial'], [
+      lesson('tr-es.u15.l1', 1, ['feliz', 'triste', 'contento', 'genial', 'enfadado', 'sorprendido', 'solo', 'seguro'], [
         sel('"mutlu" hangisi?', ['triste', 'feliz', 'nervioso'], 1),
         sel('"harika" hangisi?', ['genial', 'triste', 'tranquilo'], 0),
         match([
@@ -1511,8 +1971,14 @@ export const trEs = course(
           { emoji: '😌', label: 'tranquilo' },
         ], 1),
         read('Hoy estoy feliz y mi hermano está contento. No estamos tristes.', 'Anlatıcı ve kardeşi nasıl?', ['İkisi de mutlu', 'İkisi de üzgün', 'Anlatıcı üzgün, kardeşi mutlu'], 0),
+        match([
+          ['enfadado', 'kızgın'],
+          ['sorprendido', 'şaşkın'],
+          ['solo', 'yalnız'],
+          ['seguro', 'emin'],
+        ]),
       ]),
-      lesson('tr-es.u15.l2', 2, ['nervioso', 'tranquilo', 'fuerte', 'amable'], [
+      lesson('tr-es.u15.l2', 2, ['nervioso', 'tranquilo', 'fuerte', 'amable', 'listo', 'perezoso', 'trabajador', 'simpatico'], [
         sel('"gergin" hangisi?', ['tranquilo', 'nervioso', 'fuerte'], 1),
         sel('"nazik" hangisi?', ['amable', 'tímido', 'fuerte'], 0),
         match([
@@ -1530,8 +1996,14 @@ export const trEs = course(
         listenSel('Mi padre es tranquilo', ['Mi padre es tranquilo', 'Mi padre es nervioso', 'Mi madre es tranquila'], 0),
         chat([['a', 'Estoy nervioso por el examen.']], ['¿Quieres estudiar conmigo?', 'El examen es difícil.', 'Yo soy fuerte.'], 0),
         read('Mi padre es tranquilo y amable. Mi hermano es fuerte y no está nervioso.', 'Baba nasıl biri?', ['Sakin ve nazik', 'Gergin ve korkak', 'Güçlü ve utangaç'], 0),
+        match([
+          ['listo', 'zeki'],
+          ['perezoso', 'tembel'],
+          ['trabajador', 'çalışkan'],
+          ['simpático', 'sevimli'],
+        ]),
       ]),
-      lesson('tr-es.u15.l3', 3, ['timido', 'creer', 'razon', 'importante'], [
+      lesson('tr-es.u15.l3', 3, ['timido', 'creer', 'razon', 'importante', 'valiente', 'sincero', 'sonreir', 'llorar'], [
         sel('"utangaç" hangisi?', ['tímido', 'amable', 'fuerte'], 0),
         sel('"sanmak / inanmak" hangisi?', ['creer', 'saber', 'hacer'], 0),
         match([
@@ -1554,6 +2026,12 @@ export const trEs = course(
           { emoji: '🧘', label: 'tranquilo' },
         ], 0),
         read('Mi amigo es tímido pero amable. Creo que la familia es muy importante.', 'Arkadaş nasıl biri?', ['Utangaç ama nazik', 'Utangaç ve kaba', 'Cesur ve nazik'], 0),
+        match([
+          ['valiente', 'cesur'],
+          ['sincero', 'dürüst'],
+          ['sonreír', 'gülümsemek'],
+          ['llorar', 'ağlamak'],
+        ]),
       ]),
       lesson('tr-es.u15.l4', 4, ['feliz', 'nervioso', 'creer', 'importante'], [
         sel('"sakin" hangisi?', ['nervioso', 'tranquilo', 'fuerte'], 1),
@@ -1576,7 +2054,7 @@ export const trEs = course(
       ]),
     ]),
     unit('tr-es.u16', 16, 'Kibar İstekler', 'Restoranda ve telefonda kibar konuş.', [
-      lesson('tr-es.u16.l1', 1, ['quisiera', 'gustaria', 'mesa', 'camarero'], [
+      lesson('tr-es.u16.l1', 1, ['quisiera', 'gustaria', 'mesa', 'camarero', 'camarera', 'comida', 'bebida', 'sopa'], [
         sel('"isterdim (nazik)" hangisi?', ['quiero', 'quisiera', 'tengo'], 1),
         sel('"garson" hangisi?', ['el camarero', 'la mesa', 'el teléfono'], 0),
         match([
@@ -1594,8 +2072,14 @@ export const trEs = course(
         listenSel('Quisiera una mesa para tres', ['Quisiera una mesa para tres', 'Quisiera una mesa para dos', 'Quise una mesa para tres'], 0),
         chat([['a', 'Buenas tardes. Quisiera una mesa, por favor.']], ['¿Para cuántas personas?', 'Adiós, hasta mañana.', 'La comida está rica.'], 0),
         read('Estoy en un restaurante. Digo: «Quisiera una mesa para dos» y el camarero me da una mesa libre.', 'Anlatıcı ne istiyor?', ['İki kişilik bir masa', 'Bir çay', 'Hesabı'], 0),
+        match([
+          ['la camarera', 'kadın garson'],
+          ['la comida', 'yemek'],
+          ['la bebida', 'içecek'],
+          ['la sopa', 'çorba'],
+        ]),
       ]),
-      lesson('tr-es.u16.l2', 2, ['podria', 'reservar', 'telefono', 'llamar'], [
+      lesson('tr-es.u16.l2', 2, ['podria', 'reservar', 'telefono', 'llamar', 'pedir', 'servir', 'desear', 'repetir'], [
         sel('"yapabilir miyim (nazik)" hangisi?', ['puedo', 'podría', 'tengo'], 1),
         sel('"telefon" hangisi?', ['el teléfono', 'la mesa', 'el camarero'], 0),
         match([
@@ -1613,8 +2097,14 @@ export const trEs = course(
         listenSel('Voy a llamar a mi madre', ['Voy a llamar a mi madre', 'Voy a llamar a mi padre', 'Voy a llamar mi madre'], 0),
         chat([['a', '¿Restaurante La Luna, buenos días?']], ['Quisiera reservar una mesa, por favor.', 'Me gusta la luna.', 'Estoy en la escuela.'], 0),
         read('Llamo al restaurante por teléfono. Quiero reservar una mesa para mañana. La señora dice: «¿Podría decirme su nombre?».', 'Anlatıcı telefonla ne yapıyor?', ['Masa rezervasyonu yapıyor', 'Yemek siparişi veriyor', 'Hesap ödüyor'], 0),
+        match([
+          ['pedir', 'sipariş etmek'],
+          ['servir', 'servis etmek'],
+          ['desear', 'dilemek / istemek'],
+          ['repetir', 'tekrar etmek'],
+        ]),
       ]),
-      lesson('tr-es.u16.l3', 3, ['traer', 'propina', 'gusto', 'libre'], [
+      lesson('tr-es.u16.l3', 3, ['traer', 'propina', 'gusto', 'libre', 'sentarse', 'esperar', 'disculpar', 'invitar'], [
         sel('"getirmek" hangisi?', ['traer', 'reservar', 'llamar'], 0),
         sel('"bahşiş" hangisi?', ['la propina', 'la cuenta', 'la mesa'], 0),
         match([
@@ -1632,6 +2122,12 @@ export const trEs = course(
         listenSel('Te ayudo con gusto', ['Te ayudo con gusto', 'Te ayudo con la propina', 'Me ayudo con gusto'], 0),
         chat([['a', '¿Me puede traer más agua, por favor?']], ['Con gusto, traigo más agua.', 'El agua es fría.', 'Yo no soy el camarero.'], 0),
         read('La comida está rica. Dejo una propina en la mesa y digo gracias. El camarero dice: «Con gusto».', 'Anlatıcı masada ne bırakıyor?', ['Bahşiş', 'Hesap', 'Telefon'], 0),
+        match([
+          ['sentarse', 'oturmak'],
+          ['esperar', 'beklemek'],
+          ['disculpar', 'affetmek (Disculpe: affedersiniz)'],
+          ['invitar', 'davet etmek'],
+        ]),
       ]),
       lesson('tr-es.u16.l4', 4, ['quisiera', 'podria', 'reservar', 'mesa'], [
         sel('"rezervasyon yapmak" hangisi?', ['reservar', 'repetir', 'llamar'], 0),
