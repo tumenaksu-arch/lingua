@@ -294,7 +294,7 @@ export const trEs = course(
     ['falda', 'la falda', 'etek', 'La falda es verde.'],
     ['sombrero', 'el sombrero', 'şapka', 'El sombrero es amarillo.'],
     ['abrigo', 'el abrigo', 'palto / mont', 'El abrigo es nuevo.'],
-    ['verde', 'verde', 'yeşil', 'La falda es verde.'],
+    ['verde', 'verde', 'yeşil', 'El vestido es verde.'],
     ['amarillo', 'amarillo', 'sarı', 'El sombrero es amarillo.'],
     ['negro', 'negro', 'siyah', 'Los zapatos son negros.'],
     ['blanco', 'blanco', 'beyaz', 'La camisa es blanca.'],
@@ -571,7 +571,7 @@ export const trEs = course(
         fill('Yo ___ pan.', ['bebo', 'como', 'soy'], 1),
         speak('Yo bebo té.'),
         sel('"el café" ne demek?', ['çay', 'kahve', 'süt'], 1, 'to'),
-        listenSel('Yo bebo té', ['Yo bebo té', 'Yo como té', 'Tú bebes té'], 0),
+        listenSel('Yo bebo té', ['Yo bebo té', 'Yo bebo café', 'Tú bebes té'], 0),
         pic('"ekmek" hangisi?', [
           { emoji: '💧', label: 'el agua' },
           { emoji: '🍞', label: 'el pan' },
@@ -600,7 +600,7 @@ export const trEs = course(
         fill('Tú ___ leche.', ['comes', 'bebes', 'eres'], 1),
         speak('Tú bebes leche.'),
         sel('"la leche" ne demek?', ['elma', 'süt', 'su'], 1, 'to'),
-        listenSel('Tú bebes leche', ['Tú bebes leche', 'Tú comes leche', 'Yo bebo leche'], 0),
+        listenSel('Tú bebes leche', ['Tú bebes leche', 'Tú bebes agua', 'Yo bebo leche'], 0),
         chat([['a', 'Bebo leche. ¿Y tú?']], ['Como una manzana.', 'Estoy bien.', 'Sí, por favor.'], 0),
         read('Yo como una manzana. Mi amigo bebe leche.', 'Arkadaş ne yapıyor?', ['Süt içiyor', 'Elma yiyor', 'Su içiyor'], 0),
         match([
@@ -631,7 +631,7 @@ export const trEs = course(
           ['tengo hambre', 'aç olmak'],
           ['el menú', 'menü'],
         ]),
-        listenSel('Tengo hambre', ['Tengo hambre', 'Tengo hombre', 'Tienes hambre'], 0),
+        listenSel('Tengo hambre', ['Tengo hambre', 'Tengo sueño', 'Tienes hambre'], 0),
         pic('"yumurta" hangisi?', [
           { emoji: '🧀', label: 'el queso' },
           { emoji: '🥚', label: 'el huevo' },
@@ -661,7 +661,7 @@ export const trEs = course(
         fill('No como ___.', ['pescado', 'rico', 'hambre'], 0),
         speak('Yo como arroz.'),
         sel('"azúcar" ne demek?', ['tuz', 'şeker', 'salata'], 1, 'to'),
-        listenSel('Yo como pollo y arroz', ['Yo como pollo y arroz', 'Yo como pescado y arroz', 'Yo bebo pollo y arroz'], 0),
+        listenSel('Yo como pollo y arroz', ['Yo como pollo y arroz', 'Yo como pescado y arroz', 'Yo como pollo y ensalada'], 0),
         pic('"salata" hangisi?', [
           { emoji: '🐟', label: 'el pescado' },
           { emoji: '🍗', label: 'el pollo' },
@@ -715,7 +715,7 @@ export const trEs = course(
         fill('Yo ___ a mi madre.', ['quiero', 'soy', 'como'], 0),
         speak('Mi familia es pequeña.'),
         sel('"grande" ne demek?', ['küçük', 'büyük', 'iyi'], 1, 'to'),
-        listenSel('Mi familia es grande', ['Mi familia es grande', 'Mi familia es pequeña', 'Mi familia está grande'], 0),
+        listenSel('Mi familia es grande', ['Mi familia es grande', 'Mi familia es pequeña', 'Tu familia es grande'], 0),
         chat([['a', 'Mi familia es pequeña. ¿Y tú?']], ['Mi familia es grande.', 'Yo soy un hombre.', 'Tengo hambre.'], 0),
         read('Mi familia es grande. El niño es pequeño.', 'Aile nasıl?', ['Büyük', 'Küçük', 'İyi'], 0),
         pic('"köpek" hangisi?', [
@@ -739,7 +739,7 @@ export const trEs = course(
         fill('Tú ___ una hermana.', ['tienes', 'tengo', 'eres'], 0),
         speak('Mi hermano es mi amigo.'),
         sel('"el niño" ne demek?', ['arkadaş', 'çocuk', 'aile'], 1, 'to'),
-        listenSel('Mi amigo tiene un niño', ['Mi amigo tiene un niño', 'Mi amigo tengo un niño', 'Mi amigo tiene una niño'], 0),
+        listenSel('Mi amigo tiene un niño', ['Mi amigo tiene un niño', 'Mi amigo tiene una hija', 'Tu amigo tiene un niño'], 0),
         pic('"erkek kardeş" hangisi?', [
           { emoji: '👧', label: 'la hermana' },
           { emoji: '👦', label: 'el hermano' },
@@ -769,7 +769,7 @@ export const trEs = course(
         speak('Quiero a mi familia.'),
         sel('"el hijo" ne demek?', ['kız (evlat)', 'oğul', 'büyükbaba'], 1, 'to'),
         fill('Yo ___ a mi abuela.', ['quiero', 'soy', 'tengo'], 0),
-        listenSel('Mi abuelo bebe té', ['Mi abuelo bebe té', 'Mi abuela bebe té', 'Mi abuelo come té'], 0),
+        listenSel('Mi abuelo bebe té', ['Mi abuelo bebe té', 'Mi abuela bebe té', 'Mi abuelo come pan'], 0),
         pic('"büyükbaba" hangisi?', [
           { emoji: '👴', label: 'el abuelo' },
           { emoji: '👵', label: 'la abuela' },
@@ -794,7 +794,7 @@ export const trEs = course(
         fill('Tengo un ___.', ['billete', 'tren', 'dónde'], 0),
         speak('¿Dónde está el hotel?'),
         sel('"dónde" ne demek?', ['ne', 'nerede', 'kim'], 1, 'to'),
-        listenSel('¿Dónde está el tren?', ['¿Dónde está el tren?', '¿Dónde está la tren?', '¿Dónde está el hotel?'], 0),
+        listenSel('¿Dónde está el tren?', ['¿Dónde está el tren?', '¿Dónde está la estación?', '¿Dónde está el hotel?'], 0),
         pic('"bilet" hangisi?', [
           { emoji: '🚉', label: 'la estación' },
           { emoji: '🚂', label: 'el tren' },
@@ -898,7 +898,7 @@ export const trEs = course(
         fill('El ___ es diez euros.', ['precio', 'tienda', 'dinero'], 0),
         speak('¿Cuánto cuesta?'),
         sel('"barato" ne demek?', ['pahalı', 'ucuz', 'fiyat'], 1, 'to'),
-        listenSel('El precio es diez euros', ['El precio es diez euros', 'El precio es dos euros', 'La precio es diez euros'], 0),
+        listenSel('El precio es diez euros', ['El precio es diez euros', 'El precio es dos euros', 'El precio es cinco euros'], 0),
         pic('"fiyat" hangisi?', [
           { emoji: '🏪', label: 'la tienda' },
           { emoji: '💵', label: 'el dinero' },
@@ -928,7 +928,7 @@ export const trEs = course(
         speak('Compro zapatos nuevos.'),
         sel('"vestido" ne demek?', ['gömlek', 'elbise', 'ayakkabı'], 1, 'to'),
         fill('Los ___ son nuevos.', ['zapatos', 'vestido', 'camisa'], 0),
-        listenSel('Compro una camisa', ['Compro una camisa', 'Compro un camisa', 'Compro un vestido'], 0),
+        listenSel('Compro una camisa', ['Compro una camisa', 'Compro unos zapatos', 'Compro un vestido'], 0),
         pic('"ayakkabı" hangisi?', [
           { emoji: '👕', label: 'la camisa' },
           { emoji: '👞', label: 'los zapatos' },
@@ -1039,7 +1039,7 @@ export const trEs = course(
         speak('Leo libros en español.'),
         sel('"escribir" ne demek?', ['okumak', 'yazmak', 'öğrenmek'], 1, 'to'),
         fill('El ___ está en la mesa.', ['libro', 'leer', 'aprender'], 0),
-        listenSel('Leo un libro', ['Leo un libro', 'Leo un bolígrafo', 'Lees un libro'], 0),
+        listenSel('Leo un libro', ['Leo un libro', 'Escribo un libro', 'Lees un libro'], 0),
         pic('"kalem" hangisi?', [
           { emoji: '📖', label: 'el libro' },
           { emoji: '🖊️', label: 'el bolígrafo' },
@@ -1094,7 +1094,7 @@ export const trEs = course(
         speak('Soy un buen estudiante.'),
         sel('"aprender" ne demek?', ['okumak', 'öğrenmek', 'çalışmak'], 1, 'to'),
         fill('Los estudiantes ___ en la escuela.', ['leen', 'aprender', 'español'], 0),
-        listenSel('El profesor habla español', ['El profesor habla español', 'El estudiante habla español', 'El profesor habla española'], 0),
+        listenSel('El profesor habla español', ['El profesor habla español', 'El estudiante habla español', 'El profesor habla inglés'], 0),
         pic('"öğrenci" hangisi?', [
           { emoji: '🧑‍🏫', label: 'el profesor' },
           { emoji: '🧑‍🎓', label: 'el estudiante' },
@@ -1175,7 +1175,7 @@ export const trEs = course(
         speak('Es temprano.'),
         sel('"hora" ne demek?', ['dakika', 'saat (süre)', 'gün'], 1, 'to'),
         fill('El tren está ___.', ['tarde', 'temprano', 'ahora'], 0),
-        listenSel('Son las tres', ['Son las tres', 'Son las dos', 'Es las tres'], 0),
+        listenSel('Son las tres', ['Son las tres', 'Son las dos', 'Son las cinco'], 0),
         chat([['a', '¿Qué hora es?']], ['Son las tres.', 'Hoy es lunes.', 'Tengo un libro.'], 0),
         read('Es la una ahora. El tren llega tarde.', 'Saat kaç?', ['Bir', 'Üç', 'İki'], 0),
         pic('"kar" hangisi?', [
@@ -1200,7 +1200,7 @@ export const trEs = course(
         speak('Hace buen tiempo.'),
         sel('"mañana" ne demek?', ['bugün', 'yarın', 'şimdi'], 1, 'to'),
         fill('Hoy ___ frío.', ['hace', 'es', 'tiene'], 0),
-        listenSel('Mañana hace frío', ['Mañana hace frío', 'Mañana hace calor', 'Mañana es frío'], 0),
+        listenSel('Mañana hace frío', ['Mañana hace frío', 'Mañana hace calor', 'Hoy hace frío'], 0),
         chat([['a', 'Hoy hace mucho calor. ¿Quieres agua?']], ['Sí, por favor.', 'Hoy hace frío.', 'Mañana es lunes.'], 0),
         read('El domingo hace calor. Mañana hace frío.', 'Pazar günü hava nasıl?', ['Sıcak', 'Soğuk', 'Yağmurlu'], 0),
       ]),
@@ -1221,7 +1221,7 @@ export const trEs = course(
         fill('Esta noche vemos una ___.', ['película', 'música', 'guitarra'], 0),
         speak('Me gusta el fútbol.'),
         sel('"jugar" ne demek?', ['izlemek', 'oynamak', 'dinlemek'], 1, 'to'),
-        listenSel('Juego al fútbol', ['Juego al fútbol', 'Juego a la guitarra', 'Juegas al fútbol'], 0),
+        listenSel('Juego al fútbol', ['Juego al fútbol', 'Juego al tenis', 'Juegas al fútbol'], 0),
         pic('"gitar" hangisi?', [
           { emoji: '🎵', label: 'la música' },
           { emoji: '⚽', label: 'el fútbol' },
@@ -1251,7 +1251,7 @@ export const trEs = course(
         speak('Corro todos los días.'),
         sel('"fin de semana" ne demek?', ['hafta', 'hafta sonu', 'pazartesi'], 1, 'to'),
         fill('Me gusta ___ en el mar.', ['nadar', 'bailar', 'parque'], 0),
-        listenSel('Corro en el parque', ['Corro en el parque', 'Corro en la parque', 'Nado en el parque'], 0),
+        listenSel('Corro en el parque', ['Corro en el parque', 'Corro en la plaza', 'Nado en el parque'], 0),
         pic('"park" hangisi?', [
           { emoji: '🏊', label: 'nadar' },
           { emoji: '🏃', label: 'correr' },
@@ -1311,7 +1311,7 @@ export const trEs = course(
         speak('Me gustan las películas.'),
         sel('"guitarra" ne demek?', ['müzik', 'gitar', 'film'], 1, 'to'),
         build('Arkadaşımla futbol oynarım.', ['Juego al fútbol con mi amigo'], ['guitarra', 'película', 'gusta']),
-        listenSel('Toco la guitarra el fin de semana', ['Toco la guitarra el fin de semana', 'Juego la guitarra el fin de semana', 'Toco el fútbol el fin de semana'], 0),
+        listenSel('Toco la guitarra el fin de semana', ['Toco la guitarra el fin de semana', 'Toco el piano el fin de semana', 'Toco la guitarra los lunes'], 0),
         chat([['a', 'Quiero jugar al fútbol.']], ['Jugamos el fin de semana.', 'Me gusta el té.', 'Hoy es domingo.'], 0),
         read('Jugamos al fútbol el fin de semana. Me gustan las películas.', 'Hafta sonu ne yapıyorlar?', ['Futbol oynuyorlar', 'Film izliyorlar', 'Gitar çalıyorlar'], 0),
       ]),
