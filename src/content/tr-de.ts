@@ -282,7 +282,7 @@ export const trDe = course(
     ['orange', 'die Orange', 'portakal', 'Die Orange ist süß.'],
     ['zwiebel', 'die Zwiebel', 'soğan', 'Ich schneide die Zwiebel.'],
     ['dasessen', 'das Essen', 'yemek (isim)', 'Das Essen schmeckt gut.'],
-    ['schmecken', 'schmecken', 'lezzetli gelmek', 'Das Essen schmeckt gut.'],
+    ['schmecken', 'schmecken', 'tadı güzel olmak', 'Das Essen schmeckt gut.'],
     ['messer', 'das Messer', 'bıçak', 'Das Messer ist scharf.'],
     ['gabel', 'die Gabel', 'çatal', 'Die Gabel ist auf dem Tisch.'],
     // İ3 — Ünite 3 ek kelimeler (Aile)
@@ -338,7 +338,7 @@ export const trDe = course(
     ['kreditkarte', 'die Kreditkarte', 'kredi kartı', 'Ich bezahle mit der Kreditkarte.'],
     ['bar', 'bar', 'nakit', 'Ich zahle bar.'],
     ['wechselgeld', 'das Wechselgeld', 'para üstü', 'Das Wechselgeld ist ein Euro.'],
-    ['sonderangebot', 'das Sonderangebot', 'özel fırsat', 'Das Sonderangebot ist billig.'],
+    ['sonderangebot', 'das Sonderangebot', 'indirimli ürün, kampanya', 'Das Sonderangebot ist billig.'],
     ['rabatt', 'der Rabatt', 'indirim', 'Der Rabatt ist groß.'],
     ['quittung', 'die Quittung', 'fiş', 'Die Quittung, bitte.'],
     ['hose', 'die Hose', 'pantolon', 'Die Hose ist lang.'],
@@ -421,7 +421,7 @@ export const trDe = course(
     ['zeichnen', 'zeichnen', 'çizmek', 'Ich zeichne gern.'],
     ['singen', 'singen', 'şarkı söylemek', 'Meine Schwester singt gern.'],
     ['fernsehen', 'fernsehen', 'televizyon izlemek', 'Abends sehe ich fern.'],
-    ['spazieren', 'spazieren', 'gezmek (yürüyerek)', 'Ich gehe gern spazieren.'],
+    ['spazieren', 'spazieren gehen', 'yürüyüşe çıkmak', 'Ich gehe gern spazieren.'],
     ['konzert', 'das Konzert', 'konser', 'Das Konzert ist toll.'],
     ['theater', 'das Theater', 'tiyatro', 'Wir gehen ins Theater.'],
     ['bibliothek', 'die Bibliothek', 'kütüphane', 'Die Bibliothek ist ruhig.'],
@@ -691,7 +691,7 @@ export const trDe = course(
         ]),
         match([
           ['das Essen', 'yemek (isim)'],
-          ['schmecken', 'lezzetli gelmek'],
+          ['schmecken', 'tadı güzel olmak'],
           ['das Messer', 'bıçak'],
           ['die Gabel', 'çatal'],
         ]),
@@ -986,7 +986,7 @@ export const trDe = course(
         ]),
         match([
           ['das Wechselgeld', 'para üstü'],
-          ['das Sonderangebot', 'özel fırsat'],
+          ['das Sonderangebot', 'indirimli ürün, kampanya'],
           ['der Rabatt', 'indirim'],
           ['die Quittung', 'fiş'],
         ]),
@@ -1282,7 +1282,7 @@ export const trDe = course(
           ['Donnerstag', 'perşembe'],
           ['Freitag', 'cuma'],
         ]),
-        listenSel('Am Samstag ist der Markt', ['Am Samstag ist der Markt', 'Am Sonntag ist der Markt', 'Am Samstag ist der Markt offen'], 0),
+        listenSel('Am Samstag ist der Markt', ['Am Samstag ist der Markt', 'Am Sonntag ist der Markt', 'Am Samstag ist das Training'], 0),
       ]),
       lesson('tr-de.u7.l3', 3, ['wiespaet', 'uhr', 'stunde', 'jetzt', 'spaet', 'frueh', 'morgens', 'abends', 'mittags', 'nachts', 'wann', 'heuteabend', 'von', 'bis'], [
         sel('"saat kaç" hangisi?', ['Wie spät ist es', 'Wie weit ist es', 'Wie alt ist es'], 0),
@@ -1339,7 +1339,7 @@ export const trDe = course(
           ['die Wettervorhersage', 'hava tahmini'],
           ['frei', 'boş, müsait'],
         ]),
-        listenSel('Nächstes Jahr reise ich nach Italien', ['Nächstes Jahr reise ich nach Italien', 'Letztes Jahr reise ich nach Italien', 'Nächstes Jahr reisen wir nach Italien'], 0),
+        listenSel('Nächstes Jahr reise ich nach Italien', ['Nächstes Jahr reise ich nach Italien', 'Nächstes Jahr reise ich nach Spanien', 'Nächstes Jahr reisen wir nach Italien'], 0),
       ]),
     ]),
     unit('tr-de.u8', 8, 'Hobiler', 'Sevdiğin şeylerden ve hafta sonundan bahset.', [
@@ -1404,7 +1404,7 @@ export const trDe = course(
           ['fernsehen', 'televizyon izlemek'],
         ]),
         match([
-          ['spazieren', 'gezmek (yürüyerek)'],
+          ['spazieren gehen', 'yürüyüşe çıkmak'],
           ['das Konzert', 'konser'],
           ['das Theater', 'tiyatro'],
           ['die Bibliothek', 'kütüphane'],
