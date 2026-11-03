@@ -299,7 +299,7 @@ export const trEs = course(
     ['negro', 'negro', 'siyah', 'Los zapatos son negros.'],
     ['blanco', 'blanco', 'beyaz', 'La camisa es blanca.'],
     ['calcetines', 'los calcetines', 'çorap', 'Los calcetines son baratos.'],
-    ['bolsa', 'la bolsa', 'çanta', 'La bolsa es grande.'],
+    ['bolsa', 'la bolsa', 'torba / poşet', 'La bolsa es grande.'],
     ['tarjeta', 'la tarjeta', 'kart', 'Pago con tarjeta.'],
     ['pagar', 'pagar', 'ödemek', 'Pago la cuenta.'],
     // İ3 genişletmesi — Unit 6 (İş ve Okul)
@@ -441,9 +441,9 @@ export const trEs = course(
     ['servir', 'servir', 'servis etmek', 'El camarero sirve la comida.'],
     ['desear', 'desear', 'dilemek / istemek', '¿Desea algo más?'],
     ['repetir', 'repetir', 'tekrar etmek', 'Repito la pregunta.'],
-    ['sentarse', 'sentarse', 'oturmak', 'Nos sentamos en la mesa.'],
+    ['sentarse', 'sentarse', 'oturmak', 'Nos sentamos a la mesa.'],
     ['esperar', 'esperar', 'beklemek', 'Espero cinco minutos.'],
-    ['disculpar', 'disculpar', 'özür dilemek', 'Disculpe, ¿dónde está el hotel?'],
+    ['disculpar', 'disculpar', 'affetmek (Disculpe: affedersiniz)', 'Disculpe, ¿dónde está el hotel?'],
     ['invitar', 'invitar', 'davet etmek', 'Invito a mi amigo a cenar.'],
   ],
   [
@@ -963,7 +963,7 @@ export const trEs = course(
         read('Me gusta el vestido azul. No me gusta la camisa roja.', 'Anlatıcı hangisini beğeniyor?', ['Mavi elbiseyi', 'Kırmızı gömleği', 'Kırmızı elbiseyi'], 0),
         match([
           ['los calcetines', 'çorap'],
-          ['la bolsa', 'çanta'],
+          ['la bolsa', 'torba / poşet'],
           ['la tarjeta', 'kart'],
           ['pagar', 'ödemek'],
         ]),
@@ -2125,7 +2125,7 @@ export const trEs = course(
         match([
           ['sentarse', 'oturmak'],
           ['esperar', 'beklemek'],
-          ['disculpar', 'özür dilemek'],
+          ['disculpar', 'affetmek (Disculpe: affedersiniz)'],
           ['invitar', 'davet etmek'],
         ]),
       ]),
