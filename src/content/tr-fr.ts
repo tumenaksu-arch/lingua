@@ -1337,7 +1337,7 @@ export const trFr = course(
         match([
           ['le matin', 'sabah'],
           ['la journée', 'gün (boyu)'],
-          ["j'ai mangé", 'yedi (geçmiş)'],
+          ["j'ai mangé", 'yedim (geçmiş)'],
           ['hier', 'dün'],
         ]),
       ]),
