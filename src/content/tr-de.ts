@@ -487,7 +487,7 @@ export const trDe = course(
         speak('Ich bin ein Mann.'),
         fill('Ich ___ eine Frau.', ['bist', 'bin', 'ist'], 1),
         speak('Du bist ein Mann.'),
-        listenSel('Ich bin ein Mann', ['Ich bin ein Mann', 'Ich bin eine Mann', 'Du bist ein Mann'], 0),
+        listenSel('Ich bin ein Mann', ['Ich bin ein Mann', 'Ich bin ein Kind', 'Du bist ein Mann'], 0),
         chat([['a', 'Ich bin Ayşe.']], ['Du bist Ayşe.', 'Und ich bin Tom.', 'Ich bin ein Mann.'], 1),
         read('Ich bin ein Mann. Du bist eine Frau.', 'Metinde kimler var?', ['Bir adam ve bir kadın', 'İki kadın', 'İki adam'], 0),
         match([
@@ -582,7 +582,7 @@ export const trDe = course(
         speak('Ich trinke Tee.'),
         sel('"der Kaffee" ne demek?', ['çay', 'kahve', 'süt'], 1, 'to'),
         speak('Ich esse Brot.'),
-        listenSel('Ich trinke Wasser', ['Ich esse Wasser', 'Du trinkst Wasser', 'Ich trinke Wasser'], 2),
+        listenSel('Ich trinke Wasser', ['Ich trinke Tee', 'Du trinkst Wasser', 'Ich trinke Wasser'], 2),
         pic('"das Brot" hangisi?', [
           { emoji: '🍞', label: 'das Brot' },
           { emoji: '☕', label: 'der Kaffee' },
@@ -613,7 +613,7 @@ export const trDe = course(
         speak('Du trinkst Milch.'),
         sel('"die Milch" ne demek?', ['elma', 'süt', 'su'], 1, 'to'),
         listen('Ich trinke Milch', ['Ich trinke Milch']),
-        listenSel('Du trinkst Milch', ['Du isst Milch', 'Ich trinke Milch', 'Du trinkst Milch'], 2),
+        listenSel('Du trinkst Milch', ['Du trinkst Kaffee', 'Ich trinke Milch', 'Du trinkst Milch'], 2),
         pic('"der Apfel" hangisi?', [
           { emoji: '🍎', label: 'der Apfel' },
           { emoji: '🥛', label: 'die Milch' },
@@ -675,7 +675,7 @@ export const trDe = course(
         fill('Ich esse keinen ___.', ['Fisch', 'Salz', 'Wasser'], 0),
         speak('Ich esse Reis.'),
         sel('"der Zucker" ne demek?', ['tuz', 'şeker', 'salata'], 1, 'to'),
-        listenSel('Ich esse Fisch', ['Ich esse Fisch', 'Ich esse frisch', 'Du isst Fisch'], 0),
+        listenSel('Ich esse Fisch', ['Ich esse Fisch', 'Ich esse einen Apfel', 'Du isst Fisch'], 0),
         pic('"der Fisch" hangisi?', [
           { emoji: '🐟', label: 'der Fisch' },
           { emoji: '🍗', label: 'das Hähnchen' },
@@ -811,7 +811,7 @@ export const trDe = course(
         speak('Meine Familie ist groß.'),
         sel('"die Ehefrau" ne demek?', ['koca', 'eş (kadın)', 'kız kardeş'], 1, 'to'),
         fill('Mein Bruder ___ ein Kind.', ['hat', 'habe', 'bist'], 0),
-        listenSel('Ich liebe meine Ehefrau', ['Ich liebe meine Ehefrau', 'Ich liebe meine Ehemann', 'Du liebst meine Ehefrau'], 0),
+        listenSel('Ich liebe meine Ehefrau', ['Ich liebe meine Ehefrau', 'Du liebst deinen Ehemann', 'Du liebst meine Ehefrau'], 0),
         chat([['a', 'Wie ist deine Ehefrau?']], ['Ich habe eine Ehefrau.', 'Meine Ehefrau ist gut.', 'Mein Ehemann trinkt Tee.'], 1),
         read('Ich habe einen Ehemann. Ich liebe meine Familie.', 'Yazar neye sahip?', ['Bir kocaya', 'Bir çocuğa', 'Bir kardeşe'], 0),
         match([
@@ -1106,7 +1106,7 @@ export const trDe = course(
         fill('Er ist heute sehr ___.', ['beschäftigt', 'Büro', 'arbeiten'], 0),
         speak('Ich arbeite in der Schule.'),
         sel('"beschäftigt" ne demek?', ['boş', 'meşgul', 'yorgun'], 1, 'to'),
-        listenSel('Ich arbeite in der Schule', ['Du arbeitest in der Schule', 'Ich arbeite in der Schule', 'Ich arbeite in der Büro'], 1),
+        listenSel('Ich arbeite in der Schule', ['Du arbeitest in der Schule', 'Ich arbeite in der Schule', 'Ich arbeite zu Hause'], 1),
         pic('"der Arzt" hangisi?', [
           { emoji: '👨‍⚕️', label: 'der Arzt' },
           { emoji: '👷', label: 'der Ingenieur' },
@@ -1142,7 +1142,7 @@ export const trDe = course(
         speak('Ich lese deutsche Bücher.'),
         sel('"schreiben" ne demek?', ['okumak', 'yazmak', 'öğrenmek'], 1, 'to'),
         fill('Das ___ liegt auf dem Tisch.', ['Buch', 'lesen', 'lernen'], 0),
-        listenSel('Ich lese ein Buch', ['Ich lese ein Buch', 'Du liest ein Buch', 'Ich lese ein Stift'], 0),
+        listenSel('Ich lese ein Buch', ['Ich lese ein Buch', 'Du liest ein Buch', 'Ich lese eine Zeitung'], 0),
         pic('"das Buch" hangisi?', [
           { emoji: '📖', label: 'das Buch' },
           { emoji: '🖊️', label: 'der Stift' },
@@ -1178,7 +1178,7 @@ export const trDe = course(
         speak('Die Besprechung ist heute.'),
         sel('"der Computer" ne demek?', ['toplantı', 'bilgisayar', 'ofis'], 1, 'to'),
         fill('___ habe ich eine Besprechung.', ['Heute', 'Computer', 'Büro'], 0),
-        listenSel('Ich habe heute eine Besprechung', ['Ich habe heute eine Besprechung', 'Ich habe heute einen Besprechung', 'Du hast heute eine Besprechung'], 0),
+        listenSel('Ich habe heute eine Besprechung', ['Ich habe heute eine Besprechung', 'Ich habe heute einen Termin', 'Du hast heute eine Besprechung'], 0),
         chat([['a', 'Wo ist dein Computer?']], ['Ich habe heute eine Besprechung.', 'Mein Computer ist im Büro.', 'Ich bin heute beschäftigt.'], 1),
         read('Ich arbeite heute im Büro. Die Besprechung ist heute.', 'Toplantı ne zaman?', ['Bugün', 'Yarın', 'Hafta sonu'], 0),
         match([
