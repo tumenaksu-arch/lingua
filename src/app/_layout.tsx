@@ -10,6 +10,7 @@ import { useFonts } from 'expo-font';
 import { useAppStore } from '@/features/store';
 import { startSocialSync } from '@/features/social/socialStore';
 import { ShellUpdateBanner, useAutoUpdate } from '@/platform/autoUpdate';
+import { ShellExitHint, useShellBackButton } from '@/platform/backButton';
 import { useSystemBars } from '@/platform/systemBars';
 import { useSettingsStore, useTheme, useThemeStore } from '@/ui';
 
@@ -25,6 +26,7 @@ export default function RootLayout() {
   useSystemBars(colors.background, !isDark);
   const [error, setError] = useState<string | null>(null);
   useAutoUpdate();
+  const showExitHint = useShellBackButton();
   // EduPilot typefaces, loaded once for the whole app. Rendering is NOT blocked:
   // text uses the platform fallback until the fonts are ready.
   useFonts({
@@ -107,6 +109,8 @@ export default function RootLayout() {
         <Stack.Screen name="sinif-katil" options={{ presentation: 'modal' }} />
         <Stack.Screen name="lisanslar" options={{ presentation: 'modal' }} />
       </Stack>
+      {/* Android shell: 'press again to exit' pill after the first back press at the root. */}
+      {showExitHint ? <ShellExitHint /> : null}
     </ThemeProvider>
   );
 }

@@ -27,6 +27,7 @@ import type { AiExplainRequest } from '@/features/lesson/explainApi';
 import { playComplete, playCorrect, playWrong } from '@/features/sound';
 import { exerciseVocabMap, formatDuration, correctAnswerText } from '@/features/lesson/helpers';
 import { useAppStore } from '@/features/store';
+import { registerShellBackHandler } from '@/platform/backButton';
 import { Body, Button, Caption, CloseButton, ErrorState, FeedbackSheet, Heading, Hearts, Icon, ProgressBar, Screen, Title, Vox, XpBoostChip, radii, showAlert, spacing, useSettingsStore, useTheme, voxLineForLesson } from '@/ui';
 
 type Params = { id: string; mode?: 'practice' };
@@ -142,12 +143,15 @@ function LessonRunner({ id, practice }: { id: string; practice: boolean }) {
     }
   }, [state, exercise, feedback, lesson, finished, startedAt, persist]);
 
-  const confirmQuit = () => {
+  const confirmQuit = useCallback(() => {
     showAlert('Dersi bırak?', 'İlerlemen kaydedilmeyecek.', [
       { text: 'Devam et', style: 'cancel' },
       { text: 'Bırak', style: 'destructive', onPress: () => router.back() },
     ]);
-  };
+  }, []);
+
+  // Hardware back (Android shell) opens the same quit confirmation as the close button.
+  useEffect(() => registerShellBackHandler(confirmQuit), [confirmQuit]);
 
   if (!lesson || !state) {
     return (

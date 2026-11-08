@@ -19,6 +19,7 @@ import { ExerciseView } from '@/features/lesson/ExerciseView';
 import { playComplete, playCorrect, playWrong } from '@/features/sound';
 import { formatDuration, correctAnswerText } from '@/features/lesson/helpers';
 import { useAppStore } from '@/features/store';
+import { registerShellBackHandler } from '@/platform/backButton';
 import { Body, Button, Caption, FeedbackSheet, Heading, Icon, ProgressBar, Screen, Title, showAlert, spacing, useTheme } from '@/ui';
 
 import { WEAK_WORDS_LIMIT, buildMistakeSession, buildWordSession, type PracticeMode } from './session';
@@ -135,12 +136,15 @@ export function PracticeRunner({ mode }: { mode: PracticeMode }) {
     }
   }, [state, exercise, feedback, session, startedAt, reviewCard, persist]);
 
-  const confirmQuit = () => {
+  const confirmQuit = useCallback(() => {
     showAlert('Pratiği bırak?', 'İlerlemen kaydedilmeyecek.', [
       { text: 'Devam et', style: 'cancel' },
       { text: 'Bırak', style: 'destructive', onPress: () => router.back() },
     ]);
-  };
+  }, []);
+
+  // Hardware back (Android shell) opens the same quit confirmation as the close button.
+  useEffect(() => registerShellBackHandler(confirmQuit), [confirmQuit]);
 
   if (loadError) {
     return (

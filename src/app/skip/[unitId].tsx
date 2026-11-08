@@ -20,6 +20,7 @@ import { correctAnswerText } from '@/features/lesson/helpers';
 import { playComplete, playCorrect, playWrong } from '@/features/sound';
 import { buildSkipTest } from '@/features/skipTest';
 import { useAppStore } from '@/features/store';
+import { registerShellBackHandler } from '@/platform/backButton';
 import { Body, Button, Caption, FeedbackSheet, Heading, Icon, ProgressBar, Screen, Title, showAlert, spacing, useTheme } from '@/ui';
 
 type Params = { unitId: string };
@@ -147,6 +148,9 @@ function SkipSession({ unit, attempt, onRetry }: { unit: Unit; attempt: number; 
       },
     ]);
   }, [finishSkipTest, state, total, unit.id]);
+
+  // Hardware back (Android shell) opens the same quit confirmation as the close button.
+  useEffect(() => registerShellBackHandler(confirmQuit), [confirmQuit]);
 
   if (!state) {
     return (
