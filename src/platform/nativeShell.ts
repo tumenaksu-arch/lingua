@@ -48,6 +48,12 @@ export interface ShellLocalNotifications {
 
 export interface ShellApp {
   getInfo(): Promise<{ name: string; id: string; build: string; version: string }>;
+  /**
+   * Hardware back button. Registering a 'backButton' listener takes over from Capacitor's
+   * default behavior (walk the WebView history, exit at the end) — the app decides instead.
+   */
+  addListener(event: 'backButton', cb: (e: { canGoBack: boolean }) => void): Promise<ListenerHandle>;
+  exitApp(): Promise<void>;
 }
 
 /** Sets the strip behind the status/navigation bars (window decor background) + icon style. */
